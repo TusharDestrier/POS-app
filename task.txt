@@ -1,0 +1,8 @@
+17-10-2024
+
+[✔️] initiall focus should be in the Customer Selection phone number input
+[✔️] after enter customer should be created from on
+[] after selction item from search box that should be selected and modal sould be closed
+[] affter closing the search modal scan input should be shown
+[] item search everytime i click item should be increment
+

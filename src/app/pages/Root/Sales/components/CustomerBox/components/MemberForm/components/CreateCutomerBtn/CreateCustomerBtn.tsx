@@ -2,9 +2,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components
 import { Button } from '@/components/ui/button'
 import CustomerCreate from '../../../../../CustomerCreate'
 
-function CreateCustomerBtn() {
+function CreateCustomerBtn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogTrigger>
         <Button className="w-max mt-auto" type={'button'}>
           {'Create customer'}

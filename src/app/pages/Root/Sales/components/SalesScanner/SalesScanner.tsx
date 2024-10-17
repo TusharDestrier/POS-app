@@ -2,7 +2,6 @@ import { Input } from '@/components/ui/input'
 import { FormEvent } from 'react'
 import useSalesScannerState from './store/useSalesScannerState'
 import useFocusOnKeyPress from '@/hooks/useFocusOnKeyPress'
-import { Card, CardContent } from '@/components/ui/card'
 
 function SalesScanner({ className, ...props }: { className?: string }) {
   const setScanID = useSalesScannerState((state) => state.setScanID)
@@ -11,7 +10,7 @@ function SalesScanner({ className, ...props }: { className?: string }) {
   const inputRef = useFocusOnKeyPress<HTMLInputElement>(
     'F1',
     (input) => input?.focus(), // Focus action
-    true // Focus initially
+    false // Focus initially
   )
 
   function handleSubmit(e: FormEvent) {
