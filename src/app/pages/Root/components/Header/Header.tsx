@@ -12,16 +12,13 @@ function Header() {
               <Hamburger />
             </span>
             <h2 tabIndex={1} className="header-title flex flex-col">
-              Point Of Sale
+              Point OF Sale
               <span className="text-[10px] font-semibold  ">(#2142124242)</span>
             </h2>
           </div>
           <UserBox />
         </div>
       </div>
-      {/* <div className="bottom">
-        <Navigation />
-      </div> */}
     </header>
   )
 }
