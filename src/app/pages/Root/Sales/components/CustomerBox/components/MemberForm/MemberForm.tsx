@@ -1,16 +1,25 @@
-import { useState, ChangeEvent, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import CreateCustomerBtn from './components/CreateCutomerBtn'
 import CustomerHistory from './components/CustomerHistory'
+import useFocusOnKeyPress from '@/hooks/useFocusOnKeyPress'
 
 function MemberForm() {
-  const [phoneNo, setPhoneNo] = useState('')
+  const [phoneNo, setPhoneNo] = useState('') // Keep using state for tracking
   const [memberId, setMemberId] = useState('')
   const [memberName, setMemberName] = useState('')
   const [created, setCreatedAt] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [isNewCustomer, setIsNewCustomer] = useState(false)
+  const [isCreateCustomerOpen, setIsCreateCustomerOpen] = useState(false)
+
+  // Use the hook to focus on the phoneNo input initially and on F1 key press
+  const phoneNoRef = useFocusOnKeyPress<HTMLInputElement>(
+    'F4',
+    (input) => input?.focus(),
+    true // Focus initially
+  )
 
   // Simulate customer lookup
   const checkCustomerExists = (phoneNo: string) => {
@@ -20,7 +29,6 @@ function MemberForm() {
       createdDate: '2022-05-16',
     }
 
-    // Simulate: return customer if phone matches, else return null
     return phoneNo === '1234567890' ? mockCustomer : null
   }
 
@@ -37,18 +45,17 @@ function MemberForm() {
     }
   }
 
-  // Trigger lookup based on phone number change
   useEffect(() => {
     if (phoneNo.length === 10) {
       const customer = checkCustomerExists(phoneNo)
       if (customer) {
-        setIsNewCustomer(false) // Customer exists, no need to create
+        setIsNewCustomer(false)
         setMemberName(customer.memberName)
         setMemberId(customer.memberId)
         setCreatedAt(customer.createdDate)
         setErrorMessage('')
       } else {
-        setIsNewCustomer(true) // No customer, allow customer creation
+        setIsNewCustomer(true)
         setMemberName('')
         setMemberId('')
         setCreatedAt('')
@@ -61,24 +68,14 @@ function MemberForm() {
     }
   }, [phoneNo])
 
-  // For creating a new customer or submitting form (if needed)
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    if (isNewCustomer) {
-      // Logic to create new customer
-      console.log('Creating new customer with data:', {
-        phoneNo,
-        memberName,
-        memberId,
-      })
-    } else {
-      // Logic to handle existing customer
-      console.log('Existing customer selected:', {
-        phoneNo,
-        memberName,
-        memberId,
-      })
-    }
+    setIsCreateCustomerOpen(true)
+  }
+
+  // Close the modal
+  const handleCloseModal = () => {
+    setIsCreateCustomerOpen(false)
   }
 
   return (
@@ -87,39 +84,29 @@ function MemberForm() {
       <Label className="flex flex-col gap-2">
         Phone Number
         <Input
+          ref={phoneNoRef} // Use ref for focus, state for value
           placeholder="Enter Phone Number"
           onChange={handleChange}
           value={phoneNo}
           name="phoneNo"
         />
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       </Label>
 
       {/* Display Error Message */}
-      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
-      {/* Conditionally Render the Rest of the Form */}
       {phoneNo.length === 10 && !isNewCustomer && (
         <>
           {/* Member Name Field */}
           <Label className="flex flex-col gap-2">
             Member Name
-            <Input
-              placeholder="Enter Member name"
-              name="memberName"
-              value={memberName}
-              disabled // Disable because the customer already exists
-            />
+            <Input placeholder="Enter Member name" name="memberName" value={memberName} disabled />
           </Label>
 
           {/* Member ID Field */}
           <Label className="flex flex-col gap-2">
             Member Id
-            <Input
-              placeholder="Enter Member Id"
-              name="memberId"
-              value={memberId}
-              disabled // Disable because the customer already exists
-            />
+            <Input placeholder="Enter Member Id" name="memberId" value={memberId} disabled />
           </Label>
 
           {/* Created At Field */}
@@ -135,10 +122,9 @@ function MemberForm() {
         </>
       )}
 
-      {/* Only render the create customer button if phoneNo is valid but customer doesn't exist */}
       {phoneNo.length === 10 && isNewCustomer && (
         <div className="ml-auto flex flex-col">
-          <CreateCustomerBtn />
+          <CreateCustomerBtn isOpen={isCreateCustomerOpen} onClose={handleCloseModal} />
         </div>
       )}
     </form>

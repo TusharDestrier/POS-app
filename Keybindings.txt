@@ -1,0 +1,2 @@
+customer box phno. -> f4
+item scan -> f1
