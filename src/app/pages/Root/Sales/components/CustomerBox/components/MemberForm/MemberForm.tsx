@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/label'
 import CreateCustomerBtn from './components/CreateCutomerBtn'
 import CustomerHistory from './components/CustomerHistory'
 import useFocusOnKeyPress from '@/hooks/useFocusOnKeyPress'
+import useMemberStore from './store/useMemberFormStore'
 
 function MemberForm() {
   const [phoneNo, setPhoneNo] = useState('') // Keep using state for tracking
@@ -13,6 +14,7 @@ function MemberForm() {
   const [errorMessage, setErrorMessage] = useState('')
   const [isNewCustomer, setIsNewCustomer] = useState(false)
   const [isCreateCustomerOpen, setIsCreateCustomerOpen] = useState(false)
+  const { saveMemberInfo } = useMemberStore()
 
   // Use the hook to focus on the phoneNo input initially and on F1 key press
   const phoneNoRef = useFocusOnKeyPress<HTMLInputElement>(
@@ -67,6 +69,13 @@ function MemberForm() {
       setErrorMessage('')
     }
   }, [phoneNo])
+
+  useEffect(() => {
+    if (phoneNo.length === 10) {
+      // Assume customer exists and set data
+      saveMemberInfo(phoneNo, '123456', 'John Doe')
+    }
+  }, [phoneNo, saveMemberInfo])
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()

@@ -11,12 +11,14 @@ import { useSalesData } from '../../api/useSalesData'
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import useSearchItemsStore from './store/useSearchItems'
+import useSales from '../../store/useSales'
 
 function SalesSearchTable() {
   const { searchKey } = useSalesSearchStore()
   const { salesData } = useSalesData()
   const [currentPage, setCurrentPage] = useState(0)
   const itemsPerPage = 6
+  const { increaseQuantity } = useSales()
 
   const { selectedSearchItems, toggleSelectedItem } = useSearchItemsStore()
 
@@ -67,7 +69,15 @@ function SalesSearchTable() {
               <TableRow
                 key={item.id}
                 className={`cursor-pointer hover:bg-red-100 ${selectedSearchItems.includes(item.id) ? 'bg-red-50' : ''}`} // Highlight selected row
-                onClick={() => toggleSelectedItem(item.id)} // Use Zustand toggle function
+                onClick={() => {
+                  if (!selectedSearchItems.includes(item.id)) {
+                    // First time click (item not selected yet), so select it
+                    toggleSelectedItem(item.id)
+                  } else {
+                    // Item is already selected, so increase the quantity
+                    increaseQuantity(item.id)
+                  }
+                }} // Use Zustand toggle function
               >
                 <TableCell className="font-medium text-[11px] sm:text-sm">
                   {currentPage * itemsPerPage + index + 1}
