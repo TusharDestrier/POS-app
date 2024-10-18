@@ -2,6 +2,8 @@ import { LoginPage } from '@/app/pages/Auth'
 import AuthLayout from '@/app/pages/Auth/layout'
 import ErrorPage from '@/app/pages/ErrorPage/page'
 import NotFoundPage from '@/app/pages/NotFound/page'
+import CustomerLayout from '@/app/pages/Root/Customer/layout'
+import CustomerPage from '@/app/pages/Root/Customer/page'
 import RootLayout from '@/app/pages/Root/layout'
 import ReportLayout from '@/app/pages/Root/Report/layout'
 import ReportPage from '@/app/pages/Root/Report/page'
@@ -52,11 +54,11 @@ const routes = createBrowserRouter([
       },
       {
         path: 'customers',
-        element: <SalesLayout />,
+        element: <CustomerLayout />,
         children: [
           {
             index: true,
-            element: <h3>Customer</h3>,
+            element: <CustomerPage />,
           },
         ],
       },
