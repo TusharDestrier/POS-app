@@ -1,4 +1,16 @@
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  //DialogDescription,
+  //DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import CustomersTable from '../CustomersTableData'
+// import { Input } from '@/components/ui/input'
+// import { Label } from '@/components/ui/label'
 
 function SalesBtns() {
   return (
@@ -7,7 +19,19 @@ function SalesBtns() {
         <Button>Item View</Button>
       </li>
       <li>
-        <Button>Customers</Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>Customers</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[625px]">
+            <DialogHeader>
+              <DialogTitle>Customer Data</DialogTitle>
+            </DialogHeader>
+            <div className="grid gap-4 py-4"></div>
+            <CustomersTable />
+            {/* <CustomerBox /> */}
+          </DialogContent>
+        </Dialog>
       </li>
       <li>
         <Button>Promotions</Button>
