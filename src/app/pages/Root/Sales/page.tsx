@@ -11,10 +11,10 @@ function SalesPage() {
   return (
     <>
       <div className=" grid gap-3 grid-cols-[1fr,80px] ">
-        <div className="grid gap-3 grid-cols-[1.5fr,1fr] ">
+        <div className="grid gap-3 grid-cols-[2fr,1fr] ">
           <div className="customer-box">
             {/* <CustomerBox /> */}
-            <div className="mt-3">
+            <div className="">
               <Card>
                 <CardContent className="space-y-4">
                   <SalesScanner />
