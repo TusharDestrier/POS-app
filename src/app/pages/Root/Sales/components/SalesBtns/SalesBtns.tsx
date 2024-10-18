@@ -27,9 +27,8 @@ function SalesBtns() {
             <DialogHeader>
               <DialogTitle>Customer Data</DialogTitle>
             </DialogHeader>
-            <div className="grid gap-4 py-4"></div>
+            {/* <div className="grid gap-4 py-4"></div> */}
             <CustomersTable />
-            {/* <CustomerBox /> */}
           </DialogContent>
         </Dialog>
       </li>
