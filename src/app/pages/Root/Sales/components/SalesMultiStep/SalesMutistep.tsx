@@ -49,7 +49,16 @@ function SalesMutistep() {
   const renderStepContent = () => {
     switch (step) {
       case 1:
-        return <h3>single Customer view</h3>
+        return (
+          <Card>
+            <CardHeader>
+              <h3 className="heading-secondary">Customer Detail</h3>
+            </CardHeader>
+            <CardContent>
+              <CustomerCreate />
+            </CardContent>
+          </Card>
+        )
       case 2:
         return <BillHistory />
       case 3:
