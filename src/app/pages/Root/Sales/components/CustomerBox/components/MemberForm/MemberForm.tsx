@@ -1,79 +1,62 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { useState, useEffect, ChangeEvent, FormEvent, useCallback, memo } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import CreateCustomerBtn from './components/CreateCutomerBtn'
 import CustomerHistory from './components/CustomerHistory'
 import useFocusOnKeyPress from '@/hooks/useFocusOnKeyPress'
-import useMemberStore from './store/useMemberFormStore'
+import useMemberStore from './store/useMemberFormStore' // Zustand store
+import { fetchCustomerByPhone } from '@/services/Customers'
 
 function MemberForm() {
-  const [phoneNo, setPhoneNo] = useState('') // Keep using state for tracking
-  const [memberId, setMemberId] = useState('')
-  const [memberName, setMemberName] = useState('')
-  const [created, setCreatedAt] = useState('')
+  const [phoneNo, setPhoneNo] = useState('') // Only state for phone number
   const [errorMessage, setErrorMessage] = useState('')
   const [isNewCustomer, setIsNewCustomer] = useState(false)
   const [isCreateCustomerOpen, setIsCreateCustomerOpen] = useState(false)
-  const { saveMemberInfo } = useMemberStore()
+  const [isLoading, setIsLoading] = useState(false)
 
-  // Use the hook to focus on the phoneNo input initially and on F1 key press
-  const phoneNoRef = useFocusOnKeyPress<HTMLInputElement>(
-    'F4',
-    (input) => input?.focus(),
-    true // Focus initially
-  )
+  const saveMemberInfo = useMemberStore((state) => state.saveMemberInfo)
+  const memberId = useMemberStore((state) => state.memberId)
+  const memberName = useMemberStore((state) => state.memberName)
 
-  // Simulate customer lookup
-  const checkCustomerExists = (phoneNo: string) => {
-    const mockCustomer = {
-      memberName: 'John Doe',
-      memberId: '123456',
-      createdDate: '2022-05-16',
-    }
+  // Focus on the phoneNo input initially and on F4 key press
+  const phoneNoRef = useFocusOnKeyPress<HTMLInputElement>('F4', (input) => input?.focus(), true)
 
-    return phoneNo === '1234567890' ? mockCustomer : null
-  }
+  // Handle phone number input changes
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    setPhoneNo(value)
+    setErrorMessage('')
+  }, [])
 
-  // Handle input changes
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target
-
-    if (name === 'phoneNo') {
-      setPhoneNo(value)
-    } else if (name === 'memberName') {
-      setMemberName(value)
-    } else if (name === 'memberId') {
-      setMemberId(value)
-    }
-  }
-
+  // Fetch customer data when phone number changes
   useEffect(() => {
     if (phoneNo.length === 10) {
-      const customer = checkCustomerExists(phoneNo)
-      if (customer) {
-        setIsNewCustomer(false)
-        setMemberName(customer.memberName)
-        setMemberId(customer.memberId)
-        setCreatedAt(customer.createdDate)
-        setErrorMessage('')
-      } else {
-        setIsNewCustomer(true)
-        setMemberName('')
-        setMemberId('')
-        setCreatedAt('')
-        setErrorMessage('Customer not found. Do you want to create a new one?')
-      }
+      setIsLoading(true)
+      fetchCustomerByPhone(phoneNo)
+        .then((customer) => {
+          if (customer) {
+            setIsNewCustomer(false)
+            saveMemberInfo(phoneNo, customer.memberId, customer.memberName)
+            setErrorMessage('')
+          } else {
+            setIsNewCustomer(true)
+            setErrorMessage('Customer not found. Do you want to create a new one?')
+            saveMemberInfo(null, null, null)
+          }
+        })
+        .catch(() => {
+          setErrorMessage('Error fetching customer data. Please try again.')
+          saveMemberInfo(null, null, null)
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
     } else if (phoneNo.length > 0 && phoneNo.length < 10) {
       setErrorMessage('Invalid phone number format. It must be 10 digits.')
+      saveMemberInfo(null, null, null)
     } else {
       setErrorMessage('')
-    }
-  }, [phoneNo])
-
-  useEffect(() => {
-    if (phoneNo.length === 10) {
-      // Assume customer exists and set data
-      saveMemberInfo(phoneNo, '123456', 'John Doe')
+      saveMemberInfo(null, null, null)
     }
   }, [phoneNo, saveMemberInfo])
 
@@ -82,7 +65,7 @@ function MemberForm() {
     setIsCreateCustomerOpen(true)
   }
 
-  // Close the modal
+  // Close the create customer modal
   const handleCloseModal = () => {
     setIsCreateCustomerOpen(false)
   }
@@ -93,7 +76,7 @@ function MemberForm() {
       <Label className="flex flex-col gap-2">
         Phone Number
         <Input
-          ref={phoneNoRef} // Use ref for focus, state for value
+          ref={phoneNoRef}
           placeholder="Enter Phone Number"
           onChange={handleChange}
           value={phoneNo}
@@ -102,42 +85,57 @@ function MemberForm() {
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       </Label>
 
-      {/* Display Error Message */}
+      {/* Show Loading Spinner */}
+      {isLoading && (
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-loader-circle animate-spin"
+          >
+            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+          </svg>
+        </div>
+      )}
 
-      {phoneNo.length === 10 && !isNewCustomer && (
+      {/* Render Customer Info from Zustand Store */}
+      {phoneNo.length === 10 && memberName && !isNewCustomer && !isLoading && (
         <>
-          {/* Member Name Field */}
           <Label className="flex flex-col gap-2">
             Member Name
-            <Input placeholder="Enter Member name" name="memberName" value={memberName} disabled />
+            <Input placeholder="Enter Member name" value={memberName ?? ''} disabled />
           </Label>
-
-          {/* Member ID Field */}
           <Label className="flex flex-col gap-2">
             Member Id
-            <Input placeholder="Enter Member Id" name="memberId" value={memberId} disabled />
+            <Input placeholder="Enter Member Id" value={memberId ?? ''} disabled />
           </Label>
-
-          {/* Created At Field */}
           <Label className="flex flex-col gap-2">
             Created At
-            <Input placeholder="Created At" value={created} disabled />
+            <Input placeholder="Created At" value={'22/33/2023'} disabled />
           </Label>
-
-          {/* Submit Button */}
           <div className="ml-auto flex flex-col">
             <CustomerHistory />
           </div>
         </>
       )}
 
-      {phoneNo.length === 10 && isNewCustomer && (
+      {/* Render Create Customer Button if new customer */}
+      {phoneNo.length === 10 && isNewCustomer && !isLoading && (
         <div className="ml-auto flex flex-col">
-          <CreateCustomerBtn isOpen={isCreateCustomerOpen} onClose={handleCloseModal} />
+          <MemoizedCreateCustomerBtn isOpen={isCreateCustomerOpen} onClose={handleCloseModal} />
         </div>
       )}
     </form>
   )
 }
 
-export default MemberForm
+const MemoizedCreateCustomerBtn = memo(CreateCustomerBtn)
+
+export default memo(MemberForm)
