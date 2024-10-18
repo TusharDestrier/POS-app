@@ -31,7 +31,7 @@ function SalesTable() {
   }
 
   return (
-    <div className="box min-h-[18rem] ">
+    <div className="box min-h-[30rem] ">
       <h2 className="heading-secondary mb-2">Scanned Products</h2>
       {renderContent()}
     </div>

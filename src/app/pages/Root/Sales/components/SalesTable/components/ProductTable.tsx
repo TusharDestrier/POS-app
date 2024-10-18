@@ -10,7 +10,7 @@ interface ProductTableProps {
 
 function ProductTable({ data, onIncrease, onDecrease }: ProductTableProps) {
   return (
-    <div className="responsive-table min-h-[16rem]  overflow-y-scroll max-h-[16rem] ">
+    <div className="responsive-table min-h-[18rem]  overflow-y-scroll max-h-[18rem] ">
       <Table>
         <TableHeader>
           <TableRow>

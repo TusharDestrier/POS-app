@@ -13,7 +13,7 @@ function SalesPage() {
       <div className=" grid gap-3 grid-cols-[1fr,80px] ">
         <div className="grid gap-3 grid-cols-[1.5fr,1fr] ">
           <div className="customer-box">
-            <CustomerBox />
+            {/* <CustomerBox /> */}
             <div className="mt-3">
               <Card>
                 <CardContent className="space-y-4">
