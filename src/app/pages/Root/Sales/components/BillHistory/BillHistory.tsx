@@ -8,8 +8,8 @@ function BillHistory() {
       <h3 className="heading-secondary">Bill History</h3>
       <Tabs defaultValue="account" className="">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+          <TabsTrigger value="account">Billwise</TabsTrigger>
+          <TabsTrigger value="password">ItemWise</TabsTrigger>
         </TabsList>
         <TabsContent value="account">
           <Billwise />
