@@ -11,7 +11,7 @@ function SalesLayout() {
             <Button variant={'outline'}>Exchange</Button>
           </li>
           <li>
-            <Button>Export  </Button>
+            <Button>Export </Button>
           </li>
           <li>
             <Button>Credit Memo</Button>

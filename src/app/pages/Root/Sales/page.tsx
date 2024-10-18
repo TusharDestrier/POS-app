@@ -1,6 +1,5 @@
 import SalesScanner from './components/SalesScanner'
 import SalesTable from './components/SalesTable'
-import CustomerBox from './components/CustomerBox'
 import SalesOptions from './components/SalesOptions'
 import SalesBtns from './components/SalesBtns'
 import SalesTabContent from './components/SalesTabContent/SalesTabContent'
@@ -13,7 +12,6 @@ function SalesPage() {
       <div className=" grid gap-3 grid-cols-[1fr,80px] ">
         <div className="grid gap-3 grid-cols-[2fr,1fr] ">
           <div className="customer-box">
-            {/* <CustomerBox /> */}
             <div className="">
               <Card>
                 <CardContent className="space-y-4">

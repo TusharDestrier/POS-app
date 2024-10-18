@@ -51,6 +51,16 @@ const routes = createBrowserRouter([
         ],
       },
       {
+        path: 'customers',
+        element: <SalesLayout />,
+        children: [
+          {
+            index: true,
+            element: <h3>Customer</h3>,
+          },
+        ],
+      },
+      {
         path: 'reports',
         element: <ReportLayout />,
         children: [
