@@ -6,7 +6,7 @@ function CreateCustomerBtn({ isOpen, onClose }: { isOpen: boolean; onClose: () =
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogTrigger>
-        <Button className="w-max mt-auto" type={'button'}>
+        <Button className="w-max mt-auto" type={'submit'}>
           {'Create customer'}
         </Button>
       </DialogTrigger>

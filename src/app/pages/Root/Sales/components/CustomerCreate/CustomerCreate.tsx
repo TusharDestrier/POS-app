@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useEffect } from 'react'
+import useMemberStore from '../CustomerBox/components/MemberForm/store/useMemberFormStore'
 
 const formSchema = z.object({
   firstName: z.string().min(2, {
@@ -37,13 +38,15 @@ const formSchema = z.object({
 })
 
 function CustomerCreate() {
+  const phoneNo = useMemberStore((state) => state.phoneNo)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: '',
       middleName: '',
       lastName: '',
-      mobileNo: '',
+      mobileNo: phoneNo || '',
       address: '',
       dob: '',
       doa: '',
