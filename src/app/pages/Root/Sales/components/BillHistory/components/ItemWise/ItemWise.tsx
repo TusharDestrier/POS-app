@@ -63,9 +63,13 @@ function ItemWise() {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Bar Code</TableHead>
-            <TableHead>Bill Date</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead className="text-right">Store Name</TableHead>
+            <TableHead>Item Name</TableHead>
+            <TableHead>Quality</TableHead>
+            <TableHead className="text-right">Rate</TableHead>
+            <TableHead className="text-right">Amount</TableHead>
+            <TableHead className="text-right">Bill No</TableHead>
+            <TableHead className="text-right">Rate</TableHead>
+            <TableHead className="text-right">Bill Dt.</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
