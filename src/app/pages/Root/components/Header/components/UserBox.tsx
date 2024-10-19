@@ -60,7 +60,10 @@ function UserBox() {
       </div>
       <div>
         <DropdownMenu>
-          <DropdownMenuTrigger>{user?.username}</DropdownMenuTrigger>
+          <DropdownMenuTrigger className='flex items-start flex-col'>
+            <h5 className='text-lg mb-0'>{user?.username}</h5>
+            <h6 className='text-sm'>{user?.role}</h6>
+          </DropdownMenuTrigger>
           <DropdownMenuContent className="right-6 relative">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />

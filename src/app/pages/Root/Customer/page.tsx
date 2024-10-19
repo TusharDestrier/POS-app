@@ -1,11 +1,6 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import CustomerBox from '../Sales/components/CustomerBox'
-import SalesBtns from '../Sales/components/SalesBtns'
 import CustomersTable from '../Sales/components/CustomersTableData'
-import SalesTabContent from '../Sales/components/SalesTabContent/SalesTabContent'
-import PromotionBox from '../Sales/components/PromotionBox'
-import SalesOptions from '../Sales/components/SalesOptions'
-import CustomerHistory from '../Sales/components/CustomerBox/components/MemberForm/components/CustomerHistory'
 import SalesMutistep from '../Sales/components/SalesMultiStep'
 
 function CustomerPage() {
@@ -20,7 +15,6 @@ function CustomerPage() {
                 <CustomersTable />
               </CardContent>
             </Card>
-            {/* <SalesBtns /> */}
           </div>
         </div>
         <div className="sales btns flex flex-col">
