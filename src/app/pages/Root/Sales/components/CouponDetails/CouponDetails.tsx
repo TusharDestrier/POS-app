@@ -60,7 +60,7 @@ export function CouponDetails() {
       {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Coupon</TableHead>
+          <TableHead className="w-full">Coupon</TableHead>
           <TableHead>Coupon Name</TableHead>
           <TableHead>Amount</TableHead>
           <TableHead className="text-right">Valid Till</TableHead>

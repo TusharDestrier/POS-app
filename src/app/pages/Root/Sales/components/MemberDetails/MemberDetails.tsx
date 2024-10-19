@@ -23,7 +23,7 @@ function MemberDetails() {
   return (
     <div>
       MemberDetails
-      <Card className="w-[400px]">
+      <Card className="w-full">
         {/* <CardHeader>
           <CardTitle>Create project</CardTitle>
           <CardDescription>Deploy your new project in one-click.</CardDescription>

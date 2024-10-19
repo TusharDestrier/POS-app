@@ -20,7 +20,7 @@ import { Label } from '@/components/ui/label'
 
 export function LoyaltyPoint() {
   return (
-    <Card className="w-[350px]">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Loyalty Points</CardTitle>
         {/* <CardDescription>Deploy your new project in one-click.</CardDescription> */}
