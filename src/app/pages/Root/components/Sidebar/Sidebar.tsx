@@ -2,33 +2,26 @@ import { NavLink } from 'react-router-dom'
 import { useSidebarComp } from './hooks/useSidebarComp'
 import Logo from '@/assets/img/demo-logo.png'
 
-import { BadgeDollarSign, BookText, Presentation } from 'lucide-react'
+import useAuth from '@/store/useAuth'
+import { roleBasedMenu, RoleBasedMenu, SidebarItem } from './data/roleBasedMenu'
+
+interface User {
+  role: 'admin' | 'manager' | 'storeManager' | 'cashier'
+}
 
 function Sidebar() {
   const { open, sidebarRef } = useSidebarComp()
+  const { user } = useAuth()
 
-  // Array of sidebar items
-  const sidebarItems = [
-    {
-      name: 'Billing Request',
-      path: '/billing',
-      icon: <BadgeDollarSign />,
-    },
-    {
-      name: 'Reports',
-      path: '/reports',
-      icon: <BookText />,
-    },
-    {
-      name: 'Session',
-      path: '/sessions',
-      icon: <Presentation />,
-    },
-  ]
+  // Role-based sidebar structure
+
+  // Get the menu items based on the user's role
+  const sidebarItems: SidebarItem[] =
+    roleBasedMenu[user?.role?.toLowerCase() as keyof RoleBasedMenu] || []
 
   return (
     <aside className={`sidebar overflow-hidden ${open ? 'expand' : ''}`} ref={sidebarRef}>
-      <div className="logo mb-4 border-b border-gray-100  pt-5 px-3.5 pb-6">
+      <div className="logo mb-4 border-b border-gray-100 pt-5 px-3.5 pb-6">
         <NavLink
           className="font-extrabold text-2xl text-nowrap flex items-center gap-3 text-gray-600"
           to={'/'}
@@ -38,7 +31,7 @@ function Sidebar() {
             className={`transition-opacity duration-1000 ${open ? 'opacity-100' : 'opacity-0'}`}
           >
             {open && 'POS'}
-            <em className="text-[8px]  ml-1">V 1.0.0</em>
+            <em className="text-[8px] ml-1">V 1.0.0</em>
           </span>
         </NavLink>
       </div>
@@ -53,17 +46,33 @@ function Sidebar() {
               }
               to={item.path}
             >
-              <>
-                <span className="">{item.icon}</span>
-                <span
-                  className={`ml-3 text-nowrap transition-opacity duration-1000 ${
-                    open ? 'opacity-100' : 'opacity-0'
-                  }`}
-                >
-                  {open && item.name}
-                </span>
-              </>
+              <span>{item.icon}</span>
+              <span
+                className={`ml-3 text-nowrap transition-opacity duration-1000 ${
+                  open ? 'opacity-100' : 'opacity-0'
+                }`}
+              >
+                {open && item.name}
+              </span>
             </NavLink>
+            {item.subItems && open && (
+              <ul className="ml-12 pl-3 space-y-3 mt-1 border-s border-solid border-gray-100">
+                {item.subItems.map((subItem, subIndex) => (
+                  <li key={subIndex}>
+                    <NavLink
+                      className={({ isActive }) =>
+                        `block text-sm text-gray-500 hover:text-gray-700 ${
+                          isActive ? 'font-semibold text-gray-900' : ''
+                        }`
+                      }
+                      to={subItem.path}
+                    >
+                      {subItem.name}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ul>
