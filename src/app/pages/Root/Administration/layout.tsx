@@ -2,12 +2,11 @@ import { Outlet } from 'react-router-dom'
 
 export const AdministrationLayout = () => {
   return (
-    <div className="m-3 p-3 text-center">
-      Administration Layout
-      i am a adininnidnenew
-      <div className="content">
-        <Outlet />
+    <div className="administration-layout px-4 ">
+      <div className="administration-header py-3 flex justify-between">
+        <h3 className="page-title mb-3">Administration </h3>
       </div>
+      <Outlet />
     </div>
   )
 }

@@ -1,3 +1,5 @@
+import StoreMasterTab from './components/StoreMasterTab'
+
 export const StoreMasterPage = () => {
-  return <div>Store Master page</div>
+  return <StoreMasterTab />
 }
