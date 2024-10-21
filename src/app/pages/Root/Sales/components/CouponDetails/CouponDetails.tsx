@@ -77,10 +77,10 @@ export function CouponDetails() {
         ))}
       </TableBody>
       <TableFooter>
-        <TableRow>
+        {/* <TableRow>
           <TableCell colSpan={3}>Total</TableCell>
           <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
+        </TableRow> */}
       </TableFooter>
     </Table>
   )
