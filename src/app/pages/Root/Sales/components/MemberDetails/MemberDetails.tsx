@@ -30,11 +30,9 @@ function MemberDetails() {
         </CardHeader> */}
         <CardContent>
           <form>
-            <div className="grid w-full items-center gap-4">
-              <div className="flex flex-row space-y-1.5 mt-3">
-                <Label className="m-3" htmlFor="framework">
-                  MemberShip Type
-                </Label>
+            <div className="grid w-full items-start gap-4">
+              <div className="flex flex-col space-y-1.5 mt-3 float-start">
+                <Label htmlFor="framework">MemberShip Type</Label>
                 <Select>
                   <SelectTrigger id="framework">
                     <SelectValue placeholder="Select" />
@@ -47,10 +45,8 @@ function MemberDetails() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="flex flex-row space-y-1.5">
-                <Label className="m-3" htmlFor="framework">
-                  MemberShip ID
-                </Label>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="framework">MemberShip ID</Label>
                 <Select>
                   <SelectTrigger id="framework">
                     <SelectValue placeholder="Select" />
@@ -63,20 +59,20 @@ function MemberDetails() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="flex flex-row space-y-1.5">
-                <Label htmlFor="validFrom" typeof="date" className="m-3">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="validFrom" typeof="date">
                   Valid From
                 </Label>
                 <Input id="validFrom" placeholder="validFrom" type="date" />
-                <Label htmlFor="validTo" className="m-3">
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="validTo" className="space-y-1.5">
                   Valid To
                 </Label>
                 <Input id="validTO" placeholder="validTo" type="date" />
               </div>
-              <div className="flex flex-row space-y-1.5">
-                <Label htmlFor="name" className="m-3">
-                  Inactive
-                </Label>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name">Inactive</Label>
                 <Input id="name" placeholder="inactive" />
               </div>
             </div>
