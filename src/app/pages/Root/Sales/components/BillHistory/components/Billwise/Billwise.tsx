@@ -57,7 +57,7 @@ const invoices = [
 function Billwise() {
   return (
     <div>
-      Billwise
+      {/* Billwise */}
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>

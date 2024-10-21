@@ -57,7 +57,7 @@ const invoices = [
 function ItemWise() {
   return (
     <div>
-      ItemWise
+      {/* ItemWise */}
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
