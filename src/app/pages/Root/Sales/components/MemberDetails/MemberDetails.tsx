@@ -89,9 +89,10 @@ function MemberDetails() {
         <br />
         {/* <h1 className="font-bold">Coupon Details</h1> */}
         <CouponDetails />
-        <Button className="lg:dark:hover:bg-white ... text-end" type="submit">
-          Submit
-        </Button>
+        <div className="col-span-full text-end m-3 space-x-3">
+          {/* <Button type="submit">Cancel</Button> */}
+          <Button type="submit">Submit</Button>
+        </div>
       </Card>
     </div>
   )

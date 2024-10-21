@@ -3,6 +3,8 @@ import AuthLayout from '@/app/pages/Auth/layout'
 import ErrorPage from '@/app/pages/ErrorPage/page'
 import NotFoundPage from '@/app/pages/NotFound/page'
 import RoleWiseRedirection from '@/app/pages/RoleWiseRedirection'
+import { AdministrationLayout } from '@/app/pages/Root/Administration/layout'
+import { StoreMasterPage } from '@/app/pages/Root/Administration/StoreMaster/page'
 import CustomerLayout from '@/app/pages/Root/Customer/layout'
 import CustomerPage from '@/app/pages/Root/Customer/page'
 import DashboardLayout from '@/app/pages/Root/Dashboard/layout'
@@ -52,6 +54,20 @@ const routes = createBrowserRouter([
           {
             index: true,
             element: <DashboardPage />,
+          },
+        ],
+      },
+      {
+        path: 'administration',
+        element: <AdministrationLayout />,
+        children: [
+          {
+            index: true,
+            element: <DashboardPage />,
+          },
+          {
+            path: 'setup/store-master',
+            element: <StoreMasterPage />,
           },
         ],
       },
