@@ -22,8 +22,8 @@ import CouponDetails from '../CouponDetails'
 function MemberDetails() {
   return (
     <div>
-      <form action="">
-        <Card className="w-full">
+      <Card>
+        <Card className="w-full border-none">
           {/* <CardHeader>
           <CardTitle>Create project</CardTitle>
           <CardDescription>Deploy your new project in one-click.</CardDescription>
@@ -92,7 +92,7 @@ function MemberDetails() {
         <Button className="lg:dark:hover:bg-white ... text-end" type="submit">
           Submit
         </Button>
-      </form>
+      </Card>
     </div>
   )
 }
