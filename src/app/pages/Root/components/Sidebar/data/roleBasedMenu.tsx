@@ -93,7 +93,7 @@ export const roleBasedMenu: RoleBasedMenu = {
     },
     {
       name: 'Billing',
-      path: '/pos/billing',
+      path: '/billing',
       icon: <BadgeDollarSign />,
     },
     {
