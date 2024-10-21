@@ -104,7 +104,9 @@
   height: 100dvh;
   transform: translateX(var(--sidebar-translate));
   transition: all 0.3s ease-in-out;
-
+  &::-webkit-scrollbar {
+    display: none !important;
+  }
   @media (min-width: 900px) {
     transform: translateX(0);
     position: relative;
@@ -146,10 +148,25 @@
 /* side bar styles */
 aside ul li > ul > li > button {
   padding: 2px 0px !important;
+  font-size: 16px !important;
+}
+
+aside ul li > ul > li > a {
+  padding: 0px 0 !important;
+  font-size: 14px !important;
+  background-color: white !important;
 }
 
 aside ul li > ul {
+  margin-top: 20px !important;
   margin-left: 20px !important;
+}
+aside ul li > ul > li > ul {
+  margin-top: 10px !important;
+  margin-left: 10px !important;
+}
+aside ul li > ul > li > ul > li > a > span {
+  margin-left: 0 !important;
 }
 
 aside ul li > ul > li > button:hover {
@@ -164,7 +181,8 @@ aside ul li > ul > li > button[aria-expanded='true'] {
 
 aside ul li > ul > li > ul > li > a {
   padding: 3px 0 !important;
-  font-size: 11px !important;
+  font-size: 12px !important;
+  background-color: white !important;
 }
 
 aside ul li > ul > li > ul > li {

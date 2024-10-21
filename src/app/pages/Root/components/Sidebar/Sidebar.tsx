@@ -27,20 +27,18 @@ function SidebarItemComponent({
     <li>
       {item.subItems ? (
         <button
-          className={`group flex items-center text-base text-gray-600 hover:text-gray-950 font-semibold px-3 py-3 sm:py-3 rounded-lg w-full text-left
-            ${isOpen ? 'bg-primary/90 hover:bg-primary hover:text-white text-white' : 'bg-white'}
+          className={`group flex items-center text-base text-gray-600 hover:text-gray-950 font-semibold px-3 py-2 sm:py-3 rounded-lg w-full text-left
+            ${isOpen ? 'bg-primary/50 hover:bg-primary/60 hover:text-white text-white' : 'bg-white'}
             hover:bg-gray-100 transition-all`}
           onClick={handleToggle}
           aria-expanded={isOpen}
         >
           {'icon' in item && <span>{item.icon}</span>}
-          {globalOpen && (
-            <span
-              className={`ml-3 transition-opacity duration-1000 ${globalOpen ? 'opacity-100' : 'opacity-0'}`}
-            >
-              {item.name}
-            </span>
-          )}
+          <span
+            className={`ml-3 transition-opacity leading-[20px] duration-1000 ${globalOpen ? 'opacity-100' : 'opacity-0'}`}
+          >
+            {globalOpen && item.name}
+          </span>
         </button>
       ) : (
         <NavLink
@@ -53,13 +51,12 @@ function SidebarItemComponent({
           end
         >
           {'icon' in item && <span>{item.icon}</span>}
-          {globalOpen && (
-            <span
-              className={`ml-3 transition-opacity duration-1000 ${globalOpen ? 'opacity-100' : 'opacity-0'}`}
-            >
-              {item.name}
-            </span>
-          )}
+
+          <span
+            className={`ml-3 transition-opacity leading-[20px] duration-1000 ${globalOpen ? 'opacity-100' : 'opacity-0'}`}
+          >
+            {globalOpen && item.name}
+          </span>
         </NavLink>
       )}
 
