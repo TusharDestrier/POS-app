@@ -4,6 +4,7 @@ import ErrorPage from '@/app/pages/ErrorPage/page'
 import NotFoundPage from '@/app/pages/NotFound/page'
 import RoleWiseRedirection from '@/app/pages/RoleWiseRedirection'
 import { AdministrationLayout } from '@/app/pages/Root/Administration/layout'
+import { PayModeMasterPage } from '@/app/pages/Root/Administration/PayModeMaster/page'
 import { StoreMasterPage } from '@/app/pages/Root/Administration/StoreMaster/page'
 import CustomerLayout from '@/app/pages/Root/Customer/layout'
 import CustomerPage from '@/app/pages/Root/Customer/page'
@@ -74,11 +75,11 @@ const routes = createBrowserRouter([
               },
               {
                 path: 'customer-master',
-                element: <h3>Customer mastere</h3>,
+                element: <h3>Customer master</h3>,
               },
               {
                 path: 'paymode-master',
-                element: <h3>Paymode mastere</h3>,
+                element: <PayModeMasterPage />,
               },
             ],
           },

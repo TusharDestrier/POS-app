@@ -1,7 +1,7 @@
 import {
   Table,
   TableBody,
-  TableCaption,
+  // TableCaption,
   TableCell,
   TableFooter,
   TableHead,
@@ -59,7 +59,7 @@ function Billwise() {
     <div>
       {/* Billwise */}
       <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
+        {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Bill No.</TableHead>
