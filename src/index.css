@@ -142,3 +142,31 @@
 .page-title {
   @apply text-lg font-medium text-gray-600;
 }
+
+/* side bar styles */
+aside ul li > ul > li > button {
+  padding: 2px 0px !important;
+}
+
+aside ul li > ul {
+  margin-left: 20px !important;
+}
+
+aside ul li > ul > li > button:hover {
+  background: white !important;
+  color: red !important;
+}
+
+aside ul li > ul > li > button[aria-expanded='true'] {
+  background: white;
+  color: red;
+}
+
+aside ul li > ul > li > ul > li > a {
+  padding: 3px 0 !important;
+  font-size: 11px !important;
+}
+
+aside ul li > ul > li > ul > li {
+  margin: 0 !important;
+}

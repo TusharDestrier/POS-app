@@ -83,7 +83,7 @@ function Sidebar() {
     roleBasedMenu[user?.role?.toLowerCase() as keyof RoleBasedMenu] || []
 
   return (
-    <aside className={`sidebar overflow-hidden ${globalOpen ? 'expand' : ''}`} ref={sidebarRef}>
+    <aside className={`sidebar overflow-y-scroll ${globalOpen ? 'expand' : ''}`} ref={sidebarRef}>
       <div className="logo mb-4 border-b border-gray-100 pt-5 px-3.5 pb-6">
         <NavLink
           className="font-extrabold text-2xl text-nowrap flex items-center gap-3 text-gray-600"
