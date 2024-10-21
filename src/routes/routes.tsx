@@ -63,11 +63,24 @@ const routes = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <DashboardPage />,
+            element: <Navigate to={'/setup'} />,
           },
           {
-            path: 'setup/store-master',
-            element: <StoreMasterPage />,
+            path: 'setup',
+            children: [
+              {
+                path: 'store-master',
+                element: <StoreMasterPage />,
+              },
+              {
+                path: 'customer-master',
+                element: <h3>Customer mastere</h3>,
+              },
+              {
+                path: 'paymode-master',
+                element: <h3>Paymode mastere</h3>,
+              },
+            ],
           },
         ],
       },
