@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useSidebarComp } from './hooks/useSidebarComp'
 import Logo from '@/assets/img/demo-logo.png'
 
@@ -18,24 +18,41 @@ function SidebarItemComponent({
   globalOpen: boolean
 }) {
   const [isOpen, setIsOpen] = useState(false)
+  const { pathname } = useLocation()
+
+  // Automatically open items if the path matches any sub-item paths
+  useEffect(() => {
+    if (item.subItems) {
+      const isPathActive = item.subItems.some((subItem) => pathname.startsWith(subItem.path))
+      setIsOpen(isPathActive)
+    }
+  }, [pathname, item.subItems])
 
   const handleToggle = () => {
     setIsOpen((prev) => !prev)
   }
+
+  const isActive = item.path && pathname.startsWith(item.path)
 
   return (
     <li>
       {item.subItems ? (
         <button
           className={`group flex items-center text-base text-gray-600 hover:text-gray-950 font-semibold px-3 py-2 sm:py-3 rounded-lg w-full text-left
-            ${isOpen ? 'bg-primary/50 hover:bg-primary/60 hover:text-white text-white' : 'bg-white'}
+            ${
+              isOpen || isActive
+                ? 'bg-primary/90 hover:bg-primary hover:text-white text-white'
+                : 'bg-white'
+            }
             hover:bg-gray-100 transition-all`}
           onClick={handleToggle}
           aria-expanded={isOpen}
         >
           {'icon' in item && <span>{item.icon}</span>}
           <span
-            className={`ml-3 transition-opacity leading-[20px] duration-1000 ${globalOpen ? 'opacity-100' : 'opacity-0'}`}
+            className={`ml-3 transition-opacity leading-[20px] duration-1000 ${
+              globalOpen ? 'opacity-100' : 'opacity-0'
+            }`}
           >
             {globalOpen && item.name}
           </span>
@@ -44,7 +61,11 @@ function SidebarItemComponent({
         <NavLink
           className={({ isActive }) =>
             `group flex items-center text-[14px] sm:text-base text-gray-600 hover:text-gray-950 font-semibold px-3 py-3 sm:py-3 rounded-lg 
-            ${isActive ? 'bg-primary/90 hover:bg-primary hover:text-white text-white' : 'bg-white'} 
+            ${
+              isActive || isActive
+                ? 'bg-primary/90 hover:bg-primary hover:text-white text-white'
+                : 'bg-white'
+            } 
             hover:bg-gray-100 transition-all`
           }
           to={item.path}
@@ -53,7 +74,9 @@ function SidebarItemComponent({
           {'icon' in item && <span>{item.icon}</span>}
 
           <span
-            className={`ml-3 transition-opacity leading-[20px] duration-1000 ${globalOpen ? 'opacity-100' : 'opacity-0'}`}
+            className={`ml-3 transition-opacity leading-[20px] duration-1000 ${
+              globalOpen ? 'opacity-100' : 'opacity-0'
+            }`}
           >
             {globalOpen && item.name}
           </span>

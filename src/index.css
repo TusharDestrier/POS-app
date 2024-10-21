@@ -150,6 +150,9 @@ aside ul li > ul > li > button {
   padding: 2px 0px !important;
   font-size: 16px !important;
 }
+aside ul li > ul > li:has(button) {
+  margin-bottom: 15px !important;
+}
 
 aside ul li > ul > li > a {
   padding: 0px 0 !important;
@@ -167,6 +170,7 @@ aside ul li > ul > li > ul {
 }
 aside ul li > ul > li > ul > li > a > span {
   margin-left: 0 !important;
+  color: #333 !important;
 }
 
 aside ul li > ul > li > button:hover {
@@ -186,5 +190,4 @@ aside ul li > ul > li > ul > li > a {
 }
 
 aside ul li > ul > li > ul > li {
-  margin: 0 !important;
 }
