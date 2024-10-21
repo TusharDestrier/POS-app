@@ -1,12 +1,5 @@
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  //CardDescription,
-  //CardFooter,
-  // CardHeader,
-  // CardTitle,
-} from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import {
@@ -22,7 +15,7 @@ import CouponDetails from '../CouponDetails'
 function MemberDetails() {
   return (
     <div>
-      <Card className='p-3'>
+      <Card className="p-3">
         <form className="  grid-cols-2 gap-2">
           <h1>MemberDetails</h1>
           <div className="grid w-full items-start gap-4">
