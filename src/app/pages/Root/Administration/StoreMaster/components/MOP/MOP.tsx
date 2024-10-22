@@ -164,10 +164,17 @@ function MOP() {
                 </div>
               </div>
             ))}
-            <Button type="button" onClick={() => append({ value: '' })}>
-              Add Field
-            </Button>
-            <Button type="submit">Submit</Button>
+            <ul className='flex item-center gap-3 justify-end mt-5'>
+              <li>
+                <Button type="button" onClick={() => append({ value: '' })}>
+                  Add Field
+                </Button>
+              </li>
+              <li>
+                {' '}
+                <Button type="submit">Submit</Button>
+              </li>
+            </ul>
           </form>
         </Form>
       </CardContent>
