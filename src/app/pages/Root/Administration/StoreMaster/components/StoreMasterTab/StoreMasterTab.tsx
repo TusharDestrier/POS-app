@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import StoreDetail from '../StoreDetail'
 import Logistics from '../Logistics'
 import MOP from '../MOP'
+import PettyCashDetails from '../PettyCashDetails'
 
 function StoreMasterTab() {
   return (
@@ -24,7 +25,9 @@ function StoreMasterTab() {
       <TabsContent value="mop-details">
         <MOP />
       </TabsContent>
-      <TabsContent value="petty-cash">Petty cash details content here.</TabsContent>
+      <TabsContent value="petty-cash">
+        <PettyCashDetails />
+      </TabsContent>
       <TabsContent value="document-series">Document series content here.</TabsContent>
       <TabsContent value="ledgers">Ledgers content here.</TabsContent>
     </Tabs>
