@@ -50,9 +50,16 @@ export const appRoutes = {
               path: 'store-master',
               element: <StoreMasterPage />,
             },
+
             {
               path: 'customer-master',
-              element: <h3>Customer master</h3>,
+              element: <CustomerLayout />,
+              children: [
+                {
+                  index: true,
+                  element: <CustomerPage />,
+                },
+              ],
             },
             {
               path: 'paymode-master',
@@ -72,16 +79,7 @@ export const appRoutes = {
         },
       ],
     },
-    {
-      path: 'customers',
-      element: <CustomerLayout />,
-      children: [
-        {
-          index: true,
-          element: <CustomerPage />,
-        },
-      ],
-    },
+
     {
       path: 'reports',
       element: <ReportLayout />,
