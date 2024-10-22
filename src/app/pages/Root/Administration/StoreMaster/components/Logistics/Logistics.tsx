@@ -320,7 +320,7 @@ function Logistics() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="grid grid-cols-2 gap-3 text-start">
-                      Searching W/H
+                      Sourcing W/H
                     </FormLabel>
                     <FormControl>
                       {/* <textarea
