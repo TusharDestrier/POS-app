@@ -8,6 +8,15 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -107,7 +116,22 @@ function Logistics() {
                   <FormItem>
                     <FormLabel>City</FormLabel>
                     <FormControl>
-                      <Input placeholder="City" {...field} />
+                      <Select {...field}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a city" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>City</SelectLabel>
+                            <SelectItem value="kolkata">Kolkata</SelectItem>
+                            <SelectItem value="pune">Pune</SelectItem>
+                            <SelectItem value="hydrabad">Hydrabad</SelectItem>
+                            <SelectItem value="bengaluru">Bengaluru</SelectItem>
+                            <SelectItem value="mumbai">Mumbai</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      {/* <Input placeholder="City" {...field} /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -133,7 +157,19 @@ function Logistics() {
                   <FormItem>
                     <FormLabel>State</FormLabel>
                     <FormControl>
-                      <Input placeholder="State" {...field} />
+                      <Select {...field}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a state" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>State</SelectLabel>
+                            <SelectItem value="wb">West Bengal</SelectItem>
+                            <SelectItem value="karnataka">Karnataka</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      {/* <Input placeholder="State" {...field} /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -219,7 +255,22 @@ function Logistics() {
                   <FormItem>
                     <FormLabel>City</FormLabel>
                     <FormControl>
-                      <Input placeholder="City" {...field} />
+                      <Select {...field}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a city" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>City</SelectLabel>
+                            <SelectItem value="kolkata">Kolkata</SelectItem>
+                            <SelectItem value="pune">Pune</SelectItem>
+                            <SelectItem value="hydrabad">Hydrabad</SelectItem>
+                            <SelectItem value="bengaluru">Bengaluru</SelectItem>
+                            <SelectItem value="mumbai">Mumbai</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      {/* <Input placeholder="City" {...field} /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -245,7 +296,19 @@ function Logistics() {
                   <FormItem>
                     <FormLabel>State</FormLabel>
                     <FormControl>
-                      <Input placeholder="State" {...field} />
+                      <Select {...field}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a state" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>State</SelectLabel>
+                            <SelectItem value="wb">West Bengal</SelectItem>
+                            <SelectItem value="karnataka">Karnataka</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      {/* <Input placeholder="State" {...field} /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
