@@ -159,7 +159,7 @@ function MOP() {
                     )}
                   />
                   <Button size={'icon'} type="button" onClick={() => remove(index)}>
-                    <Trash size={'16'} />
+                    <Trash size={'15'} />
                   </Button>
                 </div>
               </div>
