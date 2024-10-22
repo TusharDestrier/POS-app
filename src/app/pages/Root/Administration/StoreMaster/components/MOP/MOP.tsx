@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/Checkbox'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Form,
   FormControl,
@@ -199,7 +199,7 @@ function MOP() {
                 </div>
               </div>
             ))}
-            <ul className='flex item-center gap-3 justify-end mt-5'>
+            <ul className="flex item-center gap-3 justify-end mt-5">
               <li>
                 <Button type="button" onClick={() => append({ value: '' })}>
                   Add Field
