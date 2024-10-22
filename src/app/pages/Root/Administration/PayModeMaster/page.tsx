@@ -55,11 +55,11 @@ export const PayModeMasterPage = () => {
           <h3 className="heading-secondary mb-3">Applicable Currencies</h3>
           <RadioGroup defaultValue="comfortable " className="space-y-1">
             <div className="flex items-center space-x-2">
-              <Label htmlFor="r1">Rupee</Label>
+              <Label htmlFor="r1">Rupees</Label>
               <RadioGroupItem value="cash" id="r1" />
             </div>
             <div className="flex items-center space-x-2">
-              <Label htmlFor="r2">Doller</Label>
+              <Label htmlFor="r2">Dollar</Label>
               <RadioGroupItem value="credit" id="r2" />
             </div>
             <div className="flex items-center space-x-4">
@@ -78,7 +78,7 @@ export const PayModeMasterPage = () => {
         <RadioGroup defaultValue="comfortable " className="space-y-1 m-4">
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="denomination" id="r10" />
-            <Label htmlFor="r10">Accept denomination based payements</Label>
+            <Label htmlFor="r10">Accept denomination based payment</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="denomination" id="r11" />
@@ -90,15 +90,15 @@ export const PayModeMasterPage = () => {
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="denomination" id="r13" />
-            <Label htmlFor="r13">Do not accpet payement in this mode where:</Label>
+            <Label htmlFor="r13">Do not accpet payment in this mode when:</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="denomination" id="r14" />
-            <Label htmlFor="r14">Count based payement transfer</Label>
+            <Label htmlFor="r14">Count based payment transfer and session closure</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="denomination" id="r15" />
-            <Label htmlFor="r15">Restrict customer loyalty points for this mode of payement</Label>
+            <Label htmlFor="r15">Restrict customer loyalty points for this mode of payment</Label>
           </div>
         </RadioGroup>
       </div>
