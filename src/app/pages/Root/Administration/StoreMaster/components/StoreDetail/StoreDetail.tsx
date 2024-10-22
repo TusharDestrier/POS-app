@@ -12,6 +12,8 @@ import { Input } from '@/components/ui/input'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Select } from '@radix-ui/react-select'
+import { SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 // Define the form schema with all required fields
 const formSchema = z.object({
@@ -188,10 +190,6 @@ function StoreDetail() {
                   </FormItem>
                 )}
               />
-            </div>
-
-            <div className="space-y-3">
-              {/* GSTIN */}
               <FormField
                 control={form.control}
                 name="GSTIN"
@@ -205,6 +203,31 @@ function StoreDetail() {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Date</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Date" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="date">date</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="space-y-3">
+              {/* GSTIN */}
+
               {/* State */}
               <FormField
                 control={form.control}
