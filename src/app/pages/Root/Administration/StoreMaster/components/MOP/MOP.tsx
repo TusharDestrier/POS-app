@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/Checkbox'
 import {
   Form,
   FormControl,
@@ -79,7 +80,7 @@ function MOP() {
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a verified email to display" />
+                            <SelectValue placeholder="Select Paymode Name" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -99,7 +100,7 @@ function MOP() {
                     <FormItem>
                       <FormLabel></FormLabel>
                       <FormControl>
-                        <Input placeholder="shadcn" {...field} />
+                        <Input placeholder="Payment Code" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -112,7 +113,15 @@ function MOP() {
                     <FormItem>
                       <FormLabel></FormLabel>
                       <FormControl>
-                        <Input placeholder="shadcn" {...field} />
+                        <div className="flex items-center space-x-2 m-9">
+                          <Checkbox id="terms" {...field} />
+                          {/* <label
+                            htmlFor="terms"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Accept terms and conditions
+                          </label> */}
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -124,9 +133,18 @@ function MOP() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel></FormLabel>
-                      <FormControl>
-                        <Input placeholder="shadcn" {...field} />
-                      </FormControl>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select Ledger Name" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="m@example.com">m@example.com</SelectItem>
+                          <SelectItem value="m@google.com">m@google.com</SelectItem>
+                          <SelectItem value="m@support.com">m@support.com</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -137,9 +155,18 @@ function MOP() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel></FormLabel>
-                      <FormControl>
-                        <Input placeholder="shadcn" {...field} />
-                      </FormControl>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select Sub Ledger Name" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="m@example.com">m@example.com</SelectItem>
+                          <SelectItem value="m@google.com">m@google.com</SelectItem>
+                          <SelectItem value="m@support.com">m@support.com</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -152,7 +179,15 @@ function MOP() {
                       <FormItem>
                         <FormLabel></FormLabel>
                         <FormControl>
-                          <Input placeholder="shadcn" {...field} />
+                          <div className="flex items-center space-x-2 m-9">
+                            <Checkbox id="terms" {...field} />
+                            {/* <label
+                            htmlFor="terms"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Accept terms and conditions
+                          </label> */}
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
