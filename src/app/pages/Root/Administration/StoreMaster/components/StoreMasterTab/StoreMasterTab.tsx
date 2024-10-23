@@ -3,6 +3,8 @@ import StoreDetail from '../StoreDetail'
 import Logistics from '../Logistics'
 import MOP from '../MOP'
 import PettyCashDetails from '../PettyCashDetails'
+import DocumentSeries from '../DocumentSeries'
+import Ledgers from '../Ledgers'
 
 function StoreMasterTab() {
   return (
@@ -28,8 +30,12 @@ function StoreMasterTab() {
       <TabsContent value="petty-cash">
         <PettyCashDetails />
       </TabsContent>
-      <TabsContent value="document-series">Document series content here.</TabsContent>
-      <TabsContent value="ledgers">Ledgers content here.</TabsContent>
+      <TabsContent value="document-series">
+        <DocumentSeries />
+      </TabsContent>
+      <TabsContent value="ledgers">
+        <Ledgers />
+      </TabsContent>
     </Tabs>
   )
 }
