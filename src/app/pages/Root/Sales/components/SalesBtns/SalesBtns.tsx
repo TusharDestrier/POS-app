@@ -22,7 +22,7 @@ function SalesBtns() {
         <Button>Item View</Button>
       </li>
       <li>
-        <Button onClick={() => navigate('/customers')}>Customers</Button>
+        <Button onClick={() => navigate('customers')}>Customers</Button>
       </li>
       <li>
         <Button>Promotions</Button>

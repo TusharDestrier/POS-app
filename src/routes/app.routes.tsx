@@ -77,6 +77,10 @@ export const appRoutes = {
           index: true,
           element: <SalesPage />,
         },
+        {
+          path: 'customers',
+          element: <CustomerPage />,
+        },
       ],
     },
 
