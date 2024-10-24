@@ -77,7 +77,7 @@ const Ledgers = () => {
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select Paymode Name" />
+                            <SelectValue placeholder="Select Ledger Name" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -100,7 +100,7 @@ const Ledgers = () => {
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder="Select TypeOf Transaction" />
+                              <SelectValue placeholder="Select Sub Ledger Name" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -124,7 +124,7 @@ const Ledgers = () => {
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder="Select TypeOf Transaction" />
+                              <SelectValue placeholder="Select Cost Centre" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>

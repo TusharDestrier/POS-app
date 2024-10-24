@@ -80,7 +80,7 @@ const PettyCashDetails = () => {
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select Paymode Name" />
+                            <SelectValue placeholder="Select Pettycash Head" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
