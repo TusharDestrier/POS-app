@@ -33,6 +33,7 @@ const formSchema = z.object({
   state: z.string().optional(),
   contactPerson: z.string().optional(),
   contactNo: z.string().optional(),
+  alcontactNo: z.string().optional(),
   emailId: z.string().optional(),
   shipToAddress: z.string().optional(),
   searching: z.string().optional(),
@@ -60,6 +61,7 @@ function Logistics() {
       city: '',
       contactPerson: '',
       contactNo: '',
+      alcontactNo: '',
       emailId: '',
       shipToAddress: '',
       searching: '',
@@ -203,10 +205,10 @@ function Logistics() {
               />
               <FormField
                 control={form.control}
-                name="contactNo"
+                name="alcontactNo"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Contact No.</FormLabel>
+                    <FormLabel>Alternative Contact No.</FormLabel>
                     <FormControl>
                       <Input placeholder="Contact No." {...field} />
                     </FormControl>
@@ -284,31 +286,6 @@ function Logistics() {
                     <FormLabel>Postal Code</FormLabel>
                     <FormControl>
                       <Input placeholder="Postal Code" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="state"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>State</FormLabel>
-                    <FormControl>
-                      <Select {...field}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select a state" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>State</SelectLabel>
-                            <SelectItem value="wb">West Bengal</SelectItem>
-                            <SelectItem value="karnataka">Karnataka</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                      {/* <Input placeholder="State" {...field} /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
