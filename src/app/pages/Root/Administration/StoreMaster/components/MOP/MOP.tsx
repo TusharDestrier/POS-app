@@ -201,8 +201,11 @@ function MOP() {
             ))}
             <ul className="flex item-center gap-3 justify-end mt-5">
               <li>
+                <Button type="button">Copy from Site</Button>
+              </li>
+              <li>
                 <Button type="button" onClick={() => append({ value: '' })}>
-                  Add Field
+                  Add Row
                 </Button>
               </li>
               <li>

@@ -31,6 +31,15 @@ const formSchema = z.object({
   address: z.string().min(5, {
     message: 'Address must be at least 5 characters.',
   }),
+  city: z.string().min(5, {
+    message: 'Address must be at least 5 characters.',
+  }),
+  state: z.string().min(5, {
+    message: 'Address must be at least 5 characters.',
+  }),
+  pin: z.string().min(5, {
+    message: 'Address must be at least 5 characters.',
+  }),
   dob: z.string().nonempty({ message: 'Date of Birth is required.' }),
   doa: z.string().optional(), // Date of Anniversary is optional
   spouseName: z.string().optional(), // Spouse Name is optional
@@ -51,6 +60,9 @@ function CustomerCreate() {
       dob: '',
       doa: '',
       spouseName: '',
+      city: '',
+      state: '',
+      pin: '',
       createdOn: '', // This will be set to the current date in the useEffect
     },
   })
@@ -127,7 +139,48 @@ function CustomerCreate() {
               </FormItem>
             )}
           />
-
+          {/* City */}
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>City</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Your CIty" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* State */}
+          <FormField
+            control={form.control}
+            name="state"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>State</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Your State" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Pin */}
+          <FormField
+            control={form.control}
+            name="pin"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Pin</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Your Pin" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           {/* Address */}
           <FormField
             control={form.control}
