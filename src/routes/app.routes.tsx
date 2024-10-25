@@ -1,5 +1,7 @@
 import ErrorPage from '@/app/pages/ErrorPage/page'
 import RoleWiseRedirection from '@/app/pages/RoleWiseRedirection'
+import CustomerMasterLayout from '@/app/pages/Root/Administration/CustomerMaster/layout'
+import CustomerMasterPage from '@/app/pages/Root/Administration/CustomerMaster/page'
 import { AdministrationLayout } from '@/app/pages/Root/Administration/layout'
 import { PayModeMasterPage } from '@/app/pages/Root/Administration/PayModeMaster/page'
 import { StoreMasterPage } from '@/app/pages/Root/Administration/StoreMaster/page'
@@ -53,11 +55,11 @@ export const appRoutes = {
 
             {
               path: 'customer-master',
-              element: <CustomerLayout />,
+              element: <CustomerMasterLayout />,
               children: [
                 {
                   index: true,
-                  element: <CustomerPage />,
+                  element: <CustomerMasterPage />,
                 },
               ],
             },

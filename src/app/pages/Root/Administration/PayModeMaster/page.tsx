@@ -14,11 +14,11 @@ export const PayModeMasterPage = () => {
           <Input type="text" placeholder="PayMode" id="paymode" />
         </Label>
         <Label className=" flex flex-col items-start gap-3" htmlFor="paymode">
-          PayMode
+          Sequence
           <Input type="text" placeholder="PayMode" id="paymode" />
         </Label>
         <Label className=" flex flex-col items-start gap-3" htmlFor="paymode">
-          PayMode
+          Short Code
           <Input type="text" placeholder="PayMode" id="paymode" />
         </Label>
         <div className="payments">
@@ -51,6 +51,38 @@ export const PayModeMasterPage = () => {
             </div>
           </RadioGroup>
         </div>
+        <div className="">
+          <h3 className="heading-secondary mb-3"> Pay Mode Wise Applicable Conditions</h3>
+
+          <RadioGroup defaultValue="comfortable " className="space-y-1 m-4">
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="denomination" id="r10" />
+              <Label htmlFor="r10">Accept denomination based payment</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="denomination" id="r11" />
+              <Label htmlFor="r11">Allow reference details capturing</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="denomination" id="r12" />
+              <Label htmlFor="r12">Accept negative values only</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="denomination" id="r13" />
+              <Label htmlFor="r13">Do not accpet payment in this mode when:</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="denomination" id="r14" />
+              <Label htmlFor="r14">Count based payment transfer and session closure</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="denomination" id="r15" />
+              <Label htmlFor="r15">Restrict customer loyalty points for this mode of payment</Label>
+            </div>
+          </RadioGroup>
+        </div>
+      </div>
+      <div className="item ml-6 mb-6">
         <div className="payments">
           <h3 className="heading-secondary mb-3">Applicable Currencies</h3>
           <RadioGroup defaultValue="comfortable " className="space-y-1">
@@ -72,35 +104,6 @@ export const PayModeMasterPage = () => {
             </div>
           </RadioGroup>
         </div>
-      </div>
-      <div className="item ml-6 mb-6">
-        Pay Mode Wise Applicable Conditions
-        <RadioGroup defaultValue="comfortable " className="space-y-1 m-4">
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="denomination" id="r10" />
-            <Label htmlFor="r10">Accept denomination based payment</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="denomination" id="r11" />
-            <Label htmlFor="r11">Allow reference details capturing</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="denomination" id="r12" />
-            <Label htmlFor="r12">Accept negative values only</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="denomination" id="r13" />
-            <Label htmlFor="r13">Do not accpet payment in this mode when:</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="denomination" id="r14" />
-            <Label htmlFor="r14">Count based payment transfer and session closure</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="denomination" id="r15" />
-            <Label htmlFor="r15">Restrict customer loyalty points for this mode of payment</Label>
-          </div>
-        </RadioGroup>
       </div>
     </div>
   )

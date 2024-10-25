@@ -128,3 +128,8 @@ function Sidebar() {
 }
 
 export default Sidebar
+// company own and transaction owned
+
+//company 
+
+// admin->  customer add,edit,view
