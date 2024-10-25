@@ -98,7 +98,9 @@ function StoreDetail() {
                 name="storeCode"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Store Code</FormLabel>
+                    <FormLabel>
+                      Store Code <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Store Code" {...field} />
                     </FormControl>
@@ -112,9 +114,11 @@ function StoreDetail() {
                 name="storeDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Store Date</FormLabel>
+                    <FormLabel>
+                      Start Date <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
-                      <Input placeholder="Store Date" {...field} />
+                      <Input placeholder="Start Date" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -154,7 +158,9 @@ function StoreDetail() {
                 name="default"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Default W/H</FormLabel>
+                    <FormLabel>
+                      Default W/H <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Default W/H" {...field} />
                     </FormControl>
@@ -168,7 +174,9 @@ function StoreDetail() {
                 name="defaultSale"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Default Sale W/H</FormLabel>
+                    <FormLabel>
+                      Default Sale W/H <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Default Sale W/H" {...field} />
                     </FormControl>
@@ -182,7 +190,9 @@ function StoreDetail() {
                 name="defaultReturn"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Default Return W/H</FormLabel>
+                    <FormLabel>
+                      Default Return W/H <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Default Return W/H" {...field} />
                     </FormControl>
@@ -234,7 +244,9 @@ function StoreDetail() {
                 name="state"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>State</FormLabel>
+                    <FormLabel>
+                      State <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="State" {...field} />
                     </FormControl>
@@ -248,9 +260,27 @@ function StoreDetail() {
                 name="storeType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Store Type</FormLabel>
+                    <FormLabel>
+                      Store Type <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Store Type" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Price List */}
+              <FormField
+                control={form.control}
+                name="storeType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Price List <span className="text-primary">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="Price List" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -290,7 +320,9 @@ function StoreDetail() {
                 name="operationType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Operation Type</FormLabel>
+                    <FormLabel>
+                      Operation Type <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Operation Type" {...field} />
                     </FormControl>
