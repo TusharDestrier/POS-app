@@ -60,23 +60,23 @@ export const PayModeMasterPage = () => {
               <Label htmlFor="r10">Accept denomination based payment</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="denomination" id="r11" />
+              <RadioGroupItem value="reference" id="r11" />
               <Label htmlFor="r11">Allow reference details capturing</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="denomination" id="r12" />
+              <RadioGroupItem value="negative" id="r12" />
               <Label htmlFor="r12">Accept negative values only</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="denomination" id="r13" />
+              <RadioGroupItem value="accpet" id="r13" />
               <Label htmlFor="r13">Do not accpet payment in this mode when:</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="denomination" id="r14" />
+              <RadioGroupItem value="countBased" id="r14" />
               <Label htmlFor="r14">Count based payment transfer and session closure</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="denomination" id="r15" />
+              <RadioGroupItem value="customer" id="r15" />
               <Label htmlFor="r15">Restrict customer loyalty points for this mode of payment</Label>
             </div>
           </RadioGroup>
@@ -113,23 +113,23 @@ export const PayModeMasterPage = () => {
             <Label htmlFor="r10">Accept denomination based payment</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="denomination" id="r11" />
+            <RadioGroupItem value="reference" id="r11" />
             <Label htmlFor="r11">Allow reference details capturing</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="denomination" id="r12" />
+            <RadioGroupItem value="negative" id="r12" />
             <Label htmlFor="r12">Accept negative values only</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="denomination" id="r13" />
+            <RadioGroupItem value="accpet" id="r13" />
             <Label htmlFor="r13">Do not accpet payment in this mode when:</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="denomination" id="r14" />
+            <RadioGroupItem value="count" id="r14" />
             <Label htmlFor="r14">Count based payment transfer and session closure</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="denomination" id="r15" />
+            <RadioGroupItem value="Restrict" id="r15" />
             <Label htmlFor="r15">Restrict customer loyalty points for this mode of payment</Label>
           </div>
         </RadioGroup>

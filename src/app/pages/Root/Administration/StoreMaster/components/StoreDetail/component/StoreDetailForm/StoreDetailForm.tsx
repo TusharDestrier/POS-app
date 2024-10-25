@@ -13,7 +13,15 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Select } from '@radix-ui/react-select'
-import { SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Checkbox } from '@/components/ui/checkbox'
 
 // Define the form schema with all required fields
 const formSchema = z.object({
@@ -21,7 +29,7 @@ const formSchema = z.object({
     message: 'Store Name must be at least 2 characters.',
   }),
   storeCode: z.string().optional(),
-  storeDate: z.string().optional(),
+  startDate: z.string().optional(),
   closeDate: z.string().optional(),
   storeSize: z.string().optional(),
   default: z.string().optional(),
@@ -31,6 +39,8 @@ const formSchema = z.object({
   date: z.string().optional(),
   state: z.string().optional(),
   factor: z.string().optional(),
+  priceList: z.string().optional(),
+  factorIfAny: z.string().optional(),
   storeType: z.string().optional(),
   category: z.string().optional(),
   franchise: z.string().optional(),
@@ -44,7 +54,7 @@ function StoreDetailForm() {
     defaultValues: {
       storeName: '',
       storeCode: '',
-      storeDate: '',
+      startDate: '',
       closeDate: '',
       storeSize: '',
       default: '',
@@ -54,6 +64,8 @@ function StoreDetailForm() {
       date: '',
       state: '',
       factor: '',
+      priceList: '',
+      factorIfAny: '',
       storeType: '',
       category: '',
       franchise: '',
@@ -68,7 +80,7 @@ function StoreDetailForm() {
   }
 
   return (
-    <Form {...form} >
+    <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-3">
         <div className="space-y-3">
           {/* Store Name Field */}
@@ -93,7 +105,9 @@ function StoreDetailForm() {
             name="storeCode"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Store Code</FormLabel>
+                <FormLabel>
+                  Store Code <span className="text-primary">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="Store Code" {...field} />
                 </FormControl>
@@ -101,15 +115,17 @@ function StoreDetailForm() {
               </FormItem>
             )}
           />
-          {/* Store Date Field */}
+          {/* Start Date Field */}
           <FormField
             control={form.control}
-            name="storeDate"
+            name="startDate"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Store Date</FormLabel>
+                <FormLabel>
+                  Start Date <span className="text-primary">*</span>
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="Store Date" {...field} />
+                  <Input type="date" placeholder="Start Date" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -123,7 +139,7 @@ function StoreDetailForm() {
               <FormItem>
                 <FormLabel>Close Date</FormLabel>
                 <FormControl>
-                  <Input placeholder="Close Date" {...field} />
+                  <Input type="date" placeholder="Close Date" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -149,7 +165,9 @@ function StoreDetailForm() {
             name="default"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Default W/H</FormLabel>
+                <FormLabel>
+                  Default W/H <span className="text-primary">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="Default W/H" {...field} />
                 </FormControl>
@@ -163,7 +181,9 @@ function StoreDetailForm() {
             name="defaultSale"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Default Sale W/H</FormLabel>
+                <FormLabel>
+                  Default Sale W/H <span className="text-primary">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="Default Sale W/H" {...field} />
                 </FormControl>
@@ -177,7 +197,9 @@ function StoreDetailForm() {
             name="defaultReturn"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Default Return W/H</FormLabel>
+                <FormLabel>
+                  Default Return W/H <span className="text-primary">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="Default Return W/H" {...field} />
                 </FormControl>
@@ -185,12 +207,15 @@ function StoreDetailForm() {
               </FormItem>
             )}
           />
+          {/* GSTIN Field */}
           <FormField
             control={form.control}
             name="GSTIN"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>GSTIN No</FormLabel>
+                <FormLabel>
+                  GSTIN No <span className="text-primary">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="GSTIN No" {...field} />
                 </FormControl>
@@ -198,6 +223,7 @@ function StoreDetailForm() {
               </FormItem>
             )}
           />
+          {/* Date Field */}
           <FormField
             control={form.control}
             name="date"
@@ -212,8 +238,37 @@ function StoreDetailForm() {
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="date">date</SelectItem>
+                    <SelectItem value="date1">date1</SelectItem>
                   </SelectContent>
                 </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* State Field */}
+          <FormField
+            control={form.control}
+            name="state"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  State <span className="text-primary">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Select {...field}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a state" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>State</SelectLabel>
+                        <SelectItem value="wb">West Bengal</SelectItem>
+                        <SelectItem value="karnataka">Karnataka</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {/* <Input placeholder="State" {...field} /> */}
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -222,36 +277,82 @@ function StoreDetailForm() {
 
         <div className="space-y-3">
           {/* GSTIN */}
-
-          {/* State */}
+          {/* Store Type */}
+          {/* Price List Field */}
           <FormField
             control={form.control}
-            name="state"
+            name="priceList"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>State</FormLabel>
+                <FormLabel>
+                  Price List <span className="text-primary">*</span>
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="State" {...field} />
+                  <Select {...field}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Price List" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Store </SelectLabel>
+                        <SelectItem value="kolkata">Kolkata</SelectItem>
+                        <SelectItem value="pune">Pune</SelectItem>
+                        <SelectItem value="hydrabad">Hydrabad</SelectItem>
+                        <SelectItem value="bengaluru">Bengaluru</SelectItem>
+                        <SelectItem value="mumbai">Mumbai</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          {/* Store Type */}
+          {/* Factor If Any Field */}
+          <FormField
+            control={form.control}
+            name="factorIfAny"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Factor If Any</FormLabel>
+                <FormControl>
+                  <Input type="text" placeholder="Factor" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Store Type Field */}
           <FormField
             control={form.control}
             name="storeType"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Store Type</FormLabel>
+                <FormLabel>
+                  Store Type <span className="text-primary">*</span>
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="Store Type" {...field} />
+                  <Select {...field}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Store" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Store </SelectLabel>
+                        <SelectItem value="kolkata">Kolkata</SelectItem>
+                        <SelectItem value="pune">Pune</SelectItem>
+                        <SelectItem value="hydrabad">Hydrabad</SelectItem>
+                        <SelectItem value="bengaluru">Bengaluru</SelectItem>
+                        <SelectItem value="mumbai">Mumbai</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          {/* Category */}
+          {/* Category Field*/}
           <FormField
             control={form.control}
             name="category"
@@ -259,7 +360,21 @@ function StoreDetailForm() {
               <FormItem>
                 <FormLabel>Category</FormLabel>
                 <FormControl>
-                  <Input placeholder="Category" {...field} />
+                  <Select {...field}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Category </SelectLabel>
+                        <SelectItem value="kolkata">Kolkata</SelectItem>
+                        <SelectItem value="pune">Pune</SelectItem>
+                        <SelectItem value="hydrabad">Hydrabad</SelectItem>
+                        <SelectItem value="bengaluru">Bengaluru</SelectItem>
+                        <SelectItem value="mumbai">Mumbai</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -273,7 +388,21 @@ function StoreDetailForm() {
               <FormItem>
                 <FormLabel>Franchise Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Franchise Name" {...field} />
+                  <Select {...field}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Franchise" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Franchise </SelectLabel>
+                        <SelectItem value="kolkata">Kolkata</SelectItem>
+                        <SelectItem value="pune">Pune</SelectItem>
+                        <SelectItem value="hydrabad">Hydrabad</SelectItem>
+                        <SelectItem value="bengaluru">Bengaluru</SelectItem>
+                        <SelectItem value="mumbai">Mumbai</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -285,15 +414,31 @@ function StoreDetailForm() {
             name="operationType"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Operation Type</FormLabel>
+                <FormLabel>
+                  Operation Type <span className="text-primary">*</span>
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="Operation Type" {...field} />
+                  <Select {...field}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Operation Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Operation Type </SelectLabel>
+                        <SelectItem value="kolkata">Kolkata</SelectItem>
+                        <SelectItem value="pune">Pune</SelectItem>
+                        <SelectItem value="hydrabad">Hydrabad</SelectItem>
+                        <SelectItem value="bengaluru">Bengaluru</SelectItem>
+                        <SelectItem value="mumbai">Mumbai</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          {/* Inactive */}
+          {/* Inactive Field*/}
           <FormField
             control={form.control}
             name="inActive"
@@ -301,7 +446,7 @@ function StoreDetailForm() {
               <FormItem>
                 <FormLabel>Inactive</FormLabel>
                 <FormControl>
-                  <Input placeholder="Inactive" {...field} />
+                  <Checkbox className="m-4" id="terms" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

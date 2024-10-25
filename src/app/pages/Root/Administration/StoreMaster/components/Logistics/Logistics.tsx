@@ -98,7 +98,9 @@ function Logistics() {
                 name="billToAddress"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Bill To Address</FormLabel>
+                    <FormLabel>
+                      Bill To Address <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <textarea
                         className="w-full mt-5 p-5"
@@ -116,7 +118,9 @@ function Logistics() {
                 name="city"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>City</FormLabel>
+                    <FormLabel>
+                      City <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Select {...field}>
                         <SelectTrigger className="w-full">
@@ -124,7 +128,7 @@ function Logistics() {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectLabel>City</SelectLabel>
+                            <SelectLabel>City </SelectLabel>
                             <SelectItem value="kolkata">Kolkata</SelectItem>
                             <SelectItem value="pune">Pune</SelectItem>
                             <SelectItem value="hydrabad">Hydrabad</SelectItem>
@@ -144,7 +148,9 @@ function Logistics() {
                 name="postalCode"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Postal Code</FormLabel>
+                    <FormLabel>
+                      Postal Code <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Postal Code" {...field} />
                     </FormControl>
@@ -157,7 +163,9 @@ function Logistics() {
                 name="state"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>State</FormLabel>
+                    <FormLabel>
+                      State <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Select {...field}>
                         <SelectTrigger className="w-full">
@@ -182,7 +190,9 @@ function Logistics() {
                 name="contactPerson"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Contact Person</FormLabel>
+                    <FormLabel>
+                      Contact Person <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Contact Person" {...field} />
                     </FormControl>
@@ -221,7 +231,9 @@ function Logistics() {
                 name="emailId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email Id</FormLabel>
+                    <FormLabel>
+                      Email Id <span className="required">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Email Id" {...field} />
                     </FormControl>
@@ -237,7 +249,9 @@ function Logistics() {
                 name="shipToAddress"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Ship To Address</FormLabel>
+                    <FormLabel>
+                      Ship To Address <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <textarea
                         className="w-full mt-5 p-5"
@@ -255,7 +269,9 @@ function Logistics() {
                 name="city"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>City</FormLabel>
+                    <FormLabel>
+                      City <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Select {...field}>
                         <SelectTrigger className="w-full">
@@ -283,9 +299,38 @@ function Logistics() {
                 name="postalCode"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Postal Code</FormLabel>
+                    <FormLabel>
+                      Postal Code <span className="text-primary">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Postal Code" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="state"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      State <span className="text-primary">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Select {...field}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a state" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>State</SelectLabel>
+                            <SelectItem value="wb">West Bengal</SelectItem>
+                            <SelectItem value="karnataka">Karnataka</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      {/* <Input placeholder="State" {...field} /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
