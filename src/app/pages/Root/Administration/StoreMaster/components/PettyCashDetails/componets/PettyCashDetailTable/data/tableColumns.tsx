@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import useStoreDetail from '../../../store/useStoreDetail'
+import usePettyCashDetails from '../../../store/usePettyCashDetails'
 
 export const columns: ColumnDef<Customer>[] = [
   {
@@ -78,8 +78,8 @@ export const columns: ColumnDef<Customer>[] = [
 ]
 
 function TableRowDropDowns({ customer }: { customer: Customer }) {
-  const modalToggler = useStoreDetail((state) => state.toggleOpen)
-  const setModalMode = useStoreDetail((state) => state.setMode)
+  const modalToggler = usePettyCashDetails((state) => state.toggleOpen)
+  const setModalMode = usePettyCashDetails((state) => state.setMode)
 
   function EditModalHandler() {
     modalToggler()

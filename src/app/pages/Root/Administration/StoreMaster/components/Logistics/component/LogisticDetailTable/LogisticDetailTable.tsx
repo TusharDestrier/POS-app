@@ -1,4 +1,4 @@
-// StoreDetailTable.tsx
+// LogisticDetailTable.tsx
 'use client'
 
 import * as React from 'react'
@@ -34,10 +34,10 @@ import {
 } from '@/components/ui/table'
 import { data } from './data/tableData'
 import { columns } from './data/tableColumns'
-import StoreDetailModal from '../StoreDetailModal'
-import useStoreDetail from '../../store/useStoreDetail'
+import LogistcDetailModal from '../LogisticDetailModel'
+import useLogisticsDetails from '../../store/useLogisticsDetails'
 
-export function StoreDetailTable() {
+export function LogisticDetailTable() {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -47,8 +47,8 @@ export function StoreDetailTable() {
     pageSize: 5, // Set the page size as desired
   })
 
-  const modalToggler = useStoreDetail((state) => state.toggleOpen)
-  const setModalMode = useStoreDetail((state) => state.setMode)
+  const modalToggler = useLogisticsDetails((state) => state.toggleOpen)
+  const setModalMode = useLogisticsDetails((state) => state.setMode)
 
   const table = useReactTable({
     data,
@@ -187,7 +187,7 @@ export function StoreDetailTable() {
           </div>
         </div>
       </div>
-      <StoreDetailModal />
+      <LogistcDetailModal />
     </>
   )
 }
