@@ -22,6 +22,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import StoreDetailForm from '../../StoreDetailForm'
+import useStoreDetail from '../../../store/useStoreDetail'
 
 export const columns: ColumnDef<Customer>[] = [
   {
@@ -81,26 +82,36 @@ export const columns: ColumnDef<Customer>[] = [
     cell: ({ row }) => {
       const customer = row.original
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(customer.id)}>
-              Copy Customer ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem>View Customer</DropdownMenuItem>
-            <DropdownMenuItem>Edit Customer</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
+      return <TableRowDropDowns customer={customer} />
     },
   },
 ]
+
+function TableRowDropDowns({ customer }: { customer: Customer }) {
+  const modalToggler = useStoreDetail((state) => state.toggleOpen)
+  const setModalMode = useStoreDetail((state) => state.setMode)
+
+  function EditModalHandler() {
+    modalToggler()
+    setModalMode('Edit')
+  }
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <DotsHorizontalIcon className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(customer.id)}>
+          Copy Customer ID
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={EditModalHandler}>Edit Customer</DropdownMenuItem>
+        <DropdownMenuItem>View Customer</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}

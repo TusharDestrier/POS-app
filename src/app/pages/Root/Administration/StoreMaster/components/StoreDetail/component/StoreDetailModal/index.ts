@@ -1,3 +1,3 @@
-import StoreDetailModalBtn from './StoreDetailModal'
+import StoreDetailModal from './StoreDetailModal'
 
-export default StoreDetailModalBtn
+export default StoreDetailModal
