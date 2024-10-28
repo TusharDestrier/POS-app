@@ -21,35 +21,11 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
-
-// Define the form schema with all required fields
-const formSchema = z.object({
-  storeName: z.string().min(2, {
-    message: 'Store Name must be at least 2 characters.',
-  }),
-  storeCode: z.string().optional(),
-  startDate: z.string().optional(),
-  closeDate: z.string().optional(),
-  storeSize: z.string().optional(),
-  default: z.string().optional(),
-  defaultSale: z.string().optional(),
-  defaultReturn: z.string().optional(),
-  GSTIN: z.string().optional(),
-  date: z.string().optional(),
-  state: z.string().optional(),
-  factor: z.string().optional(),
-  priceList: z.string().optional(),
-  factorIfAny: z.string().optional(),
-  storeType: z.string().optional(),
-  category: z.string().optional(),
-  franchise: z.string().optional(),
-  operationType: z.string().optional(),
-  inActive: z.string().optional(),
-})
+import { storeDetailFormSchema } from '@/schema/storeDetail.schema'
 
 function StoreDetailForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof storeDetailFormSchema>>({
+    resolver: zodResolver(storeDetailFormSchema),
     defaultValues: {
       storeName: '',
       storeCode: '',
@@ -73,7 +49,7 @@ function StoreDetailForm() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof storeDetailFormSchema>) {
     // Handle the form submission here.
     console.log(values)
   }
