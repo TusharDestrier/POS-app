@@ -1,4 +1,3 @@
-import { ProductFetched } from '@/types/sales'
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 class ApiService {

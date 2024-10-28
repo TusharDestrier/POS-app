@@ -13,14 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 // import StoreDetailModalBtn from '../../StoreDetailModal'
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+
 import useSalesPerson from '../../../../store/useSalesPerson'
 // import StoreDetailForm from '../../StoreDetailForm'
 // import useStoreDetail from '../../../store/useStoreDetail'

@@ -17,7 +17,6 @@ import {
 } from '@tanstack/react-table'
 
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -76,10 +75,10 @@ export function SalesPersonTable() {
     modalToggler()
     setModalMode('Create')
   }
-  function EditModalHandler() {
-    modalToggler()
-    setModalMode('Edit')
-  }
+  // function EditModalHandler() {
+  //   modalToggler()
+  //   setModalMode('Edit')
+  // }
 
   return (
     <>

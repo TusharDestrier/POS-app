@@ -6,9 +6,9 @@ import Logo from '@/assets/img/demo-logo.png'
 import useAuth from '@/store/useAuth'
 import { roleBasedMenu, RoleBasedMenu, SidebarItem, SubItem } from './data/roleBasedMenu'
 
-interface User {
-  role: 'admin' | 'manager' | 'storemanager' | 'cashier'
-}
+// interface User {
+//   role: 'admin' | 'manager' | 'storemanager' | 'cashier'
+// }
 
 function SidebarItemComponent({
   item,
@@ -130,6 +130,6 @@ function Sidebar() {
 export default Sidebar
 // company own and transaction owned
 
-//company 
+//company
 
 // admin->  customer add,edit,view

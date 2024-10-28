@@ -1,3 +1,3 @@
-import ItemWise from './itemWise'
+import ItemWise from './ItemWise'
 
 export default ItemWise
