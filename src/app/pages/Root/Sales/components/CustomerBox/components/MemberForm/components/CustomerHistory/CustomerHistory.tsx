@@ -1,6 +1,7 @@
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import SalesMutistep from '../../../../../SalesMultiStep'
+
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 
 function CustomerHistory() {
   return (

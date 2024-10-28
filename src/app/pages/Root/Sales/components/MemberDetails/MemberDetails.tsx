@@ -1,3 +1,6 @@
+import CouponDetails from '../CouponDetails'
+import LoyaltyPoint from '../LoyaltyPoint'
+
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -9,8 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import LoyaltyPoint from '../LoyaltyPoint'
-import CouponDetails from '../CouponDetails'
 
 function MemberDetails() {
   return (

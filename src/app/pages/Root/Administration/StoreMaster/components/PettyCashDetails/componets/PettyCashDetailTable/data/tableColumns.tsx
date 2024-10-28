@@ -1,9 +1,12 @@
 // tableColumns.ts
-import { ColumnDef } from '@tanstack/react-table'
-import { Customer } from './tableData'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Button } from '@/components/ui/button'
 import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
+import { ColumnDef } from '@tanstack/react-table'
+
+import { Customer } from './tableData'
+import usePettyCashDetails from '../../../store/usePettyCashDetails'
+
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import usePettyCashDetails from '../../../store/usePettyCashDetails'
+
 
 export const columns: ColumnDef<Customer>[] = [
   {

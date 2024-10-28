@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+
 import { ProductModified } from '@/types/sales'
 
 interface SalesState {

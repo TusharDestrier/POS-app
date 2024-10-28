@@ -1,6 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { format } from 'date-fns'
+import { Trash } from 'lucide-react'
 import { useForm, useFieldArray } from 'react-hook-form'
+import { z } from 'zod'
+
 import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Form,
   FormControl,
@@ -10,7 +16,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
 import {
   Select,
   SelectContent,
@@ -18,11 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { z } from 'zod'
-import { Calendar } from '@/components/ui/calendar'
-import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
-import { format } from 'date-fns'
-import { Trash } from 'lucide-react'
 
 const formSchema = z.object({
   allocations: z.array(

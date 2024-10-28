@@ -1,6 +1,7 @@
+import ProductRow from './ProductRow'
+
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { ProductModified } from '@/types/sales'
-import ProductRow from './ProductRow'
 
 interface ProductTableProps {
   data: ProductModified[]

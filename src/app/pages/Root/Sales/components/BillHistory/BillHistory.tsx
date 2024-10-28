@@ -1,7 +1,8 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Billwise from './components/Billwise'
 import ItemWise from './components/ItemWise'
+
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function BillHistory() {
   return (

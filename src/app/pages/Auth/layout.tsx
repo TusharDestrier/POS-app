@@ -1,5 +1,6 @@
-import useAuthRedirection from '@/hooks/useAuthRedirection'
 import { Outlet } from 'react-router-dom'
+
+import useAuthRedirection from '@/hooks/useAuthRedirection'
 
 function AuthLayout() {
   useAuthRedirection({ requireAuth: false, redirectTo: '/' })

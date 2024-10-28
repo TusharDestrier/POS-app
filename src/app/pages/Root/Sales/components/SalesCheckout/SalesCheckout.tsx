@@ -1,8 +1,10 @@
+import useSales from '../../store/useSales'
+import CheckoutModal from '../CheckoutModal'
+
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import useSales from '../../store/useSales'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
-import CheckoutModal from '../CheckoutModal'
+
 
 function SalesCheckout() {
   const selectedSalesData = useSales((state) => state.selectedSalesData)

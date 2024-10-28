@@ -1,3 +1,7 @@
+
+import usePettyCashDetails from '../../store/usePettyCashDetails'
+import PettyCashDetailsForm from '../PettyCashDetailForm'
+
 import {
   Dialog,
   DialogContent,
@@ -5,9 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-
-import usePettyCashDetails from '../../store/usePettyCashDetails'
-import PettyCashDetailsForm from '../PettyCashDetailForm'
 
 function PettyCashDetailModel() {
   const isOpen = usePettyCashDetails((state) => state.isOpen)

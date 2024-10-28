@@ -1,5 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import MemberForm from './components/MemberForm'
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 function CustomerBox() {
   return (

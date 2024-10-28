@@ -1,6 +1,8 @@
-import { Input } from '@/components/ui/input'
 import { FormEvent } from 'react'
+
 import useSalesScannerState from './store/useSalesScannerState'
+
+import { Input } from '@/components/ui/input'
 import useFocusOnKeyPress from '@/hooks/useFocusOnKeyPress'
 
 // { className}: { className?: string }

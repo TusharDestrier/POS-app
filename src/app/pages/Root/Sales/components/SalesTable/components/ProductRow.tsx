@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button'
 import { Minus, Plus } from '@/assets/icons'
+import { Button } from '@/components/ui/button'
 import { TableCell, TableRow } from '@/components/ui/table'
 import { ProductModified } from '@/types/sales'
 

@@ -1,3 +1,6 @@
+import { useCustomerMaster } from '../../store/useCustomerMaster'
+import CustomerForm from '../CustomerForm'
+
 import {
   Dialog,
   DialogContent,
@@ -5,8 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import CustomerForm from '../CustomerForm'
-import { useCustomerMaster } from '../../store/useCustomerMaster'
 
 function CustomerModal() {
   const isOpen = useCustomerMaster((state) => state.isOpen)

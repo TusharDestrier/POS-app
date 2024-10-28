@@ -1,3 +1,7 @@
+
+import useLedgers from '../../store/useLedgers'
+import LedgersDetailsForm from '../LedgersDetailForm'
+
 import {
   Dialog,
   DialogContent,
@@ -5,9 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-
-import useLedgers from '../../store/useLedgers'
-import LedgersDetailsForm from '../LedgersDetailForm'
 
 function LedgersDetailModel() {
   const isOpen = useLedgers((state) => state.isOpen)

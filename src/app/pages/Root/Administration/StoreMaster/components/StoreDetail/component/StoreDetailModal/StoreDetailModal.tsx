@@ -1,3 +1,6 @@
+import useStoreDetail from '../../store/useStoreDetail'
+import StoreDetailForm from '../StoreDetailForm/StoreDetailForm'
+
 import {
   Dialog,
   DialogContent,
@@ -6,8 +9,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-import StoreDetailForm from '../StoreDetailForm/StoreDetailForm'
-import useStoreDetail from '../../store/useStoreDetail'
 
 function StoreDetailModal() {
   const isOpen = useStoreDetail((state) => state.isOpen)

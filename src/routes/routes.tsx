@@ -1,6 +1,8 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
-import { authRoutes } from './auth.routes'
+
 import { appRoutes } from './app.routes'
+import { authRoutes } from './auth.routes'
+
 import NotFoundPage from '@/app/pages/NotFound/page'
 
 const routes = createBrowserRouter([

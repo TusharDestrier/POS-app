@@ -1,3 +1,8 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Trash } from 'lucide-react'
+import { useFieldArray, useForm } from 'react-hook-form'
+import { z } from 'zod'
+
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -16,10 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Trash } from 'lucide-react'
-import { useFieldArray, useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 const formSchema = z.object({
   username: z.string().min(2, {

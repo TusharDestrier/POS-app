@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+
 import { useClickAway } from '@/hooks/useClickAway'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import useSidebar from '@/store/useSidebar'

@@ -1,5 +1,6 @@
-import { getItem, setItem } from '@/lib/localstorage'
 import { useEffect, useRef, useState } from 'react'
+
+import { getItem, setItem } from '@/lib/localstorage'
 
 // Define a generic type for the data
 const useFetch = <T>({

@@ -1,6 +1,7 @@
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
 import CustomerCreate from '../../../../../CustomerCreate'
+
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 
 function CreateCustomerBtn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   return (

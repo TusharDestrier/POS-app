@@ -1,3 +1,8 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { z } from 'zod'
+
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -8,12 +13,9 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import useAuth from '@/store/useAuth'
-import { toast } from 'sonner'
 import { loginSchema } from '@/schema/auth.schema'
+import useAuth from '@/store/useAuth'
+
 
 function LoginForm() {
   const login = useAuth((state) => state.login)
