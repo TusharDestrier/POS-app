@@ -6,25 +6,25 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-import useLedgers from '../../store/useLedgers'
-import LedgersDetailsForm from '../LedgersDetailForm'
+import DocumentSeriesDetailForm from '../DocumentSeriesDetailForm'
+import useDocumentSeries from '../../store/useDocumentSeries'
 
-function LedgersDetailModel() {
-  const isOpen = useLedgers((state) => state.isOpen)
-  const modalMode = useLedgers((state) => state.mode)
-  const closeModal = useLedgers((state) => state.close)
+function DocumentSeriesDetailModel() {
+  const isOpen = useDocumentSeries((state) => state.isOpen)
+  const modalMode = useDocumentSeries((state) => state.mode)
+  const closeModal = useDocumentSeries((state) => state.close)
 
   return (
     <Dialog open={isOpen} onOpenChange={closeModal}>
       <DialogContent className="sm:max-w-[800px] h-[30rem] overflow-y-scroll p-0">
         <DialogHeader className="p-5 border-b border-gray-50 sticky top-0 left-0 bg-white">
           <DialogTitle>
-            <h3 className="text-xl capitalize">{modalMode} Ledgers</h3>
+            <h3 className="text-xl capitalize">{modalMode} Document Series</h3>
           </DialogTitle>
         </DialogHeader>
         <div className="px-6">
           {' '}
-          <LedgersDetailsForm />
+          <DocumentSeriesDetailForm />
         </div>
 
         <DialogFooter className="bg-white h-5 sticky bottom-0 right-0"></DialogFooter>
@@ -33,4 +33,4 @@ function LedgersDetailModel() {
   )
 }
 
-export default LedgersDetailModel
+export default DocumentSeriesDetailModel
