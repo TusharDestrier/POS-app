@@ -16,25 +16,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { LedgersSchema } from '@/schema/ledgers.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Trash } from 'lucide-react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-  test: z.array(
-    z.object({
-      value: z.string().min(1, { message: 'Field is required' }),
-    })
-  ),
-})
-
 const LedgersDetailsForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof LedgersSchema>>({
+    resolver: zodResolver(LedgersSchema),
     defaultValues: {
       username: '',
       test: [{ value: '' }],
@@ -46,7 +36,7 @@ const LedgersDetailsForm = () => {
     name: 'test',
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof LedgersSchema>) {
     console.log(values)
   }
 
