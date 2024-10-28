@@ -5,7 +5,6 @@ import {
   DiamondPercent,
   OctagonX,
   Route,
-  RouteOff,
   ShoppingBag,
   Stamp,
   TextSearch,

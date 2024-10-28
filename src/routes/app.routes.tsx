@@ -7,7 +7,6 @@ import { PayModeMasterPage } from '@/app/pages/Root/Administration/PayModeMaster
 import SalesPersonMasterLayout from '@/app/pages/Root/Administration/SalesPersonMaster/layout'
 import SalesPersonMasterPage from '@/app/pages/Root/Administration/SalesPersonMaster/page'
 import { StoreMasterPage } from '@/app/pages/Root/Administration/StoreMaster/page'
-import CustomerLayout from '@/app/pages/Root/Customer/layout'
 import CustomerPage from '@/app/pages/Root/Customer/page'
 import DashboardLayout from '@/app/pages/Root/Dashboard/layout'
 import DashboardPage from '@/app/pages/Root/Dashboard/page'

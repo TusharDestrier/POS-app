@@ -3,7 +3,9 @@ import { FormEvent } from 'react'
 import useSalesScannerState from './store/useSalesScannerState'
 import useFocusOnKeyPress from '@/hooks/useFocusOnKeyPress'
 
-function SalesScanner({ className, ...props }: { className?: string }) {
+// { className}: { className?: string }
+
+function SalesScanner() {
   const setScanID = useSalesScannerState((state) => state.setScanID)
 
   // Use the hook to focus on the input when F1 is pressed

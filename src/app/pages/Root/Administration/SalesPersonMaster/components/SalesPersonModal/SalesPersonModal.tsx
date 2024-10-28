@@ -1,11 +1,9 @@
-import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import useSalesPerson from '../../store/useSalesPerson'
 import SalesPersonForm from '../SalesPersonForm'
