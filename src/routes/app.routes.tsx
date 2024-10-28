@@ -4,6 +4,8 @@ import CustomerMasterLayout from '@/app/pages/Root/Administration/CustomerMaster
 import CustomerMasterPage from '@/app/pages/Root/Administration/CustomerMaster/page'
 import { AdministrationLayout } from '@/app/pages/Root/Administration/layout'
 import { PayModeMasterPage } from '@/app/pages/Root/Administration/PayModeMaster/page'
+import SalesPersonMasterLayout from '@/app/pages/Root/Administration/SalesPersonMaster/layout'
+import SalesPersonMasterPage from '@/app/pages/Root/Administration/SalesPersonMaster/page'
 import { StoreMasterPage } from '@/app/pages/Root/Administration/StoreMaster/page'
 import CustomerLayout from '@/app/pages/Root/Customer/layout'
 import CustomerPage from '@/app/pages/Root/Customer/page'
@@ -60,6 +62,16 @@ export const appRoutes = {
                 {
                   index: true,
                   element: <CustomerMasterPage />,
+                },
+              ],
+            },
+            {
+              path: 'salesperson-master',
+              element: <SalesPersonMasterLayout />,
+              children: [
+                {
+                  index: true,
+                  element: <SalesPersonMasterPage />,
                 },
               ],
             },
