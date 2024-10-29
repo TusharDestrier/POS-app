@@ -1,6 +1,7 @@
-import { DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import SalesSearch from '../SalesSearch/SalesSearch'
 import SalesSearchTable from '../SalesSearchTable'
+
+import { DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 
 function SalesSearchModal() {
   return (

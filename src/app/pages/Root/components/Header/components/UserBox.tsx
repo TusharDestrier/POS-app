@@ -1,4 +1,11 @@
+import { Bell, Search } from 'lucide-react'
+
+import SalesSearchModal from '../../../Sales/components/SalesSearchModal'
+import useHeaderStore from '../store/useHeaderStore'
+
+import FullscreenBtn from '@/components/FullscreenBtn'
 import { Avatar } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import { DialogTrigger, Dialog } from '@/components/ui/dialog'
 import {
   DropdownMenu,
@@ -8,12 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import SalesSearchModal from '../../../Sales/components/SalesSearchModal'
 import useFocusOnKeyPress from '@/hooks/useFocusOnKeyPress'
-import useHeaderStore from '../store/useHeaderStore'
-import { Button } from '@/components/ui/button'
-import { Bell, Search } from 'lucide-react'
-import FullscreenBtn from '@/components/FullscreenBtn'
 import useAuth from '@/store/useAuth'
 
 function UserBox() {

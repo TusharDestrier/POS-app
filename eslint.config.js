@@ -1,19 +1,16 @@
 import js from '@eslint/js'
-import globals from 'globals'
+import ts from '@typescript-eslint/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
+import importPlugin from 'eslint-plugin-import'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
+import unusedImports from 'eslint-plugin-unused-imports'
+import globals from 'globals'
 
-export default tseslint.config(
-  { ignores: ['dist'] },
+export default [
+  js.configs.recommended,
   {
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended,
-      'plugin:import/errors', // Add import plugin errors
-      'plugin:import/warnings', // Add import plugin warnings
-    ],
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -21,29 +18,57 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      import: importPlugin, // Add the import plugin to the plugins
+      'unused-imports': unusedImports,
+      import: importPlugin,
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
       'no-console': 'warn',
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'import/order': [
         'error',
         {
-          groups: [
-            ['builtin', 'external'], // Built-in modules, then external libraries
-            'internal', // Your internal modules
-            ['sibling', 'parent'], // Sibling and parent imports
-            'index', // Index files
-          ],
-          'newlines-between': 'always', // Enforce new lines between different groups
-          alphabetize: { order: 'asc', caseInsensitive: true }, // Sort imports alphabetically within groups
+          groups: [['builtin', 'external'], 'internal', ['sibling', 'parent'], 'index'],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
-      'no-unused-vars': [
-        'warn', // Change to 'error' if you want it to block the build
-        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }, // Ignore unused vars prefixed with `_`
+      'no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
+        'warn',
+        { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
+      ],
+      ...reactHooks.configs.recommended.rules,
+    },
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      parser: tsParser,
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
+    plugins: {
+      '@typescript-eslint': ts,
+      'unused-imports': unusedImports,
+      import: importPlugin,
+    },
+    rules: {
+      ...ts.configs.recommended.rules, // TypeScript recommended rules
+      'no-console': 'warn',
+      'import/order': [
+        'error',
+        {
+          groups: [['builtin', 'external'], 'internal', ['sibling', 'parent'], 'index'],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
+        },
+      ],
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
+        'warn',
+        { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
       ],
     },
-  }
-)
+  },
+]

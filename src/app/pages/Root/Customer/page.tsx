@@ -1,7 +1,8 @@
-import { Card, CardContent } from '@/components/ui/card'
 import CustomerBox from '../Sales/components/CustomerBox'
 import CustomersTable from '../Sales/components/CustomersTableData'
 import SalesMutistep from '../Sales/components/SalesMultiStep'
+
+import { Card, CardContent } from '@/components/ui/card'
 
 function CustomerPage() {
   return (

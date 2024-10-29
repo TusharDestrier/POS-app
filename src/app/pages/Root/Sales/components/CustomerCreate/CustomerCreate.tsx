@@ -1,8 +1,12 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+
+import useMemberStore from '../CustomerBox/components/MemberForm/store/useMemberFormStore'
+
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -14,8 +18,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useEffect } from 'react'
-import useMemberStore from '../CustomerBox/components/MemberForm/store/useMemberFormStore'
 
 const formSchema = z.object({
   firstName: z.string().min(2, {

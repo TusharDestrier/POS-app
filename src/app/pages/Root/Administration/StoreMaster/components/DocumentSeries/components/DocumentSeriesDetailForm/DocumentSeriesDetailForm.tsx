@@ -1,3 +1,8 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Trash } from 'lucide-react'
+import { useFieldArray, useForm } from 'react-hook-form'
+import { z } from 'zod'
+
 import { Button } from '@/components/ui/button'
 //import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -18,10 +23,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { DocuemntSeriesschema } from '@/schema/documentSeries.schema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Trash } from 'lucide-react'
-import { useFieldArray, useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 const DocumentSeriesDetailForm = () => {
   const form = useForm<z.infer<typeof DocuemntSeriesschema>>({

@@ -1,10 +1,11 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import StoreDetail from '../StoreDetail'
+import DocumentSeries from '../DocumentSeries'
+import Ledgers from '../Ledgers'
 import Logistics from '../Logistics'
 import MOP from '../MOP'
 import PettyCashDetails from '../PettyCashDetails'
-import DocumentSeries from '../DocumentSeries'
-import Ledgers from '../Ledgers'
+import StoreDetail from '../StoreDetail'
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function StoreMasterTab() {
   return (

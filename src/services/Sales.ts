@@ -1,5 +1,6 @@
-import { ProductFetched } from '@/types/sales'
 import ApiService from './ApiClient'
+
+import { ProductFetched } from '@/types/sales'
 
 // Example usage
 const apiService = new ApiService('http://localhost:3000')

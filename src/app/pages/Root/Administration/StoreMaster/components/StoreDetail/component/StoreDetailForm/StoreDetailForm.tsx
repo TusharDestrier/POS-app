@@ -1,3 +1,10 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Select } from '@radix-ui/react-select'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Form,
   FormControl,
@@ -6,12 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
-import { z } from 'zod'
-import { Button } from '@/components/ui/button'
-import { Select } from '@radix-ui/react-select'
 import {
   SelectContent,
   SelectGroup,
@@ -20,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Checkbox } from '@/components/ui/checkbox'
 import { storeDetailFormSchema } from '@/schema/storeDetail.schema'
 
 function StoreDetailForm() {

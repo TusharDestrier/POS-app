@@ -1,9 +1,11 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { LayoutGrid, Logs } from 'lucide-react'
-import SalesSearch from '../SalesSearch'
-import SalesSearchTable from '../SalesSearchTable'
-import SalesSearchGrid from '../SalesSearchGrid'
 import { useState } from 'react'
+
+import SalesSearch from '../SalesSearch'
+import SalesSearchGrid from '../SalesSearchGrid'
+import SalesSearchTable from '../SalesSearchTable'
+
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 function SalesItemSearch() {
   const [view, setView] = useState('list')

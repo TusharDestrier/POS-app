@@ -1,6 +1,7 @@
+import useSalesSearchStore from './store/useSalesSearch'
+
 import { Input } from '@/components/ui/input'
 import useFocusOnKeyPress from '@/hooks/useFocusOnKeyPress'
-import useSalesSearchStore from './store/useSalesSearch'
 
 function SalesSearch() {
   const { setSearchKey } = useSalesSearchStore()

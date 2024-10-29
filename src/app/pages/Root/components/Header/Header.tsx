@@ -1,4 +1,5 @@
 import UserBox from './components/UserBox'
+
 import { Hamburger } from '@/assets/icons'
 import useSidebar from '@/store/useSidebar'
 function Header() {

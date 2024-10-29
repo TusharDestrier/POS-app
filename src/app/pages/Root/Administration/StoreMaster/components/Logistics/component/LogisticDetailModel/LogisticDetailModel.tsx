@@ -1,3 +1,6 @@
+import useLogisticsDetails from '../../store/useLogisticsDetails'
+import LogisticDetailForm from '../LogisticDetailForm'
+
 import {
   Dialog,
   DialogContent,
@@ -6,8 +9,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-import LogisticDetailForm from '../LogisticDetailForm'
-import useLogisticsDetails from '../../store/useLogisticsDetails'
 
 function LogistcDetailModal() {
   const isOpen = useLogisticsDetails((state) => state.isOpen)

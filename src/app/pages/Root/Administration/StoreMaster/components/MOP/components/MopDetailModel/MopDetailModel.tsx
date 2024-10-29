@@ -1,3 +1,7 @@
+
+import useMopDetails from '../../store/useMopDetails'
+import MopDetailForm from '../MopDetailForm'
+
 import {
   Dialog,
   DialogContent,
@@ -5,9 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-
-import useMopDetails from '../../store/useMopDetails'
-import MopDetailForm from '../MopDetailForm'
 
 function MopDetailModal() {
   const isOpen = useMopDetails((state) => state.isOpen)

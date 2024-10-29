@@ -1,6 +1,7 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import SalesPersonTab from './components/SalesPersonTab'
 import StoreAllocationTab from './components/StoreAllocationTab'
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function SalesPersonForm() {
   return (

@@ -1,6 +1,7 @@
+import { useEffect } from 'react'
+
 import useFullScreen from '@/hooks/useFullScreen'
 import useAuth from '@/store/useAuth'
-import { useEffect } from 'react'
 
 export function useInit() {
   const initUser = useAuth((state) => state.initializeUser)

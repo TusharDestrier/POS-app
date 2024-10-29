@@ -1,3 +1,6 @@
+import useSalesPerson from '../../store/useSalesPerson'
+import SalesPersonForm from '../SalesPersonForm'
+
 import {
   Dialog,
   DialogContent,
@@ -5,8 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import useSalesPerson from '../../store/useSalesPerson'
-import SalesPersonForm from '../SalesPersonForm'
 
 function SalesPersonModal() {
   const isOpen = useSalesPerson((state) => state.isOpen)

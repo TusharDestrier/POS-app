@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { useSidebarComp } from './hooks/useSidebarComp'
-import Logo from '@/assets/img/demo-logo.png'
 
-import useAuth from '@/store/useAuth'
 import { roleBasedMenu, RoleBasedMenu, SidebarItem, SubItem } from './data/roleBasedMenu'
+import { useSidebarComp } from './hooks/useSidebarComp'
+
+import Logo from '@/assets/img/demo-logo.png'
+import useAuth from '@/store/useAuth'
 
 // interface User {
 //   role: 'admin' | 'manager' | 'storemanager' | 'cashier'

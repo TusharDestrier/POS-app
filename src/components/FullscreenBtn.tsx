@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
-import { Button } from './ui/button'
 import { Expand, Minimize2 } from 'lucide-react'
+import { useState, useEffect } from 'react'
+
+import { Button } from './ui/button'
 
 function FullscreenBtn() {
   const [isFullscreen, setIsFullscreen] = useState(false)

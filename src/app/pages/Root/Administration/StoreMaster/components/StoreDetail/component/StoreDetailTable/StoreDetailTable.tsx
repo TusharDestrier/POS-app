@@ -1,7 +1,6 @@
 // StoreDetailTable.tsx
 'use client'
 
-import * as React from 'react'
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import {
   ColumnFiltersState,
@@ -15,6 +14,12 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import * as React from 'react'
+
+import StoreDetailModal from '../StoreDetailModal'
+import { columns } from './data/tableColumns'
+import { data } from './data/tableData'
+import useStoreDetail from '../../store/useStoreDetail'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -32,10 +37,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { data } from './data/tableData'
-import { columns } from './data/tableColumns'
-import StoreDetailModal from '../StoreDetailModal'
-import useStoreDetail from '../../store/useStoreDetail'
 
 export function StoreDetailTable() {
   const [sorting, setSorting] = React.useState<SortingState>([])

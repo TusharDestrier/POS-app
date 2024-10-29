@@ -1,10 +1,12 @@
-import SalesScanner from './components/SalesScanner'
-import SalesTable from './components/SalesTable'
-import SalesOptions from './components/SalesOptions'
-import SalesBtns from './components/SalesBtns'
-import SalesTabContent from './components/SalesTabContent/SalesTabContent'
-import { Card, CardContent } from '@/components/ui/card'
 import PromotionBox from './components/PromotionBox'
+import SalesBtns from './components/SalesBtns'
+import SalesOptions from './components/SalesOptions'
+import SalesScanner from './components/SalesScanner'
+import SalesTabContent from './components/SalesTabContent/SalesTabContent'
+import SalesTable from './components/SalesTable'
+
+import { Card, CardContent } from '@/components/ui/card'
+
 
 function SalesPage() {
   return (

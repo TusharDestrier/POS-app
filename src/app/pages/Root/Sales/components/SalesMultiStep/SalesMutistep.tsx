@@ -1,10 +1,12 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import useSalesMultiStep from './store/useSalesMultistep'
-import CustomerCreate from '../CustomerCreate'
 import { useEffect, useRef } from 'react'
+
 import BillHistory from '../BillHistory'
+import CustomerCreate from '../CustomerCreate'
 import MemberDetails from '../MemberDetails'
+import useSalesMultiStep from './store/useSalesMultistep'
+
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 function SalesMutistep() {
   const { step, nextStep, prevStep, setStep } = useSalesMultiStep()

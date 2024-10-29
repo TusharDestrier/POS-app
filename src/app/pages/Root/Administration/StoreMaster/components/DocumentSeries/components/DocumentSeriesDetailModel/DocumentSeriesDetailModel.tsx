@@ -1,3 +1,6 @@
+import useDocumentSeries from '../../store/useDocumentSeries'
+import DocumentSeriesDetailForm from '../DocumentSeriesDetailForm'
+
 import {
   Dialog,
   DialogContent,
@@ -6,8 +9,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-import DocumentSeriesDetailForm from '../DocumentSeriesDetailForm'
-import useDocumentSeries from '../../store/useDocumentSeries'
 
 function DocumentSeriesDetailModel() {
   const isOpen = useDocumentSeries((state) => state.isOpen)

@@ -1,7 +1,6 @@
 // LogisticDetailTable.tsx
 'use client'
 
-import * as React from 'react'
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import {
   ColumnFiltersState,
@@ -15,6 +14,12 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import * as React from 'react'
+
+import LedgersDetailModel from '../LedgersDetailModel'
+import { columns } from './data/tableColumns'
+import { data } from './data/tableData'
+import useLedgers from '../../store/useLedgers'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -32,10 +37,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { data } from './data/tableData'
-import { columns } from './data/tableColumns'
-import LedgersDetailModel from '../LedgersDetailModel'
-import useLedgers from '../../store/useLedgers'
 
 export function LedgersDetailsTable() {
   const [sorting, setSorting] = React.useState<SortingState>([])

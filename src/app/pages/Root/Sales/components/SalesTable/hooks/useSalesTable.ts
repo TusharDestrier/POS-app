@@ -1,10 +1,15 @@
 import { useEffect } from 'react'
-import useSalesScannerState from '../../SalesScanner/store/useSalesScannerState'
-import useSales from '../../../store/useSales'
-import { ProductModified } from '@/types/sales'
-import { useSalesData } from '../../../api/useSalesData'
 import { toast } from 'sonner'
+
+import { useSalesData } from '../../../api/useSalesData'
+import useSales from '../../../store/useSales'
+import useSalesScannerState from '../../SalesScanner/store/useSalesScannerState'
 import useSearchItemsStore from '../../SalesSearchTable/store/useSearchItems'
+
+import { ProductModified } from '@/types/sales'
+
+
+
 
 function useSalesTable() {
   const { salesData, error, isLoading } = useSalesData()

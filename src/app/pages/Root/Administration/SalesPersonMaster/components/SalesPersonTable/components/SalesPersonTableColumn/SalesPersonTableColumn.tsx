@@ -1,9 +1,12 @@
 // tableColumns.ts
-import { ColumnDef } from '@tanstack/react-table'
-import { Customer } from '../../data/tableData'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Button } from '@/components/ui/button'
 import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
+import { ColumnDef } from '@tanstack/react-table'
+
+import useSalesPerson from '../../../../store/useSalesPerson'
+import { Customer } from '../../data/tableData'
+
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +17,6 @@ import {
 } from '@/components/ui/dropdown-menu'
 // import StoreDetailModalBtn from '../../StoreDetailModal'
 
-import useSalesPerson from '../../../../store/useSalesPerson'
 // import StoreDetailForm from '../../StoreDetailForm'
 // import useStoreDetail from '../../../store/useStoreDetail'
 

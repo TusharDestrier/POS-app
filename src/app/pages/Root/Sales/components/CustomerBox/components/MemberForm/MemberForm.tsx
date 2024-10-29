@@ -1,10 +1,12 @@
 import { useState, useEffect, ChangeEvent, FormEvent, useCallback, memo } from 'react'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+
 import CreateCustomerBtn from './components/CreateCutomerBtn'
 import CustomerHistory from './components/CustomerHistory'
-import useFocusOnKeyPress from '@/hooks/useFocusOnKeyPress'
 import useMemberStore from './store/useMemberFormStore' // Zustand store
+
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import useFocusOnKeyPress from '@/hooks/useFocusOnKeyPress'
 import { fetchCustomerByPhone } from '@/services/Customers'
 
 function MemberForm() {

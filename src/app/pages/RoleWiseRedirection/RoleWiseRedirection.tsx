@@ -1,6 +1,7 @@
-import useAuth from '@/store/useAuth'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import useAuth from '@/store/useAuth'
 
 function RoleWiseRedirection() {
   const { user } = useAuth() // Fetch user details from auth

@@ -1,3 +1,11 @@
+import { useState, useEffect } from 'react'
+
+import useSearchItemsStore from './store/useSearchItems'
+import { useSalesData } from '../../api/useSalesData'
+import useSales from '../../store/useSales'
+import useSalesSearchStore from '../SalesSearch/store/useSalesSearch'
+
+import { Button } from '@/components/ui/button'
 import {
   Table,
   TableBody,
@@ -6,12 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import useSalesSearchStore from '../SalesSearch/store/useSalesSearch'
-import { useSalesData } from '../../api/useSalesData'
-import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/button'
-import useSearchItemsStore from './store/useSearchItems'
-import useSales from '../../store/useSales'
 
 function SalesSearchTable() {
   const { searchKey } = useSalesSearchStore()

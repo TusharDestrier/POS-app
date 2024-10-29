@@ -1,3 +1,5 @@
+import { Navigate } from 'react-router-dom'
+
 import ErrorPage from '@/app/pages/ErrorPage/page'
 import RoleWiseRedirection from '@/app/pages/RoleWiseRedirection'
 import CustomerMasterLayout from '@/app/pages/Root/Administration/CustomerMaster/layout'
@@ -17,7 +19,6 @@ import SalesLayout from '@/app/pages/Root/Sales/layout'
 import SalesPage from '@/app/pages/Root/Sales/page'
 import SessionLayout from '@/app/pages/Root/Session/layout'
 import SessionPage from '@/app/pages/Root/Session/page'
-import { Navigate } from 'react-router-dom'
 
 export const appRoutes = {
   path: '/',

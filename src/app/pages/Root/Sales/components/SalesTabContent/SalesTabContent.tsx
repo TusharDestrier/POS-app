@@ -1,6 +1,6 @@
 import SalesCheckout from '../SalesCheckout'
-import { useSalesOptionStore } from '../SalesOptions/store/useSalesOptionsStore'
 import SalesItemSearch from '../SalesItemSearch'
+import { useSalesOptionStore } from '../SalesOptions/store/useSalesOptionsStore'
 
 function SalesTabContent() {
   const option = useSalesOptionStore((state) => state.selectedOption)

@@ -1,6 +1,7 @@
+import { toast } from 'sonner'
+
 import ProductTable from './components/ProductTable'
 import { useSalesTable } from './hooks/useSalesTable'
-import { toast } from 'sonner'
 
 function SalesTable() {
   const { selectedSalesData, increaseQuantity, decreaseQuantity, error, isLoading } =

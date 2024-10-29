@@ -1,4 +1,3 @@
-import TootlTipWrapper from '@/components/TootlTipWrapper'
 import {
   Blinds,
   ChartSpline,
@@ -10,7 +9,10 @@ import {
   TextSearch,
   TicketX,
 } from 'lucide-react'
+
 import { useSalesOptionStore } from './store/useSalesOptionsStore'
+
+import TootlTipWrapper from '@/components/TootlTipWrapper'
 
 function SalesOptions() {
   const setOption = useSalesOptionStore((state) => state.setSelectedOption)
