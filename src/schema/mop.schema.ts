@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
-export const Mopschema = z.object({
+// Define the schema for each item in the `mopValues` array
+const mopItemSchema = z.object({
   payMode: z.string().min(2, {
     message: 'Please select Pay Mode.',
   }),
@@ -11,7 +12,12 @@ export const Mopschema = z.object({
   subLedger: z.string().optional(),
   crossStore: z.string().optional(),
   discontinue: z.string().optional(),
-  test: z.array(z.object({ // add this field
+  test: z.array(z.object({
     value: z.string().optional(),
   })).optional(),
+})
+
+// Define the schema for the form, with `mopValues` as an array of `mopItemSchema`
+export const Mopschema = z.object({
+  mopValues: z.array(mopItemSchema),  // Use array of `mopItemSchema` objects
 })
