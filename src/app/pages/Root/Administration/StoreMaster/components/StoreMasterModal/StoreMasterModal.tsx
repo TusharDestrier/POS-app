@@ -1,5 +1,5 @@
-import useStoreDetail from '../../store/useStoreDetail'
-import StoreDetailForm from '../StoreDetailForm/StoreDetailForm'
+import useStoreMasterStore from '../../store/useStoreMasterStore'
+import StoreMasterForm from '../StoreMasterForm'
 
 import {
   Dialog,
@@ -9,14 +9,14 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-function StoreDetailModal() {
-  const isOpen = useStoreDetail((state) => state.isOpen)
-  const modalMode = useStoreDetail((state) => state.mode)
-  const closeModal = useStoreDetail((state) => state.close)
+function StoreMasterModal() {
+  const isOpen = useStoreMasterStore((state) => state.isOpen)
+  const modalMode = useStoreMasterStore((state) => state.mode)
+  const closeModal = useStoreMasterStore((state) => state.close)
 
   return (
     <Dialog open={isOpen} onOpenChange={closeModal}>
-      <DialogContent className="sm:max-w-[800px] h-[30rem] overflow-y-scroll p-0">
+      <DialogContent className="sm:max-w-[900px] max-h-[30rem] min-h-[30rem] h-[30rem]  overflow-y-scroll p-0 flex flex-col gap-0">
         <DialogHeader className="p-5 border-b border-gray-50 sticky top-0 left-0 bg-white">
           <DialogTitle>
             <h3 className="text-xl capitalize">{modalMode} Store Detail</h3>
@@ -24,7 +24,7 @@ function StoreDetailModal() {
         </DialogHeader>
         <div className="px-6">
           {' '}
-          <StoreDetailForm />
+          <StoreMasterForm />
         </div>
 
         <DialogFooter className="bg-white h-5 sticky bottom-0 right-0"></DialogFooter>
@@ -33,4 +33,4 @@ function StoreDetailModal() {
   )
 }
 
-export default StoreDetailModal
+export default StoreMasterModal

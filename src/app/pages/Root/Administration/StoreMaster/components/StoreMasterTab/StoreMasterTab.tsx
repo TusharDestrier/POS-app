@@ -9,8 +9,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function StoreMasterTab() {
   return (
-    <Tabs defaultValue="store-detail" className="">
-      <TabsList>
+    <Tabs defaultValue="store-detail" className="mt-3">
+      <TabsList className="mb-4">
         <TabsTrigger value="store-detail">Store Detail</TabsTrigger>
         <TabsTrigger value="logistics">Logistics</TabsTrigger>
         <TabsTrigger value="mop-details">MOP Details</TabsTrigger>

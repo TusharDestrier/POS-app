@@ -1,9 +1,9 @@
-import StoreDetailTable from './component/StoreDetailTable'
+import StoreDetailForm from './component/StoreDetailForm'
 
 function StoreDetail() {
   return (
     <div className="store-detail__layout">
-      <StoreDetailTable />
+      <StoreDetailForm />
     </div>
   )
 }

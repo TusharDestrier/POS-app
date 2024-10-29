@@ -1,7 +1,7 @@
-import DocumentSeriesDetailTable from './components/DocumentSeriesDetailTable'
+import DocumentSeriesDetailForm from './components/DocumentSeriesDetailForm'
 
 function DocumentSeries() {
-  return <div className="store-detail__layout">{<DocumentSeriesDetailTable />}</div>
+  return <div className="store-detail__layout">{<DocumentSeriesDetailForm />}</div>
 }
 
 export default DocumentSeries

@@ -1,5 +1,4 @@
-// LogisticDetailTable.tsx
-'use client'
+// StoreDetailTable.tsx
 
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import {
@@ -16,10 +15,10 @@ import {
 } from '@tanstack/react-table'
 import * as React from 'react'
 
-import LedgersDetailModel from '../LedgersDetailModel'
-import { columns } from './data/tableColumns'
-import { data } from './data/tableData'
-import useLedgers from '../../store/useLedgers'
+import { data } from '../../data/tableData'
+import useStoreMasterStore from '../../store/useStoreMasterStore'
+import StoreMasterModal from '../StoreMasterModal'
+import columns from '../StoreMasterTableColumns'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -38,7 +37,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-export function LedgersDetailsTable() {
+function StoreMasterTable() {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -48,8 +47,8 @@ export function LedgersDetailsTable() {
     pageSize: 5, // Set the page size as desired
   })
 
-  const modalToggler = useLedgers((state) => state.toggleOpen)
-  const setModalMode = useLedgers((state) => state.setMode)
+  const modalToggler = useStoreMasterStore((state) => state.toggleOpen)
+  const setModalMode = useStoreMasterStore((state) => state.setMode)
 
   const table = useReactTable({
     data,
@@ -188,7 +187,9 @@ export function LedgersDetailsTable() {
           </div>
         </div>
       </div>
-      <LedgersDetailModel />
+      <StoreMasterModal />
     </>
   )
 }
+
+export default StoreMasterTable
