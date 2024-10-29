@@ -48,7 +48,7 @@ const LedgersDetailsForm = () => {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="form-head">
+            <div className="form-head mb-4">
               <ul className="grid grid-cols-6 gap-3 ">
                 <li className="text-sm font-semibold">Ledger Name</li>
                 <li className="text-sm font-semibold">Sub Ledger Name</li>
@@ -163,7 +163,7 @@ const LedgersDetailsForm = () => {
               </li>
               <li>
                 {' '}
-                <Button type="submit">Submit</Button>
+                <Button type="submit">Save</Button>
               </li>
             </ul>
           </form>

@@ -27,7 +27,7 @@ function LogisticDetailForm() {
   const form = useForm<z.infer<typeof logisticsScema>>({
     resolver: zodResolver(logisticsScema),
     defaultValues: {
-      storeName: '',
+      // storeName: '',
 
       billToAddress: '',
       city: '',
@@ -331,7 +331,7 @@ function LogisticDetailForm() {
             </div>
             {/* Submit Button */}
             <div className="col-span-full text-end">
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Save</Button>
             </div>
           </form>
         </Form>

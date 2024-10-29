@@ -195,7 +195,7 @@ function MopDetailForm() {
             </li>
             <li>
               {' '}
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Save</Button>
             </li>
           </ul>
         </form>

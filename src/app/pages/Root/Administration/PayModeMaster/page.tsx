@@ -15,11 +15,11 @@ export const PayModeMasterPage = () => {
         </Label>
         <Label className=" flex flex-col items-start gap-3" htmlFor="paymode">
           Sequence
-          <Input type="text" placeholder="PayMode" id="paymode" />
+          <Input type="text" placeholder="Sequence" id="sequence" />
         </Label>
         <Label className=" flex flex-col items-start gap-3" htmlFor="paymode">
           Short Code
-          <Input type="text" placeholder="PayMode" id="paymode" />
+          <Input type="text" placeholder="Short Code" id="shortCode" />
         </Label>
         <div className="payments">
           <h3 className="heading-secondary mb-3">Select Payement Methods</h3>
@@ -51,10 +51,9 @@ export const PayModeMasterPage = () => {
             </div>
           </RadioGroup>
         </div>
-        <div className="">
+        <div className="payments">
           <h3 className="heading-secondary mb-3"> Pay Mode Wise Applicable Conditions</h3>
-
-          <RadioGroup defaultValue="comfortable " className="space-y-1 m-4">
+          <RadioGroup defaultValue="comfortable " className="space-y-1 grid-rows-2">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="denomination" id="r10" />
               <Label htmlFor="r10">Accept denomination based payment</Label>

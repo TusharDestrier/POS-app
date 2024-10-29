@@ -431,7 +431,7 @@ function StoreDetailForm() {
 
         {/* Submit Button */}
         <div className="col-span-full p-5 text-end sticky bottom-0 right-0 w-full bg-white z-20">
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Save</Button>
         </div>
       </form>
     </Form>
