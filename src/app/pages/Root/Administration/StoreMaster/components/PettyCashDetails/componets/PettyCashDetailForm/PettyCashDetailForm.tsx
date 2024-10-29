@@ -21,22 +21,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-
-
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-  test: z.array(
-    z.object({
-      value: z.string().min(1, { message: 'Field is required' }),
-    })
-  ),
-})
+import { PettyCashschema } from '@/schema/pettyCash.scema'
 
 const PettyCashDetailsForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof PettyCashschema>>({
+    resolver: zodResolver(PettyCashschema),
     defaultValues: {
       username: '',
       test: [{ value: '' }],
@@ -48,7 +37,7 @@ const PettyCashDetailsForm = () => {
     name: 'test',
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof PettyCashschema>) {
     console.log(values)
   }
 
