@@ -1,12 +1,26 @@
 import { z } from 'zod'
 
-export const PettyCashschema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+export const Pettychema = z.object({
+  pettycahHead: z.string().min(2, {
+    message: 'Please select Petty Cash Head.',
   }),
-  test: z.array(
-    z.object({
-      value: z.string().min(1, { message: 'Field is required' }),
-    })
-  ),
+  limit: z.string().optional(),
+  typeofTransaction: z.string().min(2, {
+    message: 'Please select TypeOf Transaction'
+  }),
+  ledger: z.string().min(2, {
+    message: 'Please select Leadger'
+  }),
+  subLedger: z.string().optional(),
+  discontinue: z.string().optional(),
+  test: z.array(z.object({
+    value: z.string().optional(),
+  })).optional(),
+  })
+
+  
+export const PettyCashschema = z.object({
+  pettycashValues: z.array(Pettychema),  // Use array of `PettyCashschema` objects
 })
+
+ 

@@ -27,14 +27,22 @@ const PettyCashDetailsForm = () => {
   const form = useForm<z.infer<typeof PettyCashschema>>({
     resolver: zodResolver(PettyCashschema),
     defaultValues: {
-      username: '',
-      test: [{ value: '' }],
+      pettycashValues: [
+        {
+          pettycahHead: '',
+          limit: '',
+          typeofTransaction: '',
+          ledger: '',
+          subLedger: '',
+          discontinue: '',
+        },
+      ],
     },
   })
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: 'test',
+    name: 'pettycashValues',
   })
 
   function onSubmit(values: z.infer<typeof PettyCashschema>) {
@@ -47,10 +55,10 @@ const PettyCashDetailsForm = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="">
           <div className="form-head mb-4">
             <ul className="grid grid-cols-6 gap-3 ">
-              <li className="text-sm font-semibold">Petty Cash Head</li>
+              <li className="text-sm font-semibold">Petty Cash Head <span className="text-primary">*</span></li>
               <li className="text-sm font-semibold">Limit</li>
-              <li className="text-sm font-semibold">Type Of Transaction</li>
-              <li className="text-sm font-semibold">Ledger</li>
+              <li className="text-sm font-semibold">TypeOf Transaction <span className="text-primary">*</span></li>
+              <li className="text-sm font-semibold">Ledger <span className="text-primary">*</span></li>
               <li className="text-sm font-semibold">Sub Ledger</li>
               <li className="text-sm font-semibold">Discontinued</li>
             </ul>
@@ -59,7 +67,7 @@ const PettyCashDetailsForm = () => {
             <div key={item.id} className="grid grid-cols-6 gap-3 mb-3 ">
               <FormField
                 control={form.control}
-                name="username"
+                name={`pettycashValues.${index}.pettycahHead`} // Dynamic field name
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -81,12 +89,12 @@ const PettyCashDetailsForm = () => {
               />
               <FormField
                 control={form.control}
-                name="username"
+                name={`pettycashValues.${index}.limit`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
                     <FormControl>
-                      <Input placeholder="Payment Code" {...field} />
+                      <Input placeholder="Limit" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -94,7 +102,7 @@ const PettyCashDetailsForm = () => {
               />
               <FormField
                 control={form.control}
-                name="username"
+                name={`pettycashValues.${index}.typeofTransaction`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -102,7 +110,7 @@ const PettyCashDetailsForm = () => {
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select TypeOf Transaction" />
+                          <SelectValue placeholder="Select TypeOf Transaction" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -118,29 +126,30 @@ const PettyCashDetailsForm = () => {
               />
               <FormField
                 control={form.control}
-                name="username"
+                name={`pettycashValues.${index}.ledger`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
+                    <FormControl>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
                           <SelectValue placeholder="Select Ledger Name" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="m@example.com">m@example.com</SelectItem>
-                        <SelectItem value="m@google.com">m@google.com</SelectItem>
-                        <SelectItem value="m@support.com">m@support.com</SelectItem>
-                      </SelectContent>
-                    </Select>
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="m@example.com">m@example.com</SelectItem>
+                          <SelectItem value="m@google.com">m@google.com</SelectItem>
+                          <SelectItem value="m@support.com">m@support.com</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
-              />
-              <FormField
+              />              <FormField
                 control={form.control}
-                name="username"
+                name={`pettycashValues.${index}.subLedger`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -163,7 +172,7 @@ const PettyCashDetailsForm = () => {
               <div className="flex items-center gap-3">
                 <FormField
                   control={form.control}
-                  name="username"
+                  name={`pettycashValues.${index}.discontinue`}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel></FormLabel>
@@ -188,14 +197,26 @@ const PettyCashDetailsForm = () => {
               </div>
             </div>
           ))}
-          <ul className="flex item-center gap-3 justify-end mt-8">
+          <ul className="flex item-center gap-3 justify-end mt-4">
             <li>
               <Button type="button">Copy from Site</Button>
             </li>
             <li>
-              <Button type="button" onClick={() => append({ value: '' })}>
-                Add Row
-              </Button>
+            <Button
+              type="button"
+              onClick={() =>
+                append({
+                  pettycahHead: '',
+                  limit: '',
+                  typeofTransaction: '',
+                  ledger: ' ',
+                  subLedger: '',
+                  discontinue: '',
+                })
+              }
+            >
+              Add Row
+            </Button>
             </li>
             <li>
               {' '}

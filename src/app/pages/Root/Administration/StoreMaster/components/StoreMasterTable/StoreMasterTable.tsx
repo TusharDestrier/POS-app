@@ -88,7 +88,7 @@ function StoreMasterTable() {
           />
           <ul className="flex items-center gap-3 ms-auto">
             <li>
-              <Button onClick={createModalHandler}>Create</Button>
+              <Button onClick={createModalHandler}>Add</Button>
             </li>
             <li>
               <Button variant={'outline'}>Export</Button>

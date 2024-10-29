@@ -28,19 +28,22 @@ const DocumentSeriesDetailForm = () => {
   const form = useForm<z.infer<typeof DocuemntSeriesschema>>({
     resolver: zodResolver(DocuemntSeriesschema),
     defaultValues: {
-      transactionType: '',
-      seriesname: '',
-      prefix: '',
-      noOfDigits: '',
-      suffix: '',
-      checkbox: '',
-      test: [{ value: '' }],
+      documentValues: [
+        {
+          transactionType: '',
+          seriesname: '',
+          prefix: '',
+          noOfDigits: '',
+          suffix: '',
+          checkbox: '',
+        }
+      ]
     },
   })
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: 'test',
+    name: 'documentValues',
   })
 
   function onSubmit(values: z.infer<typeof DocuemntSeriesschema>) {
@@ -52,10 +55,10 @@ const DocumentSeriesDetailForm = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <div className="form-head mb-4">
             <ul className="grid grid-cols-6 gap-3 ">
-              <li className="text-sm font-semibold">Transaction Type</li>
-              <li className="text-sm font-semibold">Series Name</li>
+              <li className="text-sm font-semibold">Transaction Type <span className="text-primary">*</span></li>
+              <li className="text-sm font-semibold">Series Name <span className="text-primary">*</span></li>
               <li className="text-sm font-semibold">Prefix</li>
-              <li className="text-sm font-semibold">No. of Digits</li>
+              <li className="text-sm font-semibold">No. of Digits <span className="text-primary">*</span></li>
               <li className="text-sm font-semibold">Suffix</li>
               <li className="text-sm font-semibold">Discontinued</li>
             </ul>
@@ -64,7 +67,7 @@ const DocumentSeriesDetailForm = () => {
             <div key={item.id} className="grid grid-cols-6 gap-3 mb-3 ">
               <FormField
                 control={form.control}
-                name="transactionType"
+                name={`documentValues.${index}.transactionType`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -86,7 +89,7 @@ const DocumentSeriesDetailForm = () => {
               />
               <FormField
                 control={form.control}
-                name="seriesname"
+                name={`documentValues.${index}.seriesname`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -99,7 +102,7 @@ const DocumentSeriesDetailForm = () => {
               />
               <FormField
                 control={form.control}
-                name="prefix"
+                name={`documentValues.${index}.prefix`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -112,7 +115,7 @@ const DocumentSeriesDetailForm = () => {
               />
               <FormField
                 control={form.control}
-                name="noOfDigits"
+                name={`documentValues.${index}.noOfDigits`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -123,7 +126,7 @@ const DocumentSeriesDetailForm = () => {
               />
               <FormField
                 control={form.control}
-                name="suffix"
+                name={`documentValues.${index}.suffix`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -135,7 +138,7 @@ const DocumentSeriesDetailForm = () => {
               <div className="flex items-center gap-3">
                 <FormField
                   control={form.control}
-                  name="checkbox"
+                  name={`documentValues.${index}.checkbox`}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel></FormLabel>
@@ -165,7 +168,14 @@ const DocumentSeriesDetailForm = () => {
               <Button type="button">Copy from Site</Button>
             </li>
             <li>
-              <Button type="button" onClick={() => append({ value: '' })}>
+              <Button type="button" onClick={() => append({ 
+                transactionType: '',
+                seriesname: '',
+                prefix: '',
+                noOfDigits: '',
+                suffix: '',
+                checkbox: '',
+               })}>
                 Add Row
               </Button>
             </li>

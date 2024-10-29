@@ -26,14 +26,20 @@ const LedgersDetailsForm = () => {
   const form = useForm<z.infer<typeof LedgersSchema>>({
     resolver: zodResolver(LedgersSchema),
     defaultValues: {
-      username: '',
-      test: [{ value: '' }],
+      ledgerValue: [
+        {
+          ledger: '',
+          subLedger: '',
+          costCentre: '',
+          discontinue: '',
+        }
+      ]
     },
   })
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: 'test',
+    name: 'ledgerValue',
   })
 
   function onSubmit(values: z.infer<typeof LedgersSchema>) {
@@ -46,7 +52,7 @@ const LedgersDetailsForm = () => {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="form-head mb-4">
             <ul className="grid grid-cols-4 gap-3 ">
-              <li className="text-sm font-semibold">Ledger Name</li>
+              <li className="text-sm font-semibold">Ledger Name <span className="text-primary">*</span></li>
               <li className="text-sm font-semibold">Sub Ledger Name</li>
               <li className="text-sm font-semibold">Cost Centre</li>
               <li className="text-sm font-semibold">Discontinued</li>
@@ -56,7 +62,7 @@ const LedgersDetailsForm = () => {
             <div key={item.id} className="grid grid-cols-4 gap-3 mb-4">
               <FormField
                 control={form.control}
-                name="username"
+                name={`ledgerValue.${index}.ledger`} // Dynamic field name
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -78,7 +84,7 @@ const LedgersDetailsForm = () => {
               />
               <FormField
                 control={form.control}
-                name="username"
+                name={`ledgerValue.${index}.subLedger`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -102,7 +108,7 @@ const LedgersDetailsForm = () => {
               />
               <FormField
                 control={form.control}
-                name="username"
+                name={`ledgerValue.${index}.costCentre`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -127,7 +133,7 @@ const LedgersDetailsForm = () => {
               <div className="flex items-center gap-3">
                 <FormField
                   control={form.control}
-                  name="username"
+                  name={`ledgerValue.${index}.discontinue`}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel></FormLabel>
@@ -140,11 +146,11 @@ const LedgersDetailsForm = () => {
                     </FormItem>
                   )}
                 />
-                <div className="flex items-center gap-3 ms-auto">
+                {/* <div className="flex items-center gap-3 ms-auto"> */}
                   <Button size={'icon'} type="button" onClick={() => remove(index)}>
                     <Trash size={'15'} />
                   </Button>
-                </div>
+                {/* </div> */}
               </div>
             </div>
           ))}
@@ -153,7 +159,12 @@ const LedgersDetailsForm = () => {
               <Button type="button">Copy from Site</Button>
             </li>
             <li>
-              <Button type="button" onClick={() => append({ value: '' })}>
+              <Button type="button" onClick={() => append({ 
+                ledger: '',
+                subLedger: '',
+                costCentre: '',
+                discontinue: '', 
+                })}>
                 Add Row
               </Button>
             </li>
