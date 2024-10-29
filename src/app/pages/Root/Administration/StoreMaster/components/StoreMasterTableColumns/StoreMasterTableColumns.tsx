@@ -2,8 +2,8 @@
 import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { ColumnDef } from '@tanstack/react-table'
 
-import { Customer } from './tableData'
-import useLogisticsDetails from '../../../store/useLogisticsDetails'
+import { Customer } from '../../data/tableData'
+import useStoreMasterStore from '../../store/useStoreMasterStore'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -80,8 +80,8 @@ export const columns: ColumnDef<Customer>[] = [
 ]
 
 function TableRowDropDowns({ customer }: { customer: Customer }) {
-  const modalToggler = useLogisticsDetails((state) => state.toggleOpen)
-  const setModalMode = useLogisticsDetails((state) => state.setMode)
+  const modalToggler = useStoreMasterStore((state) => state.toggleOpen)
+  const setModalMode = useStoreMasterStore((state) => state.setMode)
 
   function EditModalHandler() {
     modalToggler()

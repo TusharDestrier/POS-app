@@ -1,9 +1,9 @@
-import MopDetailTable from './components/MopDetailTable'
+import MopDetailForm from './components/MopDetailForm'
 
 function Mop() {
   return (
     <div className="store-detail__layout">
-      <MopDetailTable />
+      <MopDetailForm />
     </div>
   )
 }

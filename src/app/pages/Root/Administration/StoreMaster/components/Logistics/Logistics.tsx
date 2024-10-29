@@ -1,9 +1,9 @@
-import LogisticDetailTable from './component/LogisticDetailTable'
+import LogisticDetailForm from './component/LogisticDetailForm'
 
 function Logistics() {
   return (
     <div className="store-detail__layout">
-      <LogisticDetailTable />
+      <LogisticDetailForm />
     </div>
   )
 }

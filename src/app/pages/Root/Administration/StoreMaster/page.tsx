@@ -1,5 +1,5 @@
-import StoreMasterTab from './components/StoreMasterTab'
+import StoreMasterTable from './components/StoreMasterTable'
 
 export const StoreMasterPage = () => {
-  return <StoreMasterTab />
+  return <StoreMasterTable />
 }

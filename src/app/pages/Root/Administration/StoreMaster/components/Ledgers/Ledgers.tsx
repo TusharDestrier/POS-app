@@ -1,9 +1,9 @@
-import LedgersDetailsTable from './components/LedgersDetailTable'
+import LedgersDetailsForm from './components/LedgersDetailForm'
 
 function Ledgers() {
   return (
     <div className="store-detail__layout">
-      <LedgersDetailsTable />
+      <LedgersDetailsForm />
     </div>
   )
 }
