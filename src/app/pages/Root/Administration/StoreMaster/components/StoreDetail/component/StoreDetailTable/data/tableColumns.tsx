@@ -16,7 +16,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-
 export const columns: ColumnDef<Customer>[] = [
   {
     id: 'select',

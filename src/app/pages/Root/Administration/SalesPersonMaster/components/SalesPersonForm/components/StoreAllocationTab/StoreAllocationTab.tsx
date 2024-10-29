@@ -181,7 +181,7 @@ function StoreAllocationTab() {
             </div>
           ))}
         </div>
-        <div className='flex justify-end gap-3'>
+        <div className="flex justify-end gap-3">
           <Button
             type="button"
             onClick={() =>

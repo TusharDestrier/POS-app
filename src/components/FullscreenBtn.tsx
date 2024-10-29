@@ -46,12 +46,7 @@ function FullscreenBtn() {
   }, [])
 
   return (
-    <Button
-      size="icon"
-      variant="ghost"
-      className="mr-2 cursor-pointer"
-      onClick={toggleFullscreen}
-    >
+    <Button size="icon" variant="ghost" className="mr-2 cursor-pointer" onClick={toggleFullscreen}>
       {isFullscreen ? (
         <Minimize2 size={14} strokeWidth={2} absoluteStrokeWidth />
       ) : (

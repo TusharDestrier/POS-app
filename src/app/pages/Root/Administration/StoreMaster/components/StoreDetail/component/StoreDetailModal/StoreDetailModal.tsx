@@ -9,7 +9,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-
 function StoreDetailModal() {
   const isOpen = useStoreDetail((state) => state.isOpen)
   const modalMode = useStoreDetail((state) => state.mode)

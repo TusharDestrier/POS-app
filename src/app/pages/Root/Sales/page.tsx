@@ -7,7 +7,6 @@ import SalesTable from './components/SalesTable'
 
 import { Card, CardContent } from '@/components/ui/card'
 
-
 function SalesPage() {
   return (
     <>

@@ -8,9 +8,6 @@ import useSearchItemsStore from '../../SalesSearchTable/store/useSearchItems'
 
 import { ProductModified } from '@/types/sales'
 
-
-
-
 function useSalesTable() {
   const { salesData, error, isLoading } = useSalesData()
 

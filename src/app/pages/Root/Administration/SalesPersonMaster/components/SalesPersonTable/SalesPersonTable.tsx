@@ -38,7 +38,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-
 export function SalesPersonTable() {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])

@@ -9,7 +9,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-
 function LogistcDetailModal() {
   const isOpen = useLogisticsDetails((state) => state.isOpen)
   const modalMode = useLogisticsDetails((state) => state.mode)

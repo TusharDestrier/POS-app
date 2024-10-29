@@ -332,7 +332,7 @@ function LogisticDetailForm() {
             </div>
             {/* Submit Button */}
             <div className="col-span-full text-end">
-              <Button type="submit">Save</Button>
+              {/* <Button type="submit">Save</Button> */}
             </div>
           </form>
         </Form>

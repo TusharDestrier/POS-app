@@ -6,7 +6,7 @@ function PromotionBox() {
       <CardHeader>
         <h2 className="heading-secondary"> Promitions </h2>
       </CardHeader>
-      <CardContent className='space-y-1'>
+      <CardContent className="space-y-1">
         <h3 className="text-sm">Details: </h3>
         <h3 className="text-sm">Name: </h3>
         <h3 className="text-sm">Conditions: </h3>

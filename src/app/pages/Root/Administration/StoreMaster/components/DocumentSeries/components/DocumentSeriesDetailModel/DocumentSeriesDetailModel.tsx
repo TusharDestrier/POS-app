@@ -9,7 +9,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-
 function DocumentSeriesDetailModel() {
   const isOpen = useDocumentSeries((state) => state.isOpen)
   const modalMode = useDocumentSeries((state) => state.mode)

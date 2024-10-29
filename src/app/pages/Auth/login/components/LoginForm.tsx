@@ -16,7 +16,6 @@ import { Input } from '@/components/ui/input'
 import { loginSchema } from '@/schema/auth.schema'
 import useAuth from '@/store/useAuth'
 
-
 function LoginForm() {
   const login = useAuth((state) => state.login)
   const form = useForm<z.infer<typeof loginSchema>>({

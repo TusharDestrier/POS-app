@@ -1,4 +1,4 @@
-import { BadgeDollarSign, BookText, Presentation, Settings,  FileText } from 'lucide-react'
+import { BadgeDollarSign, BookText, Presentation, Settings, FileText } from 'lucide-react'
 import { ReactNode } from 'react'
 
 export interface SubItem {
