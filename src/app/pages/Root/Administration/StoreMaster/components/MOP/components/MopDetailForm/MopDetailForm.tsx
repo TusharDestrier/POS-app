@@ -27,8 +27,12 @@ function MopDetailForm() {
   const form = useForm<z.infer<typeof Mopschema>>({
     resolver: zodResolver(Mopschema),
     defaultValues: {
-      username: '',
-      test: [{ value: '' }],
+      payMode: '',
+      ledgers: '',
+      subLedger: '',
+      paymentCode: '',
+      crossStore: '',
+      discontinue: '',
     },
   })
 
@@ -47,10 +51,10 @@ function MopDetailForm() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <div className="form-head mb-4">
             <ul className="grid grid-cols-6 gap-3 ">
-              <li className="text-sm font-semibold">Paymode Name</li>
+              <li className="text-sm font-semibold">Paymode Name <span className="text-primary">*</span></li>
               <li className="text-sm font-semibold">Paymode Code</li>
               <li className="text-sm font-semibold">Cross Store Usage</li>
-              <li className="text-sm font-semibold">Ledger</li>
+              <li className="text-sm font-semibold">Ledger <span className="text-primary">*</span></li>
               <li className="text-sm font-semibold">Sub Ledger</li>
               <li className="text-sm font-semibold">Discontinued</li>
             </ul>
@@ -59,7 +63,7 @@ function MopDetailForm() {
             <div key={item.id} className="grid grid-cols-6 gap-3 ">
               <FormField
                 control={form.control}
-                name="username"
+                name="payMode"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -81,7 +85,7 @@ function MopDetailForm() {
               />
               <FormField
                 control={form.control}
-                name="username"
+                name="paymentCode"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -94,7 +98,7 @@ function MopDetailForm() {
               />
               <FormField
                 control={form.control}
-                name="username"
+                name="crossStore"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -115,7 +119,7 @@ function MopDetailForm() {
               />
               <FormField
                 control={form.control}
-                name="username"
+                name="ledgers"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -137,7 +141,7 @@ function MopDetailForm() {
               />
               <FormField
                 control={form.control}
-                name="username"
+                name="subLedger"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel></FormLabel>
@@ -160,7 +164,7 @@ function MopDetailForm() {
               <div className="flex items-center gap-3">
                 <FormField
                   control={form.control}
-                  name="username"
+                  name="discontinue"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel></FormLabel>

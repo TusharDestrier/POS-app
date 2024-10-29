@@ -1,12 +1,17 @@
 import { z } from 'zod'
 
 export const Mopschema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+  payMode: z.string().min(2, {
+    message: 'Please select Pay Mode.',
   }),
-  test: z.array(
-    z.object({
-      value: z.string().min(1, { message: 'Field is required' }),
-    })
-  ),
+  ledgers: z.string().min(2, {
+    message: 'Please select Ledgers.',
+  }),
+  paymentCode: z.string().optional(),
+  subLedger: z.string().optional(),
+  crossStore: z.string().optional(),
+  discontinue: z.string().optional(),
+  test: z.array(z.object({ // add this field
+    value: z.string().optional(),
+  })).optional(),
 })
