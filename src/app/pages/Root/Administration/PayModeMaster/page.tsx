@@ -52,6 +52,29 @@ export const PayModeMasterPage = () => {
           </RadioGroup>
         </div>
         <div className="payments">
+          <h3 className="heading-secondary mb-3">Applicable Currencies</h3>
+          <RadioGroup defaultValue="comfortable " className="space-y-1">
+            <div className="flex items-center space-x-2">
+              <Label htmlFor="r1">Rupees</Label>
+              <RadioGroupItem value="cash" id="r1" />
+            </div>
+            <div className="flex items-center space-x-2">
+              <Label htmlFor="r2">Dollar</Label>
+              <RadioGroupItem value="credit" id="r2" />
+            </div>
+            <div className="flex items-center space-x-4">
+              <Label htmlFor="r3">Euro</Label>
+              <RadioGroupItem value="gpay" id="r3" />
+            </div>
+            <div className="flex items-center space-x-2">
+              <Label htmlFor="r4">Pound</Label>
+              <RadioGroupItem value="debit" id="r4" />
+            </div>
+          </RadioGroup>
+        </div>
+      </div>
+      <div className="item ml-6 mb-6">
+      <div className="payments">
           <h3 className="heading-secondary mb-3"> Pay Mode Wise Applicable Conditions</h3>
           <RadioGroup defaultValue="comfortable " className="space-y-1 grid-rows-2">
             <div className="flex items-center space-x-2">
@@ -77,29 +100,6 @@ export const PayModeMasterPage = () => {
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="customer" id="r15" />
               <Label htmlFor="r15">Restrict customer loyalty points for this mode of payment</Label>
-            </div>
-          </RadioGroup>
-        </div>
-      </div>
-      <div className="item ml-6 mb-6">
-        <div className="payments">
-          <h3 className="heading-secondary mb-3">Applicable Currencies</h3>
-          <RadioGroup defaultValue="comfortable " className="space-y-1">
-            <div className="flex items-center space-x-2">
-              <Label htmlFor="r1">Rupees</Label>
-              <RadioGroupItem value="cash" id="r1" />
-            </div>
-            <div className="flex items-center space-x-2">
-              <Label htmlFor="r2">Dollar</Label>
-              <RadioGroupItem value="credit" id="r2" />
-            </div>
-            <div className="flex items-center space-x-4">
-              <Label htmlFor="r3">Euro</Label>
-              <RadioGroupItem value="gpay" id="r3" />
-            </div>
-            <div className="flex items-center space-x-2">
-              <Label htmlFor="r4">Pound</Label>
-              <RadioGroupItem value="debit" id="r4" />
             </div>
           </RadioGroup>
         </div>

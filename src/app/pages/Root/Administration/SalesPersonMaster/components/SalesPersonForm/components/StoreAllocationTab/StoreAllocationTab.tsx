@@ -74,7 +74,7 @@ function StoreAllocationTab() {
                 name={`allocations.${index}.storeName`}
                 render={({ field }) => (
                   <FormItem className="col-span-1">
-                    <FormLabel>Store Name *</FormLabel>
+                    <FormLabel>Store Name <span className="text-primary">*</span></FormLabel>
                     <FormControl>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <SelectTrigger>
@@ -113,7 +113,7 @@ function StoreAllocationTab() {
                 name={`allocations.${index}.startDate`}
                 render={({ field }) => (
                   <FormItem className="col-span-1">
-                    <FormLabel>Start Date *</FormLabel>
+                    <FormLabel>Start Date <span className="text-primary">*</span></FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>

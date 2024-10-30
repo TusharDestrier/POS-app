@@ -26,8 +26,9 @@ const formSchema = z.object({
   lastName: z.string().min(1, { message: 'Last Name is required.' }),
   mobileNo: z.string().min(10, { message: 'Mobile No. must be at least 10 digits.' }),
   whatsappNo: z.string().optional(),
-  email: z.string().email({ message: 'Invalid email address.' }).optional(),
-  employeeId: z.string().min(1, { message: 'Employee ID is required.' }),
+  // email: z.string().email({ message: 'Invalid email address.' }).optional(),
+  email: z.string().optional(),
+  employeeId: z.string().optional(),
   allocateRole: z.string().optional(),
   allocateUser: z.string().optional(),
   inactive: z.boolean().optional(),
@@ -61,7 +62,7 @@ function SalesPersonTab() {
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First Name *</FormLabel>
+              <FormLabel>First Name <span className="text-primary">*</span></FormLabel>
               <FormControl>
                 <Input placeholder="First Name" {...field} />
               </FormControl>
@@ -75,7 +76,7 @@ function SalesPersonTab() {
           name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Last Name *</FormLabel>
+              <FormLabel>Last Name <span className="text-primary">*</span></FormLabel>
               <FormControl>
                 <Input placeholder="Last Name" {...field} />
               </FormControl>
@@ -89,7 +90,7 @@ function SalesPersonTab() {
           name="mobileNo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Mobile No. *</FormLabel>
+              <FormLabel>Mobile No.<span className="text-primary">*</span></FormLabel>
               <FormControl>
                 <Input placeholder="Mobile No." {...field} />
               </FormControl>
