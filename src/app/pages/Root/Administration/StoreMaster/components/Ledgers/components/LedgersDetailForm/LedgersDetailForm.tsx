@@ -36,10 +36,10 @@ const LedgersDetailsForm = () => {
       </div>
 
       {fields.map((item, index) => (
-        <div key={item.id} className="grid grid-cols-4 gap-3 mb-4">
+        <div key={item.id} className="grid grid-cols-4 gap-2 mb-3">
           <FormField
             control={control}
-            name={`ledgerValues.${index}.ledger`}
+            name={`ledgers.ledgerValue.${index}.ledger`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -48,9 +48,9 @@ const LedgersDetailsForm = () => {
                       <SelectValue placeholder="Select Ledger Name" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="thegreddefedededce">m@example.com</SelectItem>
-                      <SelectItem value="lkjvjwbvwjnvwbivnccq">m@google.com</SelectItem>
-                      <SelectItem value="lkjsfvkwjnvfkjwbifwn">m@support.com</SelectItem>
+                      <SelectItem value="m@example.com">m@example.com</SelectItem>
+                      <SelectItem value="m@google.com">m@google.com</SelectItem>
+                      <SelectItem value="m@support.com">m@support.com</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -61,7 +61,7 @@ const LedgersDetailsForm = () => {
 
           <FormField
             control={control}
-            name={`ledgerValues.${index}.subLedger`}
+            name={`ledgers.ledgerValue.${index}.subLedger`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -83,7 +83,7 @@ const LedgersDetailsForm = () => {
 
           <FormField
             control={control}
-            name={`ledgerValues.${index}.costCentre`}
+            name={`ledgers.ledgerValue.${index}.costCentre`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -103,19 +103,21 @@ const LedgersDetailsForm = () => {
             )}
           />
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 justify-between">
             <FormField
               control={control}
-              name={`ledgerValues.${index}.discontinue`}
+              name={`ledgers.ledgerValue.${index}.discontinue`}
               render={({ field }) => (
-                <FormItem>
+                <FormItem className='mx-auto'>
                   <FormControl>
+                    <div className="flex items-center justify-center">
                     <Checkbox
                       id={`discontinue-${index}`}
                       {...field}
                       checked={field.value || false}
                       onCheckedChange={(checked) => field.onChange(checked)}
                     />
+                    </div> 
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -140,7 +142,7 @@ const LedgersDetailsForm = () => {
                 ledger: '',
                 subLedger: '',
                 costCentre: '',
-                discontinue: '',
+                discontinue: false,
               })
             }
           >

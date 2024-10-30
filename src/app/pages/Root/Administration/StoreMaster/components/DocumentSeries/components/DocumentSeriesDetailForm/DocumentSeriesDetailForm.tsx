@@ -159,7 +159,7 @@ const DocumentSeriesDetailForm = () => {
                 prefix: '',
                 noOfDigits: '',
                 suffix: '',
-                checkbox: '',
+                checkbox: false,
               })
             }
           >

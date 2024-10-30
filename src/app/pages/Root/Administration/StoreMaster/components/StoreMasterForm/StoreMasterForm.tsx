@@ -34,7 +34,7 @@ function StoreMasterForm() {
       },
       logistics: {
         billToAddress: '123 Demo Street, Demo City',
-        city: 'Demo City',
+        city: 'pune',
         postalCode: '560001',
         state: 'Karnataka',
         contactPerson: 'John Doe',

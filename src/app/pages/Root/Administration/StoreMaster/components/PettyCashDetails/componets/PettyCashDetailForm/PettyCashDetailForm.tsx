@@ -145,14 +145,14 @@ const PettyCashDetailsForm = () => {
             )}
           />
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 justify-between">
             <FormField
               control={control}
               name={`pettyCash.pettycashValues.${index}.discontinue`}
               render={({ field }) => (
-                <FormItem>
+                <FormItem className='ms-auto me-auto'>
                   <FormControl>
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center mt-2">
                       <Checkbox
                         id={`discontinue-${index}`}
                         {...field}
@@ -165,9 +165,11 @@ const PettyCashDetailsForm = () => {
                 </FormItem>
               )}
             />
+            <div>
             <Button size="icon" type="button" onClick={() => remove(index)}>
               <Trash size="15" />
             </Button>
+            </div>
           </div>
         </div>
       ))}
@@ -186,7 +188,7 @@ const PettyCashDetailsForm = () => {
                 typeofTransaction: '',
                 ledger: '',
                 subLedger: '',
-                discontinue: '',
+                discontinue: false,
               })
             }
           >

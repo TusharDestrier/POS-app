@@ -41,7 +41,7 @@ function MopDetailForm() {
       </div>
 
       {fields.map((item, index) => (
-        <div key={item.id} className="grid grid-cols-6 gap-3">
+        <div key={item.id} className="grid grid-cols-6 gap-3 mb-3">
           <FormField
             control={control}
             name={`mop.mopValues.${index}.payMode`}
@@ -140,7 +140,7 @@ function MopDetailForm() {
             )}
           />
 
-          <div className="flex items-center gap-3 justify-between">
+          <div className="flex items-center gap-3 justify-center">
             <FormField
               control={control}
               name={`mop.mopValues.${index}.discontinue`}
@@ -170,7 +170,7 @@ function MopDetailForm() {
         </div>
       ))}
 
-      <ul className="flex items-center gap-3 justify-end mt-5">
+      <ul className="flex items-center gap-3 justify-end mt-4 m-4">
         <li>
           <Button type="button">Copy from Site</Button>
         </li>
