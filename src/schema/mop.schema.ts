@@ -10,8 +10,8 @@ const mopItemSchema = z.object({
   }),
   paymentCode: z.string().optional(),
   subLedger: z.string().optional(),
-  crossStore: z.string().optional(),
-  discontinue: z.string().optional(),
+  crossStore: z.boolean().optional(),
+  discontinue: z.boolean().optional(),
   test: z.array(z.object({
     value: z.string().optional(),
   })).optional(),

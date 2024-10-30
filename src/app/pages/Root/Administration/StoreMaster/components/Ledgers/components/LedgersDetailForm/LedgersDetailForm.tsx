@@ -1,18 +1,9 @@
-import { zodResolver } from '@hookform/resolvers/zod'
 import { Trash } from 'lucide-react'
-import { useFieldArray, useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import {
   Select,
   SelectContent,
@@ -20,161 +11,143 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { LedgersSchema } from '@/schema/ledgers.schema'
 
 const LedgersDetailsForm = () => {
-  const form = useForm<z.infer<typeof LedgersSchema>>({
-    resolver: zodResolver(LedgersSchema),
-    defaultValues: {
-      ledgerValue: [
-        {
-          ledger: '',
-          subLedger: '',
-          costCentre: '',
-          discontinue: '',
-        }
-      ]
-    },
-  })
+  // Access form context for central form control
+  const { control } = useFormContext()
 
+  // Dynamic field management for ledger values
   const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: 'ledgerValue',
+    control,
+    name: 'ledgers.ledgerValue',
   })
-
-  function onSubmit(values: z.infer<typeof LedgersSchema>) {
-    console.log(values)
-  }
 
   return (
     <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="form-head mb-4">
-            <ul className="grid grid-cols-4 gap-3 ">
-              <li className="text-sm font-semibold">Ledger Name <span className="text-primary">*</span></li>
-              <li className="text-sm font-semibold">Sub Ledger Name</li>
-              <li className="text-sm font-semibold">Cost Centre</li>
-              <li className="text-sm font-semibold">Discontinued</li>
-            </ul>
+      <div className="form-head mb-4">
+        <ul className="grid grid-cols-4 gap-3 ">
+          <li className="text-sm font-semibold">
+            Ledger Name <span className="text-primary">*</span>
+          </li>
+          <li className="text-sm font-semibold">Sub Ledger Name</li>
+          <li className="text-sm font-semibold">Cost Centre</li>
+          <li className="text-sm font-semibold">Discontinued</li>
+        </ul>
+      </div>
+
+      {fields.map((item, index) => (
+        <div key={item.id} className="grid grid-cols-4 gap-3 mb-4">
+          <FormField
+            control={control}
+            name={`ledgerValues.${index}.ledger`}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value || undefined}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Ledger Name" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="thegreddefedededce">m@example.com</SelectItem>
+                      <SelectItem value="lkjvjwbvwjnvwbivnccq">m@google.com</SelectItem>
+                      <SelectItem value="lkjsfvkwjnvfkjwbifwn">m@support.com</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={control}
+            name={`ledgerValues.${index}.subLedger`}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Sub Ledger Name" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="m@example.com">m@example.com</SelectItem>
+                      <SelectItem value="m@google.com">m@google.com</SelectItem>
+                      <SelectItem value="m@support.com">m@support.com</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={control}
+            name={`ledgerValues.${index}.costCentre`}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Cost Centre" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="m@example.com">m@example.com</SelectItem>
+                      <SelectItem value="m@google.com">m@google.com</SelectItem>
+                      <SelectItem value="m@support.com">m@support.com</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="flex items-center gap-3">
+            <FormField
+              control={control}
+              name={`ledgerValues.${index}.discontinue`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Checkbox
+                      id={`discontinue-${index}`}
+                      {...field}
+                      checked={field.value || false}
+                      onCheckedChange={(checked) => field.onChange(checked)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button size="icon" type="button" onClick={() => remove(index)}>
+              <Trash size="15" />
+            </Button>
           </div>
-          {fields.map((item, index) => (
-            <div key={item.id} className="grid grid-cols-4 gap-3 mb-4">
-              <FormField
-                control={form.control}
-                name={`ledgerValue.${index}.ledger`} // Dynamic field name
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel></FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Ledger Name" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="m@example.com">m@example.com</SelectItem>
-                        <SelectItem value="m@google.com">m@google.com</SelectItem>
-                        <SelectItem value="m@support.com">m@support.com</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name={`ledgerValue.${index}.subLedger`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel></FormLabel>
-                    <FormControl>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select Sub Ledger Name" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="m@example.com">m@example.com</SelectItem>
-                          <SelectItem value="m@google.com">m@google.com</SelectItem>
-                          <SelectItem value="m@support.com">m@support.com</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name={`ledgerValue.${index}.costCentre`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel></FormLabel>
-                    <FormControl>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select Cost Centre" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="m@example.com">m@example.com</SelectItem>
-                          <SelectItem value="m@google.com">m@google.com</SelectItem>
-                          <SelectItem value="m@support.com">m@support.com</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="flex items-center gap-3">
-                <FormField
-                  control={form.control}
-                  name={`ledgerValue.${index}.discontinue`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel></FormLabel>
-                      <FormControl>
-                        <div className="flex items-center space-x-2 m-9">
-                          <Checkbox id="terms" {...field} />
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {/* <div className="flex items-center gap-3 ms-auto"> */}
-                  <Button size={'icon'} type="button" onClick={() => remove(index)}>
-                    <Trash size={'15'} />
-                  </Button>
-                {/* </div> */}
-              </div>
-            </div>
-          ))}
-          <ul className="flex item-center gap-3 justify-end mt-5">
-            <li>
-              <Button type="button">Copy from Site</Button>
-            </li>
-            <li>
-              <Button type="button" onClick={() => append({ 
+        </div>
+      ))}
+
+      <ul className="flex items-center gap-3 justify-end mt-5">
+        <li>
+          <Button type="button">Copy from Site</Button>
+        </li>
+        <li>
+          <Button
+            type="button"
+            onClick={() =>
+              append({
                 ledger: '',
                 subLedger: '',
                 costCentre: '',
-                discontinue: '', 
-                })}>
-                Add Row
-              </Button>
-            </li>
-            <li>
-              {' '}
-              <Button type="submit">Save</Button>
-            </li>
-          </ul>
-        </form>
-      </Form>
+                discontinue: '',
+              })
+            }
+          >
+            Add Row
+          </Button>
+        </li>
+      </ul>
     </>
   )
 }

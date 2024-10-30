@@ -2,12 +2,10 @@ import { z } from 'zod'
 
 // Define the schema for each item in the `mopValues` array
 const ledgerItemSchema = z.object({
-  ledger: z.string().min(2, {
-    message: 'Please select Ledger.',
-  }),
+  ledger: z.string().optional(),
   subLedger: z.string().optional(),
   costCentre: z.string().optional(),
-  discontinue: z.string().optional(),
+  discontinue: z.boolean().optional(),
  
 })
 

@@ -12,7 +12,7 @@ export const DocuemntSeriesSchema = z.object({
     message: 'noofdigits must be at least 2 characters.',
   }),
   suffix: z.string().optional(),
-  checkbox: z.string().optional(),
+  checkbox: z.boolean().optional(),
 })
 
 export const DocuemntSeriesschema = z.object({

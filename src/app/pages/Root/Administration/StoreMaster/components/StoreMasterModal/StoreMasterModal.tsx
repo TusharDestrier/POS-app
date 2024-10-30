@@ -4,7 +4,6 @@ import StoreMasterForm from '../StoreMasterForm'
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
@@ -27,7 +26,7 @@ function StoreMasterModal() {
           <StoreMasterForm />
         </div>
 
-        <DialogFooter className="bg-white h-5 sticky bottom-0 right-0"></DialogFooter>
+        
       </DialogContent>
     </Dialog>
   )

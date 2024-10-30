@@ -28,6 +28,7 @@ export const appRoutes = {
     {
       index: true,
       element: <RoleWiseRedirection />,
+      
     },
     {
       path: 'dashboard',

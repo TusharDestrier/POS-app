@@ -42,5 +42,5 @@ export const storeDetailFormSchema = z.object({
   operationType: z.string().min(2, {
     message: 'Operation Type is empty',
   }),
-  inActive: z.string().optional(),
+  inActive: z.boolean().optional(),
 })

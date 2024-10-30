@@ -38,5 +38,5 @@ export const logisticsScema = z.object({
   category: z.string().optional(),
 
   operationType: z.string().optional(),
-  inActive: z.string().optional(),
+  inActive: z.boolean().optional(),
 })

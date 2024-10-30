@@ -12,7 +12,7 @@ export const Pettychema = z.object({
     message: 'Please select Leadger'
   }),
   subLedger: z.string().optional(),
-  discontinue: z.string().optional(),
+  discontinue: z.boolean().optional(),
   test: z.array(z.object({
     value: z.string().optional(),
   })).optional(),
