@@ -14,6 +14,9 @@ function SalesPersonModal() {
   const modalMode = useSalesPerson((state) => state.mode)
   const closeModal = useSalesPerson((state) => state.close)
 
+
+  
+
   return (
     <Dialog open={isOpen} onOpenChange={closeModal}>
       <DialogContent className="sm:max-w-[1000px] max-h-[30rem] min-h-[30rem] h-[30rem] overflow-y-scroll p-0 flex flex-col gap-0">
