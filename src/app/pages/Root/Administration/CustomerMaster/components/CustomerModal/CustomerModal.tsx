@@ -16,7 +16,7 @@ function CustomerModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={closeModal}>
-      <DialogContent className="sm:max-w-[800px]  overflow-y-scroll p-0 gap-0">
+      <DialogContent className="sm:max-w-[800px] h-[30rem] min-h-[30rem] max-h-[30rem] overflow-y-scroll p-0 gap-0">
         <DialogHeader className="p-5 border-b border-gray-50 sticky top-0 left-0 bg-white">
           <DialogTitle>
             <h3 className="text-xl capitalize">{modalMode} Sales Person Master </h3>

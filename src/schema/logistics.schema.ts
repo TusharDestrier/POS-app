@@ -15,6 +15,15 @@ export const logisticsScema = z.object({
   state: z.string().min(2, {
     message: 'State Required',
   }),
+  cityTo: z.string().min(3, {
+    message: 'City FIled is  Required',
+  }),
+  postalCodeTo: z.string().min(4, {
+    message: 'Required',
+  }),
+  stateTo: z.string().min(2, {
+    message: 'State Required',
+  }),
   contactPerson: z.string().min(2, {
     message: 'Contact Person is required',
   }),
@@ -26,17 +35,12 @@ export const logisticsScema = z.object({
   shipToAddress: z.string().min(2, {
     message: 'Ship Address is required',
   }),
-  searching: z.string().optional(),
+  sourcingWH: z.array(
+    z.object({
+      warehouse: z.string().min(1, { message: 'Warehouse is required' }),
+      transitDays: z.string().min(1, { message: 'Transit Days are required' }),
+    })
+  ),
 
-  default: z.string().optional(),
-  defaultSale: z.string().optional(),
-  defaultReturn: z.string().optional(),
-
-  date: z.string().optional(),
-  factor: z.string().optional(),
-  storeType: z.string().optional(),
-  category: z.string().optional(),
-
-  operationType: z.string().optional(),
-  inActive: z.boolean().optional(),
+ 
 })

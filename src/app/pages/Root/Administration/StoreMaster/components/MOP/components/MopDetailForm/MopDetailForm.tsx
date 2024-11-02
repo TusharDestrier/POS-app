@@ -170,7 +170,7 @@ function MopDetailForm() {
         </div>
       ))}
 
-      <ul className="flex items-center gap-3 justify-end mt-4 m-4">
+      <ul className="flex items-center gap-3 justify-end mt-4">
         <li>
           <Button type="button">Copy from Site</Button>
         </li>

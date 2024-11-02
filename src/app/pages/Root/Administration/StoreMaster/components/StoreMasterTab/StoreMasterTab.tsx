@@ -17,13 +17,13 @@ function StoreMasterTab() {
     // Wrap form in FormProvider and define form layout
    
         <Tabs defaultValue="store-detail" className="mt-3">
-          <TabsList className="mb-4">
-            <TabsTrigger value="store-detail">Store Detail</TabsTrigger>
-            <TabsTrigger value="logistics">Logistics</TabsTrigger>
-            <TabsTrigger value="mop-details">MOP Details</TabsTrigger>
-            <TabsTrigger value="petty-cash">Petty Cash Details</TabsTrigger>
-            <TabsTrigger value="document-series">Document Series</TabsTrigger>
-            <TabsTrigger value="ledgers">Ledgers</TabsTrigger>
+          <TabsList className="mb-4  flex border-none">
+            <TabsTrigger className='flex-1' value="store-detail">Store Detail</TabsTrigger>
+            <TabsTrigger className='flex-1' value="logistics">Logistics</TabsTrigger>
+            <TabsTrigger className='flex-1' value="mop-details">MOP Details</TabsTrigger>
+            <TabsTrigger className='flex-1' value="petty-cash">Petty Cash Details</TabsTrigger>
+            <TabsTrigger className='flex-1' value="document-series">Document Series</TabsTrigger>
+            <TabsTrigger className='flex-1' value="ledgers">Ledgers</TabsTrigger>
           </TabsList>
 
           <TabsContent value="store-detail">

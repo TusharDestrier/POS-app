@@ -37,21 +37,21 @@ function StoreMasterForm() {
         city: 'pune',
         postalCode: '560001',
         state: 'Karnataka',
+        cityTo: 'pune',
+        postalCodeTo: '560001',
+        stateTo: 'Karnataka',
         contactPerson: 'John Doe',
         contactNo: '1234567890',
         alcontactNo: '0987654321',
         emailId: 'john.doe@example.com',
         shipToAddress: '456 Ship St, Demo City',
-        searching: 'Sourcing Warehouse',
-        default: 'Main Warehouse',
-        defaultSale: 'Sale Warehouse A',
-        defaultReturn: 'Return Warehouse B',
-        date: '2024-01-01',
-        factor: '2.0',
-        storeType: 'Wholesale',
-        category: 'Appliances',
-        operationType: 'Logistics Operation',
-        inActive: false,
+        sourcingWH: [
+          {
+            warehouse:"",
+            transitDays:"",
+          }
+        ],
+       
       },
       mop: {
         mopValues: [

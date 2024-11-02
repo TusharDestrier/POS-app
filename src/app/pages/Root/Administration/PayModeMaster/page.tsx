@@ -1,6 +1,7 @@
 //import { RightArr } from '@/assets/icons'
 //import { Button } from '@/components/ui/button'
 //import { DialogClose, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -74,34 +75,94 @@ export const PayModeMasterPage = () => {
         </div>
       </div>
       <div className="item ml-6 mb-6">
-      <div className="payments">
-          <h3 className="heading-secondary mb-3"> Pay Mode Wise Applicable Conditions</h3>
-          <RadioGroup defaultValue="comfortable " className="space-y-1 grid-rows-2">
+        <div className="payments">
+          <h3 className="heading-secondary mb-3">Pay Mode Wise Applicable Conditions</h3>
+          <div className="space-y-3">
+            {/* Denomination Based Payments */}
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="denomination" id="r10" />
-              <Label htmlFor="r10">Accept denomination based payment</Label>
+              <Checkbox id="denomination" />
+              <Label
+                htmlFor="denomination"
+                className="text-sm font-normal  leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Accept Denomination based payments
+              </Label>
             </div>
+
+            {/* Reference Details Capturing */}
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="reference" id="r11" />
-              <Label htmlFor="r11">Allow reference details capturing</Label>
+              <Checkbox id="reference-details" />
+              <Label
+                htmlFor="reference-details"
+                className="text-sm font-normal= leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Allow reference details capturing
+              </Label>
             </div>
+
+            {/* Negative Values Only */}
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="negative" id="r12" />
-              <Label htmlFor="r12">Accept negative values only</Label>
+              <Checkbox id="negative-values" />
+              <Label
+                htmlFor="negative-values"
+                className="text-sm font-normal= leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Accept negative Values only
+              </Label>
             </div>
+
+            {/* Payment Restriction Conditions */}
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <Checkbox id="payment-restriction" />
+                <Label
+                  htmlFor="payment-restriction"
+                  className="text-sm font-normal= leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Do not accept payment in this mode when:
+                </Label>
+              </div>
+
+              <div className="ml-5">
+                <RadioGroup defaultValue="comfortable">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="default" id="promotion-item-level" />
+                    <Label htmlFor="promotion-item-level">Item level Promotions are applied</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="comfortable" id="promotion-bill-level" />
+                    <Label htmlFor="promotion-bill-level">Bill level promotions are applied</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="compact" id="promotion-any" />
+                    <Label htmlFor="promotion-any">Any promotions are applied</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+            </div>
+
+            {/* Count Based Payment Transfer */}
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="accpet" id="r13" />
-              <Label htmlFor="r13">Do not accpet payment in this mode when:</Label>
+              <Checkbox id="count-based-payment" />
+              <Label
+                htmlFor="count-based-payment"
+                className="text-sm font-normal= leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Count based payment transfer and session closure
+              </Label>
             </div>
+
+            {/* Restrict Customer Loyalty Points */}
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="countBased" id="r14" />
-              <Label htmlFor="r14">Count based payment transfer and session closure</Label>
+              <Checkbox id="restrict-loyalty-points" />
+              <Label
+                htmlFor="restrict-loyalty-points"
+                className="text-sm font-normal= leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Restrict customer loyalty points for this mode of payment
+              </Label>
             </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="customer" id="r15" />
-              <Label htmlFor="r15">Restrict customer loyalty points for this mode of payment</Label>
-            </div>
-          </RadioGroup>
+          </div>
         </div>
       </div>
     </div>
