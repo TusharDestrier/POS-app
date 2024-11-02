@@ -1,4 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Eye, EyeOff } from 'lucide-react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -17,6 +19,7 @@ import { loginSchema } from '@/schema/auth.schema'
 import useAuth from '@/store/useAuth'
 
 function LoginForm() {
+  const [isShow, setShow] = useState(false)
   const login = useAuth((state) => state.login)
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -68,7 +71,15 @@ function LoginForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Password" {...field} />
+                <div className='relative'>
+                  <Input type={isShow ? 'text' : 'password'} placeholder="Password" {...field} />
+                  <span
+                    onClick={() => setShow((prev) => !prev)}
+                    className="absolute right-3 top-2  cursor-pointer"
+                  >
+                    {isShow ? <Eye size={16} /> : <EyeOff size={16} />}
+                  </span>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
