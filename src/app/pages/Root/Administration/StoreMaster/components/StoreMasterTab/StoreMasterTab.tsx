@@ -1,11 +1,11 @@
 
 
-import DocumentSeriesDetailForm from '../DocumentSeries/components/DocumentSeriesDetailForm'
-import LedgersDetailsForm from '../Ledgers/components/LedgersDetailForm'
-import LogisticDetailForm from '../Logistics/component/LogisticDetailForm'
-import MopDetailForm from '../MOP/components/MopDetailForm'
-import PettyCashDetailsForm from '../PettyCashDetails/componets/PettyCashDetailForm'
-import StoreDetailForm from '../StoreDetail/component/StoreDetailForm'
+import DocumentSeries from '../DocumentSeries'
+import Ledgers from '../Ledgers'
+import Logistics from '../Logistics'
+import MOP from '../MOP'
+import PettyCashDetails from '../PettyCashDetails'
+import StoreDetail from '../StoreDetail'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
@@ -27,22 +27,22 @@ function StoreMasterTab() {
           </TabsList>
 
           <TabsContent value="store-detail">
-            <StoreDetailForm />
+            <StoreDetail />
           </TabsContent>
           <TabsContent value="logistics">
-            <LogisticDetailForm />
+            <Logistics />
           </TabsContent>
           <TabsContent value="mop-details">
-            <MopDetailForm/>
+            <MOP/>
           </TabsContent>
           <TabsContent value="petty-cash">
-            <PettyCashDetailsForm />
+            <PettyCashDetails />
           </TabsContent>
           <TabsContent value="document-series">
-            <DocumentSeriesDetailForm />
+            <DocumentSeries />
           </TabsContent>
           <TabsContent value="ledgers">
-            <LedgersDetailsForm />
+            <Ledgers />
           </TabsContent>
         </Tabs>
 
