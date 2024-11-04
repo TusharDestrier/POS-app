@@ -1,6 +1,10 @@
 import { format } from 'date-fns'
+// eslint-disable-next-line import/order
 import { useFormContext } from 'react-hook-form'
 //import { z } from 'zod'
+
+// import { validators } from 'tailwind-merge'
+// import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -11,7 +15,8 @@ import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
 function PersonalTab() {
-  const { control } = useFormContext()
+  const { control } = useFormContext();
+
 
   return (
     <div className=" space-y-8">
@@ -21,7 +26,7 @@ function PersonalTab() {
           name="personal.mobileNo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Mobile No.</FormLabel>
+              <FormLabel>Mobile No. <span className="text-primary">*</span></FormLabel>
               <FormControl>
                 <Input placeholder="Enter Mobile No." {...field} />
               </FormControl>
