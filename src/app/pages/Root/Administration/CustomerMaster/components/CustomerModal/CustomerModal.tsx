@@ -23,7 +23,7 @@ function CustomerModal() {
           </DialogTitle>
         </DialogHeader>
         <div className="px-6">
-          {' '}
+          
           <CustomerForm />
         </div>
 

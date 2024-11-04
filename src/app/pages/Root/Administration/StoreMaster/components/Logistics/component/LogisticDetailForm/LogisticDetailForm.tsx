@@ -16,7 +16,6 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 
 function LogisticDetailForm() {
-  // Central form control access from StoreMasterTab
   const { control } = useFormContext()
 
   const { fields, append, remove } = useFieldArray({
