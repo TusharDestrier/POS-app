@@ -1,3 +1,3 @@
-import { Personal } from "./Personal"
+import Personal from "./Personal"
 
 export default Personal
