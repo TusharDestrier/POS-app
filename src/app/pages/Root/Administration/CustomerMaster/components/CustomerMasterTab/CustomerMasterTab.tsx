@@ -19,7 +19,7 @@ function CustomerMasterTab() {
   return (
     // Wrap form in FormProvider and define form layout
 
-    <Tabs defaultValue="store-detail" className="mt-3">
+    <Tabs defaultValue="personal" className="mt-3">
       <TabsList className="mb-4  flex border-none">
         <TabsTrigger className="flex-1" value="personal">
           Personal
