@@ -1,4 +1,4 @@
-import PurchaseHistoryTab from "./components"
+import PurchaseHistoryTab from "./components/PurchaseHistoryTab"
 
 const PurchaseHistory = () => {
   return (

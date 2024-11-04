@@ -1,4 +1,4 @@
-import LoyaltyPointsTab from "./components"
+import LoyaltyPointsTab from "./components/LoyaltyPointsTab"
 
 export const LoyaltyPoints = () => {
   return (

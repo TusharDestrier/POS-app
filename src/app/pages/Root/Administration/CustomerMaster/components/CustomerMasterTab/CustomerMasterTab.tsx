@@ -1,17 +1,9 @@
-import CommunicationTab from '../CustomerForm/components/CommunicationTab/components'
-import LoyaltyPointsTab from '../CustomerForm/components/LoyaltyPointsTab/components'
-import MemberShipTab from '../CustomerForm/components/MemberShipTab/componets'
-import PersonalTab from '../CustomerForm/components/PersonalTab/components/PersonalTab'
+import Communication from '../CustomerForm/components/Communication'
+import { LoyaltyPoints } from '../CustomerForm/components/LoyaltyPoints/LoyaltyPoints'
+import Membership from '../CustomerForm/components/MemberShip'
+import Personal from '../CustomerForm/components/Personal'
+import PurchaseHistory from '../CustomerForm/components/PurchaseHistory'
 
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function CustomerMasterTab() {
@@ -39,36 +31,24 @@ function CustomerMasterTab() {
       </TabsList>
       {/* Perspnal Tab */}
       <TabsContent value="personal">
-        <PersonalTab />
+        <Personal />
       </TabsContent>
       {/* Communication Tab */}
       <TabsContent value="communication">
-        <CommunicationTab />
+        <Communication />
       </TabsContent>
       {/* Membership Tab */}
       <TabsContent value="membership">
-        <MemberShipTab />
+        <Membership />
       </TabsContent>
       {/* Purchase History Tab */}
       <TabsContent value="purchaseHistory">
-        <Card>
-          <CardHeader>
-            <CardTitle>Purchase History</CardTitle>
-            <CardDescription>View your recent purchases.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            {/* Placeholder text - you might want to replace this with an actual list or table of purchases */}
-            <div className="text-sm text-gray-600">Recent purchases will be displayed here.</div>
-          </CardContent>
-          <CardFooter>
-            <Button>View Full History</Button>
-          </CardFooter>
-        </Card>
+        <PurchaseHistory />      
       </TabsContent>
 
       {/* Loyalty Points Tab */}
       <TabsContent value="loyaltyPoints">
-        <LoyaltyPointsTab />
+        <LoyaltyPoints />
       </TabsContent>
     </Tabs>
   )

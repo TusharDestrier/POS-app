@@ -1,4 +1,4 @@
-import PersonalTab from "./components"
+import PersonalTab from "./components/PersonalTab"
 
 function Personal() {
   return (

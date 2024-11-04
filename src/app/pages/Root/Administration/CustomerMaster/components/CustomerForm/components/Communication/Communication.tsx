@@ -1,4 +1,4 @@
-import CommunicationTab from "./components"
+import CommunicationTab from "./components/CommunicationTab"
 
 export const Communication = () => {
   return (
