@@ -12,41 +12,9 @@ import { Input } from '@/components/ui/input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Textarea } from '@/components/ui/textarea'
 
-// const formSchema = z.object({
-//   address: z.string().min(1, { message: 'Address is required.' }),
-//   area: z.string().optional(),
-//   city: z.string().optional(),
-//   pin: z.string().optional(),
-//   state: z.string().optional(),
-//   email: z.string().email({ message: 'Invalid email address.' }).optional(),
-//   whatsappNo: z.string().optional(),
-//   alternatePhoneNo: z.string().optional(),
-//   receivePushMessage: z.boolean().optional(),
-//   preferredCommunication: z.enum(['sms', 'email', 'whatsapp'], {
-//     required_error: 'Preferred communication mode is required.',
-//   }),
-// })
 
 function CommunicationTab() {
-  // const form = useForm<z.infer<typeof formSchema>>({
-  //   resolver: zodResolver(formSchema),
-  //   defaultValues: {
-  //     address: '',
-  //     area: '',
-  //     city: '',
-  //     pin: '',
-  //     state: '',
-  //     email: '',
-  //     whatsappNo: '',
-  //     alternatePhoneNo: '',
-  //     receivePushMessage: false,
-  //     preferredCommunication: 'sms',
-  //   },
-  // })
-
-  // function onSubmit(values: z.infer<typeof formSchema>) {
-  //   console.log(values)
-  // }
+  
 
   const { control } = useFormContext()
   return (
@@ -54,7 +22,7 @@ function CommunicationTab() {
         {/* Address */}
         <FormField
           control={control}
-          name="address"
+          name="communication.address"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Address</FormLabel>
@@ -70,7 +38,7 @@ function CommunicationTab() {
           {/* Area */}
           <FormField
             control={control}
-            name="area"
+            name="communication.area"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Area</FormLabel>
@@ -85,7 +53,7 @@ function CommunicationTab() {
           {/* City */}
           <FormField
             control={control}
-            name="city"
+            name="communication.city"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>City</FormLabel>
@@ -100,7 +68,7 @@ function CommunicationTab() {
           {/* PIN */}
           <FormField
             control={control}
-            name="pin"
+            name="communication.pin"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>PIN</FormLabel>
@@ -115,7 +83,7 @@ function CommunicationTab() {
           {/* State */}
           <FormField
             control={control}
-            name="state"
+            name="communication.state"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>State</FormLabel>
@@ -130,7 +98,7 @@ function CommunicationTab() {
           {/* Email */}
           <FormField
             control={control}
-            name="email"
+            name="communication.email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
@@ -145,7 +113,7 @@ function CommunicationTab() {
           {/* WhatsApp No. */}
           <FormField
             control={control}
-            name="whatsappNo"
+            name="communication.whatsappNo"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>WhatsApp No.</FormLabel>
@@ -160,7 +128,7 @@ function CommunicationTab() {
           {/* Alternate Phone No. */}
           <FormField
             control={control}
-            name="alternatePhoneNo"
+            name="communication.alternatePhoneNo"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Alternate Phone No.</FormLabel>
@@ -174,7 +142,7 @@ function CommunicationTab() {
           {/* Preferred Communication Mode */}
           <FormField
             control={control}
-            name="preferredCommunication"
+            name="communication.preferredCommunication"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-3 ">
                 <FormLabel>Preferred Communication Mode</FormLabel>
@@ -201,10 +169,9 @@ function CommunicationTab() {
             )}
           />
         </div>
-        <div></div>
         <FormField
           control={control}
-          name="receivePushMessage"
+          name="communication.receivePushMessage"
           render={({ field }) => (
             <FormItem className="flex items-center space-x-4 ">
               <FormControl>
