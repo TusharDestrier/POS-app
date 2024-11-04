@@ -1,3 +1,3 @@
-import MemberShipTab from './MemberShipTab'
+import Membership from "./Membership"
 
-export default MemberShipTab
+export default Membership

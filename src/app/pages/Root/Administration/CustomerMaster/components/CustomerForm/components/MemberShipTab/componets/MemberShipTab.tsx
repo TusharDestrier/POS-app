@@ -138,9 +138,6 @@ function MemberShipTab() {
             )}
           />
         </div>
-        <div className="flex justify-end">
-          <Button type="submit">Submit</Button>
-        </div>
       </form>
     </Form>
   )

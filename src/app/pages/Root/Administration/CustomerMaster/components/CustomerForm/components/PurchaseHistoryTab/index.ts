@@ -1,3 +1,3 @@
-import PurchaseHistoryTab from './PurchaseHistoryTab'
+import PurchaseHistory from "./PurchaseHistory"
 
-export default PurchaseHistoryTab
+export default PurchaseHistory

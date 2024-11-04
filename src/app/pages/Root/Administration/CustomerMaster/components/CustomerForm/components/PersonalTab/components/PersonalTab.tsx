@@ -1,13 +1,11 @@
-import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { useFormContext } from 'react-hook-form'
+//import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import { Checkbox } from '@/components/ui/checkbox'
+//import { Checkbox } from '@/components/ui/checkbox'
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -18,51 +16,52 @@ import { Input } from '@/components/ui/input'
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
-const formSchema = z.object({
-  mobileNo: z.string().min(10, { message: 'Mobile No. must be at least 10 digits.' }),
-  firstName: z.string().min(1, { message: 'First Name is required.' }),
-  middleName: z.string().optional(),
-  lastName: z.string().min(1, { message: 'Last Name is required.' }),
-  gender: z.enum(['male', 'female'], { message: 'Gender is required.' }),
-  dateOfBirth: z.date({ required_error: 'Date of Birth is required.' }),
-  anniversaryDate: z.date().optional(),
-  profession: z.string().optional(),
-  spouseName: z.string().optional(),
-  isEmployee: z.boolean().optional(),
-  panNo: z.string().optional(),
-  gstNo: z.string().optional(),
-  gstDate: z.date().optional(),
-})
+// const formSchema = z.object({
+//   mobileNo: z.string().min(10, { message: 'Mobile No. must be at least 10 digits.' }),
+//   firstName: z.string().min(1, { message: 'First Name is required.' }),
+//   middleName: z.string().optional(),
+//   lastName: z.string().min(1, { message: 'Last Name is required.' }),
+//   gender: z.enum(['male', 'female'], { message: 'Gender is required.' }),
+//   dateOfBirth: z.date({ required_error: 'Date of Birth is required.' }),
+//   anniversaryDate: z.date().optional(),
+//   profession: z.string().optional(),
+//   spouseName: z.string().optional(),
+//   isEmployee: z.boolean().optional(),
+//   panNo: z.string().optional(),
+//   gstNo: z.string().optional(),
+//   gstDate: z.date().optional(),
+// })
 
 function PersonalTab() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      mobileNo: '',
-      firstName: '',
-      middleName: '',
-      lastName: '',
-      gender: 'male',
-      dateOfBirth: undefined,
-      anniversaryDate: undefined,
-      profession: '',
-      spouseName: '',
-      isEmployee: false,
-      panNo: '',
-      gstNo: '',
-      gstDate: undefined,
-    },
-  })
+  // const form = useForm<z.infer<typeof formSchema>>({
+  //   resolver: zodResolver(formSchema),
+  //   defaultValues: {
+  //     mobileNo: '',
+  //     firstName: '',
+  //     middleName: '',
+  //     lastName: '',
+  //     gender: 'male',
+  //     dateOfBirth: undefined,
+  //     anniversaryDate: undefined,
+  //     profession: '',
+  //     spouseName: '',
+  //     isEmployee: false,
+  //     panNo: '',
+  //     gstNo: '',
+  //     gstDate: undefined,
+  //   },
+  // })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   console.log(values)
+  // }
+  const { control } = useFormContext()
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+    <div className=" space-y-8">
+      <div className='space-y-2 '>
         <FormField
-          control={form.control}
+           control={control}
           name="mobileNo"
           render={({ field }) => (
             <FormItem>
@@ -77,7 +76,7 @@ function PersonalTab() {
 
         <div className="flex space-x-4">
           <FormField
-            control={form.control}
+             control={control}
             name="firstName"
             render={({ field }) => (
               <FormItem className="flex-1">
@@ -90,7 +89,7 @@ function PersonalTab() {
             )}
           />
           <FormField
-            control={form.control}
+            control={control}
             name="middleName"
             render={({ field }) => (
               <FormItem className="flex-1">
@@ -103,7 +102,7 @@ function PersonalTab() {
             )}
           />
           <FormField
-            control={form.control}
+            control={control}
             name="lastName"
             render={({ field }) => (
               <FormItem className="flex-1">
@@ -118,7 +117,7 @@ function PersonalTab() {
         </div>
         <div className="grid grid-cols-2 gap-3 items-center">
           <FormField
-            control={form.control}
+            control={control}
             name="gender"
             render={({ field }) => (
               <FormItem>
@@ -126,7 +125,7 @@ function PersonalTab() {
                 <RadioGroup
                   onValueChange={field.onChange}
                   defaultValue={field.value}
-                  className="flex space-x-4"
+                  className="flex  space-x-4"
                 >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="male" id="male" />
@@ -141,8 +140,8 @@ function PersonalTab() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
+          {/* <FormField
+            control={control}
             name="isEmployee"
             render={({ field }) => (
               <FormItem className="flex items-center gap-3">
@@ -151,12 +150,12 @@ function PersonalTab() {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
         </div>
 
         <div className="flex space-x-4">
           <FormField
-            control={form.control}
+             control={control}
             name="dateOfBirth"
             render={({ field }) => (
               <FormItem className="flex-1 flex gap-3 items-center">
@@ -178,7 +177,7 @@ function PersonalTab() {
             )}
           />
           <FormField
-            control={form.control}
+             control={control}
             name="anniversaryDate"
             render={({ field }) => (
               <FormItem className="flex-1 flex gap-3 items-center">
@@ -202,7 +201,7 @@ function PersonalTab() {
         </div>
         <div className="grid grid-cols-2 gap-3 ">
           <FormField
-            control={form.control}
+             control={control}
             name="profession"
             render={({ field }) => (
               <FormItem>
@@ -216,7 +215,7 @@ function PersonalTab() {
           />
 
           <FormField
-            control={form.control}
+             control={control}
             name="spouseName"
             render={({ field }) => (
               <FormItem>
@@ -230,12 +229,14 @@ function PersonalTab() {
           />
         </div>
 
+     
+        </div>
         <div className="space-y-3 ">
           <h3 className="text-lg font-semibold">Statutory Information</h3>
 
           <div className="flex gap-3 items-center">
             <FormField
-              control={form.control}
+               control={control}
               name="panNo"
               render={({ field }) => (
                 <FormItem>
@@ -248,7 +249,7 @@ function PersonalTab() {
               )}
             />
             <FormField
-              control={form.control}
+              control={control}
               name="gstNo"
               render={({ field }) => (
                 <FormItem className="flex-1">
@@ -261,7 +262,7 @@ function PersonalTab() {
               )}
             />
             <FormField
-              control={form.control}
+               control={control}
               name="gstDate"
               render={({ field }) => (
                 <FormItem className="flex-1 flex  flex-col">
@@ -284,11 +285,8 @@ function PersonalTab() {
             />
           </div>
         </div>
-        <div className="text-end ">
-          <Button type="submit">Submit</Button>
         </div>
-      </form>
-    </Form>
+     
   )
 }
 

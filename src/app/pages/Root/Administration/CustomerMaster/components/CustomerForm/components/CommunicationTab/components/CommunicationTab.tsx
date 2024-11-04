@@ -1,11 +1,7 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { useFormContext } from 'react-hook-form'
 
-import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -16,48 +12,48 @@ import { Input } from '@/components/ui/input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Textarea } from '@/components/ui/textarea'
 
-const formSchema = z.object({
-  address: z.string().min(1, { message: 'Address is required.' }),
-  area: z.string().optional(),
-  city: z.string().optional(),
-  pin: z.string().optional(),
-  state: z.string().optional(),
-  email: z.string().email({ message: 'Invalid email address.' }).optional(),
-  whatsappNo: z.string().optional(),
-  alternatePhoneNo: z.string().optional(),
-  receivePushMessage: z.boolean().optional(),
-  preferredCommunication: z.enum(['sms', 'email', 'whatsapp'], {
-    required_error: 'Preferred communication mode is required.',
-  }),
-})
+// const formSchema = z.object({
+//   address: z.string().min(1, { message: 'Address is required.' }),
+//   area: z.string().optional(),
+//   city: z.string().optional(),
+//   pin: z.string().optional(),
+//   state: z.string().optional(),
+//   email: z.string().email({ message: 'Invalid email address.' }).optional(),
+//   whatsappNo: z.string().optional(),
+//   alternatePhoneNo: z.string().optional(),
+//   receivePushMessage: z.boolean().optional(),
+//   preferredCommunication: z.enum(['sms', 'email', 'whatsapp'], {
+//     required_error: 'Preferred communication mode is required.',
+//   }),
+// })
 
 function CommunicationTab() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      address: '',
-      area: '',
-      city: '',
-      pin: '',
-      state: '',
-      email: '',
-      whatsappNo: '',
-      alternatePhoneNo: '',
-      receivePushMessage: false,
-      preferredCommunication: 'sms',
-    },
-  })
+  // const form = useForm<z.infer<typeof formSchema>>({
+  //   resolver: zodResolver(formSchema),
+  //   defaultValues: {
+  //     address: '',
+  //     area: '',
+  //     city: '',
+  //     pin: '',
+  //     state: '',
+  //     email: '',
+  //     whatsappNo: '',
+  //     alternatePhoneNo: '',
+  //     receivePushMessage: false,
+  //     preferredCommunication: 'sms',
+  //   },
+  // })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   console.log(values)
+  // }
 
+  const { control } = useFormContext()
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+    <div className='space-y-3'>
         {/* Address */}
         <FormField
-          control={form.control}
+          control={control}
           name="address"
           render={({ field }) => (
             <FormItem>
@@ -73,7 +69,7 @@ function CommunicationTab() {
         <div className="grid grid-cols-3 gap-4 items-center">
           {/* Area */}
           <FormField
-            control={form.control}
+            control={control}
             name="area"
             render={({ field }) => (
               <FormItem>
@@ -88,7 +84,7 @@ function CommunicationTab() {
 
           {/* City */}
           <FormField
-            control={form.control}
+            control={control}
             name="city"
             render={({ field }) => (
               <FormItem>
@@ -103,7 +99,7 @@ function CommunicationTab() {
 
           {/* PIN */}
           <FormField
-            control={form.control}
+            control={control}
             name="pin"
             render={({ field }) => (
               <FormItem>
@@ -118,7 +114,7 @@ function CommunicationTab() {
 
           {/* State */}
           <FormField
-            control={form.control}
+            control={control}
             name="state"
             render={({ field }) => (
               <FormItem>
@@ -133,7 +129,7 @@ function CommunicationTab() {
 
           {/* Email */}
           <FormField
-            control={form.control}
+            control={control}
             name="email"
             render={({ field }) => (
               <FormItem>
@@ -148,7 +144,7 @@ function CommunicationTab() {
 
           {/* WhatsApp No. */}
           <FormField
-            control={form.control}
+            control={control}
             name="whatsappNo"
             render={({ field }) => (
               <FormItem>
@@ -163,7 +159,7 @@ function CommunicationTab() {
 
           {/* Alternate Phone No. */}
           <FormField
-            control={form.control}
+            control={control}
             name="alternatePhoneNo"
             render={({ field }) => (
               <FormItem>
@@ -177,7 +173,7 @@ function CommunicationTab() {
           />
           {/* Preferred Communication Mode */}
           <FormField
-            control={form.control}
+            control={control}
             name="preferredCommunication"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-3 ">
@@ -207,7 +203,7 @@ function CommunicationTab() {
         </div>
         <div></div>
         <FormField
-          control={form.control}
+          control={control}
           name="receivePushMessage"
           render={({ field }) => (
             <FormItem className="flex items-center space-x-4 ">
@@ -219,12 +215,8 @@ function CommunicationTab() {
             </FormItem>
           )}
         />
-        <div className="flex justify-end">
-          <Button type="submit">Submit</Button>
-        </div>
         {/* Agree to Receive Push Message */}
-      </form>
-    </Form>
+     </div>
   )
 }
 

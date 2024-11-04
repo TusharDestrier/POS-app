@@ -1,3 +1,3 @@
-import LoyaltyPointsTab from './LoyaltyPointsTab'
+import LoyaltyPoint from "@/app/pages/Root/Sales/components/LoyaltyPoint"
 
-export default LoyaltyPointsTab
+export default LoyaltyPoint

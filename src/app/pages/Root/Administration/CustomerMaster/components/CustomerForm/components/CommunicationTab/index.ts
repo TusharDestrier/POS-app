@@ -1,3 +1,3 @@
-import CommunicationTab from './CommunicationTab'
+import { Communication } from "./Communication"
 
-export default CommunicationTab
+export default Communication
