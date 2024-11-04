@@ -6,10 +6,6 @@ import CustomerMasterTab from '../CustomerMasterTab/CustomerMasterTab'
 import { Button } from '@/components/ui/button'
 import { combinedSchema } from '@/schema/storeMaster.schema'
 
-
-
-
-
 function CustomerForm() {
   //const mode = useCustomerMaster((state) => state.mode)
 
@@ -124,7 +120,7 @@ function CustomerForm() {
           onSubmit() // Trigger submission
         }}
       >
-        <CustomerMasterTab/>
+        <CustomerMasterTab />
 
         {/* Submit Button for entire form */}
         <div className="h-[60px] sticky bottom-0 right-0 flex justify-end items-center">
