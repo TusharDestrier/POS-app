@@ -1,7 +1,7 @@
-import CommunicationTab from '../CustomerForm/components/CommunicationTab/components'
-import LoyaltyPointsTab from '../CustomerForm/components/LoyaltyPointsTab/components'
-import MemberShipTab from '../CustomerForm/components/MemberShipTab/componets'
-import PersonalTab from '../CustomerForm/components/PersonalTab/components/PersonalTab'
+import Communication from '../CustomerForm/components/CommunicationTab'
+import LoyaltyPoints from '../CustomerForm/components/LoyaltyPointsTab/LoyaltyPoints'
+import Membership from '../CustomerForm/components/MemberShipTab'
+import Personal from '../CustomerForm/components/PersonalTab'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -15,10 +15,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function CustomerMasterTab() {
-  // Main form instance with resolver for validation
   return (
-    // Wrap form in FormProvider and define form layout
-
     <Tabs defaultValue="personal" className="mt-3">
       <TabsList className="mb-4  flex border-none">
         <TabsTrigger className="flex-1" value="personal">
@@ -39,15 +36,15 @@ function CustomerMasterTab() {
       </TabsList>
       {/* Perspnal Tab */}
       <TabsContent value="personal">
-        <PersonalTab />
+        <Personal />
       </TabsContent>
       {/* Communication Tab */}
       <TabsContent value="communication">
-        <CommunicationTab />
+        <Communication />
       </TabsContent>
       {/* Membership Tab */}
       <TabsContent value="membership">
-        <MemberShipTab />
+        <Membership />
       </TabsContent>
       {/* Purchase History Tab */}
       <TabsContent value="purchaseHistory">
@@ -68,7 +65,7 @@ function CustomerMasterTab() {
 
       {/* Loyalty Points Tab */}
       <TabsContent value="loyaltyPoints">
-        <LoyaltyPointsTab />
+        <LoyaltyPoints />
       </TabsContent>
     </Tabs>
   )

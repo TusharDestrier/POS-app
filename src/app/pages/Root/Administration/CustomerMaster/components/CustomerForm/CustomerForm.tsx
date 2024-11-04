@@ -1,103 +1,47 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
+import { CustomerMasterSchema } from '../../schemas/CustomerMaster.schema'
 import CustomerMasterTab from '../CustomerMasterTab/CustomerMasterTab'
 
 import { Button } from '@/components/ui/button'
-import { combinedSchema } from '@/schema/storeMaster.schema'
 
 function CustomerForm() {
-  //const mode = useCustomerMaster((state) => state.mode)
-
   const formMethods = useForm({
-    resolver: zodResolver(combinedSchema),
+    resolver: zodResolver(CustomerMasterSchema),
     defaultValues: {
-      storeDetail: {
-        storeName: 'Demo Store',
-        storeCode: 'DS123',
-        startDate: '2024-01-01',
-        closeDate: '2025-01-01',
-        storeSize: '2000 sqft',
-        default: 'Default Warehouse 1',
-        defaultSale: 'Sale Warehouse A',
-        defaultReturn: 'Return Warehouse B',
-        GSTIN: '29ABCDE1234F2Z5',
-        date: '2024-01-01',
-        state: 'Karnataka',
-        factor: '1.5',
-        priceList: 'Standard Price List',
-        factorIfAny: 'Special Factor',
-        storeType: 'Retail',
-        category: 'Electronics',
-        franchise: 'Demo Franchise',
-        operationType: 'Retail Operation',
-        inActive: false,
+      personal: {
+        mobileNo: '', // Default to an empty string
+        firstName: '', // Default to an empty string
+        middleName: '', // Optional, can be empty
+        lastName: '', // Default to an empty string
+        gender: 'male', // Default to 'male' or 'female'
+        dateOfBirth: new Date(), // Default to today's date
+        anniversaryDate: null, // Optional, default to null
+        profession: '', // Default to an empty string
+        spouseName: '', // Optional, default to empty string
+        isEmployee: false, // Default to false
+        panNo: '', // Optional, default to empty string
+        gstNo: '', // Optional, default to empty string
+        gstDate: null, // Optional, default to null
       },
-      logistics: {
-        billToAddress: '123 Demo Street, Demo City',
-        city: 'pune',
-        postalCode: '560001',
-        state: 'Karnataka',
-        cityTo: 'pune',
-        postalCodeTo: '560001',
-        stateTo: 'Karnataka',
-        contactPerson: 'John Doe',
-        contactNo: '1234567890',
-        alcontactNo: '0987654321',
-        emailId: 'john.doe@example.com',
-        shipToAddress: '456 Ship St, Demo City',
-        sourcingWH: [
-          {
-            warehouse: '',
-            transitDays: '',
-          },
-        ],
+      communication: {
+        address: '', // Default to an empty string
+        area: '', // Optional, default to empty string
+        city: '', // Optional, default to empty string
+        pin: '', // Optional, default to empty string
+        state: '', // Optional, default to empty string
+        email: '', // Default to an empty string
+        whatsappNo: '', // Optional, default to empty string
+        alternatePhoneNo: '', // Optional, default to empty string
+        receivePushMessage: false, // Default to false
+        preferredCommunication: 'sms', // Default to 'sms'
       },
-      mop: {
-        mopValues: [
-          {
-            payMode: '',
-            ledgers: '',
-            subLedger: '',
-            paymentCode: '',
-            crossStore: false,
-            discontinue: false,
-          },
-        ],
-      },
-      pettyCash: {
-        pettycashValues: [
-          {
-            pettycahHead: '',
-            limit: '',
-            typeofTransaction: '',
-            ledger: '',
-            subLedger: '',
-            discontinue: false,
-          },
-        ],
-      },
-      documentSeries: {
-        documentValues: [
-          {
-            transactionType: '',
-            seriesname: '',
-            prefix: '',
-            noOfDigits: '',
-            suffix: '',
-            checkbox: false,
-          },
-        ],
-      },
-      ledgers: {
-        ledgerValue: [
-          {
-            ledger: '',
-            subLedger: '',
-            costCentre: '',
-            discontinue: false,
-          },
-        ],
+      membership: {
+        customerCategory: '', // Default to an empty string
+        membershipCategory: '', // Default to an empty string
+        membershipNo: '', // Optional, default to empty string
+        validTill: null, // Optional, default to null
       },
     },
   })
@@ -130,56 +74,6 @@ function CustomerForm() {
         </div>
       </form>
     </FormProvider>
-    // <Tabs defaultValue="personal" className="mt-2">
-    //   <TabsList className="grid w-full grid-cols-5">
-    //     <TabsTrigger value="personal">Personal</TabsTrigger>
-    //     <TabsTrigger value="communication">Communication</TabsTrigger>
-    //     <TabsTrigger value="membership">Membership</TabsTrigger>
-    //     {mode !== 'Create' && (
-    //       <>
-    //         <TabsTrigger value="purchaseHistory">Purchase History</TabsTrigger>
-    //         <TabsTrigger value="loyaltyPoints">Loyalty Points</TabsTrigger>
-    //       </>
-    //     )}
-    //   </TabsList>
-
-    //   {/* Personal Tab */}
-    //   <TabsContent value="personal">
-    //     <PersonalTab />
-    //   </TabsContent>
-
-    //   {/* Communication Tab */}
-    //   <TabsContent value="communication">
-    //     <CommunicationTab />
-    //   </TabsContent>
-
-    //   {/* Membership Tab */}
-    //   <TabsContent value="membership">
-    //     <MemberShipTab />
-    //   </TabsContent>
-
-    //   {/* Purchase History Tab */}
-    //   <TabsContent value="purchaseHistory">
-    //     <Card>
-    //       <CardHeader>
-    //         <CardTitle>Purchase History</CardTitle>
-    //         <CardDescription>View your recent purchases.</CardDescription>
-    //       </CardHeader>
-    //       <CardContent className="space-y-2">
-    //         {/* Placeholder text - you might want to replace this with an actual list or table of purchases */}
-    //         <div className="text-sm text-gray-600">Recent purchases will be displayed here.</div>
-    //       </CardContent>
-    //       <CardFooter>
-    //         <Button>View Full History</Button>
-    //       </CardFooter>
-    //     </Card>
-    //   </TabsContent>
-
-    //   {/* Loyalty Points Tab */}
-    //   <TabsContent value="loyaltyPoints">
-    //     <LoyaltyPointsTab />
-    //   </TabsContent>
-    // </Tabs>
   )
 }
 

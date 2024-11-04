@@ -1,3 +1,3 @@
-import LoyaltyPoint from "@/app/pages/Root/Sales/components/LoyaltyPoint"
+import LoyaltyPoint from "./LoyaltyPoints"
 
 export default LoyaltyPoint
