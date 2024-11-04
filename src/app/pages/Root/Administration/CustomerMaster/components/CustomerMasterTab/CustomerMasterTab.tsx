@@ -1,3 +1,4 @@
+import { useCustomerMaster } from '../../store/useCustomerMaster'
 import Communication from '../CustomerForm/components/Communication'
 import LoyaltyPoints from '../CustomerForm/components/LoyaltyPoints/LoyaltyPoints'
 import Membership from '../CustomerForm/components/MemberShip'
@@ -7,6 +8,8 @@ import PurchaseHistory from '../CustomerForm/components/PurchaseHistory'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function CustomerMasterTab() {
+  const mode = useCustomerMaster((state) => state.mode)
+
   return (
     <Tabs defaultValue="personal" className="mt-3">
       <TabsList className="mb-4  flex border-none">
@@ -19,12 +22,17 @@ function CustomerMasterTab() {
         <TabsTrigger className="flex-1" value="membership">
           Membership
         </TabsTrigger>
-        <TabsTrigger className="flex-1" value="purchaseHistory">
-          Purchase History
-        </TabsTrigger>
-        <TabsTrigger className="flex-1" value="loyaltyPoints">
-          Loyalty Points
-        </TabsTrigger>
+
+        {mode !== 'Create' && (
+          <>
+            <TabsTrigger className="flex-1" value="purchaseHistory">
+              Purchase History
+            </TabsTrigger>
+            <TabsTrigger className="flex-1" value="loyaltyPoints">
+              Loyalty Points
+            </TabsTrigger>
+          </>
+        )}
       </TabsList>
       {/* Perspnal Tab */}
       <TabsContent value="personal">

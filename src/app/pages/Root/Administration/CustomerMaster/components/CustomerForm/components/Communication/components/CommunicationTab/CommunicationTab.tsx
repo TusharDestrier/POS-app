@@ -116,7 +116,7 @@ function CommunicationTab() {
             name="communication.whatsappNo"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>WhatsApp No.</FormLabel>
+                <FormLabel>WhatsApp No.<span className="text-primary">*</span></FormLabel>
                 <FormControl>
                   <Input placeholder="Enter WhatsApp No." {...field} />
                 </FormControl>

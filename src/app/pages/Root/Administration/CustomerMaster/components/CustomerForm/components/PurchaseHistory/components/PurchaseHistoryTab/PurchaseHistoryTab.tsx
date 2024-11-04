@@ -1,5 +1,12 @@
+import { useState } from 'react'
+
+import Billwise from './components/BillWise'
+import ItemWise from './components/ItemWise'
+
+
 import { Button } from '@/components/ui/button'
-// import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Table,
   TableBody,
@@ -49,29 +56,22 @@ const billInformation = [
     paymentMethod: 'Bank Transfer',
   },
 ]
-function DetailModel() {
-  alert(3)
-}
+
 function PurchaseHistoryTab() {
+  const [itemDetail, setItemDetail] = useState<null | string>(null)
+  const [itemMode, setItemMode] = useState<'IW' | 'BW'>('IW')
+  function detailHandler(x: string) {
+    //console.log(x)
+    setItemDetail(x)
+  }
+
+  function itemModeHandler(mode: 'BW' | 'IW') {
+    setItemMode(mode)
+   // console.log(mode);
+  }
+
   return (
     <div>
-      {/* <div className="flex items-center space-x-2 m-2">
-        <h1>Purchase History</h1>
-        <Checkbox id="terms" />
-        <label
-          htmlFor="terms"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          Bill Wise
-        </label>
-        <Checkbox id="terms" />
-        <label
-          htmlFor="terms"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          Item Wise
-        </label>
-      </div> */}
       <div>
         <Table>
           {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
@@ -90,7 +90,9 @@ function PurchaseHistoryTab() {
                 <TableCell>{bill.billDate}</TableCell>
                 <TableCell>{bill.billAmount}</TableCell>
                 <TableCell className="text-right">
-                  <Button onClick={DetailModel}>Details</Button>
+                  <Button type="button" onClick={() => detailHandler(bill.billNo)}>
+                    Details
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -103,6 +105,29 @@ function PurchaseHistoryTab() {
           </TableFooter>
         </Table>
       </div>
+      {itemDetail && (
+        <>
+          <div className="mt-10">
+              <h1>Purchase History</h1>
+              <RadioGroup defaultValue="mode" className='flex gap-3 items-center mt-3'>
+              <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="BW" id="BW" defaultValue={itemMode} onClick={() => itemModeHandler('BW')} />
+                  <Label htmlFor="BW">Bill Wise</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem defaultValue={itemMode} value="IW" id="IW" onClick={() => itemModeHandler('IW')} />
+                  <Label htmlFor="IW">Item Wise</Label>
+                </div>
+              </RadioGroup>
+          </div>
+          {itemMode === 'IW' ? (
+            <ItemWise/>
+          
+          ) : (
+            <Billwise/>
+          )}
+        </>
+      )}
     </div>
   )
 }
