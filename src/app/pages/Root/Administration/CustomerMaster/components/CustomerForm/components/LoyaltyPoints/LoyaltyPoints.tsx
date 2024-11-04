@@ -1,7 +1,9 @@
 import LoyaltyPointsTab from "./components/LoyaltyPointsTab"
 
-export const LoyaltyPoints = () => {
+ const LoyaltyPoints = () => {
   return (
     <div><LoyaltyPointsTab/></div>
   )
 }
+
+export default LoyaltyPoints

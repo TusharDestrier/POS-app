@@ -6,6 +6,5 @@ import { storeAllocationSchema } from "./StoreAllocation.schema";
 export const SalesPersonFormSchema = z.object({
     salesPerson: salesPersonSchema, // Store details form schema
     storeAllocation: storeAllocationSchema,          // Logistics form schema
-               // Ledgers schema (array support included)
   });
   
