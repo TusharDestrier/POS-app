@@ -6,6 +6,8 @@ import CustomerMasterLayout from '@/app/pages/Root/Administration/CustomerMaster
 import CustomerMasterPage from '@/app/pages/Root/Administration/CustomerMaster/page'
 import { AdministrationLayout } from '@/app/pages/Root/Administration/layout'
 import { PayModeMasterPage } from '@/app/pages/Root/Administration/PayModeMaster/page'
+import PettyCashHeadLayout from '@/app/pages/Root/Administration/PettyCashHead/layout'
+import PettyCashHeadPage from '@/app/pages/Root/Administration/PettyCashHead/page'
 import SalesPersonMasterLayout from '@/app/pages/Root/Administration/SalesPersonMaster/layout'
 import SalesPersonMasterPage from '@/app/pages/Root/Administration/SalesPersonMaster/page'
 import { StoreMasterPage } from '@/app/pages/Root/Administration/StoreMaster/page'
@@ -73,6 +75,16 @@ export const appRoutes = {
                 {
                   index: true,
                   element: <SalesPersonMasterPage />,
+                },
+              ],
+            },
+            {
+              path: 'petty-cash-heads',
+              element: <PettyCashHeadLayout />,
+              children: [
+                {
+                  index: true,
+                  element: <PettyCashHeadPage />,
                 },
               ],
             },

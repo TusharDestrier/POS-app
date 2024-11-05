@@ -85,6 +85,8 @@ This project is built using modern web technologies aimed at creating a scalable
 src
 ├── app
 │   ├── pages
+|   |── root
+|   |
 │   ├── App.tsx
 │   └── index.ts
 ├── assets
