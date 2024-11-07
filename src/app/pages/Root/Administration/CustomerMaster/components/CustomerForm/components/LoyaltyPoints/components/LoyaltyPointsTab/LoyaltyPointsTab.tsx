@@ -49,6 +49,7 @@ function LoyaltyPointsTab() {
   const balancePoint = loyaltyData[loyaltyData.length - 1].balance
 
   return (
+    <div className='border p-4 border-black border-solid h-[580px] overflow-y-auto'>
     <div className="space-y-6 mt-5">
       <div>
         <h2 className="heading-secondary mb-3">Loyalty Points Details</h2>
@@ -97,6 +98,7 @@ function LoyaltyPointsTab() {
           </TableBody>
         </Table>
       </div>
+    </div>
     </div>
   )
 }

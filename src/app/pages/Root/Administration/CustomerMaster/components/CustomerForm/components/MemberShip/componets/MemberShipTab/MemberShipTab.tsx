@@ -18,6 +18,7 @@ function MemberShipTab() {
  
   const { control } = useFormContext()
   return (
+    <div className='border p-4 border-black border-solid h-[580px] overflow-y-auto'>
     <div className="grid grid-cols-2 gap-4">
       {/* Customer Category */}
       <FormField
@@ -107,6 +108,7 @@ function MemberShipTab() {
           </FormItem>
         )}
       />
+    </div>
     </div>
   )
 }

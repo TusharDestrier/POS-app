@@ -17,7 +17,7 @@ function StoreDetailForm() {
   const { control } = useFormContext()
 
   return (
-    <div className="grid grid-cols-[0.8fr,1fr]">
+    <div className="grid grid-cols-[0.8fr,1fr] border border-solid border-black h-[580px] overflow-y-auto">
       <div className=' '>
         <div className='border p-3 space-y-3'>
           {/* Store Code Field */}
@@ -150,8 +150,8 @@ function StoreDetailForm() {
                 </FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Store Type" />
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Store Type" ></SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>

@@ -71,7 +71,7 @@ function PurchaseHistoryTab() {
   }
 
   return (
-    <div>
+    <div className='border p-4 border-black border-solid h-[580px] overflow-y-auto'>
       <div>
         <Table>
           {/* <TableCaption>A list of your recent invoices.</TableCaption> */}

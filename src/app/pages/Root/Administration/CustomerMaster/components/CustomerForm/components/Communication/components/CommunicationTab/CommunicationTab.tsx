@@ -13,11 +13,11 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Textarea } from '@/components/ui/textarea'
 
 
-function CommunicationTab() {
-  
+function CommunicationTab() { 
 
   const { control } = useFormContext()
   return (
+    <div className="border p-4 border-black border-solid h-[580px] overflow-y-auto">
     <div className='space-y-3'>
         {/* Address */}
         <FormField
@@ -183,6 +183,7 @@ function CommunicationTab() {
           )}
         />
         {/* Agree to Receive Push Message */}
+     </div>
      </div>
   )
 }

@@ -1,6 +1,9 @@
 //import { RightArr } from '@/assets/icons'
 //import { Button } from '@/components/ui/button'
 //import { DialogClose, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import Image from './Image/pay_Image.jpg'
+//import Image from './Image/paymode.jpg'
+
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -9,6 +12,8 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 export const PayModeMasterPage = () => {
   return (
     <div className="items pe-4 space-y-5 border-e border-solid border-gray-100">
+      <div className='grid grid-cols-2 gap-7'>
+      <div className='space-y-4'>
     <Label className=" flex flex-col items-start gap-3" htmlFor="paymode">
       PayMode
       <Input type="text" placeholder="PayMode" id="paymode" />
@@ -21,6 +26,13 @@ export const PayModeMasterPage = () => {
       Short Code
       <Input type="text" placeholder="Short Code" id="shortCode" />
     </Label>
+    </div>
+    <div>
+      {/* <h1>Image</h1> */}
+    <img src={Image} alt='PayMode' width={"390px"}></img>
+    </div>
+      </div>
+     
     <div className='grid grid-cols-2  items-start '>
       <div className="payments">
         <h3 className="heading-secondary mb-3">Select Payement Methods</h3>

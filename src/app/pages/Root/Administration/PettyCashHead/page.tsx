@@ -1,8 +1,7 @@
+import PettyCashHeadTable from "./components/PettyCashHeadTable"
 
 function PettyCashHeadPage() {
-  return (
-    <div>PettyCashHeadPage</div>
-  )
+  return <PettyCashHeadTable/>
 }
 
 export default PettyCashHeadPage

@@ -33,7 +33,7 @@ function StoreAllocationTab() {
   });
 
   return (
-    <>
+    <div className='border p-4 border-black border-solid h-[580px] overflow-y-auto'>
       <div className="items-center space-y-4">
         {fields.map((field, index) => (
           <div className="grid grid-cols-5 items-center gap-3" key={field.id}>
@@ -172,7 +172,7 @@ function StoreAllocationTab() {
         </Button>
 
       </div>
-    </>
+    </div>
   );
 }
 

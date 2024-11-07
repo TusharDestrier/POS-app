@@ -39,6 +39,7 @@ function SalesPersonForm() {
   )
 
   return (
+    // <div className="border p-4 border-black border-solid h-[430px] overflow-y-auto">
     <FormProvider {...formMethods}>
       <form
         onSubmit={(e) => {
@@ -59,7 +60,6 @@ function SalesPersonForm() {
           </TabsContent>
           <TabsContent value="storeAllocation">
             <h3 className="heading-secondary mb-3 mt-3">Store Allocation</h3>
-
             <StoreAllocationTab />
           </TabsContent>
         </Tabs>
@@ -69,6 +69,7 @@ function SalesPersonForm() {
         </div>
       </form>
     </FormProvider>
+    
   )
 }
 

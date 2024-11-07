@@ -1,13 +1,14 @@
 import { create } from 'zustand'
 
-type PettyCasgType = {
+type PettyCashHeadType = {
   isOpen: boolean
   mode: 'Edit' | 'Create' | 'View'
   toggleOpen: () => void
   close: () => void
   setMode: (newMode: 'Edit' | 'Create' | 'View') => void
 }
-export const usePettyCashDetails = create<PettyCasgType>((set) => ({
+
+export const usePettyCashHead = create<PettyCashHeadType>((set) => ({
   isOpen: false,
   mode: 'Create',
   toggleOpen: () => set((state) => ({ isOpen: !state.isOpen })),
@@ -15,4 +16,4 @@ export const usePettyCashDetails = create<PettyCasgType>((set) => ({
   setMode: (newMode) => set(() => ({ mode: newMode })),
 }))
 
-export default usePettyCashDetails
+export default usePettyCashHead

@@ -115,6 +115,7 @@ function StoreMasterForm() {
   return (
     <FormProvider {...formMethods}>
       <form
+      className=''
         onSubmit={(e) => {
           e.preventDefault() // Ensure default form submission behavior is prevented
           onSubmit() // Trigger submission
@@ -122,7 +123,7 @@ function StoreMasterForm() {
       >
         <StoreMasterTab />
         {/* Submit Button for entire form */}
-        <div className="h-[60px] sticky bottom-0 right-0 flex justify-end items-center">
+        <div className="h-[60px] flex justify-end items-center  ">
           <Button type="submit" className=" btn btn-primary">
             Submit All
           </Button>

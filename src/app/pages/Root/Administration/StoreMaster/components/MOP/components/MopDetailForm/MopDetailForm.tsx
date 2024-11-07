@@ -24,8 +24,8 @@ function MopDetailForm() {
   })
 
   return (
-    <>
-      <div className="form-head mb-4">
+    < div className='border p-4 border-black border-solid h-[580px] overflow-y-auto'>
+      <div className="form-head mb-4 ">
         <ul className="grid grid-cols-6 gap-3">
           <li className="text-sm font-semibold">
             Paymode Name <span className="text-primary">*</span>
@@ -192,7 +192,7 @@ function MopDetailForm() {
           </Button>
         </li>
       </ul>
-    </>
+    </div>
   )
 }
 

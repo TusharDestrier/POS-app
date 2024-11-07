@@ -24,7 +24,7 @@ function LogisticDetailForm() {
   })
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-2 gap-3 border p-4 border-black border-solid h-[580px] overflow-y-auto">
       <div className="space-y-3">
         {/* Bill To Address Field */}
         <FormField
@@ -307,7 +307,7 @@ function LogisticDetailForm() {
                     <FormItem>
                       <FormControl>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger>
                     <SelectValue placeholder="Select a state" />
                   </SelectTrigger>
                   <SelectContent>

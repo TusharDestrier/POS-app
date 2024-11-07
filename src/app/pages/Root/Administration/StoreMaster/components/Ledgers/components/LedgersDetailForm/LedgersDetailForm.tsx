@@ -23,7 +23,7 @@ const LedgersDetailsForm = () => {
   })
 
   return (
-    <>
+    <div className="border p-4 border-black border-solid h-[580px] overflow-y-auto">
       <div className="form-head mb-4">
         <ul className="grid grid-cols-4 gap-3 ">
           <li className="text-sm font-semibold">
@@ -150,7 +150,7 @@ const LedgersDetailsForm = () => {
           </Button>
         </li>
       </ul>
-    </>
+    </div>
   )
 }
 

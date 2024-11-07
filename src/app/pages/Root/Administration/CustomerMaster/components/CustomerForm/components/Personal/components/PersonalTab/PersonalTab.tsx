@@ -19,6 +19,7 @@ function PersonalTab() {
 
 
   return (
+    <div className='border p-4 border-black border-solid h-[580px] overflow-y-auto'>
     <div className=" space-y-8">
       <div className="space-y-2 ">
         <FormField
@@ -244,6 +245,7 @@ function PersonalTab() {
           />
         </div>
       </div>
+    </div>
     </div>
   )
 }
