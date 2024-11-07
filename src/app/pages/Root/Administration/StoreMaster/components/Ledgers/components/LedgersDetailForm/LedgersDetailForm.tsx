@@ -36,7 +36,7 @@ const LedgersDetailsForm = () => {
       </div>
 
       {fields.map((item, index) => (
-        <div key={item.id} className="grid grid-cols-4 gap-2 mb-3">
+        <div key={item.id} className="grid grid-cols-4 gap-3 mb-3">
           <FormField
             control={control}
             name={`ledgers.ledgerValue.${index}.ledger`}
@@ -103,7 +103,7 @@ const LedgersDetailsForm = () => {
             )}
           />
 
-          <div className="flex items-center gap-3 justify-between">
+          <div className="grid grid-cols-4 gap-3 mb-3">
             <FormField
               control={control}
               name={`ledgers.ledgerValue.${index}.discontinue`}

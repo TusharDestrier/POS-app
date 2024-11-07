@@ -145,7 +145,7 @@ const PettyCashDetailsForm = () => {
             )}
           />
 
-          <div className="flex items-center gap-3 justify-between">
+          <div className="grid grid-cols-4 gap-3 mb-3">
             <FormField
               control={control}
               name={`pettyCash.pettycashValues.${index}.discontinue`}
@@ -165,7 +165,7 @@ const PettyCashDetailsForm = () => {
                 </FormItem>
               )}
             />
-            <div>
+            <div className="grid grid-cols-4 gap-3 mb-3">
             <Button size="icon" type="button" onClick={() => remove(index)}>
               <Trash size="15" />
             </Button>
