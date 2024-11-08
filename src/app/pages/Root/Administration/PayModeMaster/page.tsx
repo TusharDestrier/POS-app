@@ -1,7 +1,7 @@
 //import { RightArr } from '@/assets/icons'
 //import { Button } from '@/components/ui/button'
 //import { DialogClose, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import Image from './Image/Pay_mode.jpg'
+import Image from './Image/pay_Image.jpg'
 //import Image from './Image/paymode.jpg'
 
 import { Checkbox } from '@/components/ui/checkbox'
