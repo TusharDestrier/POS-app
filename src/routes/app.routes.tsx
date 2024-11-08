@@ -4,6 +4,8 @@ import ErrorPage from '@/app/pages/ErrorPage/page'
 import RoleWiseRedirection from '@/app/pages/RoleWiseRedirection'
 import CustomerMasterLayout from '@/app/pages/Root/Administration/CustomerMaster/layout'
 import CustomerMasterPage from '@/app/pages/Root/Administration/CustomerMaster/page'
+import DiscountPolicy from '@/app/pages/Root/Administration/DiscountPolicy'
+import GenericPolicy from '@/app/pages/Root/Administration/GenericPolicy'
 import { AdministrationLayout } from '@/app/pages/Root/Administration/layout'
 import { PayModeMasterPage } from '@/app/pages/Root/Administration/PayModeMaster/page'
 import PettyCashHeadLayout from '@/app/pages/Root/Administration/PettyCashHead/layout'
@@ -11,6 +13,7 @@ import PettyCashHeadPage from '@/app/pages/Root/Administration/PettyCashHead/pag
 import SalesPersonMasterLayout from '@/app/pages/Root/Administration/SalesPersonMaster/layout'
 import SalesPersonMasterPage from '@/app/pages/Root/Administration/SalesPersonMaster/page'
 import { StoreMasterPage } from '@/app/pages/Root/Administration/StoreMaster/page'
+import StoreSpecificPolicy from '@/app/pages/Root/Administration/StoreSpecificPolicy'
 import CustomerPage from '@/app/pages/Root/Customer/page'
 import DashboardLayout from '@/app/pages/Root/Dashboard/layout'
 import DashboardPage from '@/app/pages/Root/Dashboard/page'
@@ -69,6 +72,10 @@ export const appRoutes = {
               ],
             },
             {
+              path: 'paymode-master',
+              element: <PayModeMasterPage />,
+            },
+            {
               path: 'salesperson-master',
               element: <SalesPersonMasterLayout />,
               children: [
@@ -79,6 +86,18 @@ export const appRoutes = {
               ],
             },
             {
+              path: 'generic-policy',
+               element: <GenericPolicy />,
+            },
+            {
+              path: 'store-specific-policy',
+              element: <StoreSpecificPolicy/>
+            },
+            {
+              path: 'discount-policy',
+              element: <DiscountPolicy/>
+             },
+            {
               path: 'petty-cash-heads',
               element: <PettyCashHeadLayout />,
               children: [
@@ -87,10 +106,6 @@ export const appRoutes = {
                   element: <PettyCashHeadPage />,
                 },
               ],
-            },
-            {
-              path: 'paymode-master',
-              element: <PayModeMasterPage />,
             },
           ],
         },

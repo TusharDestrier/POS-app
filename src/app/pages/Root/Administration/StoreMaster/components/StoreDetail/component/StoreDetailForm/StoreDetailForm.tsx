@@ -15,6 +15,8 @@ import {
 
 function StoreDetailForm() {
   const { control } = useFormContext()
+  let isEditMode = false;
+  let isCreateMode = false;
 
   return (
     <div className="grid grid-cols-[0.8fr,1fr] border border-solid border-black h-[580px] overflow-y-auto">
@@ -30,7 +32,7 @@ function StoreDetailForm() {
                   Store Code <span className="text-primary">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Store Code" {...field} />
+                  <Input placeholder="Store Code" {...field} disabled={!isEditMode || !isCreateMode} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -46,7 +48,7 @@ function StoreDetailForm() {
                   Store Name <span className="text-primary">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Store name" {...field} />
+                  <Input placeholder="Store name" {...field} disabled={!isEditMode }/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -128,13 +130,11 @@ function StoreDetailForm() {
                   <Checkbox {...field} />
                 </FormControl>
                 <FormLabel>Inactive</FormLabel>
-
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        
       </div>
 
       <div className=''>
@@ -223,7 +223,7 @@ function StoreDetailForm() {
                   Start Date <span className="text-primary">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input type="date" placeholder="Start Date" {...field} />
+                  <Input type="date" placeholder="Start Date" {...field} disabled={!isEditMode }/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -254,7 +254,7 @@ function StoreDetailForm() {
                   GSTIN No <span className="text-primary">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="GSTIN No" {...field} />
+                  <Input placeholder="GSTIN No" {...field} disabled={!isEditMode } />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -290,8 +290,6 @@ function StoreDetailForm() {
           />
         </div>
       </div>
-
-     
     </div>
   )
 }

@@ -41,7 +41,7 @@ function MopDetailForm() {
       </div>
 
       {fields.map((item, index) => (
-        <div key={item.id} className="grid grid-cols-6 gap-3 mb-3">
+        <div key={item.id} className="grid grid-cols-6 gap-3 mb-3 m-3">
           <FormField
             control={control}
             name={`mop.mopValues.${index}.payMode`}
@@ -76,14 +76,13 @@ function MopDetailForm() {
               </FormItem>
             )}
           />
-
           <FormField
             control={control}
             name={`mop.mopValues.${index}.crossStore`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="flex items-center  justify-center mt-2 ">
+                  <div className="flex items-center mt-2 m-10">
                     <Checkbox
                       id={`crossStore-${index}`}
                       checked={field.value || false}
@@ -140,14 +139,14 @@ function MopDetailForm() {
             )}
           />
 
-          <div className="grid grid-cols-4 gap-3 mb-3">
+          <div className="grid grid-cols-4 gap-3 mb-3 m-3">
             <FormField
               control={control}
               name={`mop.mopValues.${index}.discontinue`}
               render={({ field }) => (
                 <FormItem className='ms-auto me-auto'>
                   <FormControl>
-                    <div className="flex items-center  mt-2">
+                    <div className="flex items-center justify-center">
                       <Checkbox
                         id={`discontinue-${index}`}
                         checked={field.value || false}
@@ -156,15 +155,14 @@ function MopDetailForm() {
                       />
                     </div>
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div>
-              <Button size="icon" type="button" onClick={() => remove(index)}>
-                <Trash size="15" />
-              </Button>
+              <div className="grid grid-cols-4 gap-3 mb-5">
+            <Button size="icon" type="button" onClick={() => remove(index)}>
+              <Trash size="15" />
+            </Button>
             </div>
           </div>
         </div>

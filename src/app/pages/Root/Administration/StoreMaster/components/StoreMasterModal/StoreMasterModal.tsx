@@ -25,8 +25,6 @@ function StoreMasterModal() {
           {' '}
           <StoreMasterForm />
         </div>
-
-        
       </DialogContent>
     </Dialog>
   )
