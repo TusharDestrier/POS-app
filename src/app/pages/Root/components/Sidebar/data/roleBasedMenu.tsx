@@ -21,6 +21,7 @@ export interface RoleBasedMenu {
   cashier: SidebarItem[]
 }
 
+
 export const roleBasedMenu: RoleBasedMenu = {
   admin: [
     {
