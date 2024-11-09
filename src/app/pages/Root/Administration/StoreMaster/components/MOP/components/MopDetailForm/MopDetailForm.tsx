@@ -82,7 +82,7 @@ function MopDetailForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="flex items-center mt-2 m-10">
+                  <div className="flex items-center mt-2 m-14">
                     <Checkbox
                       id={`crossStore-${index}`}
                       checked={field.value || false}
@@ -159,7 +159,7 @@ function MopDetailForm() {
                 </FormItem>
               )}
             />
-              <div className="grid grid-cols-4 gap-3 mb-5">
+              <div className="grid grid-cols-4 gap-3 mb-3">
             <Button size="icon" type="button" onClick={() => remove(index)}>
               <Trash size="15" />
             </Button>

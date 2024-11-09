@@ -8,6 +8,7 @@ import { combinedSchema } from '@/schema/storeMaster.schema'
 // Schema for validation
 
 function StoreMasterForm() {
+  
   const formMethods = useForm({
     resolver: zodResolver(combinedSchema),
     defaultValues: {
@@ -121,7 +122,7 @@ function StoreMasterForm() {
           onSubmit() // Trigger submission
         }}
       >
-        <StoreMasterTab />
+        <StoreMasterTab/>
         {/* Submit Button for entire form */}
         <div className="h-[60px] flex justify-end items-center  ">
           <Button type="submit" className=" btn btn-primary">

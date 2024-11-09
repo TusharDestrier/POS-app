@@ -288,7 +288,7 @@ function LogisticDetailForm() {
         {/* Sourcing W/H Fields */}
         <div className="form-head mb-4">
           <FormLabel>Sourcing W/H</FormLabel>
-          <div className='flex items-center mb-3'>
+          <div className='flex items-center mb-3 m-3'>
             <div className='text-center flex-1'>
               <h3 className='heading-secondary'>Warehouse</h3>
             </div>

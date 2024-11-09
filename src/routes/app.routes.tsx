@@ -24,6 +24,7 @@ import SalesLayout from '@/app/pages/Root/Sales/layout'
 import SalesPage from '@/app/pages/Root/Sales/page'
 import SessionLayout from '@/app/pages/Root/Session/layout'
 import SessionPage from '@/app/pages/Root/Session/page'
+import GeneralSetup from '@/app/pages/Root/Administration/GeneralSetup'
 
 export const appRoutes = {
   path: '/',
@@ -97,6 +98,10 @@ export const appRoutes = {
               path: 'discount-policy',
               element: <DiscountPolicy/>
              },
+             {
+              path: 'general-setup-option',
+              element: <GeneralSetup />,
+            },
             {
               path: 'petty-cash-heads',
               element: <PettyCashHeadLayout />,

@@ -30,6 +30,7 @@ export const storeDetailFormSchema = z.object({
     message: 'State is empty',
   }),
   factor: z.string().optional(),
+  //category: z.string().optional(),
   priceList: z.string().min(2, {
     message: 'Price List is empty',
   }),

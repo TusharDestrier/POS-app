@@ -6,8 +6,8 @@ import MOP from '../MOP'
 import PettyCashDetails from '../PettyCashDetails'
 import StoreDetail from '../StoreDetail'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function StoreMasterTab() {
   // Main form instance with resolver for validation
