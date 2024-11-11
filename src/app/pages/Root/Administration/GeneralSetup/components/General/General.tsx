@@ -1,9 +1,7 @@
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
+  //CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
@@ -25,9 +23,9 @@ const General = () => {
     <Card>
       <CardHeader>
         <CardTitle>General</CardTitle>
-        <CardDescription>
+        {/* <CardDescription>
           Make changes to your account here. Click save when you're done.
-        </CardDescription>
+        </CardDescription> */}
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex flex-col items-start justify-between">
@@ -138,9 +136,6 @@ const General = () => {
           </Select> 
         </div>
       </CardContent>
-      <CardFooter>
-        <Button>Save changes</Button>
-      </CardFooter>
     </Card>
   )
 }
