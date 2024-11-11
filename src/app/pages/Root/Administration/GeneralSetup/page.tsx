@@ -1,7 +1,7 @@
 import GeneralSetupTab from './components/GeneralSetupTab'
 
 function GeneralSetupPage() {
-  return  <GeneralSetupTab />
+  return <GeneralSetupTab />
   
 }
 export default GeneralSetupPage
