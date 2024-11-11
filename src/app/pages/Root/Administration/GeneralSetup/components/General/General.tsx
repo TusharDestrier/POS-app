@@ -29,7 +29,7 @@ const General = () => {
           Make changes to your account here. Click save when you're done.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-x-2">
+      <CardContent className="space-y-3">
         <div className="space-y-1">
           <Label htmlFor="pendingSettlement">Pending Settlement Days</Label>
           <Input id="pendingSettlement" defaultValue="Pedro Duarte" />
