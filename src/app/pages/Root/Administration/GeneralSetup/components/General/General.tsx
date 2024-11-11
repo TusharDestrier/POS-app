@@ -15,7 +15,7 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
+  SelectLabel,  
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -34,9 +34,9 @@ const General = () => {
           <Label htmlFor="pendingSettlement">Pending Settlement Days</Label>
           <Input id="pendingSettlement" defaultValue="Pedro Duarte" />
         </div>
-        <div className="space-y-1">
+        <div className="space-y-2">
           <Label htmlFor="footfallEntry">Footfall Entry required in Day Settlement</Label>
-          <RadioGroup defaultValue="comfortable">
+          <RadioGroup defaultValue="comfortable" className='flex items-center gap-3 '>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="default" id="r1" />
               <Label htmlFor="r1">Yes</Label>
