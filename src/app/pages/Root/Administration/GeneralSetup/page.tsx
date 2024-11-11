@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 function GeneralSetupPage() {
   const formMethods = useForm({
     resolver: zodResolver(GeneralSetupSchema)
+    
   
   })
 

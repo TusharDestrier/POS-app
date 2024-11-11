@@ -27,12 +27,9 @@ const General = () => {
   const { control } = useFormContext()
 
   return (
-    <Card>
+    <Card className='border-2 border-solid border-black'>
       <CardHeader>
         <CardTitle>General</CardTitle>
-        {/* <CardDescription>
-          Make changes to your account here. Click save when you're done.
-        </CardDescription> */}
       </CardHeader>
       <CardContent className="space-y-4">
         <FormField

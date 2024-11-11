@@ -16,6 +16,7 @@ function GeneralSetupTab() {
         <TabsTrigger value="goodsReceiptReturn">Goods Receipt & Return</TabsTrigger>
         <TabsTrigger value="posOrder">POS Order</TabsTrigger>
       </TabsList>
+      <div >
       <TabsContent value="general">
         <General/>
       </TabsContent>
@@ -31,6 +32,8 @@ function GeneralSetupTab() {
       <TabsContent value="posOrder">
         <PosOrder/>
       </TabsContent>
+      </div>
+      
     </Tabs>
   )
 }
