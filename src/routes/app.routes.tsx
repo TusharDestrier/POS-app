@@ -5,6 +5,7 @@ import RoleWiseRedirection from '@/app/pages/RoleWiseRedirection'
 import CustomerMasterLayout from '@/app/pages/Root/Administration/CustomerMaster/layout'
 import CustomerMasterPage from '@/app/pages/Root/Administration/CustomerMaster/page'
 import DiscountPolicy from '@/app/pages/Root/Administration/DiscountPolicy'
+import GeneralSetupPage from '@/app/pages/Root/Administration/GeneralSetup/page'
 import GenericPolicy from '@/app/pages/Root/Administration/GenericPolicy'
 import { AdministrationLayout } from '@/app/pages/Root/Administration/layout'
 import { PayModeMasterPage } from '@/app/pages/Root/Administration/PayModeMaster/page'
@@ -24,7 +25,6 @@ import SalesLayout from '@/app/pages/Root/Sales/layout'
 import SalesPage from '@/app/pages/Root/Sales/page'
 import SessionLayout from '@/app/pages/Root/Session/layout'
 import SessionPage from '@/app/pages/Root/Session/page'
-import GeneralSetup from '@/app/pages/Root/Administration/GeneralSetup'
 
 export const appRoutes = {
   path: '/',
@@ -100,7 +100,13 @@ export const appRoutes = {
              },
              {
               path: 'general-setup-option',
-              element: <GeneralSetup />,
+              element: <GeneralSetupPage />,
+              children: [
+                {
+                  index: true,
+                  element: <GeneralSetupPage />,
+                },
+              ],
             },
             {
               path: 'petty-cash-heads',
