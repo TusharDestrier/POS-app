@@ -63,7 +63,7 @@ function CustomerForm() {
           e.preventDefault() // Ensure default form submission behavior is prevented
           onSubmit() // Trigger submission
         }}
-        className="h-[400px] overflow-y-auto bg-cyan-200"
+        className="h-[400px] overflow-y-auto"
       >
         <CustomerMasterTab />
 
