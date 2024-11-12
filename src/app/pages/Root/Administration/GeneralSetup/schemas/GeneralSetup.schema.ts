@@ -1,7 +1,11 @@
 import { z } from 'zod';
 
+import { GeneralSchema } from './General.schema';
+import { POSSchema } from './POSBill.schema';
+
 
 // Define combined schema
 export const GeneralSetupSchema = z.object({     
-           // Ledgers schema (array support included)
+    GeneralSchema:GeneralSchema,
+    POSBill:POSSchema,
 });
