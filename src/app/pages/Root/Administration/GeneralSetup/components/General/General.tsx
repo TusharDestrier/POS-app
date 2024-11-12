@@ -83,7 +83,7 @@ const General = () => {
               <FormControl>
                 <Select {...field}>
                   <SelectTrigger className="w-full mt-3">
-                    <SelectValue placeholder="Select a fruit" />
+                    <SelectValue placeholder="Select a policy" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
@@ -109,7 +109,7 @@ const General = () => {
             <FormItem>
               <FormLabel>Maximum Billing Amount in a Single POS Billing</FormLabel>
               <FormControl>
-                <Input {...field} id="maxBillingAmt" className="w-full mt-3" />
+                <Input {...field} id="maxBillingAmt" placeholder='Maximum Billing Amount in a Single POS Billing' className="w-full mt-3" />
               </FormControl>
               <FormMessage />
             </FormItem>
