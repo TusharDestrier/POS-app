@@ -16,7 +16,7 @@ function GeneralSetupTab() {
         <TabsTrigger value="goodsReceiptReturn">Goods Receipt & Return</TabsTrigger>
         <TabsTrigger value="posOrder">POS Order</TabsTrigger>
       </TabsList>
-      <div >
+      <div className="h-[400px] overflow-y-auto border-2 border-solid border-black rounded-lg mt-10" >
       <TabsContent value="general">
         <General/>
       </TabsContent>
