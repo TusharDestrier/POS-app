@@ -1,19 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 
-
 import GeneralSetupTab from './components/GeneralSetupTab'
 import { GeneralSetupSchema } from './schemas/GeneralSetup.schema'
 
 import { Button } from '@/components/ui/button'
 
-
-
 function GeneralSetupPage() {
   const formMethods = useForm({
     resolver: zodResolver(GeneralSetupSchema)
-    
-  
   })
 
   // Handle form submission
