@@ -17,14 +17,14 @@ import {
 function POSBill() {
   const { control } = useFormContext()
   return (
-    <Card className='border-2 border-solid border-black'>
+    <Card className="border-2 border-solid border-black">
       <CardHeader>
         <CardTitle>POS Bill</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <FormField
           control={control}
-          name="allowItemLevelDiscount"
+          name="POSBill.allowItemLevelDiscount"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Allow Item Level Discount</FormLabel>
@@ -48,7 +48,7 @@ function POSBill() {
 
         <FormField
           control={control}
-          name="allowBillLevelDiscount"
+          name="POSBill.allowBillLevelDiscount"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Allow Bill Level Discount</FormLabel>
@@ -72,7 +72,7 @@ function POSBill() {
 
         <FormField
           control={control}
-          name="maxAllowableDisPer"
+          name="POSBill.maxAllowableDisPer"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Maximum Allowable Discount Percentage</FormLabel>
@@ -92,7 +92,7 @@ function POSBill() {
 
         <FormField
           control={control}
-          name="maxAllowableDisAmt"
+          name="POSBill.maxAllowableDisAmt"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Maximum Allowable Discount Amount</FormLabel>
@@ -112,7 +112,7 @@ function POSBill() {
 
         <FormField
           control={control}
-          name="selectActivePromotion"
+          name="POSBill.selectActivePromotion"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Allow to Select Active Promotion from List</FormLabel>
@@ -136,7 +136,7 @@ function POSBill() {
 
         <FormField
           control={control}
-          name="clearAppliedPromotion"
+          name="POSBill.clearAppliedPromotion"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Allow to Clear Applied Promotion</FormLabel>
@@ -160,7 +160,7 @@ function POSBill() {
 
         <FormField
           control={control}
-          name="salePersonTagging"
+          name="POSBill.salePersonTagging"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Sale Person Tagging Mandatory</FormLabel>
@@ -184,7 +184,7 @@ function POSBill() {
 
         <FormField
           control={control}
-          name="salePersonTaggingPolicy"
+          name="POSBill.salePersonTaggingPolicy"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Sale Person Tagging Policy</FormLabel>
@@ -208,7 +208,7 @@ function POSBill() {
         />
         <FormField
           control={control}
-          name="customerTagging"
+          name="POSBill.customerTagging"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Customer Tagging is Mandatory</FormLabel>

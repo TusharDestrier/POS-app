@@ -22,7 +22,7 @@ const PosOrder = () => {
       <CardContent className="space-y-4">
         <FormField
           control={control}
-          name="dueDateMandatory"
+          name="PsOrder.dueDateMandatory"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Due Date is Mandatory in POS Order</FormLabel>
@@ -46,7 +46,7 @@ const PosOrder = () => {
 
         <FormField
           control={control}
-          name="minAdvancePercentage"
+          name="PsOrder.minAdvancePercentage"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Minimum Percentage of Advance during POS Order</FormLabel>
@@ -61,7 +61,7 @@ const PosOrder = () => {
 
         <FormField
           control={control}
-          name="posOrderCancellationMandatory"
+          name="PsOrder.posOrderCancellationMandatory"
           render={({ field }) => (
             <FormItem>
               <FormLabel>POS Order Cancellation is Mandatory</FormLabel>

@@ -27,21 +27,21 @@ const General = () => {
   const { control } = useFormContext()
 
   return (
-    <Card className='border-2 border-solid border-black overflow-y-auto h-[600px]'>
+    <Card className="border-2 border-solid border-black overflow-y-auto h-[600px]">
       <CardHeader>
         <CardTitle>General</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <FormField
           control={control}
-          name="pendingSettlement"
+          name={'GeneralSchema.pendingSettlement'}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Pending Settlement Days</FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  id="pendingSettlement"
+                  id="generalSchema.pendingSettlement"
                   placeholder="Pending Settlement Day"
                   className="w-full mt-3"
                 />
@@ -53,7 +53,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="footfallEntry"
+          name="generalSchema.footfallEntry"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Footfall Entry required in Day Settlement</FormLabel>
@@ -76,7 +76,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="maxAllowable"
+          name="generalSchema.maxAllowable"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Maximum Allowable Discount Policy Validation</FormLabel>
@@ -104,12 +104,17 @@ const General = () => {
 
         <FormField
           control={control}
-          name="maxBillingAmt"
+          name="generalSchema.maxBillingAmt"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Maximum Billing Amount in a Single POS Billing</FormLabel>
               <FormControl>
-                <Input {...field} id="maxBillingAmt" placeholder='Maximum Billing Amount in a Single POS Billing' className="w-full mt-3" />
+                <Input
+                  {...field}
+                  id="maxBillingAmt"
+                  placeholder="Maximum Billing Amount in a Single POS Billing"
+                  className="w-full mt-3"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -118,7 +123,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="panNo"
+          name="generalSchema.panNo"
           render={({ field }) => (
             <FormItem>
               <FormLabel>PAN No. Mandatory if Billing Amount Exceeds</FormLabel>
@@ -132,7 +137,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="creditCardDetails"
+          name="generalSchema.creditCardDetails"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Credit Card Details Capture Policy</FormLabel>
@@ -160,7 +165,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="creditCardAuth"
+          name="generalSchema.crcardAutho"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Is Credit Card Authorization No. Entry Mandatory</FormLabel>
@@ -183,7 +188,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="backDateEntry"
+          name="generalSchema.backDateEntry"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Allow Backdate Entry</FormLabel>
@@ -206,7 +211,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="backDateDays"
+          name="generalSchema.backDateDays"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Back Date Entry Days</FormLabel>
@@ -224,7 +229,7 @@ const General = () => {
         />
         <FormField
           control={control}
-          name="stockCheck"
+          name="generalSchema.stockCheck"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Credit Card Details Capture Policy</FormLabel>

@@ -1,11 +1,17 @@
 import { z } from 'zod';
 
-import { GeneralSchema } from './General.schema';
-import { POSSchema } from './POSBill.schema';
+import { creditNoteSchema } from './CreditNote.schema';
+import { generalSchema } from './General.schema';
+import { goodsreceiptreturnSchema } from './GoodsRecepit.schema';
+import { posBSillchema } from './POSBill.schema';
+import { posOrderSchema } from './PosOrder.schema';
 
 
 // Define combined schema
 export const GeneralSetupSchema = z.object({     
-    GeneralSchema:GeneralSchema,
-    POSBill:POSSchema,
+    GeneralSchema:generalSchema,
+    POSBill:posBSillchema,
+    CreditNoteSchema: creditNoteSchema,
+    GoodsRecRet:goodsreceiptreturnSchema,
+    PsOrder: posOrderSchema
 });

@@ -23,7 +23,7 @@ const CreditNote = () => {
       <CardContent className="space-y-4">
         <FormField
           control={control}
-          name="returnItem"
+          name="CreditNoteSchema.returnItem"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Return of Item within</FormLabel>
@@ -38,7 +38,7 @@ const CreditNote = () => {
 
         <FormField
           control={control}
-          name="creditNoteValidityDays"
+          name="CreditNoteSchema.creditNoteValidityDays"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Credit Note Validity Days</FormLabel>
@@ -53,7 +53,7 @@ const CreditNote = () => {
 
         <FormField
           control={control}
-          name="billTaggingMandatory"
+          name="CreditNoteSchema.billTaggingMandatory"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Bill Tagging Mandatory during Return</FormLabel>
@@ -77,7 +77,7 @@ const CreditNote = () => {
 
         <FormField
           control={control}
-          name="numberOfCopiesPrint"
+          name="CreditNoteSchema.numberOfCopiesPrint"
           render={({ field }) => (
             <FormItem>
               <FormLabel>No. of Copies to be Print</FormLabel>

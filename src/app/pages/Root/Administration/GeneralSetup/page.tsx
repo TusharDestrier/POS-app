@@ -10,7 +10,21 @@ function GeneralSetupPage() {
   const formMethods = useForm({
     resolver: zodResolver(GeneralSetupSchema),
     defaultValues:{
-      
+      GeneralSchema:{
+        pendingSettlement:"23"
+      },
+      POSBill:{
+        allowItemLevelDiscount:false
+      },
+      PsOrder:{
+        dueDateMandatory:false
+      },
+      CreditNoteSchema:{
+        returnItem:'22'
+      },
+      GoodsRecRet: {
+        excessGoodsReceiptTolerance: '22'
+      }
     }
   
   })

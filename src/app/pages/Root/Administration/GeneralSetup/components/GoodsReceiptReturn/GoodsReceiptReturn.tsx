@@ -24,7 +24,7 @@ const GoodsReceiptReturn = () => {
       <CardContent className="space-y-4">
         <FormField
           control={control}
-          name="excessGoodsReceiptTolerance"
+          name="GoodsRecRet.excessGoodsReceiptTolerance"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Excess Goods Receipt Tolerance Percentage</FormLabel>
@@ -39,7 +39,7 @@ const GoodsReceiptReturn = () => {
 
         <FormField
           control={control}
-          name="shortGoodsReceiptTolerance"
+          name="GoodsRecRet.shortGoodsReceiptTolerance"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Short Goods Receipt Tolerance Percentage</FormLabel>
@@ -54,7 +54,7 @@ const GoodsReceiptReturn = () => {
 
         <FormField
           control={control}
-          name="allowReceiveDamagedGoods"
+          name="GoodsRecRet.allowReceiveDamagedGoods"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Allow to Receive Damaged Goods</FormLabel>
