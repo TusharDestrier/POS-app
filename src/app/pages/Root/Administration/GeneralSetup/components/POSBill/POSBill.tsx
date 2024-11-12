@@ -191,7 +191,7 @@ function POSBill() {
               <FormControl>
                 <Select {...field}>
                   <SelectTrigger className="w-full mt-3">
-                    <SelectValue placeholder="Select level" />
+                    <SelectValue placeholder="Select Tagging Policy" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
