@@ -17,7 +17,7 @@ import {
 function POSBill() {
   const { control } = useFormContext()
   return (
-    <Card>
+    <Card className='border-2 border-solid border-black'>
       <CardHeader>
         <CardTitle>POS Bill</CardTitle>
       </CardHeader>

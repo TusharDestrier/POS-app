@@ -15,7 +15,7 @@ const PosOrder = () => {
   const { control } = useFormContext()
 
   return (
-    <Card>
+    <Card className='border-2 border-solid border-black h-[600px]'>
       <CardHeader>
         <CardTitle>Pos Order</CardTitle>
       </CardHeader>

@@ -16,7 +16,7 @@ const CreditNote = () => {
   const { control } = useFormContext()
 
   return (
-    <Card>
+    <Card className='border-2 border-solid border-black h-[600px]'>
       <CardHeader>
         <CardTitle>Credit Note</CardTitle>
       </CardHeader>
