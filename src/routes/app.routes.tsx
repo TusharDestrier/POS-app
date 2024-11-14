@@ -18,6 +18,11 @@ import StoreSpecificPolicy from '@/app/pages/Root/Administration/StoreSpecificPo
 import CustomerPage from '@/app/pages/Root/Customer/page'
 import DashboardLayout from '@/app/pages/Root/Dashboard/layout'
 import DashboardPage from '@/app/pages/Root/Dashboard/page'
+import { InventoryTransferRequestLayout } from '@/app/pages/Root/Inventroty/Inventory_Transfer_Request/layout'
+import { InventoryTransferRequestPage } from '@/app/pages/Root/Inventroty/Inventory_Transfer_Request/page'
+import { InventoryTransferLayout } from '@/app/pages/Root/Inventroty/Inventroty_Transfer/layout'
+import { InventoryTransferPage } from '@/app/pages/Root/Inventroty/Inventroty_Transfer/page'
+import { InventoryLayout } from '@/app/pages/Root/Inventroty/layout'
 import RootLayout from '@/app/pages/Root/layout'
 import ReportLayout from '@/app/pages/Root/Report/layout'
 import ReportPage from '@/app/pages/Root/Report/page'
@@ -119,6 +124,36 @@ export const appRoutes = {
               ],
             },
           ],
+        },
+      ],
+    },
+    {
+      path: 'inventroty',
+      element: <InventoryLayout />,
+      children: [
+        {
+          index: true,
+          element: <Navigate to={"/inventroty/inventory-transfer"} />,
+        },
+        {
+          path: 'inventory-transfer',
+          element: <InventoryTransferLayout />,
+          Children: [
+            {
+              index: true,
+              element:  <InventoryTransferPage/>
+            }
+          ]
+        },
+        {
+          path: 'inventory-transfer-request',
+          element: <InventoryTransferRequestLayout />,
+          Children: [
+            {
+              index: true,
+              element: <InventoryTransferRequestPage />
+            }
+          ]
         },
       ],
     },

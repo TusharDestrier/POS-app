@@ -94,6 +94,21 @@ export const roleBasedMenu: RoleBasedMenu = {
       ],
     },
     {
+      name: 'Inventory ',
+      path: '/inventroty',
+      icon: <BadgeDollarSign />,
+      subItems: [
+        {
+          name: 'Inventory Transfer',
+          path: '/inventroty/inventory-transfer',
+        },
+        {
+          name: 'Inventory Transfer Request',
+          path: '/inventroty/inventory-transfer-request',
+        },
+      ],
+    },
+    {
       name: 'Billing',
       path: '/billing',
       icon: <BadgeDollarSign />,
