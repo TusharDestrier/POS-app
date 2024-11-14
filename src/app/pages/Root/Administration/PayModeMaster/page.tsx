@@ -1,7 +1,7 @@
 //import { RightArr } from '@/assets/icons'
 //import { Button } from '@/components/ui/button'
 //import { DialogClose, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import Image from './Image/pay_Image.jpg'
+// import Image from './Image/pay_Image.jpg'
 //import Image from './Image/paymode.jpg'
 
 import { Checkbox } from '@/components/ui/checkbox'
@@ -11,7 +11,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
 export const PayModeMasterPage = () => {
   return (
-    <div className="items pe-4 space-y-5 border-e border-solid border-gray-100">
+    <div className="items pe-4 space-y-5 border-e border-solid border-gray-100 bg-[linear-gradient(to_right_bottom,rgba(49,84,44,0.8),rgba(16,71,52,0.8)),url('/Pay_mode.jpg')] bg-no-repeat p-5 bg-cover ">
       <div className='grid grid-cols-2 gap-7'>
       <div className='space-y-4'>
     <Label className=" flex flex-col items-start gap-3" htmlFor="paymode">
@@ -29,7 +29,7 @@ export const PayModeMasterPage = () => {
     </div>
     <div>
       {/* <h1>Image</h1> */}
-    <img src={Image} alt='PayMode' width={"390px"}></img>
+   
     </div>
       </div>
      

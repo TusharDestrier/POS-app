@@ -138,7 +138,7 @@ export const appRoutes = {
         {
           path: 'inventory-transfer',
           element: <InventoryTransferLayout />,
-          Children: [
+          children: [
             {
               index: true,
               element:  <InventoryTransferPage/>
@@ -148,7 +148,7 @@ export const appRoutes = {
         {
           path: 'inventory-transfer-request',
           element: <InventoryTransferRequestLayout />,
-          Children: [
+          children: [
             {
               index: true,
               element: <InventoryTransferRequestPage />

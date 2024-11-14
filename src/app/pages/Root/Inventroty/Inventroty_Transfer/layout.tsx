@@ -1,6 +1,9 @@
+import { Outlet } from 'react-router-dom'
 
 export const InventoryTransferLayout = () => {
   return (
-    <div>Inventory Transfer</div>
+    <div>
+      <Outlet />
+    </div>
   )
 }

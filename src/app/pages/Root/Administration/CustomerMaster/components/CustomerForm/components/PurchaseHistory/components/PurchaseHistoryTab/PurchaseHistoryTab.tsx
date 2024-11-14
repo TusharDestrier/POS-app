@@ -3,7 +3,6 @@ import { useState } from 'react'
 import Billwise from './components/BillWise'
 import ItemWise from './components/ItemWise'
 
-
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -67,11 +66,11 @@ function PurchaseHistoryTab() {
 
   function itemModeHandler(mode: 'BW' | 'IW') {
     setItemMode(mode)
-   // console.log(mode);
+    // console.log(mode);
   }
 
   return (
-    <div className='border p-4 border-black border-solid h-[580px] overflow-y-auto'>
+    <>
       <div>
         <Table>
           {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
@@ -108,27 +107,32 @@ function PurchaseHistoryTab() {
       {itemDetail && (
         <>
           <div className="mt-10">
-              <h1>Purchase History</h1>
-              <RadioGroup defaultValue="mode" className='flex gap-3 items-center mt-3'>
+            <h1>Purchase History</h1>
+            <RadioGroup defaultValue="mode" className="flex gap-3 items-center mt-3">
               <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="BW" id="BW" defaultValue={itemMode} onClick={() => itemModeHandler('BW')} />
-                  <Label htmlFor="BW">Bill Wise</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem defaultValue={itemMode} value="IW" id="IW" onClick={() => itemModeHandler('IW')} />
-                  <Label htmlFor="IW">Item Wise</Label>
-                </div>
-              </RadioGroup>
+                <RadioGroupItem
+                  value="BW"
+                  id="BW"
+                  defaultValue={itemMode}
+                  onClick={() => itemModeHandler('BW')}
+                />
+                <Label htmlFor="BW">Bill Wise</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem
+                  defaultValue={itemMode}
+                  value="IW"
+                  id="IW"
+                  onClick={() => itemModeHandler('IW')}
+                />
+                <Label htmlFor="IW">Item Wise</Label>
+              </div>
+            </RadioGroup>
           </div>
-          {itemMode === 'IW' ? (
-            <ItemWise/>
-          
-          ) : (
-            <Billwise/>
-          )}
+          {itemMode === 'IW' ? <ItemWise /> : <Billwise />}
         </>
       )}
-    </div>
+    </>
   )
 }
 

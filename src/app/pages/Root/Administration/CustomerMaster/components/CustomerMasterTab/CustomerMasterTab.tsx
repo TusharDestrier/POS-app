@@ -35,26 +35,28 @@ function CustomerMasterTab() {
         )}
       </TabsList>
       {/* Perspnal Tab */}
-      <TabsContent value="personal">
-        <Personal />
-      </TabsContent>
-      {/* Communication Tab */}
-      <TabsContent value="communication">
-        <Communication />
-      </TabsContent>
-      {/* Membership Tab */}
-      <TabsContent value="membership">
-        <Membership />
-      </TabsContent>
-      {/* Purchase History Tab */}
-      <TabsContent value="purchaseHistory">
-        <PurchaseHistory />
-      </TabsContent>
+      <div className="h-[400px] border p-4 border-black border-solid overflow-y-auto">
+        <TabsContent value="personal">
+          <Personal />
+        </TabsContent>
+        {/* Communication Tab */}
+        <TabsContent value="communication">
+          <Communication />
+        </TabsContent>
+        {/* Membership Tab */}
+        <TabsContent value="membership">
+          <Membership />
+        </TabsContent>
+        {/* Purchase History Tab */}
+        <TabsContent value="purchaseHistory">
+          <PurchaseHistory />
+        </TabsContent>
 
-      {/* Loyalty Points Tab */}
-      <TabsContent value="loyaltyPoints">
-        <LoyaltyPoints />
-      </TabsContent>
+        {/* Loyalty Points Tab */}
+        <TabsContent value="loyaltyPoints">
+          <LoyaltyPoints />
+        </TabsContent>
+      </div>
     </Tabs>
   )
 }

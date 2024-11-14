@@ -42,7 +42,7 @@ function SidebarItemComponent({
           className={`group flex items-center text-base text-gray-600 hover:text-gray-950 font-semibold px-3 py-2 sm:py-3 rounded-lg w-full text-left
             ${
               isOpen || isActive
-                ? 'bg-primary/90 hover:bg-primary hover:text-white text-white'
+                ? 'bg-primary/90 hover:bg-primary a_active hover:text-white text-white'
                 : 'bg-white'
             }
             hover:bg-gray-100 transition-all`}
@@ -64,7 +64,7 @@ function SidebarItemComponent({
             `group flex items-center text-[14px] sm:text-base text-gray-600 hover:text-gray-950 font-semibold px-3 py-3 sm:py-3 rounded-lg 
             ${
               isActive || isActive
-                ? 'bg-primary/90 hover:bg-primary hover:text-white text-white'
+                ? 'bg-primary/90 hover:bg-primary  a_active hover:text-gray-600 text-gray-600'
                 : 'bg-white'
             } 
             hover:bg-gray-100 transition-all`

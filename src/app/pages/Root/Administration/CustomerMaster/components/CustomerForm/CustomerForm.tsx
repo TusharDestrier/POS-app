@@ -63,9 +63,12 @@ function CustomerForm() {
           e.preventDefault() // Ensure default form submission behavior is prevented
           onSubmit() // Trigger submission
         }}
-        className="h-[400px] overflow-y-auto"
+       
       >
+       
+
         <CustomerMasterTab />
+       
 
         {/* Submit Button for entire form */}
         <div className="h-[60px] sticky bottom-0 right-0 flex justify-end items-center">

@@ -49,57 +49,55 @@ function LoyaltyPointsTab() {
   const balancePoint = loyaltyData[loyaltyData.length - 1].balance
 
   return (
-    <div className='border p-4 border-black border-solid h-[580px] overflow-y-auto'>
     <div className="space-y-6 mt-5">
-      <div>
-        <h2 className="heading-secondary mb-3">Loyalty Points Details</h2>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Bill No.</TableHead>
-              <TableHead>Bill Date</TableHead>
-              <TableHead>Bill Amount</TableHead>
-              <TableHead>Points Earned</TableHead>
-              <TableHead>Points Redeemed</TableHead>
-              <TableHead>Balance</TableHead>
+    <div>
+      <h2 className="heading-secondary mb-3">Loyalty Points Details</h2>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Bill No.</TableHead>
+            <TableHead>Bill Date</TableHead>
+            <TableHead>Bill Amount</TableHead>
+            <TableHead>Points Earned</TableHead>
+            <TableHead>Points Redeemed</TableHead>
+            <TableHead>Balance</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {loyaltyData.map((item, index) => (
+            <TableRow key={index}>
+              <TableCell>{item.billNo}</TableCell>
+              <TableCell>{item.billDate}</TableCell>
+              <TableCell>{item.billAmount}</TableCell>
+              <TableCell>{item.pointsEarned}</TableCell>
+              <TableCell>{item.pointsRedeemed}</TableCell>
+              <TableCell>{item.balance}</TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {loyaltyData.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>{item.billNo}</TableCell>
-                <TableCell>{item.billDate}</TableCell>
-                <TableCell>{item.billAmount}</TableCell>
-                <TableCell>{item.pointsEarned}</TableCell>
-                <TableCell>{item.pointsRedeemed}</TableCell>
-                <TableCell>{item.balance}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
 
-      <div>
-        <h3 className="heading-secondary mb-3">Summary</h3>
-        <Table>
-          <TableBody>
-            <TableRow>
-              <TableCell>Points Earned</TableCell>
-              <TableCell>{pointsEarned}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Points Redeemed</TableCell>
-              <TableCell>{pointsRedeemed}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Balance Point</TableCell>
-              <TableCell>{balancePoint}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div>
+    <div>
+      <h3 className="heading-secondary mb-3">Summary</h3>
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell>Points Earned</TableCell>
+            <TableCell>{pointsEarned}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Points Redeemed</TableCell>
+            <TableCell>{pointsRedeemed}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Balance Point</TableCell>
+            <TableCell>{balancePoint}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
     </div>
-    </div>
+  </div>
   )
 }
 

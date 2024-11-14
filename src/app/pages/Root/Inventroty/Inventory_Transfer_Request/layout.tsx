@@ -1,7 +1,10 @@
+import { Outlet } from "react-router-dom"
 
 export const InventoryTransferRequestLayout = () => {
     return (
-      <div>Inventory Transfer Request Layout</div>
+      <div>
+        <Outlet/>
+      </div>
     )
   }
   

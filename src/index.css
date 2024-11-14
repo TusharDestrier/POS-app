@@ -195,3 +195,7 @@ aside ul li > ul > li > ul > li > a {
 .required {
   color: red;
 }
+
+aside.sidebar > ul > li > a.a_active {
+  color: #fff;
+}

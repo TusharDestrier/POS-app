@@ -75,10 +75,6 @@ export default function CustomerTable() {
     modalToggler()
     setModalMode('Create')
   }
-  // function EditModalHandler() {
-  //   modalToggler()
-  //   setModalMode('Edit')
-  // }
 
   return (
     <>
