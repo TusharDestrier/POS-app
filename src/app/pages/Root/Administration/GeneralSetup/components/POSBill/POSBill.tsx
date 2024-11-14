@@ -17,7 +17,7 @@ import {
 function POSBill() {
   const { control } = useFormContext()
   return (
-    <Card className="border-2 border-solid border-black">
+    <Card className="border-2 border-solid border-black overflow-y-auto h-[650px]">
       <CardHeader>
         <CardTitle>POS Bill</CardTitle>
       </CardHeader>
