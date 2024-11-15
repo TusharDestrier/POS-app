@@ -1,7 +1,8 @@
+import InventoryTransferRequestTable from "./components/InventoryTransferRequestTable/InventoryTransferRequestTable"
 
 export const InventoryTransferRequestPage = () => {
     return (
-      <div>Inventrory Transfer Request Page</div>
+      <div><InventoryTransferRequestTable /></div>
     )
   }
   
