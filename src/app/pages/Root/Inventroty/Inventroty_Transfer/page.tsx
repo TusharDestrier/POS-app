@@ -1,6 +1,5 @@
+import InventoryTransferTable from './components/InventoryTransferTable'
 
 export const InventoryTransferPage = () => {
-  return (
-    <div>Inventrory Transfer Page</div>
-  )
+  return <InventoryTransferTable/> 
 }
