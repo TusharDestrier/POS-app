@@ -124,9 +124,9 @@ function InventoryTransferRequestForm() {
         }}
       >
         <InventryTransferRequestDetailForm />
-        {/* <StoreMasterTab/> */}
-        {/* Submit Button for entire form */}
-        <div className="h-[60px] flex justify-end items-center  ">
+       
+       
+        <div className="h-[60px]  flex justify-end items-center  ">
           <Button type="submit" className=" btn btn-primary">
             Save 
           </Button>
