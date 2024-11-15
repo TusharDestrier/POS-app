@@ -14,10 +14,10 @@ import {
           <TableRow>
             <TableHead className="">No</TableHead>
             <TableHead>Item</TableHead>
-            <TableHead>Item Desc</TableHead>
-            <TableHead>UOM</TableHead>
-            <TableHead>Planned Quantity</TableHead>
+            <TableHead>Item Name</TableHead>
             <TableHead>Quantity</TableHead>
+            <TableHead>UOM</TableHead>
+            <TableHead>Batch</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
