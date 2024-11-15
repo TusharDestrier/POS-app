@@ -18,6 +18,7 @@ import * as React from 'react'
 import { data } from '../../data/tableData'
 import useGoodsIssueType from '../../store/useGoodsIssueType'
 import columns from '../GoodsIssueColumns'
+import GoodsIssueModal from '../GoodsIssueModal/GoodsIssueModal'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -186,7 +187,7 @@ function GoodsIssueTable() {
           </div>
         </div>
       </div>
-      {/* <InventoryTransferRequestModal /> */}
+      <GoodsIssueModal/>
     </>
   )
 }

@@ -1,4 +1,5 @@
 import useGoodsIssueType from '../../store/useGoodsIssueType'
+import GoodsIssueForm from '../GoodsIssueForm/GoodsIssueForm'
 
 import {
   Dialog,
@@ -17,12 +18,12 @@ function GoodsIssueModal() {
       <DialogContent className="w-full max-w-full  h-screen overflow-y-scroll p-0 flex flex-col gap-0">
         <DialogHeader className="p-5 border-b border-gray-50 sticky top-0 left-0 bg-white">
           <DialogTitle>
-            <h3 className="text-xl capitalize">{modalMode} .Goods Issue</h3>
+            <h3 className="text-xl capitalize">{modalMode} Goods Issue</h3>
           </DialogTitle>
         </DialogHeader>
         <div className="px-6">
           {' '}
-          {/* <GoodsIssueForm /> */}
+          <GoodsIssueForm />
         </div>
       </DialogContent>
     </Dialog>
