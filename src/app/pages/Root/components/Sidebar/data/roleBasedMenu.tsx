@@ -106,6 +106,14 @@ export const roleBasedMenu: RoleBasedMenu = {
           name: 'Inventory Transfer Request',
           path: '/inventroty/inventory-transfer-request',
         },
+        {
+          name: 'Goods Reciept',
+          path: '/inventroty/goods-reciept',
+        },
+        {
+          name: 'Goods Issue',
+          path: '/inventroty/goods-issue',
+        },
       ],
     },
     {

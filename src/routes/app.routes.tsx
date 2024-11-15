@@ -18,6 +18,10 @@ import StoreSpecificPolicy from '@/app/pages/Root/Administration/StoreSpecificPo
 import CustomerPage from '@/app/pages/Root/Customer/page'
 import DashboardLayout from '@/app/pages/Root/Dashboard/layout'
 import DashboardPage from '@/app/pages/Root/Dashboard/page'
+import GoodsIssueLayout from '@/app/pages/Root/Inventroty/GoodsIssue/layout'
+import GoodsIssuePage from '@/app/pages/Root/Inventroty/GoodsIssue/page'
+import GoodsRecieptLayout from '@/app/pages/Root/Inventroty/GoodsReciept/layout'
+import GoodsRecieptPage from '@/app/pages/Root/Inventroty/GoodsReciept/page'
 import { InventoryTransferRequestLayout } from '@/app/pages/Root/Inventroty/Inventory_Transfer_Request/layout'
 import { InventoryTransferRequestPage } from '@/app/pages/Root/Inventroty/Inventory_Transfer_Request/page'
 import { InventoryTransferLayout } from '@/app/pages/Root/Inventroty/Inventroty_Transfer/layout'
@@ -152,6 +156,26 @@ export const appRoutes = {
             {
               index: true,
               element: <InventoryTransferRequestPage />
+            }
+          ]
+        },
+        {
+          path: 'goods-reciept',
+          element: <GoodsRecieptLayout />,
+          children: [
+            {
+              index: true,
+              element: <GoodsRecieptPage />
+            }
+          ]
+        },
+        {
+          path: 'goods-issue',
+          element: <GoodsIssueLayout />,
+          children: [
+            {
+              index: true,
+              element: <GoodsIssuePage />
             }
           ]
         },
