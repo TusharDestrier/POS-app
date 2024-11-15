@@ -21,7 +21,7 @@ function GoodsReciptDetailForm() {
 
   return (
     <div className="h-screen overflow-y-auto">
-      <div className=" border border-solid border-black h-[400px] overflow-y-auto p-3 grid gap-4 grid-cols-3 items-center">
+      <div className=" border border-solid border-black overflow-y-auto p-3 grid gap-4 grid-cols-3 items-center">
         {/* Company Field */}
         <FormField
           control={control}
