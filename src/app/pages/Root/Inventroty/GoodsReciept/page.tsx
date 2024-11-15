@@ -1,7 +1,8 @@
+import GoodsReciptTable from "./components/GoodsReciptTable"
 
 function GoodsRecieptPage() {
   return (
-    <div>GoodsRecieptPage</div>
+    <div><GoodsReciptTable/></div>
   )
 }
 

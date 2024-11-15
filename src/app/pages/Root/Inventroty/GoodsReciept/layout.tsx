@@ -1,7 +1,10 @@
+import { Outlet } from "react-router-dom"
 
 function GoodsRecieptLayout() {
   return (
-    <div>GoodsRecieptLayout</div>
+    <div>
+      <Outlet/>
+    </div>
   )
 }
 
