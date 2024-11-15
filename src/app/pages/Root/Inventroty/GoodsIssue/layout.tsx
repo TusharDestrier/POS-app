@@ -1,7 +1,10 @@
+import { Outlet } from "react-router-dom"
 
 function GoodsIssueLayout() {
     return (
-      <div>GoodsIssueLayout</div>
+      <div>
+        <Outlet/>
+      </div>
     )
   }
   

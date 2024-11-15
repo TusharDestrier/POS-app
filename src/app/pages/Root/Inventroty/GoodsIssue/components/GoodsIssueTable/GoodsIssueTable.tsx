@@ -16,9 +16,8 @@ import {
 import * as React from 'react'
 
 import { data } from '../../data/tableData'
-import useInventoryTransferRequestType from '../../store/useInventoryTransferRequestType'
-import columns from '../InventoryTransferRequestColumns'
-import InventoryTransferRequestModal from '../InventoryTransferRequestModal'
+import useGoodsIssueType from '../../store/useGoodsIssueType'
+import columns from '../GoodsIssueColumns'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -37,7 +36,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-function InventoryTransferRequestTable() {
+function GoodsIssueTable() {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -47,8 +46,8 @@ function InventoryTransferRequestTable() {
     pageSize: 5, // Set the page size as desired
   })
 
-  const modalToggler = useInventoryTransferRequestType((state) => state.toggleOpen)
-  const setModalMode = useInventoryTransferRequestType((state) => state.setMode)
+  const modalToggler = useGoodsIssueType((state) => state.toggleOpen)
+  const setModalMode = useGoodsIssueType((state) => state.setMode)
 
   const table = useReactTable({
     data,
@@ -187,9 +186,9 @@ function InventoryTransferRequestTable() {
           </div>
         </div>
       </div>
-      <InventoryTransferRequestModal />
+      {/* <InventoryTransferRequestModal /> */}
     </>
   )
 }
 
-export default InventoryTransferRequestTable
+export default GoodsIssueTable

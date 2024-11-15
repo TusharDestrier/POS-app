@@ -24,7 +24,6 @@ function InventoryTransferRequestModal() {
         <div className="px-6">
           {' '}
           <InventoryTransferRequestForm />
-          {/* <StoreMasterForm /> */}
         </div>
       </DialogContent>
     </Dialog>

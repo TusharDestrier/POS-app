@@ -1,7 +1,10 @@
+import GoodsIssueTable from "./components/GoodsIssueTable/GoodsIssueTable"
 
 function GoodsIssuePage() {
     return (
-      <div>GoodsIssuePage</div>
+      <div>
+        <GoodsIssueTable/>
+        </div>
     )
   }
   
