@@ -45,6 +45,25 @@ function POSBill() {
             </FormItem>
           )}
         />
+           <FormField
+          control={control}
+          name="POSBill.maxAllowableDisPer"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Maximum Allowable Discount Percentage</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  id="maxAllowableDisPer"
+                  placeholder="Maximum Allowable Discount Percentage"
+                  className="w-full mt-3"
+                />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={control}
@@ -63,26 +82,6 @@ function POSBill() {
                     <Label htmlFor="noBillDiscount">No</Label>
                   </div>
                 </RadioGroup>
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={control}
-          name="POSBill.maxAllowableDisPer"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Maximum Allowable Discount Percentage</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  id="maxAllowableDisPer"
-                  placeholder="Maximum Allowable Discount Percentage"
-                  className="w-full mt-3"
-                />
               </FormControl>
 
               <FormMessage />

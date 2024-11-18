@@ -52,7 +52,6 @@ const General = () => {
             </FormItem>
           )}
         />
-
         <FormField
           control={control}
           name="generalSchema.footfallEntry"
@@ -64,12 +63,6 @@ const General = () => {
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="default" id="r1" />
                     <Label htmlFor="r1">Yes</Label>
-                    <Input
-                  {...field}
-                  id="maxBillingAmt"  disabled
-                  placeholder="Footfall Entry required in Day Settlement Days"
-                  className="w-full mt-3"
-                />
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="comfortable" id="r2" />
