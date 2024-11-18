@@ -1,6 +1,4 @@
-
-
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function StoreWiseSetupTab() {
   return (
@@ -12,10 +10,27 @@ function StoreWiseSetupTab() {
         <TabsTrigger value="goodsReceiptReturn">Goods Receipt & Return</TabsTrigger>
         <TabsTrigger value="posOrder">POS Order</TabsTrigger>
       </TabsList>
-      <div className="" >
-      
+      <div className="">
+        <TabsContent value="general">
+          <h3>General </h3>
+        </TabsContent>
+        <TabsContent value="posBIll">
+        <h3>posBIll </h3>
+
+        </TabsContent>
+        <TabsContent value="creditNote">
+        <h3>General </h3>
+
+        </TabsContent>
+        <TabsContent value="goodsReceiptReturn">
+        <h3>General </h3>
+
+        </TabsContent>
+        <TabsContent value="posOrder">
+        <h3>General </h3>
+
+        </TabsContent>
       </div>
-      
     </Tabs>
   )
 }

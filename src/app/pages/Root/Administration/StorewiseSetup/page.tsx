@@ -1,7 +1,10 @@
+import StoreWiseSetupTab from "./components/StoreWiseSetupTab"
 
 function StoreWiseSetupPage() {
   return (
-    <div>StoreWiseSetupPage</div>
+    <>
+    <StoreWiseSetupTab/>
+    </>
   )
 }
 
