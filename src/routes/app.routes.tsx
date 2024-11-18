@@ -15,6 +15,7 @@ import SalesPersonMasterLayout from '@/app/pages/Root/Administration/SalesPerson
 import SalesPersonMasterPage from '@/app/pages/Root/Administration/SalesPersonMaster/page'
 import { StoreMasterPage } from '@/app/pages/Root/Administration/StoreMaster/page'
 import StoreSpecificPolicy from '@/app/pages/Root/Administration/StoreSpecificPolicy'
+import StoreWiseSetupPage from '@/app/pages/Root/Administration/StorewiseSetup/page'
 import CustomerPage from '@/app/pages/Root/Customer/page'
 import DashboardLayout from '@/app/pages/Root/Dashboard/layout'
 import DashboardPage from '@/app/pages/Root/Dashboard/page'
@@ -110,13 +111,14 @@ export const appRoutes = {
              {
               path: 'general-setup-option',
               element: <GeneralSetupPage />,
-              children: [
-                {
-                  index: true,
-                  element: <GeneralSetupPage />,
-                },
-              ],
+             
             },
+            {
+              path: 'storewise-setup-option',
+              element: <StoreWiseSetupPage />,
+             
+            },
+           
             {
               path: 'petty-cash-heads',
               element: <PettyCashHeadLayout />,

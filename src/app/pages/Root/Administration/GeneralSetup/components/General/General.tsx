@@ -2,6 +2,7 @@ import { useFormContext } from 'react-hook-form'
 
 // import { Button } from '@/components/ui/button'
 
+//import useGoodsIssueType from '@/app/pages/Root/Inventroty/GoodsIssue/store/useGoodsIssueType'
 import {
   Card,
   CardContent,
@@ -25,6 +26,7 @@ import {
 
 const General = () => {
   const { control } = useFormContext()
+  //const modalMode = useGoodsIssueType((state) => state.mode)
 
   return (
     <Card className="border-2 border-solid border-black overflow-y-auto h-[650px]">
@@ -62,6 +64,12 @@ const General = () => {
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="default" id="r1" />
                     <Label htmlFor="r1">Yes</Label>
+                    <Input
+                  {...field}
+                  id="maxBillingAmt"  disabled
+                  placeholder="Footfall Entry required in Day Settlement Days"
+                  className="w-full mt-3"
+                />
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="comfortable" id="r2" />
