@@ -1,4 +1,4 @@
-import { BadgeDollarSign, BookText, Presentation, Settings, FileText } from 'lucide-react'
+import { BadgeDollarSign, BookText, Presentation, Settings, FileText, Table } from 'lucide-react'
 import { ReactNode } from 'react'
 
 export interface SubItem {
@@ -96,7 +96,7 @@ export const roleBasedMenu: RoleBasedMenu = {
     {
       name: 'Inventory ',
       path: '/inventroty',
-      icon: <BadgeDollarSign />,
+      icon: <Table />,
       subItems: [
         {
           name: 'Inventory Transfer',

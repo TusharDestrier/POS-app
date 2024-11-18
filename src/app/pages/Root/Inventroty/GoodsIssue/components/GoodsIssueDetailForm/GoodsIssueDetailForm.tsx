@@ -23,11 +23,11 @@ function GoodsIssueDetailForm() {
   return (
     <div className="overflow-y-auto">
       <div className=" border border-solid border-black  overflow-y-auto p-3  grid grid-cols-3 gap-4">
-        {/* Bussiness Patner Field */}
+        {/* Company Field */}
         <FormField
           control={control}
           name="storeDetail.storeCode"
-          disabled={modalMode === 'Edit'} // Field is disabled in edit mode
+          disabled={modalMode === 'Edit' || modalMode === 'Create'} // Field is disabled in edit mode
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -40,8 +40,118 @@ function GoodsIssueDetailForm() {
             </FormItem>
           )}
         />
-        
-      
+         {/* Store Field */}
+         <FormField
+          control={control}
+          name="storeDetail.startDate"
+          disabled={modalMode === 'Edit' } // Field is disabled in edit mode
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Store <span className="text-primary">*</span>
+              </FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a store" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>store</SelectLabel>
+                      <SelectItem value="wb">West Bengal</SelectItem>
+                      <SelectItem value="karnataka">Karnataka</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+         {/* Branch Field */}
+         <FormField
+          control={control}
+          name="storeDetail.startDate"
+          disabled={modalMode === 'Edit'} // Field is disabled in edit mode
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+              Branch <span className="text-primary">*</span>
+              </FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a Branch" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Branch</SelectLabel>
+                      <SelectItem value="wb">West Bengal</SelectItem>
+                      <SelectItem value="karnataka">Karnataka</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+         {/* Mode Field */}
+         <FormField
+          control={control}
+          name="storeDetail.startDate"
+          disabled={modalMode === 'Edit'} // Field is disabled in edit mode
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+              Mode <span className="text-primary">*</span>
+              </FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a Mode" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Mode</SelectLabel>
+                      <SelectItem value="wb">West Bengal</SelectItem>
+                      <SelectItem value="karnataka">Karnataka</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+         {/* Warehouse Field */}
+         <FormField
+          control={control}
+          name="storeDetail.startDate"
+          disabled={modalMode === 'Edit'} // Field is disabled in edit mode
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+              Warehouse <span className="text-primary">*</span>
+              </FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a Warehouse" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Warehouse</SelectLabel>
+                      <SelectItem value="wb">West Bengal</SelectItem>
+                      <SelectItem value="karnataka">Karnataka</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         {/* Posting Date  Field */}
         <FormField
           control={control}
@@ -120,7 +230,7 @@ function GoodsIssueDetailForm() {
           )}
         />
         {/* From Unit */}
-        <FormField
+        {/* <FormField
           control={control}
           name="storeDetail.startDate"
           disabled={modalMode === 'Edit'} // Field is disabled in edit mode
@@ -146,7 +256,7 @@ function GoodsIssueDetailForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         
         <FormField
           control={control}

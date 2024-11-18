@@ -20,7 +20,7 @@ function GoodsReciptDetailForm() {
   const modalMode = useGoodsReceiptType((state) => state.mode)
 
   return (
-    <div className="h-screen overflow-y-auto">
+    <div className="overflow-y-auto">
       <div className=" border border-solid border-black overflow-y-auto p-3 grid gap-4 grid-cols-3 items-center">
         {/* Company Field */}
         <FormField
@@ -116,7 +116,7 @@ function GoodsReciptDetailForm() {
           )}
         />
         {/* Unit Field */}
-        <FormField
+        {/* <FormField
           control={control}
           name="storeDetail.startDate"
           disabled={modalMode === 'Edit'} // Field is disabled in edit mode
@@ -142,7 +142,7 @@ function GoodsReciptDetailForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         {/* Document Status Field */}
         <FormField
