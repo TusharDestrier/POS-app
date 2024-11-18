@@ -32,10 +32,37 @@ function InventoryTransferForm() {
     },
   })
 
+  // const data=[
+  //   {
+  //     id:1,
+  //     value:"val1",
+  //     data:"dat1"
+  //   },
+  //   {
+  //     id:2,
+  //     value:"val2",
+  //     data:"dat2"
+  //   },
+  //   {
+  //     id:3,
+  //     value:"val3",
+  //     data:"dat3"
+  //   },
+  //   {
+  //     id:4,
+  //     value:"val4",
+  //     data:"dat4"
+  //   },
+  // ]
+
+  
+
   // Handle form submission
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
   }
+
+
 
   return (
     <Form {...form}>
@@ -47,7 +74,7 @@ function InventoryTransferForm() {
             <FormItem>
               <FormLabel className="flex items-center gap-2 ">
                 Username
-                <MultiSelectionPopUp />
+                <MultiSelectionPopUp   />
               
               </FormLabel>
               <FormControl>
