@@ -33,8 +33,12 @@ import ReportLayout from '@/app/pages/Root/Report/layout'
 import ReportPage from '@/app/pages/Root/Report/page'
 import SalesLayout from '@/app/pages/Root/Sales/layout'
 import SalesPage from '@/app/pages/Root/Sales/page'
+import AssortmentManagementLayout from '@/app/pages/Root/SalesPerson/AssortmentManagement/layout'
+import AssortmentManagementPage from '@/app/pages/Root/SalesPerson/AssortmentManagement/page'
+import SalesPersonLayout from '@/app/pages/Root/SalesPerson/layout'
 import SessionLayout from '@/app/pages/Root/Session/layout'
 import SessionPage from '@/app/pages/Root/Session/page'
+
 
 export const appRoutes = {
   path: '/',
@@ -44,7 +48,6 @@ export const appRoutes = {
     {
       index: true,
       element: <RoleWiseRedirection />,
-      
     },
     {
       path: 'dashboard',
@@ -94,31 +97,34 @@ export const appRoutes = {
                   index: true,
                   element: <SalesPersonMasterPage />,
                 },
+
+                {
+                  path: 'assortment-management',
+                  element: <SalesPersonMasterPage />,
+                },
               ],
             },
             {
               path: 'generic-policy',
-               element: <GenericPolicy />,
+              element: <GenericPolicy />,
             },
             {
               path: 'store-specific-policy',
-              element: <StoreSpecificPolicy/>
+              element: <StoreSpecificPolicy />,
             },
             {
               path: 'discount-policy',
-              element: <DiscountPolicy/>
-             },
-             {
+              element: <DiscountPolicy />,
+            },
+            {
               path: 'general-setup-option',
               element: <GeneralSetupPage />,
-             
             },
             {
               path: 'storewise-setup-option',
               element: <StoreWiseSetupPage />,
-             
             },
-           
+
             {
               path: 'petty-cash-heads',
               element: <PettyCashHeadLayout />,
@@ -139,7 +145,7 @@ export const appRoutes = {
       children: [
         {
           index: true,
-          element: <Navigate to={"/inventroty/inventory-transfer"} />,
+          element: <Navigate to={'/inventroty/inventory-transfer'} />,
         },
         {
           path: 'inventory-transfer',
@@ -147,9 +153,9 @@ export const appRoutes = {
           children: [
             {
               index: true,
-              element:  <InventoryTransferPage/>
-            }
-          ]
+              element: <InventoryTransferPage />,
+            },
+          ],
         },
         {
           path: 'inventory-transfer-request',
@@ -157,9 +163,9 @@ export const appRoutes = {
           children: [
             {
               index: true,
-              element: <InventoryTransferRequestPage />
-            }
-          ]
+              element: <InventoryTransferRequestPage />,
+            },
+          ],
         },
         {
           path: 'goods-reciept',
@@ -167,9 +173,9 @@ export const appRoutes = {
           children: [
             {
               index: true,
-              element: <GoodsRecieptPage />
-            }
-          ]
+              element: <GoodsRecieptPage />,
+            },
+          ],
         },
         {
           path: 'goods-issue',
@@ -177,9 +183,9 @@ export const appRoutes = {
           children: [
             {
               index: true,
-              element: <GoodsIssuePage />
-            }
-          ]
+              element: <GoodsIssuePage />,
+            },
+          ],
         },
       ],
     },
@@ -215,6 +221,26 @@ export const appRoutes = {
         {
           index: true,
           element: <SessionPage />,
+        },
+      ],
+    },
+    {
+      path: 'salesperson',
+      element: <SalesPersonLayout />,
+      children: [
+        {
+          index: true,
+          element: <Navigate to="/salesperson/assortment-managements" />,
+        },
+        {
+          path: 'assortment-managements',
+          element: <AssortmentManagementLayout />,
+          children: [
+            {
+              index: true,
+              element: <AssortmentManagementPage />,
+            },
+          ],
         },
       ],
     },
