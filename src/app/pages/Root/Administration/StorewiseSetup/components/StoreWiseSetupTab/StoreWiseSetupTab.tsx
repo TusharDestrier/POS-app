@@ -1,4 +1,8 @@
+import CreditNote from '../CreditNote'
 import General from '../General'
+import GoodsReceiptReturn from '../GoodsReceiptReturn'
+import POSBill from '../POSBill'
+import PosOrder from '../PosOrder'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
@@ -17,17 +21,16 @@ function StoreWiseSetupTab() {
           <General/>
         </TabsContent>
         <TabsContent value="posBIll">
-        <h3>posBIll </h3>
+       <POSBill/>
         </TabsContent>
         <TabsContent value="creditNote">
-        <h3>General </h3>
+        <CreditNote/>
         </TabsContent>
         <TabsContent value="goodsReceiptReturn">
-        <h3>General </h3>
+        <GoodsReceiptReturn/>
         </TabsContent>
         <TabsContent value="posOrder">
-        <h3>General </h3>
-
+<PosOrder/>
         </TabsContent>
       </div>
     </Tabs>

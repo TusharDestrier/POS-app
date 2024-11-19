@@ -2,6 +2,9 @@ import { z } from 'zod'
 
 // Define the schema for each item in the `generalValues` array
 export const generalSchema = z.object({
+  storeName: z.string().optional(),
+  fromDate: z.date().optional(),
+  toDate: z.date().optional(),
   pendingSettlement: z.string().optional(),
   footfallEntry: z.boolean().optional(),
   maxAllowable: z.string().optional(),
