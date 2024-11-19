@@ -16,15 +16,12 @@ function StoreWiseSetupTab() {
         </TabsContent>
         <TabsContent value="posBIll">
         <h3>posBIll </h3>
-
         </TabsContent>
         <TabsContent value="creditNote">
         <h3>General </h3>
-
         </TabsContent>
         <TabsContent value="goodsReceiptReturn">
         <h3>General </h3>
-
         </TabsContent>
         <TabsContent value="posOrder">
         <h3>General </h3>
