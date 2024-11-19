@@ -1,3 +1,5 @@
+import General from '../General'
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function StoreWiseSetupTab() {
@@ -12,7 +14,7 @@ function StoreWiseSetupTab() {
       </TabsList>
       <div className="">
         <TabsContent value="general">
-          <h3>General </h3>
+          <General/>
         </TabsContent>
         <TabsContent value="posBIll">
         <h3>posBIll </h3>

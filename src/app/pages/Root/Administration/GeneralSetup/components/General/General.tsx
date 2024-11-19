@@ -102,7 +102,6 @@ const General = () => {
             </FormItem>
           )}
         />
-
         <FormField
           control={control}
           name="generalSchema.maxBillingAmt"
@@ -129,7 +128,7 @@ const General = () => {
             <FormItem>
               <FormLabel>PAN No. Mandatory if Billing Amount Exceeds</FormLabel>
               <FormControl>
-                <Input {...field} id="panNo" placeholder="Pan No" className="w-full mt-3" />
+                <Input {...field} id="panNo" placeholder="Pan No" className="w-full mt-3" disabled />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -101,6 +101,7 @@ function POSBill() {
                   id="maxAllowableDisAmt"
                   placeholder="Maximum Allowable Discount Amount"
                   className="w-full mt-3"
+
                 />
               </FormControl>
 
@@ -185,15 +186,15 @@ function POSBill() {
           control={control}
           name="POSBill.salePersonTaggingPolicy"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Sale Person Tagging Policy</FormLabel>
+            <FormItem >
+              <FormLabel >Sale Person Tagging Policy</FormLabel>
               <FormControl>
-                <Select {...field}>
+                <Select {...field} >
                   <SelectTrigger className="w-full mt-3">
                     <SelectValue placeholder="Select Tagging Policy" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectGroup>
+                    <SelectGroup >
                       <SelectItem value="itemLevel">Item Level</SelectItem>
                       <SelectItem value="billLevel">Bill Level</SelectItem>
                     </SelectGroup>
