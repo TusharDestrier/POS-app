@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-// Define the schema for each item in the `creditnoteValues` array
 export const creditNoteSchema = z.object({
   storeName: z.string().optional(),
   fromDate: z.date().optional(),

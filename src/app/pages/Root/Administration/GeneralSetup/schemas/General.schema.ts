@@ -13,8 +13,3 @@ export const generalSchema = z.object({
   backDateDays: z.boolean().optional(),
   stockCheck: z.string().optional(),
 })
-
-// Define combined schema
-// export const GeneralSchema = z.object({
-//   generalValues: z.array(generalSchema), // Use array of `generalSchema` objects
-// })

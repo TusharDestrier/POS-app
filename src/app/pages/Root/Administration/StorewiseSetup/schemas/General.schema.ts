@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-// Define the schema for each item in the `generalValues` array
 export const generalSchema = z.object({
   storeName: z.string().optional(),
   fromDate: z.date().optional(),
