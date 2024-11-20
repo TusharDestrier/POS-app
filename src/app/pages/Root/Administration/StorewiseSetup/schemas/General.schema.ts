@@ -1,7 +1,9 @@
 import { z } from 'zod'
 
 export const generalSchema = z.object({
-  storeName: z.string().optional(),
+  storeName: z.string().min(2, {
+    message: 'Store Name is required',
+  }),
   fromDate: z.date().optional(),
   toDate: z.date().optional(),
   pendingSettlement: z.string().optional(),

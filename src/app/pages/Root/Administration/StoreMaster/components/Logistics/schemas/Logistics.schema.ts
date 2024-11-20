@@ -7,7 +7,7 @@ export const logisticsScema = z.object({
 
   //billToAddress: z.string().optional(),
   city: z.string().min(3, {
-    message: 'City FIled is  Required',
+    message: 'City Field is  Required',
   }),
   postalCode: z.string().min(4, {
     message: 'Required',

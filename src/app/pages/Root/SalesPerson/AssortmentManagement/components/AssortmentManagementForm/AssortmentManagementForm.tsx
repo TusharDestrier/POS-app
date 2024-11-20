@@ -5,6 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import AssortmentToExclude from './components/AssortmentToExclude'
+import AssortmentToInclude from './components/AssortmentToInclude'
+
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -71,16 +74,16 @@ function AssortmentManagementForm() {
         />
 
         <div>
-        <Tabs defaultValue="account" className="w-[400px]">
+        <Tabs defaultValue="account" className="">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="account">Account</TabsTrigger>
-        <TabsTrigger value="password">Password</TabsTrigger>
+        <TabsTrigger value="account">Assortment to Include</TabsTrigger>
+        <TabsTrigger value="password">Assortment to Exclude</TabsTrigger>
       </TabsList>
       <TabsContent value="account">
-        <h3>Hello world</h3>
+       <AssortmentToInclude/>
       </TabsContent>
       <TabsContent value="password">
-      <h4> world</h4>
+     <AssortmentToExclude/>
       </TabsContent>
     </Tabs>
         </div>
