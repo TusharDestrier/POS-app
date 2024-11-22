@@ -100,6 +100,12 @@ const invoices = [
           <TableHead>Barcode</TableHead>
           <TableHead>Item Name</TableHead>
           <TableHead className="text-right">Group</TableHead>
+          <TableHead className="text-right">Attribute 1</TableHead>
+          <TableHead className="text-right">Attribute 2</TableHead>
+          <TableHead className="text-right">Attribute 3</TableHead>
+          <TableHead className="text-right">Attribute 4</TableHead>
+          <TableHead className="text-right">Attribute 5</TableHead>
+          <TableHead className="text-right">Attribute 6</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -108,6 +114,12 @@ const invoices = [
             <TableCell className="font-medium"><Checkbox id="terms" /></TableCell>
             <TableCell>{invoice.paymentStatus}</TableCell>
             <TableCell>{invoice.paymentMethod}</TableCell>
+            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
             <TableCell className="text-right">{invoice.totalAmount}</TableCell>
           </TableRow>
         ))}
