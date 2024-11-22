@@ -1,3 +1,6 @@
+import { useAssortmentExcludedData } from "./hook/useAssortmentExcludedData"
+
+import SkeletonLoaderTable from "@/components/SkeletonLoaderTable"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -19,53 +22,19 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
+  
 
-const invoices = [
-    {
-      invoice: "INV001",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "INV002",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "INV003",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "INV004",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "INV005",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      paymentMethod: "Credit Card",
-    },
-  ]
 
 export const AssortmentToExclude = () => {
+  const {assortmentExcludedData,isLoading}=useAssortmentExcludedData();
+
+  if (isLoading) {
+    // Render skeleton loader during loading state
+    return<div className='mt-5'> <SkeletonLoaderTable rows={5} columns={5} /></div>;
+  }
+  if(!isLoading && !assortmentExcludedData){
+    return <h3>No data</h3>
+  }
   return (
     <div className="">
     <div className="flex gap-6 w-full m-3">
@@ -102,12 +71,12 @@ export const AssortmentToExclude = () => {
       </TableRow>
     </TableHeader>
     <TableBody>
-      {invoices.map((invoice) => (
-        <TableRow key={invoice.invoice}>
+      {assortmentExcludedData?.map((item) => (
+        <TableRow key={item.barcode}>
           <TableCell className="font-medium"><Checkbox id="terms" /></TableCell>
-          <TableCell>{invoice.paymentStatus}</TableCell>
-          <TableCell>{invoice.paymentMethod}</TableCell>
-          <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+          <TableCell>{item.barcode}</TableCell>
+          <TableCell>{item.itemName}</TableCell>
+          <TableCell className="text-right">{item.group}</TableCell>
         </TableRow>
       ))}
     </TableBody>
