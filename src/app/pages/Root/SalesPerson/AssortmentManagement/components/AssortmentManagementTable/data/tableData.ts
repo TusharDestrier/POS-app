@@ -1,39 +1,68 @@
-export const data: Payment[] = [
-    {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@yahoo.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@gmail.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@gmail.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@gmail.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@hotmail.com",
-    },
-  ]
+export const data: AssortmentType[] = [
+  {
+    id: "asrt001",
+    assortmentName: "Winter Essentials",
+    status: "success",
+    totalProducts: 20,
+    creationDate: "2024-11-01",
+    salesGenerated: 1200,
+  },
+  {
+    id: "asrt002",
+    assortmentName: "Back-to-School Bundle",
+    status: "failed",
+    totalProducts: 15,
+    creationDate: "2024-10-28",
+    salesGenerated: 650,
+  },
+  {
+    id: "asrt003",
+    assortmentName: "Holiday Gift Set",
+    status: "processing",
+    totalProducts: 30,
+    creationDate: "2024-11-15",
+    salesGenerated: 2400,
+  },
+  {
+    id: "asrt004",
+    assortmentName: "Clearance Sale",
+    status: "success",
+    totalProducts: 50,
+    creationDate: "2024-09-20",
+    salesGenerated: 400,
+  },
+  {
+    id: "asrt005",
+    assortmentName: "Summer Promo 2",
+    status: "pending",
+    totalProducts: 25,
+    creationDate: "2024-07-15",
+    salesGenerated: 800,
+  },
+  {
+    id: "asrt006",
+    assortmentName: "Summer Promo 3",
+    status: "pending",
+    totalProducts: 25,
+    creationDate: "2024-07-15",
+    salesGenerated: 3900,
+  },
+  {
+    id: "asrt007",
+    assortmentName: "Summer Promo 5",
+    status: "pending",
+    totalProducts: 30,
+    creationDate: "2024-07-15",
+    salesGenerated: 1000,
+  },
+];
+
    
-  export type Payment = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
-  }
+  export type AssortmentType = {
+    id: string;
+    assortmentName: string;
+    status: "pending" | "processing" | "success" | "failed";
+    totalProducts: number;
+    creationDate: string; // Use ISO date format or any date string
+    salesGenerated: number; // Sales in USD or other currency
+  };

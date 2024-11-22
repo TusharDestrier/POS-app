@@ -2,13 +2,13 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
-import { Payment } from "../../data/tableData"
+import { AssortmentType } from "../../data/tableData"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<AssortmentType>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -32,51 +32,59 @@ export const columns: ColumnDef<Payment>[] = [
       enableHiding: false,
     },
     {
-      accessorKey: "status",
-      header: "Status",
+      accessorKey: "assortmentName",
+      header: "Assortment Name",
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("status")}</div>
+        <div className="capitalize">{row.getValue("assortmentName")}</div>
       ),
     },
     {
-      accessorKey: "email",
+      accessorKey: "status",
       header: ({ column }) => {
         return (
           <Button
             variant="ghost"
+            className="mx-auto flex "
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Email
+            Status
             <ArrowUpDown size={16} className="ml-1" />
           </Button>
         )
       },
-      cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+      cell: ({ row }) => <div className="lowercase text-center">{row.getValue("status")}</div>,
     },
     {
-      accessorKey: "amount",
-      header: () => <div className="text-right">Amount</div>,
+      accessorKey: "totalProducts",
+      header: () => <div className="text-center">Total Products</div>,
       cell: ({ row }) => {
-        const amount = parseFloat(row.getValue("amount"))
+          return <div className="text-center font-medium">{row.getValue("totalProducts")}</div>
+      },
+    },
+    {
+      accessorKey: "creationDate",
+      header: () => <div className="text-center">Creation Date</div>,
+      cell: ({ row }) => {
+       
+        return <div className="text-center font-medium">{row.getValue("creationDate")}</div>
+      },
+    },
+    {
+      accessorKey: "salesGenerated",
+      header: () => <div className="text-center">Sales Generated</div>,
+      cell: ({ row }) => {
    
-        // Format the amount as a dollar amount
-        const formatted = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(amount)
-   
-        return <div className="text-right font-medium">{formatted}</div>
+        return <div className="text-center font-medium">{row.getValue("salesGenerated")}</div>
       },
     },
     {
       id: "actions",
+      header:() => <div className="text-left">Actions</div>,
       enableHiding: false,
-      cell: ({ row }) => {
-        const payment = row.original
-   
-        return (
+      cell: () => {
+           return (
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger asChild className="">
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal />
@@ -84,14 +92,10 @@ export const columns: ColumnDef<Payment>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(payment.id)}
-              >
-                Copy payment ID
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>View customer</DropdownMenuItem>
-              <DropdownMenuItem>View payment details</DropdownMenuItem>
+              <DropdownMenuItem>Edit Assortment</DropdownMenuItem>
+              <DropdownMenuItem>View Assortment</DropdownMenuItem>
+              <DropdownMenuSeparator/>
+              <DropdownMenuItem>Delete Assortment</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )

@@ -14,9 +14,11 @@ import React from 'react'
 
 import AssortmentManagementModal from '../AssortmentManagementModal'
 import  columns from './components/AssortmentManagementTableColumn'
-import { data } from './data/tableData'
+// import { data } from './data/tableData'
+import { useAssortmentData } from '../../api/useAssortmentData'
 import { useAssortmentManagementStore } from '../../store/useAssortmentManagement'
 
+import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -36,16 +38,26 @@ import {
 
 
 
+
 function AssortmentManagementTable() {
+const {assortmentData,isLoading}=useAssortmentData();
+
+
+
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0, // Default to first page
+    pageSize: 5,  // Default number of rows per page
+  });
 
 const modalHandler=useAssortmentManagementStore(state=>state.toggleOpen);
 
+
   const table = useReactTable({
-    data,
+    data:assortmentData || [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -60,16 +72,28 @@ const modalHandler=useAssortmentManagementStore(state=>state.toggleOpen);
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination
     },
+    onPaginationChange: setPagination,
+    
   })
+
+
+  
+  if (isLoading) {
+    // Render skeleton loader during loading state
+    return<div className='mt-5'> <SkeletonLoaderTable rows={5} columns={5} /></div>;
+  }
+
+  if (!isLoading && !assortmentData) return <h3>No data available.</h3>;
 
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('email')?.setFilterValue(event.target.value)}
+          placeholder="Assortment Search"
+          value={(table.getColumn('assortmentName')?.getFilterValue() as string) ?? ''}
+          onChange={(event) => table.getColumn('assortmentName')?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
 
@@ -112,12 +136,12 @@ const modalHandler=useAssortmentManagementStore(state=>state.toggleOpen);
       </div>
       <div className="rounded-md border">
         <Table>
-          <TableHeader>
+          <TableHeader >
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className=''>
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
@@ -132,7 +156,7 @@ const modalHandler=useAssortmentManagementStore(state=>state.toggleOpen);
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
@@ -150,26 +174,35 @@ const modalHandler=useAssortmentManagementStore(state=>state.toggleOpen);
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{' '}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         </div>
         <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
+        <Button
+  variant="outline"
+  size="sm"
+  onClick={() =>
+    setPagination((prev) => ({
+      ...prev,
+      pageIndex: Math.max(prev.pageIndex - 1, 0), // Prevent going below 0
+    }))
+  }
+  disabled={!table.getCanPreviousPage()}
+>
+  Previous
+</Button>
+<Button
+  variant="outline"
+  size="sm"
+  onClick={() =>
+    setPagination((prev) => ({
+      ...prev,
+      pageIndex: Math.min(prev.pageIndex + 1, table.getPageCount() - 1), // Prevent exceeding max pages
+    }))
+  }
+  disabled={!table.getCanNextPage()}
+>
+  Next
+</Button>
         </div>
       </div>
       <AssortmentManagementModal/>
