@@ -35,10 +35,10 @@ import SalesLayout from '@/app/pages/Root/Sales/layout'
 import SalesPage from '@/app/pages/Root/Sales/page'
 import AssortmentManagementLayout from '@/app/pages/Root/SalesPerson/AssortmentManagement/layout'
 import AssortmentManagementPage from '@/app/pages/Root/SalesPerson/AssortmentManagement/page'
+import AssortmentwiseIncentivePage from '@/app/pages/Root/SalesPerson/AssortmentwiseIncentive/page'
 import SalesPersonLayout from '@/app/pages/Root/SalesPerson/layout'
 import SessionLayout from '@/app/pages/Root/Session/layout'
 import SessionPage from '@/app/pages/Root/Session/page'
-
 
 export const appRoutes = {
   path: '/',
@@ -242,6 +242,11 @@ export const appRoutes = {
             },
           ],
         },
+        {
+          path: 'assortmentwise-incentive',
+          element: <AssortmentwiseIncentivePage />,
+        }
+
       ],
     },
   ],
