@@ -9,6 +9,7 @@ export const data=[
         "discount": "15%",
         "brand": "Brand C",
         "weight": "300g",
+        "qty": "30",
       }
     },
     {
@@ -20,8 +21,8 @@ export const data=[
         "stock": "In Stock",
         "discount": "20%",
         "brand": "Brand E",
-        "weight": "200g"
+        "weight": "200g",
+        "qty": "30",
       }
     }
   ]
-  
