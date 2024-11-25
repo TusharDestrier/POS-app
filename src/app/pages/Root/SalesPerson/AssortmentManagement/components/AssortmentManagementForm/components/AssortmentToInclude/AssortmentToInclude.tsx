@@ -31,7 +31,9 @@ const AssortmentToInclude = () => {
   const [attributeColumns, setAttributeColumns] = useState<string[]>([]) // Dynamically track attribute columns
 
   // Handle checkbox selection
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const toggleSelection = (item: any) => {
+    
     const isSelected = selectedItems[item.barcode]
 
     setSelectedItems((prev) => ({
@@ -124,7 +126,9 @@ const AssortmentToInclude = () => {
               <TableCell>{item.group}</TableCell>
               {attributeColumns.map((attr) => (
                 <TableCell key={`${item.barcode}-${attr}`} className="text-right">
-                  {selectedItems[item.barcode] ? item?.attributes?.[attr] || '--' : '--'}
+                     {/* //  @ts-nocheck  */}
+                     {selectedItems[item.barcode] ? (item.attributes as Record<string, string | undefined>)[attr] || '--' : '--'}
+
                 </TableCell>
               ))}
             </TableRow>
