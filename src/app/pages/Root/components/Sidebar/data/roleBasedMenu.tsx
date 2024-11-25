@@ -46,8 +46,8 @@ export const roleBasedMenu: RoleBasedMenu = {
             { name: 'Store Specific Policy', path: '/administration/setup/store-specific-policy' },
             { name: 'Discount Policy', path: '/administration/setup/discount-policy' },
             { name: 'Petty Cash Heads', path: '/administration/setup/petty-cash-heads' },
-            { name: 'General Setup Option', path: '/administration/setup/general-setup-option' },
-            { name: 'Storewise Setup Option', path: '/administration/setup/storewise-setup-option'}
+            { name: 'Organization Policy', path: '/administration/setup/general-setup-option' },
+            { name: 'Store Specific Policy', path: '/administration/setup/storewise-setup-option'}
           ],
         },
         {
