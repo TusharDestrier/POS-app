@@ -13,8 +13,7 @@ import { ChevronDown } from 'lucide-react'
 import React from 'react'
 
 import AssortmentManagementModal from '../AssortmentManagementModal'
-import  columns from './components/AssortmentManagementTableColumn'
-// import { data } from './data/tableData'
+import columns from './components/AssortmentManagementTableColumn'
 import { useAssortmentData } from '../../api/useAssortmentData'
 import { useAssortmentManagementStore } from '../../store/useAssortmentManagement'
 
@@ -36,26 +35,21 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-
-
-
 function AssortmentManagementTable() {
-const {assortmentData,isLoading}=useAssortmentData();
-
+  const { assortmentData, isLoading } = useAssortmentData()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
   const [pagination, setPagination] = React.useState({
     pageIndex: 0, // Default to first page
-    pageSize: 5,  // Default number of rows per page
-  });
+    pageSize: 5, // Default number of rows per page
+  })
 
-const modalHandler=useAssortmentManagementStore(state=>state.toggleOpen);
-
+  const modalHandler = useAssortmentManagementStore((state) => state.toggleOpen)
 
   const table = useReactTable({
-    data:assortmentData || [],
+    data: assortmentData || [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -70,20 +64,22 @@ const modalHandler=useAssortmentManagementStore(state=>state.toggleOpen);
       columnFilters,
       columnVisibility,
       rowSelection,
-      pagination
+      pagination,
     },
     onPaginationChange: setPagination,
-    
   })
 
-
-  
   if (isLoading) {
     // Render skeleton loader during loading state
-    return<div className='mt-5'> <SkeletonLoaderTable rows={5} columns={5} /></div>;
+    return (
+      <div className="mt-5">
+        {' '}
+        <SkeletonLoaderTable rows={5} columns={5} />
+      </div>
+    )
   }
 
-  if (!isLoading && !assortmentData) return <h3>No data available.</h3>;
+  if (!isLoading && !assortmentData) return <h3>No data available.</h3>
 
   return (
     <div className="w-full">
@@ -91,21 +87,19 @@ const modalHandler=useAssortmentManagementStore(state=>state.toggleOpen);
         <Input
           placeholder="Assortment Search"
           value={(table.getColumn('assortmentName')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('assortmentName')?.setFilterValue(event.target.value)}
+          onChange={(event) =>
+            table.getColumn('assortmentName')?.setFilterValue(event.target.value)
+          }
           className="max-w-sm"
         />
 
-        <ul className='ml-auto flex mr-3 gap-4'>
-            <li>
-                <Button onClick={modalHandler}>
-                    Add
-                </Button>
-            </li>
-            <li>
-                <Button variant={'outline'}>
-                    Export
-                </Button>
-            </li>
+        <ul className="ml-auto flex mr-3 gap-4">
+          <li>
+            <Button onClick={modalHandler}>Add</Button>
+          </li>
+          <li>
+            <Button variant={'outline'}>Export</Button>
+          </li>
         </ul>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -134,12 +128,12 @@ const modalHandler=useAssortmentManagementStore(state=>state.toggleOpen);
       </div>
       <div className="rounded-md border">
         <Table>
-          <TableHeader >
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className=''>
+                    <TableHead key={header.id} className="">
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
@@ -154,7 +148,7 @@ const modalHandler=useAssortmentManagementStore(state=>state.toggleOpen);
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} >
+                    <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
@@ -172,38 +166,38 @@ const modalHandler=useAssortmentManagementStore(state=>state.toggleOpen);
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         </div>
         <div className="space-x-2">
-        <Button
-  variant="outline"
-  size="sm"
-  onClick={() =>
-    setPagination((prev) => ({
-      ...prev,
-      pageIndex: Math.max(prev.pageIndex - 1, 0), // Prevent going below 0
-    }))
-  }
-  disabled={!table.getCanPreviousPage()}
->
-  Previous
-</Button>
-<Button
-  variant="outline"
-  size="sm"
-  onClick={() =>
-    setPagination((prev) => ({
-      ...prev,
-      pageIndex: Math.min(prev.pageIndex + 1, table.getPageCount() - 1), // Prevent exceeding max pages
-    }))
-  }
-  disabled={!table.getCanNextPage()}
->
-  Next
-</Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              setPagination((prev) => ({
+                ...prev,
+                pageIndex: Math.max(prev.pageIndex - 1, 0), // Prevent going below 0
+              }))
+            }
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              setPagination((prev) => ({
+                ...prev,
+                pageIndex: Math.min(prev.pageIndex + 1, table.getPageCount() - 1), // Prevent exceeding max pages
+              }))
+            }
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
         </div>
       </div>
-      <AssortmentManagementModal/>
+      <AssortmentManagementModal />
     </div>
   )
 }

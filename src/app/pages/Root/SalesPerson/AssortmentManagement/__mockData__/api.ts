@@ -43,6 +43,7 @@ export function getAssortmentExcludedData() {
     }, 3000)
   })
   
+  console.log('excluded data fetch')
 
   return promise as UsePromise<typeof assortmentExcludedData>
 }

@@ -1,28 +1,23 @@
 export const data=[
-    {
-      "barcode": "BRC003",
-      "itemName": "Woolen Scarf",
-      "group": "Discounted Items",
-      "attributes": {
-        "price": "$20",
-        "stock": "In Stock",
-        "discount": "15%",
-        "brand": "Brand C",
-        "weight": "300g",
-        "qty": "30",
-      }
+  {
+    barcode: "BRC001",
+    itemName: "Winter Jacket",
+    group: "Winter Collection",
+    attributes: {
+      price: "$120",
+      stock: "10 Units",
+      discount: "10%",
     },
-    {
-      "barcode": "BRC005",
-      "itemName": "Woolen Cap",
-      "group": "Clearance Sale",
-      "attributes": {
-        "price": "$25",
-        "stock": "In Stock",
-        "discount": "20%",
-        "brand": "Brand E",
-        "weight": "200g",
-        "qty": "30",
-      }
-    }
-  ]
+  },
+  {
+    barcode: "BRC002",
+    itemName: "Thermal Gloves",
+    group: "Winter Collection",
+    attributes: {
+      price: "$30",
+      stock: "Low Stock",
+      discount: "5%",
+      brand: "Brand B",
+    },
+  },
+]

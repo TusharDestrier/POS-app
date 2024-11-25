@@ -8,8 +8,8 @@ export function useAssortmentExcludedData() {
   const { data, error, isLoading } = useFetch({
     key: 'assortmentExcluded',
     fn: getAssortmentExcludedData, // This should return a Promise
-    stale: 0, // Set stale time to 0 to consider data stale immediately
-    cache: false, // Disable caching
+    stale: 10000, // Set stale time to 0 to consider data stale immediately
+    cache: true, // Disable caching
   })
 
   return { assortmentExcludedData: data, error, isLoading }
