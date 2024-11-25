@@ -87,7 +87,9 @@ function AssortmentManagementForm() {
       </TabsContent>
     </Tabs>
         </div>
+        <div className='float-end'>
         <Button type="submit">Submit</Button>
+        </div>
       </form>
     </Form>
     </div>

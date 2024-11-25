@@ -36,7 +36,7 @@ export const AssortmentToExclude = () => {
     return <h3>No data</h3>
   }
   return (
-    <div className="">
+    <div className="mt-5">
     <div className="flex gap-6 w-full m-3">
       <div className="w-[300px]">
       <Select>
@@ -55,7 +55,7 @@ export const AssortmentToExclude = () => {
     </SelectContent>
   </Select>
       </div>
-      <div className="ml-auto flex mr-3 gap-4">
+      <div className="ml-auto flex space-x-2 float-end mr-3 gap-4">
       <Button>Show Items</Button>
       <Button>Copy Assortment</Button>
       </div>

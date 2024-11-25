@@ -6,6 +6,15 @@ import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
   Table,
   TableBody,
   TableCell,
@@ -64,9 +73,28 @@ const AssortmentToInclude = () => {
 
   return (
     <div className="mt-5">
-      <div className="flex justify-between mb-4">
+      <div className="flex gap-6 w-full m-3">
+      <div className="w-[300px]">
+      <Select>
+    <SelectTrigger className="">
+      <SelectValue placeholder="Select a Name" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectGroup>
+        <SelectLabel>Names</SelectLabel>
+        <SelectItem value="apple">Apple</SelectItem>
+        <SelectItem value="banana">Banana</SelectItem>
+        <SelectItem value="blueberry">Blueberry</SelectItem>
+        <SelectItem value="grapes">Grapes</SelectItem>
+        <SelectItem value="pineapple">Pineapple</SelectItem>
+      </SelectGroup>
+    </SelectContent>
+  </Select>
+      </div>
+      <div className="ml-auto flex space-x-2 float-end mr-3 gap-4">
         <Button>Show Items</Button>
         <Button>Copy Assortment</Button>
+      </div>
       </div>
       <Table>
         <TableHeader>
