@@ -4,13 +4,13 @@ import StoreMasterForm from '../StoreMasterForm'
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
+  //DialogHeader,
+ // DialogTitle,
 } from '@/components/ui/dialog'
 
 function StoreMasterModal() {
   const isOpen = useStoreMasterStore((state) => state.isOpen)
-  const modalMode = useStoreMasterStore((state) => state.mode)
+ // const modalMode = useStoreMasterStore((state) => state.mode)
   const closeModal = useStoreMasterStore((state) => state.close)
 
   return (
