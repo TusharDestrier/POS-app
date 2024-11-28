@@ -21,7 +21,6 @@ export interface RoleBasedMenu {
   cashier: SidebarItem[]
 }
 
-
 export const roleBasedMenu: RoleBasedMenu = {
   admin: [
     {
@@ -47,7 +46,7 @@ export const roleBasedMenu: RoleBasedMenu = {
             { name: 'Discount Policy', path: '/administration/setup/discount-policy' },
             { name: 'Petty Cash Heads', path: '/administration/setup/petty-cash-heads' },
             { name: 'Organization Policy', path: '/administration/setup/general-setup-option' },
-            { name: 'Store Specific Policy', path: '/administration/setup/storewise-setup-option'}
+            { name: 'Store Specific Policy', path: '/administration/setup/storewise-setup-option' },
           ],
         },
         {
@@ -67,6 +66,11 @@ export const roleBasedMenu: RoleBasedMenu = {
               path: '/administration/promotions/assortment-managements',
             },
             { name: 'Promotion Setup', path: '/administration/promotions/promotion-setup' },
+
+            {
+              name: 'Assortment Promotion',
+              path: '/administration/promotions/assortment-promotion',
+            },
             {
               name: 'Promotion Allocation',
               path: '/administration/promotions/promotion-allocation',
