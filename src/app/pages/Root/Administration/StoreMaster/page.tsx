@@ -1,5 +1,9 @@
 import StoreMasterTable from './components/StoreMasterTable'
 
 export const StoreMasterPage = () => {
-  return <StoreMasterTable />
+  return (
+    <div className="relative z-40">
+      <StoreMasterTable />
+    </div>
+  )
 }
