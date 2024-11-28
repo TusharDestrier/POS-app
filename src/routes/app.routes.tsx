@@ -2,6 +2,10 @@ import { Navigate } from 'react-router-dom'
 
 import ErrorPage from '@/app/pages/ErrorPage/page'
 import RoleWiseRedirection from '@/app/pages/RoleWiseRedirection'
+import AssortmentmanagementSetupLayout from '@/app/pages/Root/Administration/AssortmentManagement/layout'
+import AssortmentmanagementSetupPage from '@/app/pages/Root/Administration/AssortmentManagement/page'
+import AssortmentPromotionLayout from '@/app/pages/Root/Administration/AssortmentPromotion/layout'
+import AssortmentPromotionPage from '@/app/pages/Root/Administration/AssortmentPromotion/page'
 import CustomerMasterLayout from '@/app/pages/Root/Administration/CustomerMaster/layout'
 import CustomerMasterPage from '@/app/pages/Root/Administration/CustomerMaster/page'
 import DiscountPolicy from '@/app/pages/Root/Administration/DiscountPolicy'
@@ -11,6 +15,8 @@ import { AdministrationLayout } from '@/app/pages/Root/Administration/layout'
 import { PayModeMasterPage } from '@/app/pages/Root/Administration/PayModeMaster/page'
 import PettyCashHeadLayout from '@/app/pages/Root/Administration/PettyCashHead/layout'
 import PettyCashHeadPage from '@/app/pages/Root/Administration/PettyCashHead/page'
+import PromotionSetupLayout from '@/app/pages/Root/Administration/PromotionSetup/layout'
+import PromotionSetupPage from '@/app/pages/Root/Administration/PromotionSetup/page'
 import SalesPersonMasterLayout from '@/app/pages/Root/Administration/SalesPersonMaster/layout'
 import SalesPersonMasterPage from '@/app/pages/Root/Administration/SalesPersonMaster/page'
 import { StoreMasterPage } from '@/app/pages/Root/Administration/StoreMaster/page'
@@ -35,6 +41,8 @@ import SalesLayout from '@/app/pages/Root/Sales/layout'
 import SalesPage from '@/app/pages/Root/Sales/page'
 import AssortmentManagementLayout from '@/app/pages/Root/SalesPerson/AssortmentManagement/layout'
 import AssortmentManagementPage from '@/app/pages/Root/SalesPerson/AssortmentManagement/page'
+import AssortmentThreePage from '@/app/pages/Root/SalesPerson/AssortmentThree/page'
+import AssortmentManagementTwoPage from '@/app/pages/Root/SalesPerson/AssortmentTwo/page'
 import AssortmentwiseIncentivePage from '@/app/pages/Root/SalesPerson/AssortmentwiseIncentive/page'
 import SalesPersonLayout from '@/app/pages/Root/SalesPerson/layout'
 import SessionLayout from '@/app/pages/Root/Session/layout'
@@ -137,7 +145,56 @@ export const appRoutes = {
             },
           ],
         },
-      ],
+        {
+          path:"promotions",
+          children:[
+            {
+              path: 'assortment-promotion',
+              children: [
+                {
+                  element: <AssortmentPromotionLayout />,
+                  children: [
+                    {
+                      index: true,
+                      element: <AssortmentPromotionPage />,
+                    },
+                  ],
+                },
+              ]
+            },
+            {
+              path: 'promotion-setup',
+              children: [
+                {
+                  element: <PromotionSetupLayout/>,
+                  children: [
+                    {
+                      index: true,
+                      element: <PromotionSetupPage/>
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+             path: 'assortment-managements',
+             children: [
+              {
+                element: <AssortmentmanagementSetupLayout/>,
+                children: [
+                  {
+                    index: true,
+                    element: <AssortmentmanagementSetupPage/>
+                  }
+                 
+                ]
+              }
+             ]
+            }
+          ]
+        },
+      
+      ],    
     },
     {
       path: 'inventroty',
@@ -245,7 +302,15 @@ export const appRoutes = {
         {
           path: 'assortmentwise-incentive',
           element: <AssortmentwiseIncentivePage />,
-        }
+        },
+        {
+          path: 'assortment-two',
+           element: <AssortmentManagementTwoPage/>,
+        },
+        {
+          path: 'assortment-three',
+          element: <AssortmentThreePage/>,
+        },
 
       ],
     },
