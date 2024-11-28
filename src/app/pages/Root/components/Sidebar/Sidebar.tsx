@@ -1,11 +1,13 @@
+import { ImageOff } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { roleBasedMenu, RoleBasedMenu, SidebarItem, SubItem } from './data/roleBasedMenu'
 import { useSidebarComp } from './hooks/useSidebarComp'
 
-import Logo from '@/assets/img/demo-logo.png'
+import useImageUploaderState from '@/components/ImageUploader/store/useImageUploader'
 import useAuth from '@/store/useAuth'
+
 
 // interface User {
 //   role: 'admin' | 'manager' | 'storemanager' | 'cashier'
@@ -98,6 +100,10 @@ function SidebarItemComponent({
 function Sidebar() {
   const { open: globalOpen, sidebarRef } = useSidebarComp()
   const { user } = useAuth()
+  const image = useImageUploaderState(state=>state.image);
+
+
+
 
   // Get the menu items based on the user's role
   const sidebarItems: SidebarItem[] =
@@ -110,7 +116,17 @@ function Sidebar() {
           className="font-extrabold text-2xl text-nowrap flex items-center gap-3 text-gray-600"
           to="/"
         >
-          <img src={Logo} alt="demo_logo" className="w-9 block ml-1 rounded-md" />
+          {image ? <img
+          src={image}
+          alt="Uploaded Preview"
+          style={{
+            width: "50px",
+            height: "50px",
+            objectFit: "cover",
+            borderRadius: "10px",
+            border: "2px solid #ccc",
+          }}
+        />: <ImageOff size={40} />}
           <span
             className={`transition-opacity duration-1000 ${globalOpen ? 'opacity-100' : 'opacity-0'}`}
           >

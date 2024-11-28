@@ -2,6 +2,7 @@ import { useFormContext } from 'react-hook-form'
 
 // import { Button } from '@/components/ui/button'
 
+import ImageUploader from '@/components/ImageUploader'
 //import useGoodsIssueType from '@/app/pages/Root/Inventroty/GoodsIssue/store/useGoodsIssueType'
 import {
   Card,
@@ -251,6 +252,14 @@ const General = () => {
             </FormItem>
           )}
         />
+
+        <div className="form-item">
+        <Label htmlFor="picture">Picture</Label>
+        <ImageUploader/>
+        </div>
+
+
+
       </CardContent>
     </Card>
   )
