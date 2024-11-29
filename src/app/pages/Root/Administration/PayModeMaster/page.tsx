@@ -14,7 +14,7 @@ export const PayModeMasterPage = () => {
     <div
       className="items pe-4 space-y-5 border-e border-solid  
       bg-[linear-gradient(to_right_bottom,rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('/Pay_mode.jpg')] 
-      bg-no-repeat bg-cover bg-center p-5"
+      bg-no-repeat bg-cover bg-center p-5 relative z-30 backdrop-brightness-100"
       style={{ filter: 'brightness(1.3)' }} // Adjust brightness using CSS
     >
       {/* Form Fields Section */}
@@ -105,6 +105,7 @@ export const PayModeMasterPage = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
                   <input
+                  className=''
                     type="checkbox"
                     name="paymentRestriction"
                     onClick={handleCheckboxClick}

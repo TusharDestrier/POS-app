@@ -2,7 +2,7 @@ import AssortmentManagementTable from './components/AssortmentManagementTable'
 
 function AssortmentManagementPage() {
   return (
-    <div className="relative z-30">
+    <div className="absolute z-40">
       <AssortmentManagementTable />
     </div>
   )
