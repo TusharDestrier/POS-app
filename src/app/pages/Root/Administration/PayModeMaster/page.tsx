@@ -6,8 +6,10 @@ import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
 export const PayModeMasterPage = () => {
-  // const [showExtraOptions, setShowExtraOptions] = useState(false)
   const [showExtraOptions, setShowExtraOptions] = useState(false)
+  const handleCheckboxClick = () => {
+    setShowExtraOptions(!showExtraOptions)
+  }
   return (
     <div
       className="items pe-4 space-y-5 border-e border-solid  
@@ -102,51 +104,50 @@ export const PayModeMasterPage = () => {
               {/* Payment Restriction Conditions */}
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
-                <input
-                      type="radio"
-                      name="paymentRestriction"
-                      onChange={() => setShowExtraOptions(true)}
-                    />
-                  <Label>
-                    Restrict Payments in This Mode When:
-                  </Label>
+                  <input
+                    type="checkbox"
+                    name="paymentRestriction"
+                    onClick={handleCheckboxClick}
+                    // checked={showExtraOptions}
+                  />
+                  <Label>Restrict Payments in This Mode When:</Label>
                 </div>
 
                 <div className="ml-5">
-                {showExtraOptions && (
-                  <RadioGroup defaultValue="comfortable">
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        className="border-white"
-                        value="itemPromotions"
-                        id="itemPromotions"
-                      />
-                      <Label htmlFor="itemPromotions" className="">
-                        Item-Level Promotions Are Applied
-                      </Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        className="border-white"
-                        value="billPromotions"
-                        id="billPromotions"
-                      />
-                      <Label htmlFor="billPromotions" className="">
-                        Bill-Level Promotions Are Applied
-                      </Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        className="border-white"
-                        value="anyPromotions"
-                        id="anyPromotions"
-                      />
-                      <Label htmlFor="anyPromotions" className="">
-                        Any Promotions Are Applied
-                      </Label>
-                    </div>
-                  </RadioGroup>
-                )}
+                  {showExtraOptions && (
+                    <RadioGroup defaultValue="comfortable">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          className="border-white"
+                          value="itemPromotions"
+                          id="itemPromotions"
+                        />
+                        <Label htmlFor="itemPromotions" className="">
+                          Item-Level Promotions Are Applied
+                        </Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          className="border-white"
+                          value="billPromotions"
+                          id="billPromotions"
+                        />
+                        <Label htmlFor="billPromotions" className="">
+                          Bill-Level Promotions Are Applied
+                        </Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          className="border-white"
+                          value="anyPromotions"
+                          id="anyPromotions"
+                        />
+                        <Label htmlFor="anyPromotions" className="">
+                          Any Promotions Are Applied
+                        </Label>
+                      </div>
+                    </RadioGroup>
+                  )}
                 </div>
               </div>
               {/* Count Based Payment Transfer */}
@@ -191,7 +192,6 @@ export const PayModeMasterPage = () => {
     </div>
   )
 }
-
 
 // store specific policy -> stroe wise policy
 // organization policy -> general setup

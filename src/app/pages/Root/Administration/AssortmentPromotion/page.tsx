@@ -1,8 +1,10 @@
-import AssortmentmanagementTable from "./components/AssortmentmanagementTable/AssortmentmanagementTable"
+import AssortmentmanagementTable from './components/AssortmentmanagementTable/AssortmentmanagementTable'
 
 function AssortmentPromotionPage() {
-    return (
-        <AssortmentmanagementTable/>
-    )
+  return (
+    <div className="relative z-30">
+      <AssortmentmanagementTable />
+    </div>
+  )
 }
 export default AssortmentPromotionPage

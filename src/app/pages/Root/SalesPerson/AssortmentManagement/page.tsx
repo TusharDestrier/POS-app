@@ -1,10 +1,10 @@
-
-import AssortmentManagementTable from "./components/AssortmentManagementTable"
+import AssortmentManagementTable from './components/AssortmentManagementTable'
 
 function AssortmentManagementPage() {
   return (
-
-   <AssortmentManagementTable/>
+    <div className="relative z-30">
+      <AssortmentManagementTable />
+    </div>
   )
 }
 

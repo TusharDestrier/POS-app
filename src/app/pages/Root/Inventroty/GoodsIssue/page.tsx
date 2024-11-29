@@ -2,7 +2,7 @@ import GoodsIssueTable from "./components/GoodsIssueTable/GoodsIssueTable"
 
 function GoodsIssuePage() {
     return (
-      <div>
+      <div className="relative z-30">
         <GoodsIssueTable/>
         </div>
     )

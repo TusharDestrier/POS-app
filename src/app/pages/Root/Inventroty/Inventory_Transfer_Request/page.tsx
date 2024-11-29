@@ -1,6 +1,9 @@
-import InventoryTransferRequestTable from "./components/InventoryTransferRequestTable/InventoryTransferRequestTable"
+import InventoryTransferRequestTable from './components/InventoryTransferRequestTable/InventoryTransferRequestTable'
 
 export const InventoryTransferRequestPage = () => {
-    return <InventoryTransferRequestTable />
-  }
-  
+  return (
+    <div className="relative z-30">
+      <InventoryTransferRequestTable />
+    </div>
+  )
+}

@@ -2,7 +2,10 @@ import AssortmentAllocationStoreForm from "./components/AssortmentAllocationStor
 
 function AssortmentwiseIncentivePage() {
   return (
-   <><h1 className="m-3">Store wise Assortment Allocation </h1><AssortmentAllocationStoreForm /></>
+   <div className="relative z-30">
+     <h1 className="m-3">Store wise Assortment Allocation </h1> 
+     <AssortmentAllocationStoreForm/>
+   </div>
   )
 }
 

@@ -1,7 +1,11 @@
-import PettyCashHeadTable from "./components/PettyCashHeadTable"
+import PettyCashHeadTable from './components/PettyCashHeadTable'
 
 function PettyCashHeadPage() {
-  return <PettyCashHeadTable/>
+  return (
+    <div className="relative z-30">
+      <PettyCashHeadTable />
+    </div>
+  )
 }
 
 export default PettyCashHeadPage

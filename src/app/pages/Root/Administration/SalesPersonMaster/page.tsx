@@ -1,7 +1,11 @@
 import { SalesPersonTable } from './components/SalesPersonTable/SalesPersonTable'
 
 function SalesPersonMasterPage() {
-  return <SalesPersonTable />
+  return (
+    <div className="relative z-40">
+      <SalesPersonTable />
+    </div>
+  )
 }
 
 export default SalesPersonMasterPage

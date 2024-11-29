@@ -2,7 +2,7 @@ import GoodsReciptTable from "./components/GoodsReciptTable"
 
 function GoodsRecieptPage() {
   return (
-    <div><GoodsReciptTable/></div>
+    <div className="relative z-30"><GoodsReciptTable/></div>
   )
 }
 
