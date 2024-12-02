@@ -1,8 +1,10 @@
+// eslint-disable-next-line import/order
 import { useFormContext } from 'react-hook-form'
 
 // import { Button } from '@/components/ui/button'
 
 //import useGoodsIssueType from '@/app/pages/Root/Inventroty/GoodsIssue/store/useGoodsIssueType'
+
 import {
   Card,
   CardContent,
@@ -25,6 +27,7 @@ import {
 } from '@/components/ui/select'
 
 const General = () => {
+ 
   const { control } = useFormContext()
   return (
     <Card className="border-2 border-solid border-black overflow-y-auto h-[650px]">
@@ -200,14 +203,13 @@ const General = () => {
           name="generalSchema.panNo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>PAN No. Mandatory if Billing Amount Exceeds</FormLabel>
+              <FormLabel>PAN No. Mandatory if Billing Amount Exceeds<span className="text-primary">*</span></FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   id="panNo"
                   placeholder="Pan No"
                   className="w-full mt-3"
-                  disabled
                 />
               </FormControl>
               <FormMessage />

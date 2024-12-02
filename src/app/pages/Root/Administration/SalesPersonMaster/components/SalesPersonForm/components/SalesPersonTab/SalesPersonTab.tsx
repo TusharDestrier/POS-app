@@ -40,9 +40,6 @@ function SalesPersonTab() {
   // }
   const { control } = useFormContext()
 
-
-
-
   return (
     <div className="border p-4 border-black border-solid h-[580px] overflow-y-auto">
     <div className="grid grid-cols-2 gap-3">

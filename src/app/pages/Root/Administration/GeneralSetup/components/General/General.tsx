@@ -129,7 +129,7 @@ const General = () => {
             <FormItem>
               <FormLabel>PAN No. Mandatory if Billing Amount Exceeds</FormLabel>
               <FormControl>
-                <Input {...field} id="panNo" placeholder="Pan No" className="w-full mt-3" disabled />
+                <Input {...field} id="panNo" placeholder="Pan No" className="w-full mt-3"  />
               </FormControl>
               <FormMessage />
             </FormItem>

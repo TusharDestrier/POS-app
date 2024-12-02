@@ -269,8 +269,8 @@ function StoreDetailForm() {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Type</SelectLabel>
-                        <SelectItem value="retail">Retail</SelectItem>
-                        <SelectItem value="wholesale">Wholesale</SelectItem>
+                        <SelectItem value="organizationOwned">Organization Owned </SelectItem>
+                        <SelectItem value="franchiseOwned">Franchise Owned</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
