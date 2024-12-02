@@ -4,7 +4,7 @@ export const generalSchema = z.object({
   storeName: z.string().min(2, {
     message: 'Store Name is required',
   }),
-  fromDate: z.date().optional(),
+  fromDate: z.date(),
   toDate: z.date().optional(),
   pendingSettlement: z.string().optional(),
   footfallEntry: z.boolean().optional(),

@@ -199,7 +199,7 @@ function PersonalTab() {
           name="personal.panNo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>PAN No.</FormLabel>
+              <FormLabel>PAN No.<span className="text-primary">*</span></FormLabel>
               <FormControl>
                 <Input placeholder="Enter PAN No." {...field} />
               </FormControl>

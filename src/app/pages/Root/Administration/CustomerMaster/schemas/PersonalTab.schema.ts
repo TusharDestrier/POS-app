@@ -11,7 +11,7 @@ export const personalTabSchema = z.object({
   profession: z.string().optional(),
   spouseName: z.string().optional(),
   isEmployee: z.boolean().optional(),
-  panNo: z.string().optional(),
+  panNo: z.string().min(10, { message: 'Pan No. can not be less than or more than 10 characters.' }),
   gstNo: z.string().optional(),
   gstDate: z.date().optional(),
 })

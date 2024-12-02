@@ -127,9 +127,9 @@ const General = () => {
           name="generalSchema.panNo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>PAN No. Mandatory if Billing Amount Exceeds</FormLabel>
+              <FormLabel>PAN No. Mandatory if Billing Amount Exceeds <span className="text-primary">*</span></FormLabel>
               <FormControl>
-                <Input {...field} id="panNo" placeholder="Pan No" className="w-full mt-3"  />
+              <Input placeholder="Enter PAN No." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
