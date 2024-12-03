@@ -20,24 +20,7 @@ import {
 
 
 function SalesPersonTab() {
-  // const form = useForm<z.infer<typeof formSchema>>({
-  //   resolver: zodResolver(formSchema),
-  //   defaultValues: {
-  //     firstName: '',
-  //     lastName: '',
-  //     mobileNo: '',
-  //     whatsappNo: '',
-  //     email: '',
-  //     employeeId: '',
-  //     allocateRole: '',
-  //     allocateUser: '',
-  //     inactive: false,
-  //   },
-  // })
-
-  // function onSubmit(values: z.infer<typeof formSchema>) {
-  //   console.log(values)
-  // }
+  
   const { control } = useFormContext()
 
   return (
@@ -96,7 +79,7 @@ function SalesPersonTab() {
         name="salesPerson.whatsappNo"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>WhatsApp No.</FormLabel>
+            <FormLabel>WhatsApp No.<span className="text-primary">*</span></FormLabel>
             <FormControl>
               <Input placeholder="WhatsApp No." {...field} />
             </FormControl>

@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import { PettyCashHeadSchema } from '../../schemas/PettyCashHeadSchema'
 
@@ -11,11 +12,12 @@ import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Textarea } from '@/components/ui/textarea'
 
-//import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+
 
 function PettyCashHeadForm() {
-  const formMethods = useForm({
+  const formMethods = useForm<z.infer<typeof PettyCashHeadSchema>>({
     resolver: zodResolver(PettyCashHeadSchema),
+    
   })
 
   const onSubmit = formMethods.handleSubmit(
@@ -27,6 +29,8 @@ function PettyCashHeadForm() {
     }
   )
 
+
+ 
   return (
     <FormProvider {...formMethods}>
       <form
@@ -39,7 +43,7 @@ function PettyCashHeadForm() {
         <div className="space-y-4">
           <FormField
             control={formMethods.control}
-            name="salesPerson.firstName"
+            name="pettycashCode"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
@@ -54,7 +58,7 @@ function PettyCashHeadForm() {
           />
           <FormField
             control={formMethods.control}
-            name="salesPerson.firstName"
+            name="pettycashHead"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
@@ -69,7 +73,7 @@ function PettyCashHeadForm() {
           />
           <FormField
             control={formMethods.control}
-            name="salesPerson.modeOfOperation"
+            name="modeOfOperation"
             render={({ field }) => (
               <FormItem className="flex items-start space-x-4 flex-col gap-3">
                 <FormLabel className="mt-2">Mode of Operation</FormLabel>
@@ -100,7 +104,7 @@ function PettyCashHeadForm() {
 
           <FormField
             control={formMethods.control}
-            name="salesPerson.firstName"
+            name="limit"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Limit</FormLabel>
@@ -113,7 +117,7 @@ function PettyCashHeadForm() {
           />
           <FormField
             control={formMethods.control}
-            name="salesPerson.firstName"
+            name="remarks"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Remarks</FormLabel>
@@ -127,7 +131,7 @@ function PettyCashHeadForm() {
           {/* Inactive Checkbox */}
           <FormField
             control={formMethods.control}
-            name="storeDetail.inActive"
+            name="inActive"
             render={({ field }) => (
               <FormItem style={{ marginTop: '20px' }} className="flex items-center gap-3 ">
                 <FormLabel>Inactive</FormLabel>

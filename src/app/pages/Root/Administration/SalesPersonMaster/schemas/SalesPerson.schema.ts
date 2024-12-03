@@ -4,7 +4,7 @@ export const  salesPersonSchema = z.object({
     firstName: z.string().min(1, { message: 'First Name is required.' }),
     lastName: z.string().min(1, { message: 'Last Name is required.' }),
     mobileNo: z.string().min(10, { message: 'Mobile No. must be at least 10 digits.' }),
-    whatsappNo: z.string().optional(),
+    whatsappNo: z.string().min(10, {message: 'WhatsApp No. must be at least 10 digits.'}),
     // email: z.string().email({ message: 'Invalid email address.' }).optional(),
     email: z.string().optional(),
     employeeId: z.string().optional(),
