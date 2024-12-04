@@ -122,6 +122,33 @@ export const roleBasedMenu: RoleBasedMenu = {
       ],
     },
     {
+      name: 'User Management',
+      path: '/user-management',
+      icon: <Table />,
+      subItems: [
+        {
+          name: 'Role Master',
+          path: '/user-management/role-master',
+        },
+        {
+          name: 'Designation Master',
+          path: '/user-management/designation-master',
+        },
+        {
+          name: 'User Master',
+          path: '/user-management/user-master',
+        },
+        {
+          name: 'Change Password',
+          path: '/user-management/change-password',
+        },
+        {
+          name: 'Role Wise Menu',
+          path: '/user-management/role-wise-menu',
+        },
+      ],
+    },
+    {
       name: 'Billing',
       path: '/billing',
       icon: <BadgeDollarSign />,
