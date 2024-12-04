@@ -47,6 +47,10 @@ import AssortmentwiseIncentivePage from '@/app/pages/Root/SalesPerson/Assortment
 import SalesPersonLayout from '@/app/pages/Root/SalesPerson/layout'
 import SessionLayout from '@/app/pages/Root/Session/layout'
 import SessionPage from '@/app/pages/Root/Session/page'
+import DesignationMaster from '@/app/pages/Root/UserManagement/DesignationMaster/page'
+import UserManagementLayout from '@/app/pages/Root/UserManagement/layout'
+import RoleMaster from '@/app/pages/Root/UserManagement/RoleMaster/page'
+import UserMasterPage from '@/app/pages/Root/UserManagement/UserMaster/page'
 
 export const appRoutes = {
   path: '/',
@@ -243,6 +247,36 @@ export const appRoutes = {
               element: <GoodsIssuePage />,
             },
           ],
+        },
+      ],
+    },
+    {
+      path: 'user-management',
+      element: <UserManagementLayout />,
+      children: [
+        {
+          index: true,
+          element:<Navigate to={'/user-management/role-master'} />,
+        },
+        {
+          path: 'role-master',
+          element:  <RoleMaster/>,
+        },
+        {
+          path: 'designation-master',
+          element:  <DesignationMaster/>,
+        },
+        {
+          path: 'user-master',
+          element:  <UserMasterPage/>
+        },
+        {
+          path: 'change-password',
+          element:  <h4>change password</h4>
+        },
+        {
+          path: 'role-wise-menu',
+          element:   <h4>role wise menu</h4>
         },
       ],
     },
