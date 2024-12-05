@@ -1,8 +1,10 @@
-import RoleMasterTable from "./components/RoleMasterTable";
+import RoleMasterTable from './components/RoleMasterTable'
 
 function RoleMaster() {
   return (
-    <RoleMasterTable/>
+    <div className="relative z-30">
+      <RoleMasterTable />
+    </div>
   )
 }
 

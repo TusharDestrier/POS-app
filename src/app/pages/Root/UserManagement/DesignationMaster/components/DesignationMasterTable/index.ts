@@ -1,0 +1,2 @@
+import DesignationMasterTable from "./DesignationMasterTable"
+export default DesignationMasterTable

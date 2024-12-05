@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-type RoleMasterStore = {
+type DesignationMasterStore = {
   isOpen: boolean
   mode: 'Edit' | 'Create' | 'View'
   toggleOpen: () => void
@@ -8,7 +8,7 @@ type RoleMasterStore = {
   setMode: (newMode: 'Edit' | 'Create' | 'View') => void
 }
 
-export const useRoleMasterStore = create<RoleMasterStore>((set) => ({
+export const useDesignationMasterStore = create<DesignationMasterStore>((set) => ({
   isOpen: false,
   mode: 'Create',
   toggleOpen: () => set((state) => ({ isOpen: !state.isOpen })),

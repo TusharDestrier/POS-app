@@ -1,4 +1,4 @@
-import { useRoleMasterStore } from '../../store/useRoleMasterStore'
+import { useDesignationMasterStore } from '../../store/userDesignationMaster'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -11,26 +11,26 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
-function RoleMasterModal() {
-  const mode = useRoleMasterStore((state) => state.mode)
-  const isOpen = useRoleMasterStore((state) => state.isOpen)
-  const close = useRoleMasterStore((state) => state.close)
+function DesignationMasterModal() {
+  const mode = useDesignationMasterStore((state) => state.mode)
+  const isOpen = useDesignationMasterStore((state) => state.isOpen)
+  const close = useDesignationMasterStore((state) => state.close)
   return (
     <Dialog open={isOpen} onOpenChange={close}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{mode} Role Master</DialogTitle>
+          <DialogTitle>{mode} Designation Master</DialogTitle>
         </DialogHeader>
         <div className="">
           <div className="space-y-1 mb-4">
-            <Label htmlFor="code" className="">
-              Code
+            <Label htmlFor="designationCode" className="">
+            Designation Code
             </Label>
-            <Input id="code" value=""  placeholder='Code'/>
+            <Input id="designationCode" value="" placeholder='Designation Code'/>
           </div>
           <div className="space-y-1 mb-4">
-            <Label htmlFor="roleName">Role Name</Label>
-            <Input id="roleName" value=""  placeholder='Role Name'/>
+            <Label htmlFor="designationName">Designation Name</Label>
+            <Input id="designationName" value="" placeholder='Designation Name' />
           </div>
         </div>
         <DialogFooter>
@@ -41,4 +41,4 @@ function RoleMasterModal() {
   )
 }
 
-export default RoleMasterModal
+export default DesignationMasterModal

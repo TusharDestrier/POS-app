@@ -47,6 +47,7 @@ import AssortmentwiseIncentivePage from '@/app/pages/Root/SalesPerson/Assortment
 import SalesPersonLayout from '@/app/pages/Root/SalesPerson/layout'
 import SessionLayout from '@/app/pages/Root/Session/layout'
 import SessionPage from '@/app/pages/Root/Session/page'
+import ChangePasswordPage from '@/app/pages/Root/UserManagement/ChangePassword/page'
 import DesignationMaster from '@/app/pages/Root/UserManagement/DesignationMaster/page'
 import UserManagementLayout from '@/app/pages/Root/UserManagement/layout'
 import RoleMaster from '@/app/pages/Root/UserManagement/RoleMaster/page'
@@ -272,7 +273,7 @@ export const appRoutes = {
         },
         {
           path: 'change-password',
-          element:  <h4>change password</h4>
+          element:  <ChangePasswordPage/>
         },
         {
           path: 'role-wise-menu',

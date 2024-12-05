@@ -1,8 +1,10 @@
-import UserMasterTable from "./components/UserMasterTable"
+import UserMasterTable from './components/UserMasterTable'
 
 function UserMasterPage() {
   return (
-   <UserMasterTable/>
+    <div className="relative z-30">
+      <UserMasterTable />
+    </div>
   )
 }
 

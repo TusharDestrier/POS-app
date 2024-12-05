@@ -1,7 +1,8 @@
+import DesignationMasterTable from "./components/DesignationMasterTable/DesignationMasterTable"
 
 function DesignationMaster() {
   return (
-    <div>DesignationMaster</div>
+    <div className="relative z-30"><DesignationMasterTable/></div>
   )
 }
 
