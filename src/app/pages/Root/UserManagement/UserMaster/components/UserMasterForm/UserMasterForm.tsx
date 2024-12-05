@@ -48,7 +48,7 @@ const UserMasterForm = () => {
       employeeCodeFromSAP: 'EMP001',
       active: true,
       approvedUser: false,
-      roles: '',
+      roles: 'Accountant',
       assignedCompanies: ['TEST', 'BARASAT'],
       assignedBranches: ['UNIT - 4', 'UNIT - 5'],
     },
@@ -311,12 +311,12 @@ const UserMasterForm = () => {
                 <RadioGroup
                   onValueChange={field.onChange}
                   value={field.value}
-                  className="grid grid-cols-3 gap-2"
+                  className="grid grid-cols-3 gap-2 roles-radio"
                 >
                   {['Accountant', 'Director', 'Sales', 'Audit', 'Dev', 'Loading', 'Purchase'].map((role) => (
                     <FormItem key={role} className="flex items-center space-x-2">
                       <FormControl>
-                        <RadioGroupItem value={role} id={role} checked={field.value === role} />
+                        <RadioGroupItem value={role} id={role}  />
                       </FormControl>
                       <FormLabel htmlFor={role}>{role}</FormLabel>
                     </FormItem>
