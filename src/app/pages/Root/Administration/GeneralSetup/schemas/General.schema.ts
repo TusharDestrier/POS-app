@@ -12,4 +12,5 @@ export const generalSchema = z.object({
   backDateEntry: z.boolean().optional(),
   backDateDays: z.boolean().optional(),
   stockCheck: z.string().optional(),
+  
 })

@@ -27,7 +27,7 @@ export const storeDetailFormSchema = z.object({
   }),
   date: z.string().optional(),
   state: z.string().min(2, {
-    message: 'State is empty',
+    message: 'Date is empty',
   }),
   factor: z.string().optional(),
   //category: z.string().optional(),

@@ -39,7 +39,7 @@ const General = () => {
           <div>
             <FormField 
               control={control}
-              name="generalSchema.storeName"
+              name="GeneralSchema.storeName"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Store Name</FormLabel>
@@ -70,7 +70,7 @@ const General = () => {
             <div>
               <FormField
                 control={control}
-                name="generalSchema.fromDate"
+                name="GeneralSchema.fromDate"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>From Date</FormLabel>
@@ -91,7 +91,7 @@ const General = () => {
             <div>
               <FormField
                 control={control}
-                name="generalSchema.toDate"
+                name="GeneralSchema.toDate"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>To Date</FormLabel>
@@ -131,7 +131,7 @@ const General = () => {
         />
         <FormField
           control={control}
-          name="generalSchema.footfallEntry"
+          name="GeneralSchema.footfallEntry"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Footfall Entry required in Day Settlement</FormLabel>
@@ -154,7 +154,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="generalSchema.maxAllowable"
+          name="GeneralSchema.maxAllowable"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Maximum Allowable Discount Policy Validation</FormLabel>
@@ -181,7 +181,7 @@ const General = () => {
         />
         <FormField
           control={control}
-          name="generalSchema.maxBillingAmt"
+          name="GeneralSchema.maxBillingAmt"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Maximum Billing Amount in a Single POS Billing</FormLabel>
@@ -200,7 +200,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="generalSchema.panNo"
+          name="GeneralSchema.panNo"
           render={({ field }) => (
             <FormItem>
               <FormLabel>PAN No. Mandatory if Billing Amount Exceeds<span className="text-primary">*</span></FormLabel>
@@ -219,7 +219,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="generalSchema.creditCardDetails"
+          name="GeneralSchema.creditCardDetails"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Credit Card Details Capture Policy</FormLabel>
@@ -247,7 +247,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="generalSchema.crcardAutho"
+          name="GeneralSchema.crcardAutho"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Is Credit Card Authorization No. Entry Mandatory</FormLabel>
@@ -270,7 +270,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="generalSchema.backDateEntry"
+          name="GeneralSchema.backDateEntry"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Allow Backdate Entry</FormLabel>
@@ -293,7 +293,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="generalSchema.backDateDays"
+          name="GeneralSchema.backDateDays"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Back Date Entry Days</FormLabel>
@@ -311,7 +311,7 @@ const General = () => {
         />
         <FormField
           control={control}
-          name="generalSchema.stockCheck"
+          name="GeneralSchema.stockCheck"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Negative Stock Checking Mode</FormLabel>

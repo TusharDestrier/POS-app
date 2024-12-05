@@ -1,21 +1,11 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-// eslint-disable-next-line import/order
-import { useForm, FormProvider } from 'react-hook-form'
+import {  useFormContext } from 'react-hook-form'
 
-// import { Button } from '@/components/ui/button'
 
-import { z } from 'zod'
-
-import { generalSchema } from '../../schemas/General.schema'
-
-// eslint-disable-next-line import/order
 import ImageUploader from '@/components/ImageUploader'
-//import useGoodsIssueType from '@/app/pages/Root/Inventroty/GoodsIssue/store/useGoodsIssueType'
-
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import {  RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
   SelectContent,
@@ -27,40 +17,22 @@ import {
 } from '@/components/ui/select'
 
 const General = () => {
-  const formMethods = useForm<z.infer<typeof generalSchema>>({
-    resolver: zodResolver(generalSchema),
-  })
-  const onSubmit = formMethods.handleSubmit(
-    (data) => {
-      console.log('Form Data Submitted: ', data) // Logs if submission is successful
-    },
-    (errors) => {
-      console.log('Validation Errors: ', errors) // Logs validation errors, if any
-    }
-  )
-  //const modalMode = useGoodsIssueType((state) => state.mode)
+  const { control } = useFormContext()
 
   return (
-    // eslint-disable-next-line no-undef
-    <FormProvider {...formMethods}>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault() // Ensure default form submission behavior is prevented
-          onSubmit() // Trigger submission
-        }}
-      >
+ 
         <div className="border p-4 border-black border-solid h-[650px] overflow-y-auto">
           <div className="space-y-4">
             <FormField
-              control={formMethods.control}
-              name={'pendingSettlement'}
+              control={control}
+              name={'GeneralSchema.pendingSettlement'}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Pending Settlement Days</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="generalSchema.pendingSettlement"
+                      id="pendingSettlement"
                       placeholder="Pending Settlement Day"
                       className="w-full mt-3"
                     />
@@ -70,8 +42,8 @@ const General = () => {
               )}
             />
             <FormField
-              control={formMethods.control}
-              name="footfallEntry"
+              control={control}
+              name="GeneralSchema.footfallEntry"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Footfall Entry required in Day Settlement</FormLabel>
@@ -93,8 +65,8 @@ const General = () => {
             />
 
             <FormField
-              control={formMethods.control}
-              name="maxAllowable"
+              control={control}
+              name="GeneralSchema.maxAllowable"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Maximum Allowable Discount Policy Validation</FormLabel>
@@ -120,8 +92,8 @@ const General = () => {
               )}
             />
             <FormField
-              control={formMethods.control}
-              name="maxBillingAmt"
+              control={control}
+              name="GeneralSchema.maxBillingAmt"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Maximum Billing Amount in a Single POS Billing</FormLabel>
@@ -139,8 +111,8 @@ const General = () => {
             />
 
             <FormField
-              control={formMethods.control}
-              name="panNo"
+              control={control}
+              name="GeneralSchema.panNo"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
@@ -156,8 +128,8 @@ const General = () => {
             />
 
             <FormField
-              control={formMethods.control}
-              name="creditCardDetails"
+              control={control} 
+              name="generalSchema.creditCardDetails"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Credit Card Details Capture Policy</FormLabel>
@@ -184,8 +156,8 @@ const General = () => {
             />
 
             <FormField
-              control={formMethods.control}
-              name="crcardAutho"
+              control={control}
+              name="generalSchema.crcardAutho"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Is Credit Card Authorization No. Entry Mandatory</FormLabel>
@@ -207,8 +179,8 @@ const General = () => {
             />
 
             <FormField
-              control={formMethods.control}
-              name="backDateEntry"
+              control={control}
+              name="generalSchema.backDateEntry"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Allow Backdate Entry</FormLabel>
@@ -230,8 +202,8 @@ const General = () => {
             />
 
             <FormField
-              control={formMethods.control}
-              name="backDateDays"
+              control={control}
+              name="generalSchema.backDateDays"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Back Date Entry Days</FormLabel>
@@ -248,8 +220,8 @@ const General = () => {
               )}
             />
             <FormField
-              control={formMethods.control}
-              name="stockCheck"
+              control={control}
+              name="generalSchema.stockCheck"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Credit Card Details Capture Policy</FormLabel>
@@ -278,8 +250,7 @@ const General = () => {
             </div>
           </div>
         </div>
-      </form>
-    </FormProvider>
+      
   )
 }
 
