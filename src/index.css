@@ -210,3 +210,7 @@ aside ul li > ul > li > ul > li > a {
 aside.sidebar > ul > li > a.a_active {
   color: #fff;
 }
+
+.roles-radio  button[data-state="checked"] {
+  background: #dc2626;
+}
