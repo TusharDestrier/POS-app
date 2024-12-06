@@ -2,7 +2,7 @@
 import { format } from 'date-fns'
 
 import { CalendarIcon } from 'lucide-react'
-import { useFormContext } from 'react-hook-form'
+import { useForm, useFormContext } from 'react-hook-form'
 
 // import { Button } from '@/components/ui/button'
 
@@ -33,11 +33,17 @@ import {
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils' // Verify this path matches your project structure
 
-
-
 const General = () => {
-
   const { control } = useFormContext()
+
+  const { getValues } = useForm({
+    defaultValues: {
+      GeneralSchema: {
+        fromDate: null,
+        toDate: null,
+      },
+    },
+  });
 
   return (
     <Card className="border-2 border-solid border-black overflow-y-auto h-[650px]">
@@ -84,7 +90,7 @@ const General = () => {
                 name="GeneralSchema.fromDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col col-span-1 mt-2">
-                    <FormLabel className='m-1'>From Date</FormLabel>
+                    <FormLabel className="m-1">From Date</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -105,7 +111,11 @@ const General = () => {
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date) =>  date < new Date()}
+                          disabled={(date) => {
+                            const today = new Date()
+                            today.setHours(0, 0, 0, 0) // Normalize to midnight
+                            return date < today
+                          }}
                           initialFocus
                         />
                       </PopoverContent>
@@ -120,9 +130,19 @@ const General = () => {
               <FormField
                 control={control}
                 name="GeneralSchema.toDate"
-                render={({ field }) => (
+                rules={{
+                  validate: (toDate) => {
+                    const fromDate = getValues('GeneralSchema.fromDate') // Get the "From Date"
+                    if (!toDate) return 'To Date is required'
+                    if (fromDate && toDate < fromDate) {
+                      return 'To Date cannot be earlier than From Date'
+                    }
+                    return true // Validation passed
+                  },
+                }}
+                render={({ field, fieldState }) => (
                   <FormItem className="flex flex-col col-span-1 mt-2">
-                    <FormLabel className='m-1'>To Date</FormLabel>
+                    <FormLabel className="m-1">To Date</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -139,20 +159,22 @@ const General = () => {
                         </FormControl>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    disabled={(date) => {
-                      const today = new Date();
-                      today.setHours(0, 0, 0, 0); // Normalize to midnight
-                      return date <= today;
-                    }}
-                    initialFocus
-                  />
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) => {
+                            const today = new Date()
+                            today.setHours(0, 0, 0, 0) // Normalize to midnight
+                            return date < today
+                          }}
+                          initialFocus
+                        />
                       </PopoverContent>
                     </Popover>
-                    <FormMessage />
+                    {fieldState.error && (
+                      <p className="text-red-500 text-sm mt-1">{fieldState.error.message}</p>
+                    )}
                   </FormItem>
                 )}
               />
