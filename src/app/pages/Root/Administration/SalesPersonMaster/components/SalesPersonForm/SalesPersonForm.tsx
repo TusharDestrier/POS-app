@@ -19,7 +19,7 @@ function SalesPersonForm() {
           {
             storeName: '',
             storeCode: '',
-            startDate: "",
+            startDate: new Date(),
             endDate: new Date(),
             transferred: false,
           },

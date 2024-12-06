@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { Trash } from 'lucide-react';
+import { CalendarIcon, Trash } from 'lucide-react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 
 function StoreAllocationTab() {
   // Access form control from the form context
@@ -80,53 +81,94 @@ function StoreAllocationTab() {
 
             {/* Start Date */}
             <FormField
-              control={control}
-              name={`storeAllocation.allocations.${index}.startDate`}
-              render={({ field }) => (
-                <FormItem className="col-span-1">
-                  <FormLabel>
-                    Start Date <span className="text-primary">*</span>
-                  </FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button variant="outline" className="w-full">
-                          {field.value ? format(new Date(field.value), 'yyyy-MM-dd') : 'Pick a date'}
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <Calendar selected={field.value} onSelect={field.onChange} />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
+          control={control}
+          name={`storeAllocation.allocations.${index}.startDate`}
+          render={({ field }) => (
+            <FormItem className="flex flex-col mt-2">
+              <FormLabel className='mb-1'>Start Date</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-full pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) => {
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0); // Normalize to midnight
+                      return date < today;
+                    }}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+             
+              <FormMessage />
+            </FormItem>
+          )}
+        />
             {/* End Date */}
             <FormField
-              control={control}
-              name={`storeAllocation.allocations.${index}.endDate`}
-              render={({ field }) => (
-                <FormItem className="col-span-1 w-full">
-                  <FormLabel>End Date</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button variant="outline" className="w-full">
-                          {field.value ? format(new Date(field.value), 'yyyy-MM-dd') : 'Pick a date'}
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <Calendar selected={field.value} onSelect={field.onChange} />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          control={control}
+          name={`storeAllocation.allocations.${index}.endDate`}
+          render={({ field }) => (
+            <FormItem className="flex flex-col mt-2">
+              <FormLabel className='mb-1'>End Date</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-full pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) => {
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0); // Normalize to midnight
+                      return date <= today;
+                    }}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+             
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
             {/* Transferred */}
             <div className="flex items-center gap-3 mt-auto col-span-1">
