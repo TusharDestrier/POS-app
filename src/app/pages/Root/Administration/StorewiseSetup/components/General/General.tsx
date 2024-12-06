@@ -1,10 +1,15 @@
 // eslint-disable-next-line import/order
+import { format } from 'date-fns'
+
+import { CalendarIcon } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
 // import { Button } from '@/components/ui/button'
 
 //import useGoodsIssueType from '@/app/pages/Root/Inventroty/GoodsIssue/store/useGoodsIssueType'
 
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 import {
   Card,
   CardContent,
@@ -15,6 +20,7 @@ import {
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
@@ -25,10 +31,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { cn } from '@/lib/utils' // Verify this path matches your project structure
+
+
 
 const General = () => {
- 
+
   const { control } = useFormContext()
+
   return (
     <Card className="border-2 border-solid border-black overflow-y-auto h-[650px]">
       <CardHeader>
@@ -37,11 +47,11 @@ const General = () => {
       <CardContent className="space-y-4">
         <div className="flex space-x-8 ml-5 gap-36">
           <div>
-            <FormField 
+            <FormField
               control={control}
               name="GeneralSchema.storeName"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="col-span-1">
                   <FormLabel>Store Name</FormLabel>
                   <FormControl>
                     <Select {...field}>
@@ -66,44 +76,82 @@ const General = () => {
             />
           </div>
 
-          <div className='flex space-x-9'>
+          <div className="flex space-x-9">
             <div>
+              {/* From Date */}
               <FormField
                 control={control}
                 name="GeneralSchema.fromDate"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>From Date</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        {...field}
-                        id="generalSchema.fromDate"
-                        placeholder="From Date"
-                        className="w-full mt-3"
-                      />
-                    </FormControl>
+                  <FormItem className="flex flex-col col-span-1 mt-2">
+                    <FormLabel className='m-1'>From Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={'outline'}
+                            className={cn(
+                              'w-[240px] pl-3 text-left font-normal',
+                              !field.value && 'text-muted-foreground'
+                            )}
+                          >
+                            {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>  date < new Date()}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
             <div>
+              {/* To Date */}
               <FormField
                 control={control}
                 name="GeneralSchema.toDate"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>To Date</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        {...field}
-                        id="generalSchema.toDate"
-                        placeholder="To Date"
-                        className="w-full mt-3"
-                      />
-                    </FormControl>
+                  <FormItem className="flex flex-col col-span-1 mt-2">
+                    <FormLabel className='m-1'>To Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={'outline'}
+                            className={cn(
+                              'w-[240px] pl-3 text-left font-normal',
+                              !field.value && 'text-muted-foreground'
+                            )}
+                          >
+                            {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) => {
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0); // Normalize to midnight
+                      return date <= today;
+                    }}
+                    initialFocus
+                  />
+                      </PopoverContent>
+                    </Popover>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -203,14 +251,11 @@ const General = () => {
           name="GeneralSchema.panNo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>PAN No. Mandatory if Billing Amount Exceeds<span className="text-primary">*</span></FormLabel>
+              <FormLabel>
+                PAN No. Mandatory if Billing Amount Exceeds<span className="text-primary">*</span>
+              </FormLabel>
               <FormControl>
-                <Input
-                  {...field}
-                  id="panNo"
-                  placeholder="Pan No"
-                  className="w-full mt-3"
-                />
+                <Input {...field} id="panNo" placeholder="Pan No" className="w-full mt-3" />
               </FormControl>
               <FormMessage />
             </FormItem>
