@@ -1,6 +1,6 @@
 import GoodsIssueTable from "./components/GoodsIssueTable/GoodsIssueTable"
 
-function GoodsIssuePage() {
+function GoodsIssue() {
     return (
       <div className="relative z-30">
         <GoodsIssueTable/>
@@ -8,4 +8,4 @@ function GoodsIssuePage() {
     )
   }
   
-  export default GoodsIssuePage
+  export default GoodsIssue

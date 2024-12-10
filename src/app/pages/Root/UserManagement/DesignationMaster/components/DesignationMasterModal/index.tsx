@@ -1,2 +1,0 @@
-import DesignationMasterModal from "./DesignationMasterModal"
-export default DesignationMasterModal

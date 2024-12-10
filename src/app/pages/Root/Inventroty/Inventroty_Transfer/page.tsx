@@ -1,6 +1,6 @@
 import InventoryTransferTable from './components/InventoryTransferTable'
 
-export const InventoryTransferPage = () => {
+export const InventoryTransfer = () => {
   return (
     <div className="relative z-30">
       <InventoryTransferTable />

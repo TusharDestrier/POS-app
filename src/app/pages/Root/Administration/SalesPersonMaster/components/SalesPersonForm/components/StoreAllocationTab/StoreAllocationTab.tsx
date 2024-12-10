@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { CalendarIcon, Trash } from 'lucide-react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -26,7 +26,6 @@ import { cn } from '@/lib/utils';
 function StoreAllocationTab() {
   // Access form control from the form context
   const { control } = useFormContext();
-
   // Initialize useFieldArray with the correct path
   const { fields, append, remove } = useFieldArray({
     control,
@@ -36,7 +35,15 @@ function StoreAllocationTab() {
   return (
     <div className='border p-4 border-black border-solid h-[580px] overflow-y-auto'>
       <div className="items-center space-y-4">
-        {fields.map((field, index) => (
+        {fields.map((field, index) => {
+
+            const transferred = useWatch({
+              control,
+              name: `storeAllocation.allocations.${index}.transferred`,
+            });
+          return(
+
+
           <div className="grid grid-cols-5 items-center gap-3" key={field.id}>
             {/* Store Name */}
             <FormField
@@ -140,6 +147,7 @@ function StoreAllocationTab() {
                         "w-full pl-3 text-left font-normal",
                         !field.value && "text-muted-foreground"
                       )}
+                      disabled={!transferred}
                     >
                       {field.value ? (
                         format(field.value, "PPP")
@@ -194,7 +202,7 @@ function StoreAllocationTab() {
               </Button>
             </div>
           </div>
-        ))}
+        )})}
       </div>
 
       <div className="flex justify-end gap-3 mt-4">
