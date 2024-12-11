@@ -43,12 +43,12 @@ import RootLayout from '@/app/pages/Root/layout'
 import ReportLayout from '@/app/pages/Root/Report/layout'
 import ReportPage from '@/app/pages/Root/Report/page'
 import SalesLayout from '@/app/pages/Root/Sales/layout'
-import SalesPage from '@/app/pages/Root/Sales/page'
 import SalesPersonLayout from '@/app/pages/Root/SalesPerson/layout'
 import SessionLayout from '@/app/pages/Root/Session/layout'
 import SessionPage from '@/app/pages/Root/Session/page'
 import BillingReturn from '@/app/pages/Root/Transaction/Billing/BillingReturn/page'
 import { BillingLayout } from '@/app/pages/Root/Transaction/Billing/layout'
+import SalesPage from '@/app/pages/Root/Transaction/Billing/Sales/page'
 import Session from '@/app/pages/Root/Transaction/Billing/Session/page'
 import TransactionLayout from '@/app/pages/Root/Transaction/layout'
 import ApInvoice from '@/app/pages/Root/Transaction/Purchase/ApInvoice/page'
@@ -436,7 +436,7 @@ export const appRoutes = {
       element: <SalesLayout />,
       children: [
         {
-          index: true,
+          path:'biling-return',
           element: <SalesPage />,
         },
         {

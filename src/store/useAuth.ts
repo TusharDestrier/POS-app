@@ -5,7 +5,7 @@ interface User {
   id: string
   username: string
   email: string
-  password: string
+  password: string,
   role: string
 }
 
@@ -14,6 +14,7 @@ interface AuthState {
   user: User | null // The user can either be a User object or null (if not logged in)
   login: ({ username, password }: { username: string; password: string }) => string | User // Return an error message or the User object
   logout: () => void // Logout function to clear the user
+  changePassword: () => void
   initializeUser: () => void // Initialize user from localStorage
 }
 
@@ -45,7 +46,6 @@ export const usersData: User[] = [
 // Create Zustand store with TypeScript support
 const useAuth = create<AuthState>((set) => ({
   user: null, // Initially no user is logged in
-
   // Login function that finds the user in the usersData array
   login: ({ username, password }: { username: string; password: string }) => {
     // Try to find the user based on the username and password
@@ -68,6 +68,13 @@ const useAuth = create<AuthState>((set) => ({
   logout: () => {
     set({ user: null })
     localStorage.removeItem('user')
+  },
+
+  
+  // Change Password function call here 
+   changePassword() {
+    //set({})
+    window.location.href = "http://localhost:5173/administration/security/change-password"
   },
 
   // Initialize user from localStorage

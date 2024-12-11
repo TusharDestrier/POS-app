@@ -1,6 +1,8 @@
+import GrpoTable from "./components/GrpoTable"
+
 function GRPO() {
     return (
-      <div className="relative z-30"><h1>GRPO</h1></div>
+      <div className="relative z-40"><GrpoTable/></div>
     )
   }
   

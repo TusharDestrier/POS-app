@@ -1,4 +1,5 @@
 import { Bell, Search } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import SalesSearchModal from '../../../Sales/components/SalesSearchModal'
 import useHeaderStore from '../store/useHeaderStore'
@@ -22,6 +23,7 @@ function UserBox() {
   // Access Zustand store for modal state and actions
   const { isSearchModalOpen, openSearchModal, closeSearchModal } = useHeaderStore()
   const logout = useAuth((state) => state.logout)
+ // const changePassword = useAuth((state) => state.changePassword)
   const user = useAuth((state) => state.user)
 
   // Use the hook to trigger opening the dialog on F5
@@ -70,6 +72,16 @@ function UserBox() {
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link to="/administration/security/change-password">Change Password</Link>
+            </DropdownMenuItem>
+            {/* <DropdownMenuItem 
+              onClick={() => {
+                changePassword()
+              }}
+            >
+              Change Password
+            </DropdownMenuItem> */}
             <DropdownMenuItem
               onClick={() => {
                 logout()
