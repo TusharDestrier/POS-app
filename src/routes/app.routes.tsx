@@ -19,6 +19,9 @@ import OrganizationPolicyLayout from '@/app/pages/Root/Administration/setup/poli
 import OrganizationPolicyPage from '@/app/pages/Root/Administration/setup/policy/OrganizationPolicy/page'
 import StoreSpecificLayout from '@/app/pages/Root/Administration/setup/policy/StoreSpecificPolicy/layout'
 import StoreSpecificPolicy from '@/app/pages/Root/Administration/setup/policy/StoreSpecificPolicy/page'
+import PromotionAllocationPage from '@/app/pages/Root/Administration/setup/promotion/PromotionAllocation/page'
+import PromotionSetUpLayout from '@/app/pages/Root/Administration/setup/promotion/PromotionSetup/layout'
+import PromotionSetUpPage from '@/app/pages/Root/Administration/setup/promotion/PromotionSetup/page'
 import AssortmentManagementLayout from '@/app/pages/Root/Administration/setup/salesperson/AssortmentManagement/layout'
 import AssortmentManagementPage from '@/app/pages/Root/Administration/setup/salesperson/AssortmentManagement/page'
 import AssortmentwiseIncentivePage from '@/app/pages/Root/Administration/setup/salesperson/AssortmentwiseIncentive/page'
@@ -46,8 +49,6 @@ import SalesLayout from '@/app/pages/Root/Sales/layout'
 import SalesPersonLayout from '@/app/pages/Root/SalesPerson/layout'
 import SessionLayout from '@/app/pages/Root/Session/layout'
 import SessionPage from '@/app/pages/Root/Session/page'
-import BillingReturn from '@/app/pages/Root/Transaction/Billing/BillingReturn/page'
-import { BillingLayout } from '@/app/pages/Root/Transaction/Billing/layout'
 import SalesPage from '@/app/pages/Root/Transaction/Billing/Sales/page'
 import Session from '@/app/pages/Root/Transaction/Billing/Session/page'
 import TransactionLayout from '@/app/pages/Root/Transaction/layout'
@@ -188,23 +189,19 @@ export const appRoutes = {
             },
             {
               path: 'promotion',
-              element: (
-                <section>
-                  <Outlet />
-                </section>
-              ),
+              element: <PromotionSetUpLayout/>,
               children: [
                 {
                   path: 'am-promotion',
-                  element: <h3>Am pomorno</h3>,
+                  element: <h2/>,
                 },
                 {
                   path: 'promotion-setup',
-                  element: <h3>promtion setup</h3>,
+                  element: <PromotionSetUpPage/>,
                 },
                 {
                   path: 'promotion-allocation',
-                  element: <h3>promotion allocation</h3>,
+                  element: <PromotionAllocationPage/>,
                 },
                 {
                   path: 'promotion-priority-setup',
@@ -314,11 +311,11 @@ export const appRoutes = {
         },
         {
           path: 'billing',
-          element: <BillingLayout />,
+          element: <SalesLayout />,
           children: [
             {
               path: 'billing-return',
-              element: <BillingReturn />,
+              element: <SalesPage />,
             },
             {
               path: 'sessions',

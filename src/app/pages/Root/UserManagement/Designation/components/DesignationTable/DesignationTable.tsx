@@ -65,8 +65,8 @@ function DesignationTable() {
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter designation..."
-          value={(table.getColumn('role')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('role')?.setFilterValue(event.target.value)}
+          value={(table.getColumn('designation')?.getFilterValue() as string) ?? ''}
+          onChange={(event) => table.getColumn('designation')?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         <div className="ms-auto">

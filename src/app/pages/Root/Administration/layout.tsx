@@ -6,7 +6,7 @@ export const AdministrationLayout = () => {
   const pageTitle = pathname.split('/').at(-1)
 
   return (
-    <div className="administration-layout px-4">
+    <div className="administration-layout px-4 relative z-40">
       <div className="administration-header py-3 flex justify-between">
         <h3 className="page-title mb-3 capitalize">{pageTitle?.split('-').join(' ')} </h3>
         <ul className="flex items-center gap-3">

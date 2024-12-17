@@ -98,19 +98,19 @@ export const roleBasedMenu: RoleBasedMenu = {
               subItems: [
                 {
                   name: 'Assortment Managment (Promotion)',
-                  path: '/administration/setup/am-promotion',
+                  path: '/administration/setup/promotion/am-promotion',
                 },
                 {
                   name: 'Promotion Setup',
-                  path: '/administration/setup/promotion-setup',
+                  path: '/administration/setup/promotion/promotion-setup',
                 },
                 {
                   name: 'Promotion Allocation',
-                  path: '/administration/setup/promotion-allocation',
+                  path: '/administration/setup/promotion/promotion-allocation',
                 },
                 {
                   name: 'Promotion Priorty Setup',
-                  path: '/administration/setup/promotion-priority-setup',
+                  path: '/administration/setup/promotion/promotion-priority-setup',
                 },
               ],
             },

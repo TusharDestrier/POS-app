@@ -71,7 +71,9 @@ function UserBox() {
           <DropdownMenuContent className="right-6 relative">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link to = "">Profile</Link>
+              </DropdownMenuItem>
             <DropdownMenuItem>
               <Link to="/administration/security/change-password">Change Password</Link>
             </DropdownMenuItem>
