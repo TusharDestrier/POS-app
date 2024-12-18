@@ -1,108 +1,20 @@
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
-//import GrpoRequestDetailForm from '../GrpoRequestDetailForm'
-
-import PromotionSetupDetailForm from '../PromotionSetupDetailForm/PromotionSetupDetailForm'
+import { usePromotionSetupStore } from '../../store/usePromotionSetupStore'
+import PromotionForm1 from '../PromotionForm1'
+import PromotionForm2 from '../PromotionForm2'
 
 import { Button } from '@/components/ui/button'
-import { combinedSchema } from '@/schema/storeMaster.schema'
 // Schema for validation
 
 function PromotionSetupForm() {
-  
+  const next = usePromotionSetupStore((state) => state.next)
+  const prev = usePromotionSetupStore((state) => state.prev)
+  const closeModal = usePromotionSetupStore((state) => state.close)
+  const step = usePromotionSetupStore((state) => state.step)
+
   const formMethods = useForm({
-    resolver: zodResolver(combinedSchema),
-    defaultValues: {
-      storeDetail: {
-        storeName: 'Demo Store',
-        storeCode: 'DS123',
-        startDate: '2024-01-01',
-        closeDate: '2025-01-01',
-        storeSize: '2000 sqft',
-        default: 'Default Warehouse 1',
-        defaultSale: 'Sale Warehouse A',
-        defaultReturn: 'Return Warehouse B',
-        GSTIN: '29ABCDE1234F2Z5',
-        date: '2024-01-01',
-        state: 'Karnataka',
-        factor: '1.5',
-        priceList: 'Standard Price List',
-        factorIfAny: 'Special Factor',
-        storeType: 'Retail',
-        category: 'Electronics',
-        franchise: 'Demo Franchise',
-        operationType: 'Retail Operation',
-        inActive: false,
-      },
-      logistics: {
-        billToAddress: '123 Demo Street, Demo City',
-        city: 'pune',
-        postalCode: '560001',
-        state: 'Karnataka',
-        cityTo: 'pune',
-        postalCodeTo: '560001',
-        stateTo: 'Karnataka',
-        contactPerson: 'John Doe',
-        contactNo: '1234567890',
-        alcontactNo: '0987654321',
-        emailId: 'john.doe@example.com',
-        shipToAddress: '456 Ship St, Demo City',
-        sourcingWH: [
-          {
-            warehouse:"",
-            transitDays:"",
-          }
-        ],
-       
-      },
-      mop: {
-        mopValues: [
-          {
-            payMode: '',
-            ledgers: '',
-            subLedger: '',
-            paymentCode: '',
-            crossStore: false,
-            discontinue: false,
-          },
-        ],
-      },
-      pettyCash: {
-        pettycashValues: [
-          {
-            pettycahHead: '',
-            limit: '',
-            typeofTransaction: '',
-            ledger: '',
-            subLedger: '',
-            discontinue: false,
-          },
-        ],
-      },
-      documentSeries: {
-        documentValues: [
-          {
-            transactionType: '',
-            seriesname: '',
-            prefix: '',
-            noOfDigits: '',
-            suffix: '',
-            checkbox: false,
-          },
-        ],
-      },
-      ledgers: {
-        ledgerValue: [
-          {
-            ledger: '',
-            subLedger: '',
-            costCentre: '',
-            discontinue: false,
-          },
-        ],
-      },
-    },
+    // resolver: zodResolver(),
   })
 
   // Handle form submission
@@ -118,21 +30,39 @@ function PromotionSetupForm() {
   return (
     <FormProvider {...formMethods}>
       <form
-      className=''
+        className=""
         onSubmit={(e) => {
           e.preventDefault() // Ensure default form submission behavior is prevented
           onSubmit() // Trigger submission
         }}
       >
-        <PromotionSetupDetailForm/>
-       
-        <div className="h-[60px]  flex justify-end items-center space-x-3 ">
-          <Button type="submit" className=" btn btn-primary">
-            Save 
-          </Button>
-          <Button type="submit" className="btn btn-primary">
-            Cancel 
-          </Button>
+        {step === 1 && <PromotionForm1 />}
+        {step === 2 && <PromotionForm2 />}
+
+        <div className=" h-[100px] mt-5 self-end  flex flex-col  items-end space-y-3 ">
+          {step === 1 && (
+            <Button type="button" className=" btn btn-primary" onClick={() => next()}>
+              Promotion Parameters
+            </Button>
+          )}
+          <div className="flex gap-3">
+            <Button
+              type={step === 1 ? 'submit' : 'button'}
+              className=" btn btn-primary"
+            >
+              Save
+            </Button>
+            <Button
+              type="reset"
+              className="btn btn-primary"
+              onClick={() => {
+                prev()
+                closeModal()
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
         </div>
       </form>
     </FormProvider>
