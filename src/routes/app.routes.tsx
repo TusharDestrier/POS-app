@@ -14,11 +14,13 @@ import RoleDefination from '@/app/pages/Root/Administration/Security/RoleDefinat
 import UserProfileCreationTable from '@/app/pages/Root/Administration/Security/UserProfileCreation/components/UserProfileCreationTable'
 import AssortmentManagementDiscountLayout from '@/app/pages/Root/Administration/setup/discount/AssortmentManagement/layout'
 import AssortmentManagementDiscountPage from '@/app/pages/Root/Administration/setup/discount/AssortmentManagement/page'
+import DiscountMasterPage from '@/app/pages/Root/Administration/setup/discount/DiscountMaster/page'
 import SectupLayout from '@/app/pages/Root/Administration/setup/layout'
 import OrganizationPolicyLayout from '@/app/pages/Root/Administration/setup/policy/OrganizationPolicy/layout'
 import OrganizationPolicyPage from '@/app/pages/Root/Administration/setup/policy/OrganizationPolicy/page'
 import StoreSpecificLayout from '@/app/pages/Root/Administration/setup/policy/StoreSpecificPolicy/layout'
 import StoreSpecificPolicy from '@/app/pages/Root/Administration/setup/policy/StoreSpecificPolicy/page'
+import PromotionAssortmentManagement from '@/app/pages/Root/Administration/setup/promotion/AssortmentManagement/page'
 import PromotionAllocationPage from '@/app/pages/Root/Administration/setup/promotion/PromotionAllocation/page'
 import PromotionSetUpLayout from '@/app/pages/Root/Administration/setup/promotion/PromotionSetup/layout'
 import PromotionSetUpPage from '@/app/pages/Root/Administration/setup/promotion/PromotionSetup/page'
@@ -61,6 +63,7 @@ import ChangePasswordPage from '@/app/pages/Root/UserManagement/ChangePassword/p
 import Designation from '@/app/pages/Root/UserManagement/Designation/page'
 import UtilitiesLayout from '@/app/pages/Root/Utilities/layout'
 import UtilitiesPage from '@/app/pages/Root/Utilities/page'
+import DiscountAllocation from '@/app/pages/Root/Administration/setup/discount/DiscountAllocation/page'
 
 export const appRoutes = {
   path: '/',
@@ -167,23 +170,19 @@ export const appRoutes = {
             },
             {
               path: 'discount',
-              element: (
-                <section>
-                  <Outlet />
-                </section>
-              ),
+              element: <AssortmentManagementDiscountLayout/>,
               children: [
                 {
                   path: 'am-discount',
-                  element: <AssortmentManagementDiscountLayout/>,
-                },
-                {
-                  path: 'discount-setup',
                   element: <AssortmentManagementDiscountPage/>,
                 },
                 {
+                  path: 'discount-setup',
+                  element: <DiscountMasterPage/>,
+                },
+                {
                   path: 'discount-allocation',
-                  element: <h3>discount allocation</h3>,
+                  element: <DiscountAllocation/>,
                 },
               ],
             },
@@ -193,7 +192,7 @@ export const appRoutes = {
               children: [
                 {
                   path: 'am-promotion',
-                  element: <h2/>,
+                  element: <PromotionAssortmentManagement/>,
                 },
                 {
                   path: 'promotion-setup',

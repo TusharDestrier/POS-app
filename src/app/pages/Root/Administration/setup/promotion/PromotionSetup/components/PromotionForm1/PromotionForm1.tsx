@@ -1,19 +1,15 @@
 import { useFormContext } from 'react-hook-form'
 
 
-import { usePromotionSetupStore } from '../../store/usePromotionSetupStore'
 
 import { Checkbox } from '@/components/ui/checkbox'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -22,23 +18,22 @@ import { Textarea } from '@/components/ui/textarea'
 
 function PromotionForm1() {
 
-  const formMethods=useFormContext();
-const modalMode=usePromotionSetupStore(state=>state.mode);
+  const formMethods = useFormContext();
+
   return (
-    <div className=" overflow-y-auto">
-    <div className=" border border-solid border-black  overflow-y-auto p-3 grid gap-3 items-center">
-      {/*Promotion Id Field */}
+    <div className="overflow-y-auto">
+    <div className="border border-solid border-black p-3 grid gap-3 items-center">
+      {/* Promotion ID */}
       <FormField
         control={formMethods.control}
-        name="storeDetail.storeCode"
-        disabled={modalMode === 'Edit'} // Field is disabled in edit mode
+        name="promotionId"
         render={({ field }) => (
           <FormItem>
             <FormLabel>
               Promotion ID <span className="text-primary">*</span>
             </FormLabel>
             <FormControl>
-              <Input type="text" placeholder=" Promotion ID " {...field} />
+              <Input type="text" placeholder="Promotion ID" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -47,8 +42,7 @@ const modalMode=usePromotionSetupStore(state=>state.mode);
       {/* Promotion Name */}
       <FormField
         control={formMethods.control}
-        name="storeDetail.storeName"
-        disabled={modalMode === 'Edit'} // Field is disabled in edit mode
+        name="promotionName"
         render={({ field }) => (
           <FormItem>
             <FormLabel>
@@ -61,29 +55,26 @@ const modalMode=usePromotionSetupStore(state=>state.mode);
           </FormItem>
         )}
       />
-      {/*Details Field */}
+      {/* Details */}
       <FormField
         control={formMethods.control}
-        name="storeDetail.storeName"
-        disabled={modalMode === 'Edit'} // Field is disabled in edit mode
+        name="details"
         render={({ field }) => (
           <FormItem>
             <FormLabel>
               Details <span className="text-primary">*</span>
             </FormLabel>
             <FormControl>
-              <Textarea placeholder="Type your message here." {...field} />
+              <Textarea placeholder="Details about the promotion" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-
-      {/* Applied On  Field */}
+      {/* Applied On */}
       <FormField
         control={formMethods.control}
-        name="storeDetail.startDate"
-        disabled={modalMode === 'Edit'} // Field is disabled in edit mode
+        name="appliedOn"
         render={({ field }) => (
           <FormItem>
             <FormLabel>
@@ -92,14 +83,11 @@ const modalMode=usePromotionSetupStore(state=>state.mode);
             <FormControl>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Applied On " />
+                  <SelectValue placeholder="Applied On" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Applied On </SelectLabel>
-                    <SelectItem value="eachItem">Applied on Each Item</SelectItem>
-                    <SelectItem value="billValue">Applied on Bill Value</SelectItem>
-                  </SelectGroup>
+                  <SelectItem value="eachItem">Applied on Each Item</SelectItem>
+                  <SelectItem value="billValue">Applied on Bill Value</SelectItem>
                 </SelectContent>
               </Select>
             </FormControl>
@@ -107,35 +95,60 @@ const modalMode=usePromotionSetupStore(state=>state.mode);
           </FormItem>
         )}
       />
-    </div>
-    <div className="border border-solid border-black overflow-y-auto p-3 grid grid-cols-2 items-center">
-
-      <div className="border-3 ">
-        <h4 className="font-bold mb-2">Promotion Type</h4>
-        <RadioGroup className="mb-5" defaultValue="comfortable">
-          <div className="flex items-center space-x-2">
-            <Label htmlFor="r1">Free Quantity Benefit</Label>
-            <RadioGroupItem value="freequantityBenefit" id="r1" />
-          </div>
-          <div className="flex items-center space-x-2">
-            <Label htmlFor="r2">Quantity Slab Benefit</Label>
-            <RadioGroupItem value="quantityslabBenefit" id="r2" />
-          </div>
-          <div className="flex items-center space-x-2">
-            <Label htmlFor="r3">Bill Value Slab Benefit</Label>
-            <RadioGroupItem value="billvalueslabBenefit" id="r3" />
-          </div>
-        </RadioGroup>
+      {/* Promotion Type */}
+     <FormField
+  control={formMethods.control}
+  name="promotionType"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>
+        Promotion Type <span className="text-primary">*</span>
+      </FormLabel>
+      <RadioGroup
+        value={field.value} // Bind the current value
+        onValueChange={field.onChange} // Update the value on change
+        className="mb-5 roles-radio"
+      >
         <div className="flex items-center space-x-2">
-          <Checkbox id="terms" />
-          <label
-            htmlFor="terms"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            Inactive
-          </label>
+          <RadioGroupItem value="freequantityBenefit" id="r1" />
+          <label htmlFor="r1">Free Quantity Benefit</label>
         </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="quantityslabBenefit" id="r2" />
+          <label htmlFor="r2">Quantity Slab Benefit</label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="billvalueslabBenefit" id="r3" />
+          <label htmlFor="r3">Bill Value Slab Benefit</label>
+        </div>
+      </RadioGroup>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
+<FormField
+  control={formMethods.control}
+  name="inactive"
+  render={({ field }) => (
+    <FormItem>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          checked={field.value}
+          onCheckedChange={(value) => field.onChange(value)}
+          id="inactiveCheckbox"
+        />
+        <label
+          htmlFor="inactiveCheckbox"
+          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed"
+        >
+          Inactive
+        </label>
       </div>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
     </div>
   </div>
   )

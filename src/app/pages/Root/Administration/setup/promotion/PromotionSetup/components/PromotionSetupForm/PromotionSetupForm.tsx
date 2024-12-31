@@ -1,10 +1,13 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
+import { promotionSetupSchema } from '../../schema'
 import { usePromotionSetupStore } from '../../store/usePromotionSetupStore'
 import PromotionForm1 from '../PromotionForm1'
 import PromotionForm2 from '../PromotionForm2'
 
 import { Button } from '@/components/ui/button'
+
 // Schema for validation
 
 function PromotionSetupForm() {
@@ -14,7 +17,33 @@ function PromotionSetupForm() {
   const step = usePromotionSetupStore((state) => state.step)
 
   const formMethods = useForm({
-    // resolver: zodResolver(),
+    resolver: zodResolver(promotionSetupSchema),
+    defaultValues: {
+      promotionId: '',
+      promotionName: '',
+      details: '',
+      appliedOn: '',
+      promotionType: '',
+      inactive: false,
+      promotionParameters: {
+        paidForCondition: {
+          condition: 'buyAny', // Default condition
+          quantity: undefined, // Default field for "buyAny"
+        },
+        buyAssortments: [],
+        benefitType: {
+          type: "flatDiscount", // Default to "flatDiscount"
+        },
+        discountTypes: [
+          {
+            type: undefined, // Initially undefined
+            discountOn: "",
+            condition: "",
+            comparison: "",
+          },
+        ],
+      },
+    },
   })
 
   // Handle form submission
@@ -49,6 +78,7 @@ function PromotionSetupForm() {
             <Button
               type={step === 1 ? 'submit' : 'button'}
               className=" btn btn-primary"
+              onClick={() => (step === 2 ? prev() : null)}
             >
               Save
             </Button>
