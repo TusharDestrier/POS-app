@@ -9,6 +9,8 @@ import {
 } from './components/PromotionSelectionList/store/usePromotionSelctionListStore'
 import PromotionSelectionModal from './components/PromotionSelectionModal'
 import PromotionSelectionTable from './components/PromotionSelectionTable'
+import { usePromotionStoreSelectionListStore } from './components/PromotionStoreSelectionList/store/usePromotionStoreSelectionListStore'
+import PromotionStoreSelectionModal from './components/PromotionStoreSelectionModal'
 import PromotionStoreSelectionTable from './components/PromotionStoreSelectionTable'
 
 import { Button } from '@/components/ui/button'
@@ -22,42 +24,48 @@ const promotionSchema = z.object({
       })
     )
     .nonempty('You must select at least one promotion!'),
-  selectedPromotionStores: z.array(
-    z.object({
-      name: z.string().nonempty('Store name is required'),
-      fromDate: z.string().nonempty('From Date is required'), // Use date validation if needed
-      toDate: z.string().nonempty('To Date is required'),
-      allocationType: z.enum(['normal', 'happy-hour']),
-      deallocate: z.boolean(),
-    })
-  ),
-});
+  selectedPromotionStores: z
+    .array(
+      z.object({
+        name: z.string().nonempty('Store name is required'),
+        fromDate: z.string().nonempty('From Date is required'),
+        toDate: z.string().nonempty('To Date is required'),
+        allocationType: z.enum(['normal', 'happy-hour']),
+        deallocate: z.boolean(),
+      })
+    )
+    .nonempty('At least one store must be selected!'),
+})
 
 function PromotionAllocationPage() {
   const methods = useForm<{
-    selectedPromotions: Promotion[];
+    selectedPromotions: Promotion[]
     selectedPromotionStores: {
-      name: string;
-      fromDate: string;
-      toDate: string;
-      allocationType: 'normal' | 'happy-hour';
-      deallocate: boolean;
-    }[];
+      name: string
+      fromDate: string
+      toDate: string
+      allocationType: 'normal' | 'happy-hour'
+      deallocate: boolean
+    }[]
   }>({
     defaultValues: {
       selectedPromotions: [],
       selectedPromotionStores: [], // Default as an empty array
     },
     resolver: zodResolver(promotionSchema),
-  });
+  })
 
   const { handleSubmit, setValue } = methods
 
   const selectedPromotions = usePromotionSelectionListStore((state) => state.selectedPromotions)
+  const selectedPromotionStores = usePromotionStoreSelectionListStore(
+    (state) => state.selectedPromotions
+  )
 
   useEffect(() => {
     setValue('selectedPromotions', selectedPromotions)
-  }, [selectedPromotions, setValue])
+    setValue('selectedPromotionStores', selectedPromotionStores)
+  }, [selectedPromotions, setValue, selectedPromotionStores])
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
@@ -75,11 +83,12 @@ function PromotionAllocationPage() {
               <PromotionSelectionTable />
             </div>
             <div className="p-3 border">
-              <PromotionStoreSelectionTable/>
+              <PromotionStoreSelectionTable />
             </div>
           </div>
 
           <PromotionSelectionModal />
+          <PromotionStoreSelectionModal />
           <div className="mt-4">
             <Button type="submit">Save</Button>
           </div>
