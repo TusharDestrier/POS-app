@@ -40,7 +40,7 @@ const UserMasterForm = () => {
       associatedCompany: 'TEST',
       associatedBranch: 'UNIT - 4',
       dateOfBirth: '1990-01-01', // Valid date string
-      gender: 'Male',
+      gender: 'Male' as 'Male' | 'Female' | 'Other',
       mobileNo: '1234567890',
       mailId: 'john.doe@example.com',
       sapUserId: 'SAP123',

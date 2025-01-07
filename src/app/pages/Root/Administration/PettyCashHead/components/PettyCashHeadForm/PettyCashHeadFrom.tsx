@@ -136,7 +136,10 @@ function PettyCashHeadForm() {
               <FormItem style={{ marginTop: '20px' }} className="flex items-center gap-3 ">
                 <FormLabel>Inactive</FormLabel>
                 <FormControl>
-                  <Checkbox {...field} />
+                <Checkbox
+                      checked={!!field.value}
+                      onCheckedChange={(value) => field.onChange(value)}
+                    />
                 </FormControl>
                 <FormMessage />
               </FormItem>
