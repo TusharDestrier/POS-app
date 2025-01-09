@@ -76,12 +76,10 @@ function PromotionAllocationPage() {
 
   return (
     <div className="relative z-30">
-      <h3>Promotion Allocation</h3>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-3">
             <div className="p-3 border">
-              <h4>Promotions</h4>
               <PromotionSelectionTable />
             </div>
             <div className="p-3 border">

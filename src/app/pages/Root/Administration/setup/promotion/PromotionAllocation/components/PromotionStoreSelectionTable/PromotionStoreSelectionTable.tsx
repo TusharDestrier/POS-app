@@ -1,7 +1,7 @@
-import { useFieldArray, useFormContext } from 'react-hook-form'
+import { useFieldArray, useFormContext } from "react-hook-form";
 
-import { usePromotionAllocationStore } from '../../store/usePromotionAllocationStore'
-import { usePromotionStoreSelectionListStore } from '../PromotionStoreSelectionList/store/usePromotionStoreSelectionListStore'
+import { usePromotionAllocationStore } from "../../store/usePromotionAllocationStore";
+import { usePromotionStoreSelectionListStore } from "../PromotionStoreSelectionList/store/usePromotionStoreSelectionListStore";
 
 import {
   Select,
@@ -11,7 +11,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -19,23 +19,23 @@ import {
   TableFooter,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
+} from "@/components/ui/table";
 
 function PromotionStoreSelectionTable() {
-  const { control, register,setValue,getValues } = useFormContext()
-  const openModal = usePromotionAllocationStore((state) => state.toggleOpen2)
-  const openSelector = usePromotionStoreSelectionListStore((state) => state.openSelector)
+  const { control, register, setValue, getValues } = useFormContext();
+  const openModal = usePromotionAllocationStore((state) => state.toggleOpen2);
+  const openSelector = usePromotionStoreSelectionListStore((state) => state.openSelector);
 
-  const { fields,  remove } = useFieldArray({
+  const { fields, remove } = useFieldArray({
     control,
-    name: 'selectedPromotionStores',
-  })
+    name: "selectedPromotionStores",
+  });
+
+  // Function to handle promotion selection
+ 
 
   const addRow = () => {
-    // Step 1: Capture existing values
     const currentValues = getValues("selectedPromotionStores") || [];
-  
-    // Step 2: Append a new row
     const newRow = {
       id: "",
       name: "",
@@ -44,14 +44,13 @@ function PromotionStoreSelectionTable() {
       allocationType: "normal",
       deallocate: false,
     };
-  
-    setValue("selectedPromotionStores", [...currentValues, newRow],{ shouldValidate: true });
+    setValue("selectedPromotionStores", [...currentValues, newRow], { shouldValidate: true });
   };
 
-  function handleModal(ind: number) {
-    openSelector(ind)
-    openModal()
-  }
+  const handleModal = (index: number) => {
+    openSelector(index); // Set the row index in the modal store
+    openModal(); // Open the modal
+  };
 
   return (
     <div className="p-4 border rounded shadow">
@@ -86,9 +85,10 @@ function PromotionStoreSelectionTable() {
                     {...register(`selectedPromotionStores.${index}.name`)}
                     placeholder="Enter Store Name"
                     className="border rounded px-2 py-1 w-full"
+                    readOnly
                   />
                 ) : (
-                  <button onClick={() => handleModal(index)}>select</button>
+                  <button onClick={() => handleModal(index)}>Select</button>
                 )}
               </TableCell>
               <TableCell>
@@ -153,7 +153,7 @@ function PromotionStoreSelectionTable() {
         </TableFooter>
       </Table>
     </div>
-  )
+  );
 }
 
-export default PromotionStoreSelectionTable
+export default PromotionStoreSelectionTable;
