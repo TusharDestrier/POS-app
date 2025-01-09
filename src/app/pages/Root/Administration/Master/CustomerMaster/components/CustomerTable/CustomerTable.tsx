@@ -1,5 +1,4 @@
 
-
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import {
   ColumnFiltersState,
@@ -16,7 +15,7 @@ import {
 import * as React from 'react'
 
 import columns from './components/CustomerTableColumn'
-import { data } from './data/data'
+import { useCustomerData } from '../../hooks_api/useCustomerData'
 import { useCustomerMaster } from '../../store/useCustomerMaster'
 import CustomerModal from '../CustomerModal'
 
@@ -36,8 +35,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 
 export default function CustomerTable() {
+  const { customerData,isLoading } = useCustomerData()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -49,8 +50,20 @@ export default function CustomerTable() {
   const modalToggler = useCustomerMaster((state) => state.toggleOpen)
   const setModalMode = useCustomerMaster((state) => state.setMode)
 
+  const columnData = React.useMemo(() => {
+    return customerData?.map((item) => ({
+      fullName: `${item.customerFirstName} ${item.customerMiddleName} ${item.customerLastName}`,
+      email: item.email,
+      status: "inactive",
+      phoneNo: item.mobile,
+    }));
+  }, [customerData]);
+  
+
+  // const memoizedColumns = React.useMemo(() => columns, []);
+
   const table = useReactTable({
-    data,
+    data: columnData || [],
     columns,
     state: {
       sorting,
@@ -61,19 +74,27 @@ export default function CustomerTable() {
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
-    onPaginationChange: setPagination, // Add this line
+    onPaginationChange: setPagination,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(), // Ensure this is included
+    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-  })
+  });
+
 
   function createModalHandler() {
     modalToggler()
     setModalMode('Create')
   }
+
+console.log('rerednder');
+
+if (isLoading) {
+  return  <SkeletonLoaderTable/>
+
+}
 
   return (
     <>
@@ -81,8 +102,8 @@ export default function CustomerTable() {
         <div className="flex items-center py-4">
           <Input
             placeholder="Filter emails..."
-            value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
-            onChange={(event) => table.getColumn('email')?.setFilterValue(event.target.value)}
+            value={(table.getColumn('fullName')?.getFilterValue() as string) ?? ''}
+            onChange={(event) => table.getColumn('fullName')?.setFilterValue(event.target.value)}
             className="max-w-sm"
           />
           <ul className="flex items-center gap-3 ms-auto">
@@ -121,6 +142,7 @@ export default function CustomerTable() {
           </ul>
         </div>
         <div className="rounded-md border">
+          {/* <h3>{JSON.stringify(customerData?.map((item)=>({firstName:`${item.customerFirstName} ${item.customerMiddleName} ${item.customerLastName}` ,email:item.email , status:false , phoneNumber:item.mobile} )))}</h3> */}
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (

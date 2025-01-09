@@ -1,41 +1,47 @@
-import ApiService from './ApiClient'
+import ApiService from './ApiClient';
 
-import { ProductFetched } from '@/types/sales'
+import { CustomerFetchedType } from '@/types/customer';
 
-// Example usage
-const apiService = new ApiService('http://localhost:3000')
+class CustomerService extends ApiService {
+  constructor() {
+    super('http://localhost:3002'); // Base URL
+  }
 
-// Fetch sales data
-export const getCustomersData = async (): Promise<ProductFetched[]> => {
-  return apiService.get<ProductFetched[]>('/users') // Adjust the endpoint as necessary
+  // Fetch customers
+  async getCustomers(): Promise<CustomerFetchedType[]> {
+    return this.get<CustomerFetchedType[]>('/customers');
+  }
+
+  // Create customer
+  async createCustomer(data: CustomerFetchedType): Promise<CustomerFetchedType> {
+    return this.post<CustomerFetchedType, CustomerFetchedType>('/customers', data);
+  }
+
+  // Fetch customer by phone number
+  async fetchCustomerByPhone(phoneNo: string): Promise<{
+    memberName: string;
+    memberId: string;
+    createdDate: string;
+  } | null> {
+    // Custom logic
+    const response = await new Promise((resolve) => {
+      setTimeout(() => {
+        const mockCustomer = {
+          memberName: 'John Doe',
+          memberId: '123456',
+          createdDate: '2022-05-16',
+        };
+
+        resolve(phoneNo === '1234567890' ? mockCustomer : null);
+      }, 2000);
+    });
+
+    return response as {
+      memberName: string;
+      memberId: string;
+      createdDate: string;
+    } | null;
+  }
 }
 
-// Create sales data
-export const createCustomerData = async (data: ProductFetched): Promise<ProductFetched> => {
-  return apiService.post<ProductFetched, ProductFetched>('/users', data) // Adjust the endpoint as necessary
-}
-
-// mockApi.ts
-export function fetchCustomerByPhone(phoneNo: string): Promise<{
-  memberName: string
-  memberId: string
-  createdDate: string
-} | null> {
-  return new Promise((resolve) => {
-    // Simulate a 2-second delay to mimic an API call
-    setTimeout(() => {
-      const mockCustomer = {
-        memberName: 'John Doe',
-        memberId: '123456',
-        createdDate: '2022-05-16',
-      }
-
-      // Simulate the API returning customer data if the phone number matches
-      if (phoneNo === '1234567890') {
-        resolve(mockCustomer)
-      } else {
-        resolve(null) // Return null if no customer is found
-      }
-    }, 2000) // 2 seconds delay
-  })
-}
+export default new CustomerService();

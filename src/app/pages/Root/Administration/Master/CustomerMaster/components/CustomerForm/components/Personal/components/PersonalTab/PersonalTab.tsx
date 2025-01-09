@@ -1,5 +1,6 @@
 import { format } from 'date-fns'
 // eslint-disable-next-line import/order
+import { CalendarIcon } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 //import { z } from 'zod'
 
@@ -13,6 +14,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { cn } from '@/lib/utils'
 
 function PersonalTab() {
   const { control } = useFormContext();
@@ -76,7 +78,7 @@ function PersonalTab() {
           )}
         />
       </div>
-      <div className="grid grid-cols-2 gap-3 items-center">
+      <div className="grid grid-cols-2 gap-3 items-center ">
         <FormField
           control={control}
           name="personal.gender"
@@ -86,7 +88,7 @@ function PersonalTab() {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="flex  space-x-4"
+                className="flex  space-x-4 roles-radio"
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="male" id="male" />
@@ -101,38 +103,49 @@ function PersonalTab() {
             </FormItem>
           )}
         />
-        {/* <FormField
-          control={control}
-          name="isEmployee"
-          render={({ field }) => (
-            <FormItem className="flex items-center gap-3">
-              <FormLabel>Is Employee</FormLabel>
-              <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
+       
       </div>
 
-      <div className="flex space-x-4">
-        <FormField
+      <div className="flex space-x-4 ">
+        
+      <FormField
           control={control}
           name="personal.dateOfBirth"
           render={({ field }) => (
-            <FormItem className="flex-1 flex gap-3 items-center">
-              <FormLabel>Date of Birth</FormLabel>
+            <FormItem className="flex flex-col">
+              <FormLabel>Date of birth</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
-                    <Button variant="outline" className="w-40">
-                      {field.value ? format(field.value, 'yyyy-MM-dd') : 'Select Date'}
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-[240px] pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent>
-                  <Calendar selected={field.value} onSelect={field.onChange} />
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    initialFocus
+                  />
                 </PopoverContent>
               </Popover>
+              
               <FormMessage />
             </FormItem>
           )}
@@ -141,20 +154,40 @@ function PersonalTab() {
           control={control}
           name="personal.anniversaryDate"
           render={({ field }) => (
-            <FormItem className="flex-1 flex gap-3 items-center">
-              <FormLabel>Anniversary Date</FormLabel>
+            <FormItem className="flex flex-col">
+              <FormLabel>Annversary Data</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
-                    <Button variant="outline" className="w-40">
-                      {field.value ? format(field.value, 'yyyy-MM-dd') : 'Select Date'}
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-[240px] pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent>
-                  <Calendar selected={field.value} onSelect={field.onChange} />
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    initialFocus
+                  />
                 </PopoverContent>
               </Popover>
+             
               <FormMessage />
             </FormItem>
           )}

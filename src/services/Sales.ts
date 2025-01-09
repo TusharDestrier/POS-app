@@ -3,7 +3,7 @@ import ApiService from './ApiClient'
 import { ProductFetched } from '@/types/sales'
 
 // Example usage
-const apiService = new ApiService('http://localhost:3000')
+const apiService = new ApiService('http://localhost:3002')
 
 // Fetch sales data
 export const getSalesData = async (): Promise<ProductFetched[]> => {

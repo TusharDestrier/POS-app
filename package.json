@@ -10,7 +10,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "preview": "vite preview",
-    "server:test": "npx json-server ./src/data/data.json",
+    "server:test": "npx json-server -p 3002 ./src/data/data.json",
     "fix:all": "npm run lint:fix && npm run format"
   },
   "dependencies": {
