@@ -1,4 +1,7 @@
+
 import { zodResolver } from '@hookform/resolvers/zod'
+//import { Eye, EyeOff } from 'lucide-react';
+//import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -32,17 +35,22 @@ const formSchema = z.object({
 })
 
 function ChangePasswordModal() {
-
-    // 1. Define your form.
-    const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-        userName: '',
-        oldPassword: '',
-        newPassword: '',
-        confirmPassword: '',
-      },
-    })
+  // const [oldPassword,setoldPassword] = useState('');
+  //const [newPassword,setnewPassword] = useState('');
+  //const [confirmPassword,setconfirmPassword] = useState('');
+  //const [visible, setVisible] = useState(false);
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      userName: '',
+      oldPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+    },
+  })
+  const oldPass =  form.watch("oldPassword") 
+  console.log(oldPass)
 
   const mode = useChangePasswordStore((state) => state.mode)
   const isOpen = useChangePasswordStore((state) => state.isOpen)
@@ -70,11 +78,7 @@ function ChangePasswordModal() {
                 <FormItem>
                   <FormLabel> User Name</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder=" User Name"
-                      {...field}
-                      disabled={modalMode === 'Create'}
-                    />
+                    <Input placeholder=" User Name" {...field} disabled={modalMode === 'Create'} />
                   </FormControl>
                 </FormItem>
               )}
@@ -86,12 +90,16 @@ function ChangePasswordModal() {
                 <FormItem>
                   <FormLabel>Old Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="Old Password" {...field} />
+                  <Input placeholder="Old Password" {...field} />
+                    {/* <span onClick={() => setVisible(!visible)}>
+                      {visible ? <Eye/> : <EyeOff />}
+
+                    </span> */}
                   </FormControl>
                 </FormItem>
               )}
             />
-             <FormField
+            <FormField
               control={form.control}
               name="newPassword"
               render={({ field }) => (
@@ -103,12 +111,12 @@ function ChangePasswordModal() {
                 </FormItem>
               )}
             />
-             <FormField
+            <FormField
               control={form.control}
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm  Password</FormLabel>
+                  <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
                     <Input placeholder="Confirm Password" {...field} />
                   </FormControl>

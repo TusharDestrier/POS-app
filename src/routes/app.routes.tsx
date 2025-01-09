@@ -8,12 +8,14 @@ import MasterLayout from '@/app/pages/Root/Administration/Master/layout'
 import { PayModeMaster } from '@/app/pages/Root/Administration/Master/PayModeMaster/page'
 import PettyCashHead from '@/app/pages/Root/Administration/Master/PettyCashHead/page'
 import { StoreMaster } from '@/app/pages/Root/Administration/Master/StoreMaster/page'
+//import { SalesPersonTable } from '@/app/pages/Root/Administration/SalesPersonMaster/components/SalesPersonTable/SalesPersonTable'
 import CreateRole from '@/app/pages/Root/Administration/Security/CreateRole/page'
 import SecurityLayout from '@/app/pages/Root/Administration/Security/layout'
 import RoleDefination from '@/app/pages/Root/Administration/Security/RoleDefination/page'
 import UserProfileCreationTable from '@/app/pages/Root/Administration/Security/UserProfileCreation/components/UserProfileCreationTable'
 import AssortmentManagementDiscountLayout from '@/app/pages/Root/Administration/setup/discount/AssortmentManagement/layout'
 import AssortmentManagementDiscountPage from '@/app/pages/Root/Administration/setup/discount/AssortmentManagement/page'
+import DiscountAllocation from '@/app/pages/Root/Administration/setup/discount/DiscountAllocation/page'
 import DiscountMasterPage from '@/app/pages/Root/Administration/setup/discount/DiscountMaster/page'
 import SectupLayout from '@/app/pages/Root/Administration/setup/layout'
 import OrganizationPolicyLayout from '@/app/pages/Root/Administration/setup/policy/OrganizationPolicy/layout'
@@ -22,6 +24,7 @@ import StoreSpecificLayout from '@/app/pages/Root/Administration/setup/policy/St
 import StoreSpecificPolicy from '@/app/pages/Root/Administration/setup/policy/StoreSpecificPolicy/page'
 import PromotionAssortmentManagement from '@/app/pages/Root/Administration/setup/promotion/AssortmentManagement/page'
 import PromotionAllocationPage from '@/app/pages/Root/Administration/setup/promotion/PromotionAllocation/page'
+import PromotionPrioritySetupPage from '@/app/pages/Root/Administration/setup/promotion/PromotionPrioritySetup/page'
 import PromotionSetUpLayout from '@/app/pages/Root/Administration/setup/promotion/PromotionSetup/layout'
 import PromotionSetUpPage from '@/app/pages/Root/Administration/setup/promotion/PromotionSetup/page'
 import AssortmentManagementLayout from '@/app/pages/Root/Administration/setup/salesperson/AssortmentManagement/layout'
@@ -63,7 +66,6 @@ import ChangePasswordPage from '@/app/pages/Root/UserManagement/ChangePassword/p
 import Designation from '@/app/pages/Root/UserManagement/Designation/page'
 import UtilitiesLayout from '@/app/pages/Root/Utilities/layout'
 import UtilitiesPage from '@/app/pages/Root/Utilities/page'
-import DiscountAllocation from '@/app/pages/Root/Administration/setup/discount/DiscountAllocation/page'
 
 export const appRoutes = {
   path: '/',
@@ -204,7 +206,7 @@ export const appRoutes = {
                 },
                 {
                   path: 'promotion-priority-setup',
-                  element: <h3>promotiion priority allocation</h3>,
+                  element: <PromotionPrioritySetupPage/>
                 },
               ],
             },
@@ -230,6 +232,16 @@ export const appRoutes = {
                   path: 'am-incentive',
                   element: <AssortmentwiseIncentivePage />,
                 },
+                // {
+                //   path: 'salesperson-master',
+                //   element: <SalesPersonTable />,
+                //   children: [
+                //     {
+                //       index: true,
+                //       element: <SalesPersonTable />,
+                //     },
+                //   ],
+                // },
                 
               ],
             },
