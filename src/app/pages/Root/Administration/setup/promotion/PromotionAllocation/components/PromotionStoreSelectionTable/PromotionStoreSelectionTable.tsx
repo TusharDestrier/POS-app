@@ -43,10 +43,10 @@ function PromotionStoreSelectionTable() {
       toDate: '',
       allocationType: 'normal',
       deallocate: false,
-    }
-
-    setValue('selectedPromotionStores', [...currentValues, newRow])
-  }
+    };
+  
+    setValue("selectedPromotionStores", [...currentValues, newRow],{ shouldValidate: true });
+  };
 
   function handleModal(ind: number) {
     openSelector(ind)
@@ -73,7 +73,7 @@ function PromotionStoreSelectionTable() {
               <TableCell className="font-medium">{index + 1}</TableCell>
               <TableCell>
                 <input
-                  {...register(`selectedPromotions.${index}.id`)}
+                  {...register(`selectedPromotionStores.${index}.id`)}
                   placeholder="Enter ID"
                   disabled
                   className="border rounded p-1 w-[30px] text-center"

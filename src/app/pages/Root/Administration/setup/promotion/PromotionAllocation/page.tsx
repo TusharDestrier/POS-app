@@ -27,6 +27,7 @@ const promotionSchema = z.object({
   selectedPromotionStores: z
     .array(
       z.object({
+        id:z.string(),
         name: z.string().nonempty('Store name is required'),
         fromDate: z.string().nonempty('From Date is required'),
         toDate: z.string().nonempty('To Date is required'),
@@ -41,6 +42,7 @@ function PromotionAllocationPage() {
   const methods = useForm<{
     selectedPromotions: Promotion[]
     selectedPromotionStores: {
+      id:string,
       name: string
       fromDate: string
       toDate: string
