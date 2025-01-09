@@ -7,6 +7,8 @@ import CustomerMaster from '@/app/pages/Root/Administration/Master/CustomerMaste
 import MasterLayout from '@/app/pages/Root/Administration/Master/layout'
 import { PayModeMaster } from '@/app/pages/Root/Administration/Master/PayModeMaster/page'
 import PettyCashHead from '@/app/pages/Root/Administration/Master/PettyCashHead/page'
+import SalesPersonMasterLayout from '@/app/pages/Root/Administration/Master/SalesPersonMaster/layout'
+import SalesPersonMasterPage from '@/app/pages/Root/Administration/Master/SalesPersonMaster/page'
 import { StoreMaster } from '@/app/pages/Root/Administration/Master/StoreMaster/page'
 //import { SalesPersonTable } from '@/app/pages/Root/Administration/SalesPersonMaster/components/SalesPersonTable/SalesPersonTable'
 import CreateRole from '@/app/pages/Root/Administration/Security/CreateRole/page'
@@ -172,41 +174,41 @@ export const appRoutes = {
             },
             {
               path: 'discount',
-              element: <AssortmentManagementDiscountLayout/>,
+              element: <AssortmentManagementDiscountLayout />,
               children: [
                 {
                   path: 'am-discount',
-                  element: <AssortmentManagementDiscountPage/>,
+                  element: <AssortmentManagementDiscountPage />,
                 },
                 {
                   path: 'discount-setup',
-                  element: <DiscountMasterPage/>,
+                  element: <DiscountMasterPage />,
                 },
                 {
                   path: 'discount-allocation',
-                  element: <DiscountAllocation/>,
+                  element: <DiscountAllocation />,
                 },
               ],
             },
             {
               path: 'promotion',
-              element: <PromotionSetUpLayout/>,
+              element: <PromotionSetUpLayout />,
               children: [
                 {
                   path: 'am-promotion',
-                  element: <PromotionAssortmentManagement/>,
+                  element: <PromotionAssortmentManagement />,
                 },
                 {
                   path: 'promotion-setup',
-                  element: <PromotionSetUpPage/>,
+                  element: <PromotionSetUpPage />,
                 },
                 {
                   path: 'promotion-allocation',
-                  element: <PromotionAllocationPage/>,
+                  element: <PromotionAllocationPage />,
                 },
                 {
                   path: 'promotion-priority-setup',
-                  element: <PromotionPrioritySetupPage/>
+                  element: <PromotionPrioritySetupPage />,
                 },
               ],
             },
@@ -216,7 +218,9 @@ export const appRoutes = {
               children: [
                 {
                   index: true,
-                  element: <Navigate to="/administration/setup/salesperson-incentive/am-incentive" />,
+                  element: (
+                    <Navigate to="/administration/setup/salesperson-incentive/am-incentive" />
+                  ),
                 },
                 {
                   path: 'incentive-allocation',
@@ -242,7 +246,6 @@ export const appRoutes = {
                 //     },
                 //   ],
                 // },
-                
               ],
             },
           ],
@@ -266,6 +269,16 @@ export const appRoutes = {
             {
               path: 'pettycash-heads',
               element: <PettyCashHead />,
+            },
+            {
+              path: 'salesperson-master',
+              element: <SalesPersonMasterLayout />,
+              children: [
+                {
+                  index:true,
+                  element: <SalesPersonMasterPage />,
+                },
+              ],
             },
           ],
         },
@@ -444,7 +457,7 @@ export const appRoutes = {
       element: <SalesLayout />,
       children: [
         {
-          path:'biling-return',
+          path: 'biling-return',
           element: <SalesPage />,
         },
         {
@@ -474,6 +487,5 @@ export const appRoutes = {
         },
       ],
     },
-   
   ],
 }
