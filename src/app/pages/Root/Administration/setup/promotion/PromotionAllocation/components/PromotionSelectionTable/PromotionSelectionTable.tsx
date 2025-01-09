@@ -58,7 +58,7 @@ function PromotionSelectionTable() {
                 />
               </TableCell>
               <TableCell>
-                {field.name ? (
+                {field?.name  ? (
                   <input
                     {...register(`selectedPromotions.${index}.name`)}
                     className="border rounded p-1 w-[150px]"

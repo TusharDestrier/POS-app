@@ -22,31 +22,31 @@ import {
 } from '@/components/ui/table'
 
 function PromotionStoreSelectionTable() {
-  const { control, register,setValue,getValues } = useFormContext()
+  const { control, register, setValue, getValues } = useFormContext()
   const openModal = usePromotionAllocationStore((state) => state.toggleOpen2)
   const openSelector = usePromotionStoreSelectionListStore((state) => state.openSelector)
 
-  const { fields,  remove } = useFieldArray({
+  const { fields, remove } = useFieldArray({
     control,
     name: 'selectedPromotionStores',
   })
 
   const addRow = () => {
     // Step 1: Capture existing values
-    const currentValues = getValues("selectedPromotionStores") || [];
-  
+    const currentValues = getValues('selectedPromotionStores') || []
+
     // Step 2: Append a new row
     const newRow = {
-      id: "",
-      name: "",
-      fromDate: "",
-      toDate: "",
-      allocationType: "normal",
+      id: '',
+      name: '',
+      fromDate: '',
+      toDate: '',
+      allocationType: 'normal',
       deallocate: false,
-    };
-  
-    setValue("selectedPromotionStores", [...currentValues, newRow]);
-  };
+    }
+
+    setValue('selectedPromotionStores', [...currentValues, newRow])
+  }
 
   function handleModal(ind: number) {
     openSelector(ind)
@@ -88,7 +88,9 @@ function PromotionStoreSelectionTable() {
                     className="border rounded px-2 py-1 w-full"
                   />
                 ) : (
-                  <button onClick={() => handleModal(index)}>select</button>
+                  <button type="button" onClick={() => handleModal(index)}>
+                    Select
+                  </button>
                 )}
               </TableCell>
               <TableCell>
@@ -144,7 +146,7 @@ function PromotionStoreSelectionTable() {
               <button
                 type="button"
                 onClick={addRow}
-                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                className=" flex h-8 px-4 py-2 mt-4 bg-green-500 text-white rounded hover:bg-green-600"
               >
                 Add Row
               </button>

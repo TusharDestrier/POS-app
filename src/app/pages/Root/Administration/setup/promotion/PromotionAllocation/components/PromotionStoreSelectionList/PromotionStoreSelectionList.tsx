@@ -1,4 +1,5 @@
 import { useFormContext } from "react-hook-form";
+import { undefined } from "zod";
 
 import { PromotionStoreType, usePromotionStoreSelectionListStore } from "./store/usePromotionStoreSelectionListStore"
 import { usePromotionAllocationStore } from "../../store/usePromotionAllocationStore"
@@ -28,7 +29,7 @@ function PromotionStoreSelectionList() {
       function closeModal() {
         closeSelector()
         close()
-        usePromotionStoreSelectionListStore.getState().addSelectedPromotion(-1, undefined)
+        usePromotionStoreSelectionListStore.getState().addSelectedPromotion(-1,undefined)
       }
   return (
   <div className="border p-4 mt-4">

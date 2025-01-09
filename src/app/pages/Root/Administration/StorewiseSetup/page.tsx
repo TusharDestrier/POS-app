@@ -5,7 +5,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 
 import StoreWiseSetupTab from './components/StoreWiseSetupTab'
-import { GeneralSetupSchema } from '../GeneralSetup/schemas/GeneralSetup.schema'
+import { GeneralSetupSchema } from '../setup/policy/OrganizationPolicy/schemas/GeneralSetup.schema'
 
 import { Button } from '@/components/ui/button'
 
