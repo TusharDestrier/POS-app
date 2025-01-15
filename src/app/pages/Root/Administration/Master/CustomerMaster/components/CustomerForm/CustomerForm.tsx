@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
+import { toast } from 'sonner'
 
 import { customerDataFormatter } from '../../helper/customerDataFormatter'
 import { useCreateCustomer } from '../../hooks_api/useCreateCustomer'
@@ -8,7 +9,6 @@ import { useCustomerMaster } from '../../store/useCustomerMaster'
 import CustomerMasterTab from '../CustomerMasterTab/CustomerMasterTab'
 
 import { Button } from '@/components/ui/button'
-import { toast } from 'sonner'
 
 function CustomerForm() {
   const { createCustomer, error, isLoading } = useCreateCustomer()
@@ -63,9 +63,9 @@ function CustomerForm() {
       })
 
       try {
-        await createCustomer(transformData);
-        closeModal();  // ✅ Success pe modal close
-        toast.success("Customer Created", {
+        await createCustomer(transformData)
+        closeModal() // ✅ Success pe modal close
+        toast.success('Customer Created', {
           style: {
             backgroundColor: '#e3ffea',
             color: '#3ed665',
@@ -77,7 +77,7 @@ function CustomerForm() {
             backgroundColor: '#f7edeb',
             color: '#ff6242',
           },
-        })  // Server se aayi specific error ya generic error
+        }) // Server se aayi specific error ya generic error
       }
     },
     (errors) => {
@@ -100,9 +100,8 @@ function CustomerForm() {
           <Button type="submit" className="btn btn-primary" disabled={isLoading}>
             {isLoading ? 'Submitting...' : 'Submit'}
           </Button>
-          
         </div>
-        {error && <p className='text-end'>{error}</p>}
+        {error && <p className="text-end">{error}</p>}
       </form>
     </FormProvider>
   )

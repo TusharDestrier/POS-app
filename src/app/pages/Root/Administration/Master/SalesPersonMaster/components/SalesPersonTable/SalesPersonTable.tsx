@@ -1,5 +1,3 @@
-// StoreDetailTable.tsx
-'use client'
 
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import {
@@ -17,7 +15,7 @@ import {
 import * as React from 'react'
 
 import columns from './components/SalesPersonTableColumn'
-import { data } from './data/tableData'
+import { data, SalesPersonStatus } from './data/tableData'
 import useSalesPerson from '../../store/useSalesPerson'
 import SalesPersonModal from '../SalesPersonModal/SalesPersonModal'
 
@@ -51,8 +49,21 @@ export function SalesPersonTable() {
   const modalToggler = useSalesPerson((state) => state.toggleOpen)
   const setModalMode = useSalesPerson((state) => state.setMode)
 
+
+
+
+  const newTableData = data.map(item => {
+    return {
+      ...item,
+      fullName: `${item.firstName ?? ''} ${item.lastName ?? ''}`.trim(),
+      email: item.email,
+      status: item.isActive === 'true' ? SalesPersonStatus.ACTIVE : SalesPersonStatus.INACTIVE,
+      mobileNo: item.mobileNo
+    }
+  })
+
   const table = useReactTable({
-    data,
+    data:newTableData,
     columns,
     state: {
       sorting,
@@ -76,10 +87,9 @@ export function SalesPersonTable() {
     modalToggler()
     setModalMode('Create')
   }
-  // function EditModalHandler() {
-  //   modalToggler()
-  //   setModalMode('Edit')
-  // }
+
+
+
 
   return (
     <>
