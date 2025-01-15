@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
 import ErrorPage from '@/app/pages/ErrorPage/page'
-import RoleWiseRedirection from '@/app/pages/RoleWiseRedirection'
 import { AdministrationLayout } from '@/app/pages/Root/Administration/layout'
 import CustomerMaster from '@/app/pages/Root/Administration/Master/CustomerMaster/page'
 import MasterLayout from '@/app/pages/Root/Administration/Master/layout'
@@ -76,7 +75,7 @@ export const appRoutes = {
   children: [
     {
       index: true,
-      element: <RoleWiseRedirection />,
+      element: <Navigate to={'/dashboard'}/>,
     },
     {
       path: 'dashboard',

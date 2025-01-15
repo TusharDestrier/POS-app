@@ -1,5 +1,5 @@
 import useFetch from '@/hooks/useFetch'
-import { getCustomersData } from '@/services/Customers'
+import { getCustomersData } from '@/services/customerClient'
 
 export function useCustomerData() {
   const { data, error, isLoading } = useFetch({

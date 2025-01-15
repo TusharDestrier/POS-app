@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 
-export default function useFetch<T>(fetchFunction: () => Promise<T>, dependencies: any[] = []): {
-  data: T | null;
-  error: string | null;
-  isLoading: boolean;
-} {
+import { useRefetchStore } from '@/store/useRefetchStore';
+
+export default function useFetch<T>(fetchFunction: () => Promise<T>, key: string, dependencies: any[] = []) {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const trigger = useRefetchStore((state) => state.triggers[key] || 0);  // ✅ Listen to trigger
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +25,7 @@ export default function useFetch<T>(fetchFunction: () => Promise<T>, dependencie
     };
 
     fetchData();
-  }, dependencies);
+  }, [trigger, ...dependencies]);  // ✅ Trigger added to dependencies
 
   return { data, error, isLoading };
 }

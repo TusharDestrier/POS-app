@@ -1,16 +1,19 @@
 import { getAssortmentExcludedData } from '../../../../../__mockData__/api'
 
 import useFetch from '@/hooks/useFetch'
+import { delay } from '@/lib/utils'
+
 
 
 
 export function useAssortmentExcludedData() {
-  const { data, error, isLoading } = useFetch({
-    key: 'assortmentExcluded',
-    fn: getAssortmentExcludedData, // This should return a Promise
-    stale: 10000, // Set stale time to 0 to consider data stale immediately
-    cache: true, // Disable caching
-  })
+  const { data, error, isLoading } = useFetch(
+    async () => {
+      await delay(2000)
+      return getAssortmentExcludedData()
+    }, // Pass the service method
+    [] // No dependencies for now
+  )
 
   return { assortmentExcludedData: data, error, isLoading }
 }

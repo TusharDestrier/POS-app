@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -16,11 +17,12 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { loginSchema } from '@/schema/auth.schema'
-import useAuth from '@/store/useAuth'
+import { useAuth } from '@/store/useAuth'
 
 function LoginForm() {
   const [isShow, setShow] = useState(false)
   const login = useAuth((state) => state.login)
+  const navigate = useNavigate()
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -30,7 +32,8 @@ function LoginForm() {
   })
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
-    const res = login(values)
+    const res = login({ username: values.username, password: values.password })
+
     if (typeof res === 'string') {
       toast.error(`Invalid username or password`, {
         style: {
@@ -45,6 +48,8 @@ function LoginForm() {
           color: '#3ed665',
         },
       })
+      navigate('/dashboard')
+
     }
   }
 
@@ -58,7 +63,7 @@ function LoginForm() {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="Username" {...field} />
+                <Input placeholder="Username" autoComplete="username" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -71,8 +76,13 @@ function LoginForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <div className='relative'>
-                  <Input type={isShow ? 'text' : 'password'} placeholder="Password" {...field} />
+                <div className="relative">
+                  <Input
+                    type={isShow ? 'text' : 'password'}
+                    autoComplete="current-password"
+                    placeholder="Password"
+                    {...field}
+                  />
                   <span
                     onClick={() => setShow((prev) => !prev)}
                     className="absolute right-3 top-2  cursor-pointer"

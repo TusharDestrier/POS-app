@@ -1,18 +1,35 @@
-import { Outlet } from 'react-router-dom'
+import { useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-import Header from './components/Header'
-import Sidebar from './components/Sidebar/Sidebar'
+import Header from './components/Header';
+import Sidebar from './components/Sidebar/Sidebar';
 
-import useImageUploaderState from '@/components/ImageUploader/store/useImageUploader'
-import useAuthRedirection from '@/hooks/useAuthRedirection'
+import useAutoLogout from '@/app/hooks/useAutoLogout';
+import useImageUploaderState from '@/components/ImageUploader/store/useImageUploader';
+import { useAuth } from '@/store/useAuth';
 
 function RootLayout() {
-  useAuthRedirection({ requireAuth: true, redirectTo: '/login' })
-const image=useImageUploaderState(state=>state.image);
+
+  useAutoLogout();
+  const navigate = useNavigate();
+  const isAuthenticated = useAuth((state) => state.isAuthenticated);
+  const image = useImageUploaderState((state) => state.image);
+
+  // ✅ Redirect if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
+
+  // 🛑 Show nothing if not authenticated (Prevent Flash of Protected Content)
+  if (!isAuthenticated) return null;
 
   return (
-    <div className="app_layout ">
+    <div className="app_layout">
+      {/* ✅ Sidebar for Authenticated Users */}
       <Sidebar />
+      
       <main
         className="overflow-y-scroll h-screen relative"
         style={
@@ -22,17 +39,16 @@ const image=useImageUploaderState(state=>state.image);
                 backgroundSize: "200px 200px",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
-                
-                // opacity: 0.1, // Mimics the effect from the image tag
               }
             : {}
         }
       >
+        {/* ✅ Header for Authenticated Users */}
         <Header />
         <Outlet />
       </main>
     </div>
-  )
+  );
 }
 
-export default RootLayout
+export default RootLayout;

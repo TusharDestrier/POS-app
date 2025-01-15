@@ -3,7 +3,7 @@ import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { ColumnDef } from '@tanstack/react-table'
 
 import { useCustomerMaster } from '../../../../store/useCustomerMaster'
-import { Customer } from '../../data/data'
+import { CustomerStatus, CustomerType } from '../../data/data'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -21,7 +21,7 @@ import {
 // import StoreDetailForm from '../../StoreDetailForm'
 // import useStoreDetail from '../../../store/useStoreDetail'
 
-export const columns: ColumnDef<Customer>[] = [
+export const columns: ColumnDef<CustomerType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -56,7 +56,18 @@ export const columns: ColumnDef<Customer>[] = [
   {
     accessorKey: 'status',
     header: 'Status',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('status')}</div>,
+    cell:  ({ row }) => {
+      const status = row.getValue('status') as CustomerStatus;
+      return (
+        <div
+          className={`capitalize ${
+            status === CustomerStatus.ACTIVE ? 'text-green-500' : 'text-red-500'
+          }`}
+        >
+          {status}
+        </div>
+      );
+    },
   },
   {
     accessorKey: 'email',
@@ -84,7 +95,7 @@ export const columns: ColumnDef<Customer>[] = [
   },
 ]
 
-function TableRowDropDowns({ customer }: { customer: Customer }) {
+function TableRowDropDowns({ customer }: { customer: CustomerType }) {
   const modalToggler = useCustomerMaster((state) => state.toggleOpen)
   const setModalMode = useCustomerMaster((state) => state.setMode)
 

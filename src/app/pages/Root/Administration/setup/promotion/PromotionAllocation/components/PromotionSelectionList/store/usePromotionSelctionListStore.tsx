@@ -26,13 +26,17 @@ export const usePromotionSelectionListStore = create<PromotionSelectionListStore
   selectedRowIndex: null,
   openSelector: (index) => set({ isSelecting: true, selectedRowIndex: index }),
   closeSelector: () => set({ isSelecting: false, selectedRowIndex: null }),
-  addSelectedPromotion: (index, promotion) =>
+  addSelectedPromotion: (index: number, promotion: Promotion | undefined) =>
     set((state) => {
+      if (!promotion) return state; 
+  
       const updated = [...state.selectedPromotions];
       updated[index] = promotion;
+  
       return {
-        selectedPromotions: updated.filter((item) => item !== undefined),
+        selectedPromotions: updated,
       };
     }),
+  
   
 }));

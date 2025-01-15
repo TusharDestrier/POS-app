@@ -6,7 +6,7 @@ import { roleBasedMenu, RoleBasedMenu, SidebarItem, SubItem } from './data/roleB
 import { useSidebarComp } from './hooks/useSidebarComp'
 
 import useImageUploaderState from '@/components/ImageUploader/store/useImageUploader'
-import useAuth from '@/store/useAuth'
+import {useAuth} from '@/store/useAuth'
 
 
 // interface User {
@@ -41,7 +41,7 @@ function SidebarItemComponent({
     <li>
       {item.subItems ? (
         <button
-          className={`group flex items-center text-base text-gray-600 hover:text-gray-950 font-semibold px-3 py-2 sm:py-3 rounded-lg w-full text-left
+          className={`group  flex items-center text-base text-gray-600 hover:text-gray-950 font-semibold px-3 py-2 sm:py-3 rounded-lg w-full text-left
             ${
               isOpen || isActive
                 ? 'bg-primary/90 hover:bg-primary a_active hover:text-white text-white'
@@ -108,7 +108,7 @@ function Sidebar() {
     roleBasedMenu[user?.role?.toLowerCase() as keyof RoleBasedMenu] || []
 
   return (
-    <aside className={`sidebar overflow-y-scroll ${globalOpen ? 'expand' : ''}`} ref={sidebarRef}>
+    <aside className={`sidebar relative z-50 overflow-y-scroll ${globalOpen ? 'expand' : ''}`} ref={sidebarRef}>
       <div className="logo mb-4 border-b border-gray-100 pt-5 px-3.5 pb-6">
         <NavLink
           className="font-extrabold text-2xl text-nowrap flex items-center gap-3 text-gray-600"

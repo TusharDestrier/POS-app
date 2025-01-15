@@ -18,7 +18,9 @@ import columns from './components/CustomerTableColumn'
 import { useCustomerData } from '../../hooks_api/useCustomerData'
 import { useCustomerMaster } from '../../store/useCustomerMaster'
 import CustomerModal from '../CustomerModal'
+import { CustomerStatus, CustomerType } from './data/data'
 
+import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -35,7 +37,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
+
 
 export default function CustomerTable() {
   const { customerData,isLoading } = useCustomerData()
@@ -52,17 +54,18 @@ export default function CustomerTable() {
 
   const columnData = React.useMemo(() => {
     return customerData?.map((item) => ({
+      id:String(item.customerID) ,
       fullName: `${item.customerFirstName} ${item.customerMiddleName} ${item.customerLastName}`,
       email: item.email,
-      status: "inactive",
-      phoneNo: item.mobile,
+      status: item?.status || CustomerStatus.INACTIVE,
+      phoneNo: String(item.mobile),
     }));
   }, [customerData]);
   
 
   // const memoizedColumns = React.useMemo(() => columns, []);
 
-  const table = useReactTable({
+  const table = useReactTable<CustomerType>({
     data: columnData || [],
     columns,
     state: {
@@ -89,7 +92,6 @@ export default function CustomerTable() {
     setModalMode('Create')
   }
 
-console.log('rerednder');
 
 if (isLoading) {
   return  <SkeletonLoaderTable/>

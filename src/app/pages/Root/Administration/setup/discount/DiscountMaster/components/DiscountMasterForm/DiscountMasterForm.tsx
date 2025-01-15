@@ -21,7 +21,7 @@ function DiscountMasterForm() {
       otpRequired: false,
       allowToChange: false,
       inactive: false,
-      assortments: [],
+      assortments: [{ id: '', name: '' }],
     },
   })
 

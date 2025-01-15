@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import useFocusOnKeyPress from '@/hooks/useFocusOnKeyPress'
-import useAuth from '@/store/useAuth'
+import {useAuth} from '@/store/useAuth'
 
 function UserBox() {
   // Access Zustand store for modal state and actions

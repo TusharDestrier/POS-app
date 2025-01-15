@@ -1,89 +1,108 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
+import { persist,createJSONStorage } from 'zustand/middleware';
 
-// Define the user interface to strongly type the user data
 interface User {
-  id: string
-  username: string
-  email: string
-  password: string,
-  role: string
+  id: string;
+  username: string;
+  email: string;
+  role: string;
 }
 
-// Define the state interface for the Zustand store
+// 📝 Dummy Users Data
+const fakeUsers = [
+  {
+    id: "1",
+    username: "cashier",
+    email: "cashier@pos.com",
+    password: "cashier123",
+    role: "cashier",
+  },
+  {
+    id: "2",
+    username: "manager",
+    email: "manager@pos.com",
+    password: "manager123",
+    role: "manager",
+  },
+  {
+    id: "3",
+    username: "rickzi3",
+    email: "manager@pos.com",
+    password: "Haldiram?008",
+    role: "admin",
+  },
+];
+
 interface AuthState {
-  user: User | null // The user can either be a User object or null (if not logged in)
-  login: ({ username, password }: { username: string; password: string }) => string | User // Return an error message or the User object
-  logout: () => void // Logout function to clear the user
-  changePassword: () => void
-  initializeUser: () => void // Initialize user from localStorage
+  user: User | null;
+  accessToken: string | null;
+  refreshToken: string | null;
+  isAuthenticated: boolean;
+
+  setAuth: (user: User, accessToken: string, refreshToken: string) => void;
+  clearAuth: () => void;
+  updateTokens: (accessToken: string, refreshToken: string) => void;
+  // 🔥 New Methods for Local Auth
+  login: ({username, password}:{username: string, password: string}) => string | null;
+  logout: () => void;
 }
 
-// Mock users data for client-side authentication
-export const usersData: User[] = [
-  {
-    id: '1313',
-    username: 'rickzi',
-    email: 'td0o3232@gmail.com',
-    password: 'Haldiram?008',
-    role: 'Storemanager',
-  },
-  {
-    id: '1343',
-    username: 'rickzi2',
-    email: 'td0o3232@gmail.com',
-    password: 'Haldiram?008',
-    role: 'Cashier',
-  },
-  {
-    id: '13eee3',
-    username: 'rickzi3',
-    email: 'td0o3232@gmail.com',
-    password: 'Haldiram?008',
-    role: 'Admin',
-  },
-]
+export const useAuth = create<AuthState>()(
+  persist(
+    (set,get) => ({
+      user: null,
+      accessToken: null,
+      refreshToken: null,
+      isAuthenticated: false,
 
-// Create Zustand store with TypeScript support
-const useAuth = create<AuthState>((set) => ({
-  user: null, // Initially no user is logged in
-  // Login function that finds the user in the usersData array
-  login: ({ username, password }: { username: string; password: string }) => {
-    // Try to find the user based on the username and password
-    const user = usersData.find((item) => item.username === username && item.password === password)
+      setAuth: (user, accessToken, refreshToken) =>
+        set({
+          user,
+          accessToken,
+          refreshToken,
+          isAuthenticated: true,
+        }),
 
-    if (!user) {
-      return 'Invalid username or password' // Return error message if credentials don't match
+      clearAuth: () =>
+        set({
+          user: null,
+          accessToken: null,
+          refreshToken: null,
+          isAuthenticated: false,
+        }),
+
+      updateTokens: (accessToken, refreshToken) =>
+        set({
+          accessToken,
+          refreshToken,
+          isAuthenticated: true,
+        }),
+          // 🔐 New Function: Local Login
+     login: ({username, password}) => {
+      const user = fakeUsers.find(
+        (u) => u.username === username && u.password === password
+      );
+
+      if (user) {
+        const dummyAccessToken = btoa(`access-${user.id}-${Date.now()}`);
+        const dummyRefreshToken = btoa(`refresh-${user.id}-${Date.now()}`);
+
+        // ✅ Reuse Existing setAuth
+        get().setAuth(user, dummyAccessToken, dummyRefreshToken);
+        return null; // ✅ Login Success
+      }
+
+      return "Invalid username or password!"; // ❌ Login Failed
+    },
+
+    // 🔓 New Function: Local Logout
+    logout: () => get().clearAuth(),
+    }),
+   
+    
+    {
+      name: 'auth-storage',  // ✅ LocalStorage key
+      storage: createJSONStorage(() => localStorage),
     }
-
-    // Save the user in the Zustand store
-    set({ user })
-
-    // Save the user in localStorage for persistence
-    localStorage.setItem('user', JSON.stringify(user))
-
-    return user // Return the user object if login is successful
-  },
-
-  // Logout function to clear the user from both store and localStorage
-  logout: () => {
-    set({ user: null })
-    localStorage.removeItem('user')
-  },
-
-  
-  // Change Password function call here 
-   changePassword() {
-    //set({})
-    window.location.href = "http://localhost:5173/administration/security/change-password"
-  },
-
-  // Initialize user from localStorage
-  initializeUser: () => {
-    const savedUser = localStorage.getItem('user')
-    if (savedUser) {
-      set({ user: JSON.parse(savedUser) })
-    }
-  },
-}))
-
-export default useAuth
+  )
+);

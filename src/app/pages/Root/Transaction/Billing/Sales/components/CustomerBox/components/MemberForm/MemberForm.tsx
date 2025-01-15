@@ -7,7 +7,7 @@ import useMemberStore from './store/useMemberFormStore' // Zustand store
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import useFocusOnKeyPress from '@/hooks/useFocusOnKeyPress'
-import { fetchCustomerByPhone } from '@/services/Customers'
+import { fetchCustomerByPhone } from '@/services/customerClient'
 
 function MemberForm() {
   const [phoneNo, setPhoneNo] = useState('') // Only state for phone number

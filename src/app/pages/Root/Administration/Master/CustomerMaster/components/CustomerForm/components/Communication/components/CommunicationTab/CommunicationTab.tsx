@@ -148,7 +148,7 @@ function CommunicationTab() {
             <RadioGroup
               onValueChange={field.onChange}
               defaultValue={field.value}
-              className="flex space-x-4"
+              className="flex space-x-4 roles-radio"
             >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="sms" id="sms" />

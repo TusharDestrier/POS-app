@@ -78,12 +78,12 @@ function PersonalTab() {
           )}
         />
       </div>
-      <div className="grid grid-cols-2 gap-3 items-center ">
+      <div className="grid grid-cols-2 gap-3 items-center  ">
         <FormField
           control={control}
           name="personal.gender"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className='mb-4'>
               <FormLabel>Gender</FormLabel>
               <RadioGroup
                 onValueChange={field.onChange}

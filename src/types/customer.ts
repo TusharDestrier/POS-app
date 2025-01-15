@@ -1,3 +1,5 @@
+import { CustomerStatus } from "@/app/pages/Root/Administration/Master/CustomerMaster/components/CustomerTable/data/data"
+
 export interface CustomerFetchedType {
     address: string
     alternatePhnNo: string
@@ -7,6 +9,7 @@ export interface CustomerFetchedType {
     customerCatCode: string
     customerCatName: string
     customerFirstName: string
+    status:CustomerStatus
     customerID: number
     customerLastName: string
     customerMiddleName: string
@@ -29,7 +32,7 @@ export interface CustomerFetchedType {
     profession: string
     spouseName: string
     state: string
-    usedFor: null
+    usedFor:string| null
     validTill: string
     whatsAppNo: string
   }
