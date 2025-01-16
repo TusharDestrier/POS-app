@@ -110,9 +110,9 @@ export default  function PettyCashHeadTable() {
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("pettyCashName")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("pettyCashName")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

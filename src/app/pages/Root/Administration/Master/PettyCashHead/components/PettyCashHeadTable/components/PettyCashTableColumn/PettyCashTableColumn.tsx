@@ -5,7 +5,7 @@ import { ColumnDef } from '@tanstack/react-table'
 
 
 import usePettyCashHead from '../../../../store/usePettyCashHead'
-import { ExtendedPettyCashType } from '../../data/tableData'
+import { ExtendedPettyCashType, PettyCashStatus } from '../../data/tableData'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -54,11 +54,22 @@ export const columns: ColumnDef<ExtendedPettyCashType>[] = [
     ),
     cell: ({ row }) => <div>{row.getValue('pettyCashCode')}</div>,
   },
-  // {
-  //   accessorKey: 'status',
-  //   header: 'Status',
-  //   cell: ({ row }) => <div className="capitalize">{row.getValue('status')}</div>,
-  // },
+  {
+      accessorKey: 'status',
+      header: 'Status',
+      cell:  ({ row }) => {
+        const status = row.getValue('status') as PettyCashStatus;
+        return (
+          <div
+            className={`capitalize ${
+              status === PettyCashStatus.ACTIVE ? 'text-green-500' : 'text-red-500'
+            }`}
+          >
+            {status}
+          </div>
+        );
+      },
+    },
   {
     accessorKey: 'pettyCashName',
     header: ({ column }) => (
