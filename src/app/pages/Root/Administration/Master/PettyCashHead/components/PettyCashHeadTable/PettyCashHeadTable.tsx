@@ -16,9 +16,12 @@ import * as React from 'react'
 
 import PettyCashHeadModal from '../PettyCashHeadModal'
 import { columns } from './components/PettyCashTableColumn/PettyCashTableColumn'
-import { data } from './data/tableData'
+//import {  PettyCashStatus } from './data/tableData'
+import { PettyCashStatus } from './data/tableData'
+import { usePettyCashData } from '../../hooks_api/usePettyCashData'
 import usePettyCashHead from '../../store/usePettyCashHead'
 
+import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -38,6 +41,7 @@ import {
 
 
 export default  function PettyCashHeadTable() {
+  const {pettyCashData,isLoading} = usePettyCashData();
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -50,8 +54,19 @@ export default  function PettyCashHeadTable() {
   const modalToggler = usePettyCashHead((state) => state.toggleOpen)
   const setModalMode = usePettyCashHead((state) => state.setMode)
 
+  const newTableData = pettyCashData?.map(item => {
+      return {
+        ...item,
+       // fullName: `${item.firstName ?? ''} ${item.lastName ?? ''}`.trim(),
+       pettyCashCode: item.pettyCashCode,
+       pettyCashName: item.pettyCashName,
+       status: item.isActive === 'true' ? PettyCashStatus.ACTIVE : PettyCashStatus.INACTIVE,
+        modeOfOperation: item.modeOfOperation
+      }
+    })
+
   const table = useReactTable({
-    data,
+    data: newTableData ?? [],
     columns,
     state: {
       sorting,
@@ -83,9 +98,15 @@ export default  function PettyCashHeadTable() {
   //   setModalMode('Edit')
   // }
 
+  if (isLoading) {
+    return  <SkeletonLoaderTable/>
+  
+  }
+
   return (
     <>
       <div className="w-full">
+        
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter emails..."

@@ -2,9 +2,10 @@
 import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { ColumnDef } from '@tanstack/react-table'
 
+
+
 import usePettyCashHead from '../../../../store/usePettyCashHead'
-import { PettyCashHead } from '../../data/tableData'
-//import { columns } from './components/PettyCashTableColumn/PettyCashTableColumn'
+import { ExtendedPettyCashType } from '../../data/tableData'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -21,7 +22,7 @@ import {
 // import StoreDetailForm from '../../StoreDetailForm'
 // import useStoreDetail from '../../../store/useStoreDetail'
 
-export const columns: ColumnDef<PettyCashHead>[] = [
+export const columns: ColumnDef<ExtendedPettyCashType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -44,34 +45,34 @@ export const columns: ColumnDef<PettyCashHead>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'fullName',
+    accessorKey: 'pettyCashCode',
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-        Full Name
+        PettyCash Code
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue('fullName')}</div>,
+    cell: ({ row }) => <div>{row.getValue('pettyCashCode')}</div>,
   },
+  // {
+  //   accessorKey: 'status',
+  //   header: 'Status',
+  //   cell: ({ row }) => <div className="capitalize">{row.getValue('status')}</div>,
+  // },
   {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('status')}</div>,
-  },
-  {
-    accessorKey: 'email',
+    accessorKey: 'pettyCashName',
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-        Email
+        PettyCash Name
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>,
+    cell: ({ row }) => <div className="lowercase">{row.getValue('pettyCashName')}</div>,
   },
   {
-    accessorKey: 'phoneNo',
-    header: 'Phone Number',
-    cell: ({ row }) => <div>{row.getValue('phoneNo')}</div>,
+    accessorKey: 'ModeOf Operation',
+    header: 'ModeOfOperation',
+    cell: ({ row }) => <div>{row.getValue('modeOfOperation')}</div>,
   },
   {
     id: 'actions',
@@ -84,7 +85,7 @@ export const columns: ColumnDef<PettyCashHead>[] = [
   },
 ]
 
-function TableRowDropDowns({ PettyCashHead }: { PettyCashHead: PettyCashHead }) {
+function TableRowDropDowns({ PettyCashHead }: { PettyCashHead: ExtendedPettyCashType }) {
   const modalToggler = usePettyCashHead((state) => state.toggleOpen)
   const setModalMode = usePettyCashHead((state) => state.setMode)
 
@@ -102,7 +103,7 @@ function TableRowDropDowns({ PettyCashHead }: { PettyCashHead: PettyCashHead }) 
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(PettyCashHead.id)}>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(PettyCashHead.pettyCashID)}>
           Copy Customer ID
         </DropdownMenuItem>
         <DropdownMenuSeparator />
