@@ -8,7 +8,7 @@ export const storeAllocationSchema = z.object({
         storeCode: z.string().optional(),
         startDate: z.date().optional(),
         endDate: z.date().optional(),
-        transferred: z.boolean().optional(),
+        transferred: z.boolean().optional().default(false),
       })
       .refine(
         (data) => {

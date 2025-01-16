@@ -10,5 +10,5 @@ export const  salesPersonSchema = z.object({
     employeeId: z.string().optional(),
     allocateRole: z.string().optional(),
     allocateUser: z.string().optional(),
-    inactive: z.boolean().optional(),
+    inactive: z.boolean().optional().default(false),
   })
