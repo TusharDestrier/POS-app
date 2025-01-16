@@ -15,10 +15,13 @@ import {
 import * as React from 'react'
 
 import columns from './components/SalesPersonTableColumn'
-import { data, SalesPersonStatus } from './data/tableData'
+// import {  SalesPersonStatus } from './data/tableData'
+import { useSalesPersonData } from '../../hooks_api/useSalesPersonData'
 import useSalesPerson from '../../store/useSalesPerson'
 import SalesPersonModal from '../SalesPersonModal/SalesPersonModal'
+import { SalesPersonStatus } from './data/tableData'
 
+import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -36,7 +39,11 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+
+
+
 export function SalesPersonTable() {
+  const {salesPersonData,isLoading}=useSalesPersonData();
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -52,7 +59,7 @@ export function SalesPersonTable() {
 
 
 
-  const newTableData = data.map(item => {
+  const newTableData = salesPersonData?.map(item => {
     return {
       ...item,
       fullName: `${item.firstName ?? ''} ${item.lastName ?? ''}`.trim(),
@@ -63,7 +70,7 @@ export function SalesPersonTable() {
   })
 
   const table = useReactTable({
-    data:newTableData,
+    data: newTableData ?? [],
     columns,
     state: {
       sorting,
@@ -88,7 +95,11 @@ export function SalesPersonTable() {
     setModalMode('Create')
   }
 
+// console.log();
+if (isLoading) {
+  return  <SkeletonLoaderTable/>
 
+}
 
 
   return (
