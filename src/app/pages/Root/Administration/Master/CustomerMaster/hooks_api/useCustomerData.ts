@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import customerClient from '@/services/customerClient'
 import { CustomerFetchedType } from '@/types/customer'
@@ -27,4 +27,30 @@ export function useCustomerData(id?: number) {
     error: isError ? error.message : null,
     isLoading,
   }
+}
+
+export function useFetchCustomerMasterById() {
+  const queryClient = useQueryClient()
+
+  const fetchCustomerById = async (id: number) => {
+    if (!id || id <= 0) {
+      throw new Error('Invalid Customer ID')
+    }
+
+    const data = await queryClient.fetchQuery<CustomerFetchedType>({
+      queryKey: ['customer', id], // ✅ Use a unique cache key for this query
+      queryFn: async ({ signal }) => {
+        const response = await customerClient.getCustomers({ id, signal }) // API call to fetch customer
+        if (Array.isArray(response) && response.length > 0) {
+          return response[0] // ✅ Return the first element if it's an array
+        }
+        throw new Error('No customer found') // Handle cases where the array is empty
+      },
+      staleTime: 5 * 60 * 1000, // ✅ Cache for 5 minutes
+    })
+
+    return data
+  }
+
+  return { fetchCustomerById }
 }

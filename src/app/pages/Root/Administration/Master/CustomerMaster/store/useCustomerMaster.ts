@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 
 type CustomerMasterStoreType = {
+  isLoading:boolean
+  setIsLoading: (loading: boolean) => void
   isOpen: boolean
   mode: 'Edit' | 'Create' | 'View' | 'Delete'
   toggleOpen: () => void
@@ -9,6 +11,8 @@ type CustomerMasterStoreType = {
 }
 
 export const useCustomerMaster = create<CustomerMasterStoreType>((set) => ({
+  isLoading: false,
+  setIsLoading: (loading) => set({ isLoading: loading }),
   isOpen: false,
   mode: 'Create',
   toggleOpen: () => set((state) => ({ isOpen: !state.isOpen })),

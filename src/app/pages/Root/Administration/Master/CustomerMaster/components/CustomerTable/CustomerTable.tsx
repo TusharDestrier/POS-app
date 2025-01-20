@@ -18,6 +18,7 @@ import { useCustomerData } from '../../hooks_api/useCustomerData'
 import { useCustomerMaster } from '../../store/useCustomerMaster'
 import CustomerModal from '../CustomerModal'
 import { CustomerStatus, CustomerTableRow } from './data/data'
+import { useCreateCustomer } from '../../hooks_api/useCreateCustomer'
 
 import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
@@ -37,8 +38,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+
 export default function CustomerTable() {
-  const { customerData, isLoading, error } = useCustomerData(0  )
+  const { customerData, isLoading, error } = useCustomerData(0)
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -49,6 +51,7 @@ export default function CustomerTable() {
   })
   const modalToggler = useCustomerMaster((state) => state.toggleOpen)
   const setModalMode = useCustomerMaster((state) => state.setMode)
+  const isDeleting = useCustomerMaster((state) => state.isLoading)
 
   const columnData = React.useMemo(() => {
     const dataArray = Array.isArray(customerData)
@@ -95,7 +98,7 @@ export default function CustomerTable() {
     setModalMode('Create')
   }
 
-  if (isLoading) {
+  if (isLoading || isDeleting) {
     return <SkeletonLoaderTable />
   }
 

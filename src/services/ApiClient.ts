@@ -261,9 +261,18 @@ class ApiClient {
 
       // ✅ Custom error handling based on status codes
       switch (status) {
-        case 400:
-          customMessage = 'Bad Request - Invalid data provided.'
-          break
+        case 400: {
+          const validationErrors = error.response?.data?.errors;
+          if (validationErrors) {
+            // Convert validation errors into a readable string
+            customMessage = Object.entries(validationErrors)
+              .map(([field, messages]) => `${field}: ${messages?.join(', ')}`)
+              .join('\n');
+          } else {
+            customMessage = 'Bad Request - Invalid data provided.';
+          }
+          break;
+        }
         case 401:
           customMessage = 'Unauthorized - Please log in again.'
           break

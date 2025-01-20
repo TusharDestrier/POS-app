@@ -1,4 +1,12 @@
+import { useCustomerMaster } from '../store/useCustomerMaster'
+
 import { formatDate } from '@/lib/utils'
+
+const operation = {
+  Create: 'I',
+  Edit: 'U',
+  Delete: 'D',
+}
 
 export type CustomerPost = {
   mobileNo: string
@@ -30,9 +38,10 @@ export type CustomerPost = {
   validTill?: Date | undefined
 }
 
-export function customerDataFormatter(data: CustomerPost) {
+export function customerDataFormatter(data: CustomerPost, id?: number | string | null) {
+  const mode = useCustomerMaster.getState().mode as 'Create' | 'Edit' | 'Delete'
   const formattedData = {
-    customerID: 0, // Assuming new customer, can be dynamic
+    customerID: mode === 'Create' ? 0 : id, // Assuming new customer, can be dynamic
     customerFirstName: data.firstName || '',
     customerMiddleName: data.middleName || '',
     customerLastName: data.lastName || '',
@@ -63,8 +72,8 @@ export function customerDataFormatter(data: CustomerPost) {
     membershipCategoryName: data.membershipCategory || '',
     membershipNo: data.membershipNo || '',
     validTill: data.validTill ? formatDate(data.validTill) : '',
-    enteredBy: "0", // Assuming it will be filled by backend or logged-in user
-    usedFor: 'I', // Optional or dynamic
+    enteredBy: '0', // Assuming it will be filled by backend or logged-in user
+    usedFor: operation[mode], // Optional or dynamic
   }
 
   return formattedData

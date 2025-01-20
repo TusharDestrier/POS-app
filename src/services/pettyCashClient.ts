@@ -1,16 +1,20 @@
-import ApiClient from "./ApiClient";
+import ApiClient from './ApiClient'
 
-import { FetchedPettyCashType } from "@/types/pettyCash";
+import { FetchedPettyCashType } from '@/types/pettyCash'
 
-
-class PettyCashClient extends ApiClient{
-    constructor(){
-        super('api/')
-    }
-    async getPettyCash(){
-        const response = await this.get<FetchedPettyCashType[]>(`PettyCash/GetAllPettyCash`);
-        return response.data;
-    }
-
+class PettyCashClient extends ApiClient {
+  constructor() {
+    super('api/')
+  }
+  async getPettyCash({ signal }: { signal: AbortSignal }) {
+    const response = await this.get<FetchedPettyCashType[]>(
+      `PettyCash/GetAllPettyCash`,
+      {},
+      {
+        signal,
+      }
+    )
+    return response.data
+  }
 }
-export default new PettyCashClient();
+export default new PettyCashClient()

@@ -2,6 +2,8 @@
 import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { ColumnDef } from '@tanstack/react-table'
 
+import { useCreateCustomer } from '../../../../hooks_api/useCreateCustomer'
+import {  useFetchCustomerMasterById } from '../../../../hooks_api/useCustomerData'
 import { useCustomerMaster } from '../../../../store/useCustomerMaster'
 import { useCustomerMasterDataStore } from '../../../../store/useCustomerMasterDataStore'
 import { CustomerStatus, CustomerTableRow } from '../../data/data'
@@ -93,6 +95,8 @@ export const columns: ColumnDef<CustomerTableRow>[] = [
 ]
 
 function TableRowDropDowns({ customer }: { customer: CustomerTableRow }) {
+  const { fetchCustomerById } = useFetchCustomerMasterById()
+  const {createCustomerAsync}=useCreateCustomer();
   const modalToggler = useCustomerMaster((state) => state.toggleOpen)
   const setModalMode = useCustomerMaster((state) => state.setMode)
   const setCurrentSalesPersonId = useCustomerMasterDataStore(
@@ -110,8 +114,15 @@ function TableRowDropDowns({ customer }: { customer: CustomerTableRow }) {
     setModalMode('View')
   }
 
-  function deleteHandler() {
-    setModalMode('Delete')
+  async function deleteHandler() {
+    try {
+      setModalMode('Delete')
+      const data = await fetchCustomerById(Number(customer?.customerId))
+      console.log(data)
+      await createCustomerAsync({...data,usedFor:"D"});
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -124,7 +135,9 @@ function TableRowDropDowns({ customer }: { customer: CustomerTableRow }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(String(customer.customerId))}>
+        <DropdownMenuItem
+          onClick={() => navigator.clipboard.writeText(String(customer.customerId))}
+        >
           Copy Customer ID
         </DropdownMenuItem>
         <DropdownMenuSeparator />

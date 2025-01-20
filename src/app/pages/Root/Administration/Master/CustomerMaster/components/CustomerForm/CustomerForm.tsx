@@ -1,4 +1,3 @@
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
@@ -14,7 +13,6 @@ import CustomerMasterTab from '../CustomerMasterTab/CustomerMasterTab'
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
 
-
 function CustomerForm() {
   const mode = useCustomerMaster((state) => state.mode)
   const customerID = useCustomerMasterDataStore((state) => state.currentCustomerMasterId)
@@ -23,7 +21,7 @@ function CustomerForm() {
     isLoading: customerLoading,
     error: customerError,
   } = useCustomerData(Number(customerID))
-  const { createCustomer, error, isLoading } = useCreateCustomer()
+  const { createCustomerAsync, error, isPending } = useCreateCustomer()
   const closeModal = useCustomerMaster((state) => state.close)
   const formMethods = useForm({
     resolver: zodResolver(CustomerMasterSchema),
@@ -62,10 +60,10 @@ function CustomerForm() {
         validTill: new Date(),
       },
     },
-  });
+  })
 
   useEffect(() => {
-    if (customerData  && !Array.isArray(customerData)) {
+    if (customerData && !Array.isArray(customerData)) {
       formMethods.reset({
         personal: {
           mobileNo: customerData.mobile || '',
@@ -74,7 +72,9 @@ function CustomerForm() {
           lastName: customerData.customerLastName || '',
           gender: customerData.gender === 'M' ? 'male' : 'female',
           dateOfBirth: customerData.dateOfBirth ? new Date(customerData.dateOfBirth) : new Date(),
-          anniversaryDate: customerData.anniversary ? new Date(customerData.anniversary) : new Date(),
+          anniversaryDate: customerData.anniversary
+            ? new Date(customerData.anniversary)
+            : new Date(),
           profession: customerData.profession || '',
           spouseName: customerData.spouseName || '',
           isEmployee: customerData.isEmployee === 'Y',
@@ -100,22 +100,26 @@ function CustomerForm() {
           membershipNo: customerData.membershipNo || '',
           validTill: customerData.validTill ? new Date(customerData.validTill) : new Date(),
         },
-      });
+      })
     }
-  }, [customerData, mode, formMethods.reset]);
+  }, [customerData, mode, formMethods.reset])
 
   // Handle form submission
   const onSubmit = formMethods.handleSubmit(
     async (data) => {
       // console.log('Form Data Submitted: ', data) // Logs if submission is successful
-      const transformData = customerDataFormatter({
-        ...data.communication,
-        ...data.membership,
-        ...data.personal,
-      })
+      let transformData
+      transformData = customerDataFormatter(
+        {
+          ...data.communication,
+          ...data.membership,
+          ...data.personal,
+        },
+        customerID ? Number(customerID) : null
+      )
 
       try {
-        await createCustomer(transformData)
+        await createCustomerAsync(transformData)
         closeModal() // ✅ Success pe modal close
       } catch (err: any) {
         console.log(err)
@@ -138,7 +142,6 @@ function CustomerForm() {
     return <h3>Sorry there is some problem</h3>
   }
 
-  
   return (
     <FormProvider {...formMethods}>
       <form
@@ -147,16 +150,15 @@ function CustomerForm() {
           onSubmit() // Trigger submission
         }}
       >
-       {JSON.stringify(customerData)}
         <CustomerMasterTab />
 
         {/* Submit Button for entire form */}
         <div className="h-[60px] sticky bottom-0 right-0 flex justify-end items-center">
-          <Button type="submit" className="btn btn-primary" disabled={isLoading}>
-            {isLoading ? 'Submitting...' : 'Submit'}
+          <Button type="submit" className="btn btn-primary" disabled={isPending}>
+            {isPending ? 'Submitting...' : 'Submit'}
           </Button>
         </div>
-        {error && <p className="text-end">{error}</p>}
+        {error && <p className="text-end">{error.message}</p>}
       </form>
     </FormProvider>
   )
