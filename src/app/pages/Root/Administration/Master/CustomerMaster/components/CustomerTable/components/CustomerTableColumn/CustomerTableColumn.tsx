@@ -3,7 +3,8 @@ import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { ColumnDef } from '@tanstack/react-table'
 
 import { useCustomerMaster } from '../../../../store/useCustomerMaster'
-import { CustomerStatus, CustomerType } from '../../data/data'
+import { useCustomerMasterDataStore } from '../../../../store/useCustomerMasterDataStore'
+import { CustomerStatus, CustomerTableRow } from '../../data/data'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -16,12 +17,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-// import StoreDetailModalBtn from '../../StoreDetailModal'
 
-// import StoreDetailForm from '../../StoreDetailForm'
-// import useStoreDetail from '../../../store/useStoreDetail'
-
-export const columns: ColumnDef<CustomerType>[] = [
+export const columns: ColumnDef<CustomerTableRow>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -56,8 +53,8 @@ export const columns: ColumnDef<CustomerType>[] = [
   {
     accessorKey: 'status',
     header: 'Status',
-    cell:  ({ row }) => {
-      const status = row.getValue('status') as CustomerStatus;
+    cell: ({ row }) => {
+      const status = row.getValue('status') as CustomerStatus
       return (
         <div
           className={`capitalize ${
@@ -66,7 +63,7 @@ export const columns: ColumnDef<CustomerType>[] = [
         >
           {status}
         </div>
-      );
+      )
     },
   },
   {
@@ -95,14 +92,28 @@ export const columns: ColumnDef<CustomerType>[] = [
   },
 ]
 
-function TableRowDropDowns({ customer }: { customer: CustomerType }) {
+function TableRowDropDowns({ customer }: { customer: CustomerTableRow }) {
   const modalToggler = useCustomerMaster((state) => state.toggleOpen)
   const setModalMode = useCustomerMaster((state) => state.setMode)
-
+  const setCurrentSalesPersonId = useCustomerMasterDataStore(
+    (state) => state.setCurrentCustomerMasterId
+  )
   function EditModalHandler() {
     modalToggler()
+    setCurrentSalesPersonId(Number(customer.customerId))
     setModalMode('Edit')
   }
+
+  function ViewHandler() {
+    modalToggler()
+    setCurrentSalesPersonId(Number(customer.customerId))
+    setModalMode('View')
+  }
+
+  function deleteHandler() {
+    setModalMode('Delete')
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -113,12 +124,13 @@ function TableRowDropDowns({ customer }: { customer: CustomerType }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(customer.id)}>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(String(customer.customerId))}>
           Copy Customer ID
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={EditModalHandler}>Edit Customer</DropdownMenuItem>
-        <DropdownMenuItem>View Customer</DropdownMenuItem>
+        <DropdownMenuItem onClick={ViewHandler}>View Customer</DropdownMenuItem>
+        <DropdownMenuItem onClick={deleteHandler}>Delete Customer</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

@@ -1,4 +1,14 @@
 
+export interface StoreAllocationDetail {
+  salesPersonID: number;
+  storeID: number;
+  storeCode: string;
+  storeName: string;
+  startDate: string;  // ISO format ya string, agar Date chahiye toh `Date` kar sakte hain
+  endDate: string;
+  isTransfered: 'Y' | 'N';  // Sirf 'Y' ya 'N' aayega
+}
+
 
 export type SalesPersonType = {
   salesPersonID: string
@@ -13,7 +23,10 @@ export type SalesPersonType = {
   isActive: string | null
   enteredBy: string | null
   usedFor: string | null
-  objDetails: never[]
+  objDetails: StoreAllocationDetail[]
 }
 
 export type FetchedSalesPersonType=SalesPersonType
+
+
+export type SalesPersonResponseType = { returnCode: string; returnMsg: string }[];

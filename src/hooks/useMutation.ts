@@ -4,13 +4,14 @@ import { useRefetchStore } from '@/store/useRefetchStore';
 
 export default function useMutation<T, D = unknown>(
   mutationFunction: (data: D) => Promise<T>,
-  refetchKey?: string  // ✅ Optional refetch key
+  refetchKeys?: string[]  // ✅ Optional refetch key
 ) {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const triggerRefetch = useRefetchStore((state) => state.triggerRefetch);
+  const triggers = useRefetchStore((state) => state.triggers);
 
   const mutate = async (requestData: D) => {
     setIsLoading(true);
@@ -20,9 +21,18 @@ export default function useMutation<T, D = unknown>(
       const response = await mutationFunction(requestData);
       setData(response);
 
-      if (refetchKey) {
-        triggerRefetch(refetchKey);  // ✅ Trigger fetch refresh after mutation
+      if (refetchKeys && refetchKeys.length > 0) {
+       
+        refetchKeys.forEach((key) => {
+          if (key && key.trim() !== '') {
+            triggerRefetch(key);
+            console.log(`🔄 Refetch triggered for key: ${key}`);
+          } else {
+            console.warn(`⚠️ Invalid refetch key provided: '${key}'`);
+          }
+        });
       }
+
       return response;
     } catch (err: any) {
       setError(err.message || 'Something went wrong');

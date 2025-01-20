@@ -1,27 +1,35 @@
 import ApiClient from './ApiClient'
 
 import { SalesPersonPostType } from '@/app/pages/Root/Administration/Master/SalesPersonMaster/hooks_api/useCreateSalesPerson'
-import { FetchedSalesPersonType } from '@/types/salesPerson'
+import { FetchedSalesPersonType, SalesPersonResponseType } from '@/types/salesPerson'
 
 class SalesPersonClient extends ApiClient {
   constructor() {
     super('api/')
   }
 
-  async getSalesPerson() {
-    const response = await this.get<FetchedSalesPersonType[]>(`SalePerson/GetAllSalesPerson`)
+  async getSalesPerson({ signal }: { signal: AbortSignal }) {
+    const response = await this.get<FetchedSalesPersonType[]>(
+      `SalePerson/GetAllSalesPerson`,
+      {},
+      { signal }
+    )
+    return response.data
+  }
+
+  async getSalesPersonById({ id = 0 }: { id: number | null }) {
+    const response = await this.get<FetchedSalesPersonType>(`SalePerson/GetSalesPerson`, {
+      SalesPersonID: id,
+    })
     return response.data
   }
 
   async createSalesPerson(salesPersonData: SalesPersonPostType) {
     try {
-      const response = await this.post<{ returnCode: string, returnMsg: string}[]>(
+      const response = await this.post<SalesPersonResponseType>(
         `SalePersonRep/PostSalePerson`,
         salesPersonData
       )
-
-      console.log(response.data[0].returnMsg);
-      
 
       // ✅ Status check for non-200 responses
       if (response.data[0].returnCode !== 'Y') {
@@ -30,9 +38,7 @@ class SalesPersonClient extends ApiClient {
 
       return response.data
     } catch (error: any) {
-      console.error('Error creating SalesPerson:',error)
-
-      throw new Error(error   )
+      throw new Error(error)
     }
   }
 }

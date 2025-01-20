@@ -43,3 +43,5 @@ export interface CustomerFetchedType {
     quantity: number
   }
   
+
+  export type CustomerMasterResponseType = { returnCode: string; returnMsg: string }[];

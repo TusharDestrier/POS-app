@@ -1,3 +1,5 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router-dom'
 
 import routes from '../routes'
@@ -7,11 +9,15 @@ import { Toaster } from '@/components/ui/sonner'
 
 function App() {
   useInit()
+  const queryClient = new QueryClient()
 
   return (
     <>
-      <RouterProvider router={routes} />
-      <Toaster expand={false} richColors />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={routes} />
+        <Toaster expand={false} richColors />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </>
   )
 }

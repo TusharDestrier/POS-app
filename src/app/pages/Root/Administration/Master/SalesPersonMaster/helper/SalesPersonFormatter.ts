@@ -1,14 +1,25 @@
 import { z } from 'zod'
 
 import { SalesPersonFormSchema } from '../schemas/SalesPersonForm.schema'
+import useSalesPerson from '../store/useSalesPerson'
 
 import { formatDate } from '@/lib/utils'
 
 export type SalesPersonFormFormatterType = z.infer<typeof SalesPersonFormSchema>
 
-export function salesPersonFormatter(data: SalesPersonFormFormatterType) {
+const operation = {
+  Create: 'I',
+  Edit: 'U',
+  Delete: 'D',
+}
+
+export function salesPersonFormatter(
+  data: SalesPersonFormFormatterType,
+  id: number | string | null
+) {
+  const mode = useSalesPerson.getState().mode as 'Create' | 'Edit' | 'Delete'
   const formattedData = {
-    salesPersonID: 0, // Default value, change if needed
+    salesPersonID: mode === 'Create' ? 0 : id, // Default value, change if needed
     firstName: data.salesPerson.firstName ?? '',
     lastName: data.salesPerson.lastName ?? '',
     mobileNo: data.salesPerson.mobileNo ?? '',
@@ -19,9 +30,9 @@ export function salesPersonFormatter(data: SalesPersonFormFormatterType) {
     allocatedUser: Number(data.salesPerson.allocateUser) || 0,
     isActive: data.salesPerson.inactive ? 'Y' : 'N',
     enteredBy: '0', // Default value, change if needed
-    usedFor: 'I', // Adjust this as required
+    usedFor: operation[mode], // Adjust this as required
     objDetails: data.storeAllocation.allocations.map((item, ind) => ({
-      salesPersonID: 0, // Assuming default, replace if available
+      salesPersonID: mode === 'Create' ? 0 : id, // Assuming default, replace if available
       storeID: ind, // Assuming default, replace if available
       storeCode: item.storeCode ?? '',
       storeName: item.storeName ?? '',

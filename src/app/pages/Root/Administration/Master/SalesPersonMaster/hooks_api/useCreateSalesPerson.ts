@@ -1,18 +1,58 @@
-import { salesPersonFormatter } from '../helper/SalesPersonFormatter';
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
-import useMutation from '@/hooks/useMutation';
-import salesPersonClient from '@/services/salesPersonClient';
+import { salesPersonFormatter } from '../helper/SalesPersonFormatter'
+import useSalesPerson from '../store/useSalesPerson'
 
+import salesPersonClient from '@/services/salesPersonClient'
+import { SalesPersonResponseType } from '@/types/salesPerson'
 
+const messages = {
+  "Create": 'Created SuccessFully',
+  "Edit": 'Updated SuccessFully',
+  "Delete": 'Deleted SuccessFully',
+  "View": 'Deleted SuccessFully',
+}
 
-export type SalesPersonPostType = ReturnType <typeof salesPersonFormatter>;
+export type SalesPersonPostType = ReturnType<typeof salesPersonFormatter>
 
 
 export function useCreateSalesPerson() {
-  const { mutate, data, error, isLoading } = useMutation<SalesPersonPostType, SalesPersonPostType>(
-    async (salesPersonData) => await salesPersonClient.createSalesPerson(salesPersonData),
-    'salesPerson'  // ✅ Trigger refetch after mutation
-  );
+  const queryClient = useQueryClient() // ✅ Query Invalidation ke liye
+  const mode = useSalesPerson((state) => state.mode)
+  const setIsLoading = useSalesPerson((state) => state.setIsLoading)
+  const { mutateAsync, data, error, isPending, } = useMutation<
+    SalesPersonResponseType,
+    Error,
+    SalesPersonPostType
+  >({
+    mutationFn: async (salesPersonData: SalesPersonPostType) => {
+      setIsLoading(true) 
+      return await salesPersonClient.createSalesPerson(salesPersonData)
+    },
+    onSuccess: () => {
+      // ✅ Refetch after successful creation
+      queryClient.invalidateQueries({ queryKey: ['salesPerson'] })
 
-  return { createSalesPerson: mutate, salesPersonDats: data, error, isLoading };
+      toast.success(messages[mode], {
+        style: {
+          backgroundColor: '#e3ffea',
+          color: '#3ed665',
+        },
+      })
+    },  
+    onError: (error) => {
+      toast.error(error.message, {
+        style: {
+          backgroundColor: '#f7edeb',
+          color: '#ff6242',
+        },
+      })
+    },
+    onSettled:()=>{
+      setIsLoading(false)
+    }
+  })
+
+  return { createSalesPerson: mutateAsync, data, error, isPending }
 }

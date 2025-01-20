@@ -1,4 +1,3 @@
-
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import {
   ColumnFiltersState,
@@ -18,7 +17,7 @@ import columns from './components/CustomerTableColumn'
 import { useCustomerData } from '../../hooks_api/useCustomerData'
 import { useCustomerMaster } from '../../store/useCustomerMaster'
 import CustomerModal from '../CustomerModal'
-import { CustomerStatus, CustomerType } from './data/data'
+import { CustomerStatus, CustomerTableRow } from './data/data'
 
 import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
@@ -38,9 +37,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-
 export default function CustomerTable() {
-  const { customerData,isLoading } = useCustomerData()
+  const { customerData, isLoading, error } = useCustomerData(0  )
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -53,20 +51,26 @@ export default function CustomerTable() {
   const setModalMode = useCustomerMaster((state) => state.setMode)
 
   const columnData = React.useMemo(() => {
-    return customerData?.map((item) => ({
-      id:String(item.customerID) ,
-      fullName: `${item.customerFirstName} ${item.customerMiddleName} ${item.customerLastName}`,
+    const dataArray = Array.isArray(customerData)
+      ? customerData
+      : customerData
+        ? [customerData]
+        : []
+
+    return dataArray.map((item) => ({
+      customerId: String(item.customerID),
+      fullName:
+        `${item.customerFirstName} ${item.customerMiddleName} ${item.customerLastName}`.trim(),
       email: item.email,
       status: item?.status || CustomerStatus.INACTIVE,
       phoneNo: String(item.mobile),
-    }));
-  }, [customerData]);
-  
+    }))
+  }, [customerData])
 
   // const memoizedColumns = React.useMemo(() => columns, []);
 
-  const table = useReactTable<CustomerType>({
-    data: columnData || [],
+  const table = useReactTable<CustomerTableRow>({
+    data: columnData ?? [],
     columns,
     state: {
       sorting,
@@ -84,19 +88,20 @@ export default function CustomerTable() {
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-  });
-
+  })
 
   function createModalHandler() {
     modalToggler()
     setModalMode('Create')
   }
 
+  if (isLoading) {
+    return <SkeletonLoaderTable />
+  }
 
-if (isLoading) {
-  return  <SkeletonLoaderTable/>
-
-}
+  if (error) {
+    return <p className='text-center'>{error}</p>
+  }
 
   return (
     <>
@@ -175,7 +180,7 @@ if (isLoading) {
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} className="h-24 text-center">
-                    No results.
+                    No Customer Data
                   </TableCell>
                 </TableRow>
               )}

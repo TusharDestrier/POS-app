@@ -1,56 +1,108 @@
+
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
-import { toast } from 'sonner'
 
 import { customerDataFormatter } from '../../helper/customerDataFormatter'
 import { useCreateCustomer } from '../../hooks_api/useCreateCustomer'
+import { useCustomerData } from '../../hooks_api/useCustomerData'
 import { CustomerMasterSchema } from '../../schemas/CustomerMaster.schema'
 import { useCustomerMaster } from '../../store/useCustomerMaster'
+import { useCustomerMasterDataStore } from '../../store/useCustomerMasterDataStore'
 import CustomerMasterTab from '../CustomerMasterTab/CustomerMasterTab'
 
+import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
 
+
 function CustomerForm() {
+  const mode = useCustomerMaster((state) => state.mode)
+  const customerID = useCustomerMasterDataStore((state) => state.currentCustomerMasterId)
+  const {
+    customerData,
+    isLoading: customerLoading,
+    error: customerError,
+  } = useCustomerData(Number(customerID))
   const { createCustomer, error, isLoading } = useCreateCustomer()
   const closeModal = useCustomerMaster((state) => state.close)
   const formMethods = useForm({
     resolver: zodResolver(CustomerMasterSchema),
     defaultValues: {
       personal: {
-        mobileNo: '8777524967', // Default to an empty string
-        firstName: 'tushar', // Default to an empty string
-        middleName: 'middle', // Optional, can be empty
-        lastName: 'dutta', // Default to an empty string
-        gender: 'male', // Default to 'male' or 'female'
-        dateOfBirth: new Date(), // Default to today's date
-        anniversaryDate: new Date(), // Optional, default to null
-        profession: 'developer', // Default to an empty string
-        spouseName: 'abhi nahi', // Optional, default to empty string
-        isEmployee: true, // Default to false
-        panNo: '191920293029112', // Optional, default to empty string
-        gstNo: '214232312', // Optional, default to empty string
-        gstDate: new Date(), // Optional, default to null
+        mobileNo: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        gender: 'male',
+        dateOfBirth: new Date(),
+        anniversaryDate: new Date(),
+        profession: '',
+        spouseName: '',
+        isEmployee: false,
+        panNo: '',
+        gstNo: '',
+        gstDate: new Date(),
       },
       communication: {
-        address: 'address', // Default to an empty string
-        area: 'amhers stre', // Optional, default to empty string
-        city: 'kolkata', // Optional, default to empty string
-        pin: '10000023', // Optional, default to empty string
-        state: 'westbanege', // Optional, default to empty string
-        email: '2232@gmail.com', // Default to an empty string
-        whatsappNo: '9838323243', // Optional, default to empty string
-        alternatePhoneNo: '2324232532', // Optional, default to empty string
-        receivePushMessage: false, // Default to false
-        preferredCommunication: 'sms', // Default to 'sms'
+        address: '',
+        area: '',
+        city: '',
+        pin: '',
+        state: '',
+        email: '',
+        whatsappNo: '',
+        alternatePhoneNo: '',
+        receivePushMessage: false,
+        preferredCommunication: 'sms',
       },
       membership: {
-        customerCategory: 'regular', // Default to an empty string
-        membershipCategory: 'silver', // Default to an empty string
-        membershipNo: '21233', // Optional, default to empty string
-        validTill: new Date(), // Optional, default to null
+        customerCategory: '',
+        membershipCategory: '',
+        membershipNo: '',
+        validTill: new Date(),
       },
     },
-  })
+  });
+
+  useEffect(() => {
+    if (customerData  && !Array.isArray(customerData)) {
+      formMethods.reset({
+        personal: {
+          mobileNo: customerData.mobile || '',
+          firstName: customerData.customerFirstName || '',
+          middleName: customerData.customerMiddleName || '',
+          lastName: customerData.customerLastName || '',
+          gender: customerData.gender === 'M' ? 'male' : 'female',
+          dateOfBirth: customerData.dateOfBirth ? new Date(customerData.dateOfBirth) : new Date(),
+          anniversaryDate: customerData.anniversary ? new Date(customerData.anniversary) : new Date(),
+          profession: customerData.profession || '',
+          spouseName: customerData.spouseName || '',
+          isEmployee: customerData.isEmployee === 'Y',
+          panNo: customerData.panNo || '',
+          gstNo: customerData.gstRegNo || '',
+          gstDate: customerData.gstRegDate ? new Date(customerData.gstRegDate) : new Date(),
+        },
+        communication: {
+          address: customerData.address || '',
+          area: customerData.area || '',
+          city: customerData.city || '',
+          pin: customerData.pinCode || '',
+          state: customerData.state || '',
+          email: customerData.email || '',
+          whatsappNo: customerData.whatsAppNo || '',
+          alternatePhoneNo: customerData.alternatePhnNo || '',
+          receivePushMessage: customerData.isPushMessage === 'Y',
+          preferredCommunication: customerData.preferredComMode || 'sms',
+        },
+        membership: {
+          customerCategory: customerData.customerCatName || '',
+          membershipCategory: customerData.membershipCategoryName || '',
+          membershipNo: customerData.membershipNo || '',
+          validTill: customerData.validTill ? new Date(customerData.validTill) : new Date(),
+        },
+      });
+    }
+  }, [customerData, mode, formMethods.reset]);
 
   // Handle form submission
   const onSubmit = formMethods.handleSubmit(
@@ -65,19 +117,8 @@ function CustomerForm() {
       try {
         await createCustomer(transformData)
         closeModal() // ✅ Success pe modal close
-        toast.success('Customer Created', {
-          style: {
-            backgroundColor: '#e3ffea',
-            color: '#3ed665',
-          },
-        })
       } catch (err: any) {
-        toast.error(err.message, {
-          style: {
-            backgroundColor: '#f7edeb',
-            color: '#ff6242',
-          },
-        }) // Server se aayi specific error ya generic error
+        console.log(err)
       }
     },
     (errors) => {
@@ -85,6 +126,19 @@ function CustomerForm() {
     }
   )
 
+  if (customerLoading) {
+    return <GlobalViewerLoader />
+  }
+
+  if (!customerLoading && customerData && mode === 'View') {
+    return <h3>{JSON.stringify(customerData)}</h3>
+  }
+
+  if (customerError && mode === 'View') {
+    return <h3>Sorry there is some problem</h3>
+  }
+
+  
   return (
     <FormProvider {...formMethods}>
       <form
@@ -93,6 +147,7 @@ function CustomerForm() {
           onSubmit() // Trigger submission
         }}
       >
+       {JSON.stringify(customerData)}
         <CustomerMasterTab />
 
         {/* Submit Button for entire form */}

@@ -2,10 +2,10 @@ import { create } from 'zustand'
 
 type CustomerMasterStoreType = {
   isOpen: boolean
-  mode: 'Edit' | 'Create' | 'View'
+  mode: 'Edit' | 'Create' | 'View' | 'Delete'
   toggleOpen: () => void
   close: () => void
-  setMode: (newMode: 'Edit' | 'Create' | 'View') => void
+  setMode: (newMode: 'Edit' | 'Create' | 'View' | 'Delete') => void
 }
 
 export const useCustomerMaster = create<CustomerMasterStoreType>((set) => ({

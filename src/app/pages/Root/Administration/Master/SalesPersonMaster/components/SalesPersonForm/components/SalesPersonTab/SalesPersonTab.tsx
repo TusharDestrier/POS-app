@@ -109,7 +109,7 @@ function SalesPersonTab() {
           <FormItem>
             <FormLabel>Employee ID</FormLabel>
             <FormControl>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange}  value={field.value}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select Employee ID" />
                 </SelectTrigger>
