@@ -16,8 +16,8 @@ import * as React from 'react'
 
 import PettyCashHeadModal from '../PettyCashHeadModal'
 import { columns } from './components/PettyCashTableColumn/PettyCashTableColumn'
-//import {  PettyCashStatus } from './data/tableData'
-import { PettyCashStatus } from './data/tableData'
+import {  PettyCashStatus } from './data/tableData'
+//import { PettyCashStatus } from './data/tableData'
 import { usePettyCashData } from '../../hooks_api/usePettyCashData'
 import usePettyCashHead from '../../store/usePettyCashHead'
 
@@ -41,7 +41,7 @@ import {
 
 
 export default  function PettyCashHeadTable() {
-  const {pettyCashData,isLoading} = usePettyCashData();
+ const {pettyCashData,isLoading} = usePettyCashData();
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -54,19 +54,37 @@ export default  function PettyCashHeadTable() {
   const modalToggler = usePettyCashHead((state) => state.toggleOpen)
   const setModalMode = usePettyCashHead((state) => state.setMode)
 
-  const newTableData = pettyCashData?.map(item => {
-      return {
-        ...item,
-       // fullName: `${item.firstName ?? ''} ${item.lastName ?? ''}`.trim(),
-       pettyCashCode: item.pettyCashCode,
-       pettyCashName: item.pettyCashName,
-       status: item.isActive === 'true' ? PettyCashStatus.ACTIVE : PettyCashStatus.INACTIVE,
-        modeOfOperation: item.modeOfOperation
-      }
-    })
+  
+    const columnData = React.useMemo(() => {
+      const dataArray = Array.isArray(pettyCashData)
+        ? pettyCashData
+        : pettyCashData
+          ? [pettyCashData]
+          : []
+
+            return dataArray.map((item) => ({
+              pettyCashID: String(item.pettyCashID),
+                pettyCashCode:item.pettyCashCode,
+                pettyCashName: item.pettyCashName,
+                status: item?.status || PettyCashStatus.INACTIVE,
+                modeOfOperation: item.modeOfOperation,
+              }))
+            }, [pettyCashData])
+
+  // const newTableData = pettyCashData?.map(item => {
+  //     return {
+  //       ...item,
+  //      // fullName: `${item.firstName ?? ''} ${item.lastName ?? ''}`.trim(),
+  //      pettyCashCode: item.pettyCashCode,
+  //      pettyCashName: item.pettyCashName,
+  //      status: item.isActive === 'true' ? PettyCashStatus.ACTIVE : PettyCashStatus.INACTIVE,
+  //       modeOfOperation: item.modeOfOperation
+  //     }
+  //   })
 
   const table = useReactTable({
-    data: newTableData ?? [],
+   // data: [],
+    data: columnData ?? [],
     columns,
     state: {
       sorting,
@@ -106,7 +124,7 @@ export default  function PettyCashHeadTable() {
   return (
     <>
       <div className="w-full">
-        
+        {JSON.stringify(pettyCashData)}
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter emails..."
