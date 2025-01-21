@@ -18,7 +18,7 @@ import { useCustomerData } from '../../hooks_api/useCustomerData'
 import { useCustomerMaster } from '../../store/useCustomerMaster'
 import CustomerModal from '../CustomerModal'
 import { CustomerStatus, CustomerTableRow } from './data/data'
-import { useCreateCustomer } from '../../hooks_api/useCreateCustomer'
+//import { useCreateCustomer } from '../../hooks_api/useCreateCustomer'
 
 import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'

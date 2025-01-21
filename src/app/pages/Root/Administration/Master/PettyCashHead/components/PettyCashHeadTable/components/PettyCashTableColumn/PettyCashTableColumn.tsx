@@ -81,8 +81,8 @@ export const columns: ColumnDef<ExtendedPettyCashType>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue('pettyCashName')}</div>,
   },
   {
-    accessorKey: 'ModeOf Operation',
-    header: 'ModeOfOperation',
+    accessorKey: 'modeOfOperation',
+    header: 'Modeof Operation',
     cell: ({ row }) => <div>{row.getValue('modeOfOperation')}</div>,
   },
   {
@@ -114,7 +114,7 @@ function TableRowDropDowns({ PettyCashHead }: { PettyCashHead: ExtendedPettyCash
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(PettyCashHead.pettyCashID)}>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(String(PettyCashHead.pettyCashID))}>
           Copy Customer ID
         </DropdownMenuItem>
         <DropdownMenuSeparator />

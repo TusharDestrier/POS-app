@@ -1,5 +1,6 @@
 export type PettyCashType = {
-    pettyCashID: string
+    status: import("d:/POS_V2/POS-app/src/app/pages/Root/Administration/Master/PettyCashHead/components/PettyCashHeadTable/data/tableData").PettyCashStatus
+    pettyCashID: number | null
     pettyCashCode: string | null
     pettyCashName: string | null
     modeOfOperation: string | null
