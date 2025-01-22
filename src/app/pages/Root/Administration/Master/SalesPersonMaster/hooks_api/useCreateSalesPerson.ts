@@ -11,7 +11,7 @@ const messages = {
   "Create": 'Created SuccessFully',
   "Edit": 'Updated SuccessFully',
   "Delete": 'Deleted SuccessFully',
-  "View": 'Deleted SuccessFully',
+  "View": 'View SuccessFully',
 }
 
 export type SalesPersonPostType = ReturnType<typeof salesPersonFormatter>

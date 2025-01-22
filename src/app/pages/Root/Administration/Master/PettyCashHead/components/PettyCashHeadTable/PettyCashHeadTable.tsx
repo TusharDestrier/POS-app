@@ -1,4 +1,3 @@
-
 import {
   ColumnFiltersState,
   SortingState,
@@ -16,9 +15,10 @@ import * as React from 'react'
 
 import PettyCashHeadModal from '../PettyCashHeadModal'
 import { columns } from './components/PettyCashTableColumn/PettyCashTableColumn'
-import {  PettyCashStatus } from './data/tableData'
+import { PettyCashStatus } from './data/tableData'
 //import { PettyCashStatus } from './data/tableData'
 import { usePettyCashData } from '../../hooks_api/usePettyCashData'
+import { usePettyCashDataStore } from '../../store/usePettyCashDataStore'
 import usePettyCashHead from '../../store/usePettyCashHead'
 
 import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
@@ -36,12 +36,11 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow, 
+  TableRow,
 } from '@/components/ui/table'
 
-
-export default  function PettyCashHeadTable() {
- const {pettyCashData,isLoading} = usePettyCashData();
+export default function PettyCashHeadTable() {
+  const { pettyCashData, isLoading, error } = usePettyCashData()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -51,25 +50,27 @@ export default  function PettyCashHeadTable() {
     pageSize: 5, // Set the page size as desired
   })
 
+  const isDeleting = usePettyCashHead((state) => state.isLoading)
+  const clearId = usePettyCashDataStore((state) => state.clearCurrentPettyCashId)
+
   const modalToggler = usePettyCashHead((state) => state.toggleOpen)
   const setModalMode = usePettyCashHead((state) => state.setMode)
 
-  
-    const columnData = React.useMemo(() => {
-      const dataArray = Array.isArray(pettyCashData)
-        ? pettyCashData
-        : pettyCashData
-          ? [pettyCashData]
-          : []
+  const columnData = React.useMemo(() => {
+    const dataArray = Array.isArray(pettyCashData)
+      ? pettyCashData
+      : pettyCashData
+        ? [pettyCashData]
+        : []
 
-            return dataArray.map((item) => ({
-              pettyCashID: String(item.pettyCashID),
-                pettyCashCode:item.pettyCashCode,
-                pettyCashName: item.pettyCashName,
-                status: item?.status || PettyCashStatus.INACTIVE,
-                modeOfOperation: item.modeOfOperation,
-              }))
-            }, [pettyCashData])
+    return dataArray.map((item) => ({
+      pettyCashID: String(item.pettyCashID),
+      pettyCashCode: item.pettyCashCode,
+      pettyCashName: item.pettyCashName,
+      status: item?.status || PettyCashStatus.INACTIVE,
+      modeOfOperation: item.modeOfOperation,
+    }))
+  }, [pettyCashData])
 
   // const newTableData = pettyCashData?.map(item => {
   //     return {
@@ -83,7 +84,7 @@ export default  function PettyCashHeadTable() {
   //   })
 
   const table = useReactTable({
-   // data: [],
+    // data: [],
     data: columnData ?? [],
     columns,
     state: {
@@ -104,36 +105,43 @@ export default  function PettyCashHeadTable() {
     getFilteredRowModel: getFilteredRowModel(),
   })
 
-  
   function createModalHandler() {
     modalToggler()
     setModalMode('Create')
-    //console.log('hello');  
+    clearId()
+    //console.log('hello');
   }
-  
+
+  if (isLoading || isDeleting) {
+    return <SkeletonLoaderTable />
+  }
+
   // function EditModalHandler() {
   //   modalToggler()
   //   setModalMode('Edit')
   // }
 
   if (isLoading) {
-    return  <SkeletonLoaderTable/>
-  
+    return <SkeletonLoaderTable />
+  }
+
+  if (error) {
+    return <h3 className="text-center">{error}</h3>
   }
 
   return (
     <>
       <div className="w-full">
-        {JSON.stringify(pettyCashData)}
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("pettyCashName")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("pettyCashName")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        {/* {JSON.stringify(pettyCashData)} */}
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter PettyCashName..."
+            value={(table.getColumn('pettyCashName')?.getFilterValue() as string) ?? ''}
+            onChange={(event) =>
+              table.getColumn('pettyCashName')?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
           <ul className="flex items-center gap-3 ms-auto">
             <li>
               <Button onClick={createModalHandler}>Add</Button>
@@ -168,87 +176,74 @@ export default  function PettyCashHeadTable() {
               </DropdownMenu>
             </li>
           </ul>
-       
-      </div>
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader className=''>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className='ms-4'>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody className='text-start'>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground text-start">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        <div className="space-x-2">
-        <span className="text-sm text-muted-foreground">
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader className="">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id} className="ms-4">
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                      </TableHead>
+                    )
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody className="text-start">
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="h-24 text-center">
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <div className="flex-1 text-sm text-muted-foreground text-start">
+            {table.getFilteredSelectedRowModel().rows.length} of{' '}
+            {table.getFilteredRowModel().rows.length} row(s) selected.
+          </div>
+          <div className="space-x-2">
+            <span className="text-sm text-muted-foreground">
               Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
             </span>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
-      <PettyCashHeadModal/>
+      <PettyCashHeadModal />
     </>
   )
 }

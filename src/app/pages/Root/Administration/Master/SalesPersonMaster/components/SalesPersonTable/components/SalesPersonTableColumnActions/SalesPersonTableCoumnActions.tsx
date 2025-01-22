@@ -23,6 +23,7 @@ export function TableRowDropDowns({ salesPerson }: { salesPerson: ExtendedSalesP
   const setCurrentSalesPersonId = useSalesPersonDataStore((state) => state.setCurrentSalesPersonId)
   const { createSalesPerson } = useCreateSalesPerson()
   const { fetchSalesPersonById } = useFetchSalesPersonById()
+
   function EditModalHandler() {
     modalToggler()
     setCurrentSalesPersonId(Number(salesPerson.salesPersonID))
@@ -38,8 +39,8 @@ export function TableRowDropDowns({ salesPerson }: { salesPerson: ExtendedSalesP
   async function DeleteHandler() {
     try {
       // 🔥 ID pass karke data fetch karo
-      const data = await fetchSalesPersonById(Number(salesPerson.salesPersonID));
-  
+      const data = await fetchSalesPersonById(Number(salesPerson.salesPersonID))
+
       // ✅ Data ko Delete operation ke liye format karo
       const deletePayload = {
         ...data,
@@ -55,27 +56,27 @@ export function TableRowDropDowns({ salesPerson }: { salesPerson: ExtendedSalesP
         isActive: data.isActive ?? 'N', // ✅ Null ko default 'N' se replace karo
         enteredBy: data.enteredBy ?? '0',
         usedFor: 'D', // 🗑️ Delete flag set karo
-        objDetails: data.objDetails.map((item) => ({
-          ...item,
-          startDate: item.startDate ? formatDate(item.startDate) : '',
-          endDate: item.endDate ? formatDate(item.endDate) : '',
-          isTransfered: item.isTransfered ?? 'N', // ✅ Default 'N' if null
-        })) ?? [], // ✅ Null ko empty array se replace karo
-      };
-  
-      console.log('🗑️ Deleting Data:', deletePayload);
-  
+        objDetails:
+          data.objDetails.map((item) => ({
+            ...item,
+            startDate: item.startDate ? formatDate(item.startDate) : '',
+            endDate: item.endDate ? formatDate(item.endDate) : '',
+            isTransfered: item.isTransfered ?? 'N', // ✅ Default 'N' if null
+          })) ?? [], // ✅ Null ko empty array se replace karo
+      }
+
+      console.log('🗑️ Deleting Data:', deletePayload)
+
       // 🚀 Delete ke liye mutation call karo
-      await createSalesPerson(deletePayload);
-  
+      await createSalesPerson(deletePayload)
+
       // ✅ Modal close ya confirmation show karo
-      setModalMode('Delete');
-      console.log('✅ Successfully deleted the SalesPerson');
+      setModalMode('Delete')
+      console.log('✅ Successfully deleted the SalesPerson')
     } catch (error) {
-      console.error('❌ Error fetching or deleting data:', error);
+      console.error('❌ Error fetching or deleting data:', error)
     }
   }
-  
 
   // console.log(sp);
 

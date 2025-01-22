@@ -11,3 +11,5 @@ export type PettyCashType = {
     usedFor: string | null
 }
 export type FetchedPettyCashType = PettyCashType
+
+export type PettyCashResponseType = { returnCode: string; returnMsg: string }[];

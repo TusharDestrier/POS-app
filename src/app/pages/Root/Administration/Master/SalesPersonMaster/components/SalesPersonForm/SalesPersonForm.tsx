@@ -20,9 +20,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 function SalesPersonForm() {
   const { createSalesPerson, isPending, error } = useCreateSalesPerson()
   const closeModal = useSalesPerson((state) => state.close)
-  const salesPersonId = useSalesPersonDataStore((state) => state.currentSalesPersonId)
+  const SalesPersonId = useSalesPersonDataStore((state) => state.currentSalesPersonId)
   const clearId = useSalesPersonDataStore((state) => state.clearCurrentSalesPersonId)
-  const { salesPerson, isLoading } = useSalesPersonDataById(Number(salesPersonId) || null)
+  const { salesPerson, isLoading } = useSalesPersonDataById(Number(SalesPersonId) || null)
   const mode=useSalesPerson(state=>state.mode);
   const formMethods = useForm({
     resolver: zodResolver(SalesPersonFormSchema),

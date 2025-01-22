@@ -1,3 +1,4 @@
+import { usePettyCashDataStore } from '../../store/usePettyCashDataStore'
 import usePettyCashHead from '../../store/usePettyCashHead'
 import PettyCashHeadForm from '../PettyCashHeadForm/PettyCashHeadFrom'
 
@@ -13,9 +14,14 @@ function PettyCashHeadModal() {
   const isOpen = usePettyCashHead((state) => state.isOpen)
   const modalMode = usePettyCashHead((state) => state.mode)
   const closeModal = usePettyCashHead((state) => state.close)
+const clearId = usePettyCashDataStore((state) => state.clearCurrentPettyCashId)
 
+  function handleClose() {
+    closeModal()
+    clearId()
+  }
   return (
-    <Dialog open={isOpen} onOpenChange={closeModal}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className=" max-w-full h-screen overflow-y-scroll p-0 flex flex-col gap-0">
         <DialogHeader className="p-5 border-b border-gray-50 sticky top-0 left-0 bg-white">
           <DialogTitle>

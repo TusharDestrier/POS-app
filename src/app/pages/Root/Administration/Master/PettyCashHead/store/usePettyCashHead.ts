@@ -1,14 +1,18 @@
 import { create } from 'zustand'
 
 type PettyCashHeadType = {
+  isLoading: boolean
+  setIsLoading: (loading: boolean) => void
   isOpen: boolean
-  mode: 'Edit' | 'Create' | 'View'
+  mode: 'Edit' | 'Create' | 'View' | 'Delete'
   toggleOpen: () => void
   close: () => void
-  setMode: (newMode: 'Edit' | 'Create' | 'View') => void
+  setMode: (newMode: 'Edit' | 'Create' | 'View' | 'Delete') => void
 }
 
 export const usePettyCashHead = create<PettyCashHeadType>((set) => ({
+  isLoading: false,
+  setIsLoading: (loading) => set({ isLoading: loading }),
   isOpen: false,
   mode: 'Create',
   toggleOpen: () => set((state) => ({ isOpen: !state.isOpen })),
