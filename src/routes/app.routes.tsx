@@ -4,7 +4,7 @@ import ErrorPage from '@/app/pages/ErrorPage/page'
 import { AdministrationLayout } from '@/app/pages/Root/Administration/layout'
 import CustomerMaster from '@/app/pages/Root/Administration/Master/CustomerMaster/page'
 import MasterLayout from '@/app/pages/Root/Administration/Master/layout'
-import { PayModeMaster } from '@/app/pages/Root/Administration/Master/PayModeMaster/page'
+import PaymodeMasterPage from '@/app/pages/Root/Administration/Master/PayModeMaster/page'
 import PettyCashHead from '@/app/pages/Root/Administration/Master/PettyCashHead/page'
 import SalesPersonMasterLayout from '@/app/pages/Root/Administration/Master/SalesPersonMaster/layout'
 import SalesPersonMasterPage from '@/app/pages/Root/Administration/Master/SalesPersonMaster/page'
@@ -235,16 +235,7 @@ export const appRoutes = {
                   path: 'am-incentive',
                   element: <AssortmentwiseIncentivePage />,
                 },
-                // {
-                //   path: 'salesperson-master',
-                //   element: <SalesPersonTable />,
-                //   children: [
-                //     {
-                //       index: true,
-                //       element: <SalesPersonTable />,
-                //     },
-                //   ],
-                // },
+              
               ],
             },
           ],
@@ -263,7 +254,7 @@ export const appRoutes = {
             },
             {
               path: 'paymode-master',
-              element: <PayModeMaster />,
+              element: <PaymodeMasterPage />,
             },
             {
               path: 'pettycash-heads',
@@ -360,7 +351,7 @@ export const appRoutes = {
             },
             {
               path: 'paymode-master',
-              element: <PayModeMaster />,
+              element: <PaymodeMasterPage />,
             },
             {
               path: 'pettycash-heads',
@@ -377,7 +368,6 @@ export const appRoutes = {
         {
           path: 'inventory-transfer-request',
           element: <InventoryTransferLayout />,
-          // element: <Navigate to={'/inventroty/inventory-transfer'} />,
         },
         {
           path: 'inventory-transfer-request',
@@ -385,7 +375,6 @@ export const appRoutes = {
           children: [
             {
               index: true,
-              // element: <InventoryTransferPage />,
             },
           ],
         },
@@ -421,36 +410,7 @@ export const appRoutes = {
         },
       ],
     },
-    // {
-    //   path: 'user-management',
-    //   element: <UserManagementLayout />,
-    //   children: [
-    //     {
-    //       index: true,
-    //       element:<Navigate to={'/user-management/role-master'} />,
-    //     },
-    //     {
-    //       path: 'role-master',
-    //       element:  <RoleMaster/>,
-    //     },
-    //     {
-    //       path: 'designation-master',
-    //       element:  <DesignationMaster/>,
-    //     },
-    //     {
-    //       path: 'user-master',
-    //       element:  <UserMasterPage/>
-    //     },
-    //     {
-    //       path: 'change-password',
-    //       element:  <ChangePasswordPage/>
-    //     },
-    //     {
-    //       path: 'role-wise-menu',
-    //       element:   <h4>role wise menu</h4>
-    //     },
-    //   ],
-    // },
+   
     {
       path: 'billing',
       element: <SalesLayout />,

@@ -1,58 +1,175 @@
-import { useFormContext } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
+import { transformFormData } from '../../helper/dataFormatter'
+import { useCreatePaymode } from '../../hooks_api/useCreatePaymode'
+import { usePaymodeDataById } from '../../hooks_api/usePaymodeMasterDataById'
+import { formSchema } from '../../schema/schema'
+import { usePaymodeMasterDataStore } from '../../store/usePaymentMethodStore'
+import { usePaymodeMaster } from '../../store/usePaymodeMaster'
 import PaymentMethods from '../PaymentMethod'
 import PaymodeConditions from '../PaymodeConditions'
 import SupportedCurrencies from '../SupportedCurrencies'
 
+import GlobalViewerLoader from '@/components/GlobalViewerLoader'
+import { Button } from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
+const defaultValues = {
+  paymentModeName: '', // Initialize as empty
+  shortCode: '', // Initialize as empty
+  paymentMethod: 'cash',
+  objCondition: [
+    {
+      conditionId: 1, // Use numbers instead of strings as per schema
+      paymentModeID: 0,
+      conditionDesc: 'Accept Denomination-Based Payments',
+      isEnabled: 'N',
+    },
+    {
+      conditionId: 2,
+      paymentModeID: 0,
+      conditionDesc: 'Allow Reference Details Capturing',
+      isEnabled: 'N',
+    },
+    {
+      conditionId: 3,
+      paymentModeID: 0,
+      conditionDesc: 'Accept Only Negative Payment Values',
+      isEnabled: 'N',
+    },
+    {
+      conditionId: 4,
+      paymentModeID: 0,
+      conditionDesc: 'Restrict Payments in This Mode',
+      isEnabled: 'N',
+    },
+    {
+      conditionId: 5,
+      paymentModeID: 0,
+      conditionDesc: 'Count-Based Payment Transfers',
+      isEnabled: 'N',
+    },
+    {
+      conditionId: 6,
+      paymentModeID: 0,
+      conditionDesc: 'Restrict Customer Loyalty Points',
+      isEnabled: 'N',
+    },
+  ],
+  objCurrency: [
+    {
+      currencyID: 1, // Use numbers instead of strings
+      paymentModeID: 0,
+      currencyCode: 'INR',
+      currencyName: 'Indian Rupees (INR)',
+    },
+  ],
+}
+
 function PaymodeMasterForm() {
-  const form = useFormContext()
+  const paymodeMastedId = usePaymodeMasterDataStore((state) => state.currentPaymodeMasterId)
+  const clearID = usePaymodeMasterDataStore((state) => state.clearCurrentPaymodeMasterId)
+  const mode = usePaymodeMaster((state) => state.mode)
+  const { paymodeData, isLoading, error } = usePaymodeDataById(paymodeMastedId)
+  const closeModal = usePaymodeMaster((state) => state.toggleOpen)
+  const { createPaymodeAsync, isPending } = useCreatePaymode()
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues,
+  })
+
+  useEffect(() => {
+    if (mode === 'Edit' && paymodeData) {
+      form.reset({
+        paymentModeName: paymodeData.paymentModeName || '',
+        shortCode: paymodeData.shortCode || '',
+        paymentMethod: paymodeData.availablePaymentmethod || 'cash',
+        objCondition: paymodeData.objCondition || defaultValues.objCondition,
+        objCurrency: paymodeData.objCurrency || defaultValues.objCurrency,
+      })
+    }
+  }, [mode, paymodeData, form.reset])
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const data = transformFormData(values, mode, paymodeMastedId);
+  
+    try {
+      await createPaymodeAsync(data);
+      closeModal();
+      clearID();
+      console.log('Successfully submitted data:', data );
+    } catch (error) {
+      console.error('Failed to submit data:', error);
+    }
+  }
+  
+
+  if (isLoading && mode === 'View') {
+    return <GlobalViewerLoader />
+  }
+  if (!isLoading && mode === 'View' && paymodeMastedId) {
+    return <div>{JSON.stringify(paymodeData)}</div>
+  }
+
+  if (error) {
+    return <div>{error}</div>
+  }
 
   return (
-
-      <div className="items pe-4 space-y-5 border-e border-solid p-5 relative z-30 ">
-        <div className="grid grid-cols-2 gap-7">
-          <div className="space-y-4">
-            <FormField
-              control={form.control}
-              name="paymentModeName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Payment Mode</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter Payment Mode" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="shortCode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Short Code</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter Short Code" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="items px-10 space-y-5 border-e border-solid p-5 relative z-30 ">
+          <div className="grid grid-cols-2 gap-7">
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="paymentModeName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Payment Mode</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Payment Mode" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="shortCode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Short Code</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Short Code" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div>{/* Placeholder for Image or Additional Content */}</div>
           </div>
-          <div>{/* Placeholder for Image or Additional Content */}</div>
-        </div>
 
-        <div className="grid grid-cols-2 items-start">
-          <PaymentMethods />
-          <PaymodeConditions />
+          <div className="grid grid-cols-2 items-start">
+            <PaymentMethods />
+            <PaymodeConditions />
+          </div>
+          <SupportedCurrencies />
         </div>
-        <SupportedCurrencies />
-      </div>
-      
-    
+        <div className="text-end pb-4">
+          
+          <Button type="submit" disabled={isPending}>
+            {isPending ? 'submiting' : 'submit'}
+          </Button>
+        </div>
+      </form>
+    </FormProvider>
   )
 }
 

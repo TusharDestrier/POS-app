@@ -1,28 +1,22 @@
 import { useFormContext } from "react-hook-form";
 
-import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-} from "@/components/ui/form";
+import { FormField, FormItem, FormLabel, FormControl } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 function SupportedCurrencies() {
   const { control } = useFormContext();
 
-  // Currency options
   const currencies = [
-    { currencyID: "1", paymentModeID: 0, id: "INR", label: "Indian Rupees (INR)" },
-    { currencyID: "2", paymentModeID: 0, id: "USD", label: "US Dollars (USD)" },
-    { currencyID: "3", paymentModeID: 0, id: "EUR", label: "Euros (EUR)" },
-    { currencyID: "4", paymentModeID: 0, id: "GBP", label: "British Pounds (GBP)" },
+    { currencyID: 1, paymentModeID: 0, id: "INR", label: "Indian Rupees (INR)" },
+    { currencyID: 2, paymentModeID: 0, id: "USD", label: "US Dollars (USD)" },
+    { currencyID: 3, paymentModeID: 0, id: "EUR", label: "Euros (EUR)" },
+    { currencyID: 4, paymentModeID: 0, id: "GBP", label: "British Pounds (GBP)" },
   ];
 
   return (
     <FormField
       control={control}
-      name="objCurrency" // Bind to objCurrency in the schema
+      name="objCurrency"
       render={({ field }) => (
         <RadioGroup
           onValueChange={(value) => {

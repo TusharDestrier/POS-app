@@ -1,44 +1,52 @@
-// import ApiClient from './ApiClient'
+import ApiClient from './ApiClient'
 
 
-// import { CustomerFetchedType, CustomerMasterResponseType } from '@/types/customer'
 
-// class PaymodeClient extends ApiClient {
-//   constructor() {
-//     super('api/')
-//   }
+import { PaymodePostType } from '@/app/pages/Root/Administration/Master/PayModeMaster/helper/dataFormatter.sx'
+import { PaymodeFetchedType, PaymodeMasterResponseType } from '@/types/paymode'
 
-//   async getCustomers({ id = 0, signal }: { id: number; signal?: AbortSignal }) {
-//     const response = await this.get<CustomerFetchedType[]>(
-//       `Customer/GetCustomerDetails`,
-//       {
-//         CustomerID: id,
-//       },
-//       {
-//         signal,
-//       }
-//     )
-//     return response.data
-//   }
+class PaymodeClient extends ApiClient {
+  constructor() {
+    super('api/')
+  }
 
-//   async createPaymode(paymodeData) {
-//     try {
-//       const response = await this.post<CustomerMasterResponseType>(
-//         `PayModeRep/PostPayMode`,
-//         paymodeData
-//       )
-      
+  async getPaymode({ signal }: { signal?: AbortSignal }) {
+    const response = await this.get<PaymodeFetchedType[]>(
+      `PayMode/GetAllPaymode`,
+      {},
+      {
+        signal,
+      }
+    )
+    return response.data
+  }
 
-//       // ✅ Status check for non-200 responses
-//       if (response.data[0].returnCode !== 'Y') {
-//         throw new Error(response.data[0].returnMsg)
-//       }
+  async getPaymodeById({ id = 0 }: { id: number | null }) {
+      const response = await this.get<PaymodeFetchedType>(`PayMode/GetPaymode`, {
+        PaymentModeID: id,
+      })
+      return response.data
+    }
 
-//       return response.data
-//     } catch (error: any) {
-//       throw new Error(error)
-//     }
-//   }
-// }
 
-// export default new PaymodeClient()
+
+  async createPaymode(paymodeData: PaymodePostType) {
+    try {
+      const response = await this.post<PaymodeMasterResponseType>(
+        `PayModeRep/PostPayMode`,
+        paymodeData
+      )
+
+      // ✅ Status check for non-200 responses
+      if (response.data[0].returnCode !== 'Y') {
+        throw new Error(response.data[0].returnMsg)
+      }
+
+      return response.data
+    } catch (error: any) {
+      throw new Error(error)
+    }
+  }
+}
+
+export default new PaymodeClient()

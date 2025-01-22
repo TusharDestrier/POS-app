@@ -6,15 +6,15 @@ export const formSchema = z.object({
   paymentMethod: z.string().nonempty({ message: 'Payment method is required.' }),
   objCondition: z.array(
     z.object({
-      conditionId: z.string().default(''),
+      conditionId: z.number().default(0),
       paymentModeID: z.number().default(0),
       conditionDesc: z.string(),
-      isEnabled: z.boolean(),
+      isEnabled: z.string().default('Y'),
     })
   ),
   objCurrency: z.array(
     z.object({
-      currencyID: z.string().default(""),
+      currencyID: z.number().default(0),
       paymentModeID: z.number().default(0),
       currencyCode: z.string().nonempty({ message: 'Currency Code is required.' }),
       currencyName: z.string().nonempty({ message: 'Currency Name is required.' }),
