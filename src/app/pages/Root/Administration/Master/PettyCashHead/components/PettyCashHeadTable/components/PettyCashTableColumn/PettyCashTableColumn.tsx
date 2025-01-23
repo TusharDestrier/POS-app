@@ -6,7 +6,7 @@ import { useCreatePettyCash } from '../../../../hooks_api/useCreatePettyCash'
 import { useFetchPettyCashById } from '../../../../hooks_api/usePettyCashById'
 import { usePettyCashDataStore } from '../../../../store/usePettyCashDataStore'
 import usePettyCashHead from '../../../../store/usePettyCashHead'
-import { ExtendedPettyCashType, PettyCashStatus } from '../../data/tableData'
+import {  PettyCashTableData, PettyCashStatus } from '../../data/tableData'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -18,12 +18,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-// import StoreDetailModalBtn from '../../StoreDetailModal'
 
-// import StoreDetailForm from '../../StoreDetailForm'
-// import useStoreDetail from '../../../store/useStoreDetail'
 
-export const columns: ColumnDef<ExtendedPettyCashType>[] = [
+export const columns: ColumnDef<PettyCashTableData>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -46,20 +43,36 @@ export const columns: ColumnDef<ExtendedPettyCashType>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'pettyCashCode',
+    accessorKey: 'pettyCashID',
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
         PettyCash Code
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
+    cell: ({ row }) => <div>{row.getValue('pettyCashID')}</div>,
+  },
+  
+  {
+    accessorKey: 'pettyCashName',
+    header: ({ column }) => (
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        PettyCash Name
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div className="lowercase">{row.getValue('pettyCashName')}</div>,
+  },
+  {
+    accessorKey: 'pettyCashCode',
+    header: 'Petty Cash Code',
     cell: ({ row }) => <div>{row.getValue('pettyCashCode')}</div>,
   },
   {
-    accessorKey: 'status',
+    accessorKey: 'isActive',
     header: 'Status',
     cell: ({ row }) => {
-      const status = row.getValue('status') as PettyCashStatus
+      const status = row.getValue('isActive') as PettyCashStatus
       return (
         <div
           className={`capitalize ${
@@ -72,21 +85,6 @@ export const columns: ColumnDef<ExtendedPettyCashType>[] = [
     },
   },
   {
-    accessorKey: 'pettyCashName',
-    header: ({ column }) => (
-      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-        PettyCash Name
-        <CaretSortIcon className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => <div className="lowercase">{row.getValue('pettyCashName')}</div>,
-  },
-  {
-    accessorKey: 'modeOfOperation',
-    header: 'Modeof Operation',
-    cell: ({ row }) => <div>{row.getValue('modeOfOperation')}</div>,
-  },
-  {
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
@@ -97,7 +95,7 @@ export const columns: ColumnDef<ExtendedPettyCashType>[] = [
   },
 ]
 
-function TableRowDropDowns({ PettyCashHead }: { PettyCashHead: ExtendedPettyCashType }) {
+function TableRowDropDowns({ PettyCashHead }: { PettyCashHead: PettyCashTableData }) {
   const modalToggler = usePettyCashHead((state) => state.toggleOpen)
   const setModalMode = usePettyCashHead((state) => state.setMode)
   const setCurrentPettyCashId = usePettyCashDataStore((state) => state.setCurrentPettyCashId)
@@ -119,29 +117,16 @@ function TableRowDropDowns({ PettyCashHead }: { PettyCashHead: ExtendedPettyCash
   async function DeleteHandler() {
     // console.log('DeleteHandler')
     try {
-      // 🔥 ID pass karke data fetch karo
       const data = await fetchPettyCashById(Number(PettyCashHead.pettyCashID))
 
-      // ✅ Data ko Delete operation ke liye format karo
       const deletePayload = {
         ...data,
-        pettyCashID: Number(data.pettyCashID), // 🔄 String ko Number mein convert karo
-        pettyCashCode: data.pettyCashCode ?? '',
-        pettyCashName: data.pettyCashName ?? '',
-        modeOfOperation: data.modeOfOperation ?? '',
-        limit: data.limit?.toString() ?? '',
-        remarks: data.remarks ?? '',
-        isActive: data.isActive ?? '',
-        enteredBy: data.enteredBy?.toString() ?? '',
+        pettyCashID: Number(data.pettyCashID),
         usedFor: 'D', // 🗑️ Delete flag set karo
       }
 
-      // console.log('🗑️ Deleting Data:', deletePayload);
-
-      // 🚀 Delete ke liye mutation call karo
       await createPettyCash(deletePayload)
 
-      // ✅ Modal close ya confirmation show karo
       setModalMode('Delete')
       console.log('✅ Successfully deleted the Petty Cash')
     } catch (error) {

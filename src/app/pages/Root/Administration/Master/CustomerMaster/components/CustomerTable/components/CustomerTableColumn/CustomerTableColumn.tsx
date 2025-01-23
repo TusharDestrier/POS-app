@@ -94,6 +94,8 @@ export const columns: ColumnDef<CustomerTableRow>[] = [
   },
 ]
 
+
+
 function TableRowDropDowns({ customer }: { customer: CustomerTableRow }) {
   const { fetchCustomerById } = useFetchCustomerMasterById()
   const {createCustomerAsync}=useCreateCustomer();

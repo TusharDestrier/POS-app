@@ -5,8 +5,9 @@ import { z } from 'zod'
 
 import { PettyCashFormatter } from '../../helper/PettyCashFormatter'
 import { useCreatePettyCash } from '../../hooks_api/useCreatePettyCash'
-import { usePettyCashDataById } from '../../hooks_api/usePettyCashById'
+import {  usePettyCashDataById } from '../../hooks_api/usePettyCashById'
 import { PettyCashHeadSchema } from '../../schemas/PettyCashHeadSchema'
+import { usePettyCashDataStore } from '../../store/usePettyCashDataStore'
 import usePettyCashHead from '../../store/usePettyCashHead'
 //import { PettyCashViewer } from '../PettyCashTableViewer/PettyCashViewer'
 
@@ -17,15 +18,16 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-//import { Tabs, TabsContent } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
+//import { Tabs, TabsContent } from '@/components/ui/tabs'
 
 function PettyCashHeadForm() {
   const { createPettyCash, isPending, error } = useCreatePettyCash()
+  const pettyCashId=usePettyCashDataStore(state=>state.currentPettyCashId);
   const closeModal = usePettyCashHead((state) => state.close)
-  const { pettyCash, isLoading } = usePettyCashDataById(Number() || null)
- // const mode=usePettyCashHead(state=>state.mode);
-
+  const { pettyCash, isLoading } = usePettyCashDataById(Number(pettyCashId) || null)
+ const mode=usePettyCashHead(state=>state.mode);
+ const clearId=usePettyCashDataStore(state=>state.clearCurrentPettyCashId);
   const formMethods = useForm<z.infer<typeof PettyCashHeadSchema>>({
     resolver: zodResolver(PettyCashHeadSchema),
     defaultValues: {
@@ -39,7 +41,7 @@ function PettyCashHeadForm() {
   })
 
   useEffect(() => {
-    if (pettyCash) {
+    if (pettyCash && mode === 'Edit') {
       formMethods.reset({
         pettyCashCode: pettyCash?.pettyCashCode || '',
         pettyCashName: pettyCash?.pettyCashName?.toString() || '',
@@ -51,7 +53,7 @@ function PettyCashHeadForm() {
         usedFor: pettyCash?.usedFor || '',
       })
     }
-  }, [pettyCash, formMethods.reset]) // ✅ Dependency mein salesPerson aur reset rakho
+  }, [pettyCash, formMethods.reset,mode]) // ✅ Dependency mein salesPerson aur reset rakho
 
   const onSubmit = formMethods.handleSubmit(
     async (data) => {
@@ -60,7 +62,9 @@ function PettyCashHeadForm() {
       try {
         await createPettyCash(transformData)
         closeModal()
-        // clearId()
+        clearId()
+        // console.log(transformData);
+        
       } catch (err: any) {
         console.log(err)
       }
@@ -71,13 +75,17 @@ function PettyCashHeadForm() {
     }
   )
 
-  if (isLoading) {
+  if (isLoading && mode === 'View') {
     return <GlobalViewerLoader />
   }
 
-  // if(mode==='View'){
-  //   return <PettyCashViewer data={pettyCash}/>
-  // }
+  if(mode==='View' && !isLoading){
+    return <h3>{JSON.stringify(pettyCash)}</h3>
+  }
+
+  if(error){
+    return <p>{error.message}</p>
+  }
 
   return (
     <FormProvider {...formMethods}>
@@ -201,7 +209,7 @@ function PettyCashHeadForm() {
             {isPending ? 'Submitting...' : 'Submit'}
           </Button>
         </div>
-        {error && <p className="text-end">{error.message}</p>}
+        {error && <p className="text-end">{error}</p>}
       </form>
     </FormProvider>
   )

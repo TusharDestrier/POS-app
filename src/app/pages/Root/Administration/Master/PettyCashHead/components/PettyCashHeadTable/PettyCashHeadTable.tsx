@@ -67,21 +67,11 @@ export default function PettyCashHeadTable() {
       pettyCashID: String(item.pettyCashID),
       pettyCashCode: item.pettyCashCode,
       pettyCashName: item.pettyCashName,
-      status: item?.status || PettyCashStatus.INACTIVE,
+      isActive: item?.isActive || PettyCashStatus.INACTIVE,
       modeOfOperation: item.modeOfOperation,
     }))
   }, [pettyCashData])
 
-  // const newTableData = pettyCashData?.map(item => {
-  //     return {
-  //       ...item,
-  //      // fullName: `${item.firstName ?? ''} ${item.lastName ?? ''}`.trim(),
-  //      pettyCashCode: item.pettyCashCode,
-  //      pettyCashName: item.pettyCashName,
-  //      status: item.isActive === 'true' ? PettyCashStatus.ACTIVE : PettyCashStatus.INACTIVE,
-  //       modeOfOperation: item.modeOfOperation
-  //     }
-  //   })
 
   const table = useReactTable({
     // data: [],
@@ -116,10 +106,7 @@ export default function PettyCashHeadTable() {
     return <SkeletonLoaderTable />
   }
 
-  // function EditModalHandler() {
-  //   modalToggler()
-  //   setModalMode('Edit')
-  // }
+
 
   if (isLoading) {
     return <SkeletonLoaderTable />

@@ -7,6 +7,7 @@ class PettyCashClient extends ApiClient {
   constructor() {
     super('api/')
   }
+
   async getPettyCash({ signal }: { signal: AbortSignal }) {
     const response = await this.get<FetchedPettyCashType[]>(
       `PettyCash/GetAllPettyCash`,
@@ -17,12 +18,14 @@ class PettyCashClient extends ApiClient {
     )
     return response.data
   }
+
    async getPettyCashById({ id = 0 }: { id: number | null }) {
       const response = await this.get<FetchedPettyCashType>(`PettyCash/GetPettyCash`, {
         PettycashID: id,
       })
       return response.data
     }
+
   async createPettyCash(pettyCashData: PettyCashPostType) {
       try {
         const response = await this.post<PettyCashResponseType>(
@@ -41,4 +44,5 @@ class PettyCashClient extends ApiClient {
       }
     }
 }
+
 export default new PettyCashClient()

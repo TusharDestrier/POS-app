@@ -27,13 +27,5 @@ export function PettyCashFormatter( data: PettyCashFormFormatterType,
   }
   return formattedData 
 }
-    // pettyCashID: data.pettyCashID,
-    // pettyCashCode: data.pettyCashCode,
-    // pettyCashName: data.pettyCashName,
-    // modeOfOperation: data.modeOfOperation,
-    // limit: data.limit,
-    // remarks: data.remarks,
-    // isActive: data.isActive,
-    // enteredBy: data.enteredBy,
-    // usedFor: data.usedFor,
+
  

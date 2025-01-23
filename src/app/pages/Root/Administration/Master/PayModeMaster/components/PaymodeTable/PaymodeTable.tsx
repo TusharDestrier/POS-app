@@ -16,6 +16,7 @@ import { usePaymodeMasterData } from '../../hooks_api/usePaymodeMasterData'
 import { usePaymodeMaster } from '../../store/usePaymodeMaster'
 import PaymodeModal from '../PaymodeModal/PaymodeModal'
 import columns from './components/PaymodeColumn'
+import { usePaymodeMasterDataStore } from '../../store/usePaymentMethodStore'
 
 import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
@@ -34,7 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { usePaymodeMasterDataStore } from '../../store/usePaymentMethodStore'
+
 
 export type PaymodeTableType = {
   paymentModeID: number | string
@@ -84,6 +85,8 @@ function PaymodeTable() {
     setMode('Create')
     clearID()
   }
+
+  
   return (
     <div className="w-full">
       <div className="flex items-center py-4 justify-between">

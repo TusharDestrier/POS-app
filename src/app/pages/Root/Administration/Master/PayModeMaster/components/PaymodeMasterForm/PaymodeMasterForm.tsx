@@ -112,6 +112,7 @@ function PaymodeMasterForm() {
   if (isLoading && mode === 'View') {
     return <GlobalViewerLoader />
   }
+  
   if (!isLoading && mode === 'View' && paymodeMastedId) {
     return <div>{JSON.stringify(paymodeData)}</div>
   }

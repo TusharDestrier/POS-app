@@ -1,13 +1,12 @@
-import { PettyCashType } from "@/types/pettyCash";
 
 export enum PettyCashStatus {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
+  ACTIVE = 'Y',
+  INACTIVE = 'N',
 }
 
-
-
-
-export type ExtendedPettyCashType = PettyCashType & {
-  status:PettyCashStatus
+export type PettyCashTableData = {
+  isActive: PettyCashStatus
+  pettyCashCode: string|null|number
+  pettyCashID: string|null|number
+  pettyCashName: string|null
 }

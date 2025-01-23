@@ -2,7 +2,7 @@ import PaymodeTable from "./components/PaymodeTable"
 
 function PaymodeMasterPage() {
   return (
-    <div><PaymodeTable/></div>
+    <section className="paymodemaster-page" ><PaymodeTable/></section>
   )
 }
 

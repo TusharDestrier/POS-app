@@ -36,6 +36,9 @@ export function transformFormData(
   mode: 'Create' | 'Edit' | 'Delete' | 'View',
   selectedId: number | null | string
 ): PaymodePostType {
+
+  console.log(mode);
+  
   return {
     paymentModeID: mode === 'Create' ? 0 : (selectedId ?? 0),
     paymentModeName: data.paymentModeName,
