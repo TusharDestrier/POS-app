@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form'
 
-import useStoreMasterStore from '../../../../store/useStoreMasterStore'
+import useStoreMasterStore from '../../../../store/useStoreMasterHead'
 
 import { Checkbox } from '@/components/ui/checkbox'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'

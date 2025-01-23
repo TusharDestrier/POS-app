@@ -1,0 +1,101 @@
+import { z } from "zod";
+
+export const StoreMasterHeadSchema = z.object({
+  storeID: z.number(),
+  storeCode: z.string(),
+  storeName: z.string(),
+  startDate: z.string(),
+  closeDate: z.string(),
+  storeTypeCode: z.string(),
+  storeTypeName: z.string(),
+  storeCategoryCode: z.string(),
+  storeCategoryName: z.string(),
+  franchiseCode: z.string(),
+  franchiseName: z.string(),
+  storeSize: z.number(),
+  operationTypeCode: z.string(),
+  operationTypeName: z.string(),
+  defaultWarehouseCode: z.string(),
+  defaultWarehouseName: z.string(),
+  defaultSaleWHCode: z.string(),
+  defaultSaleWHName: z.string(),
+  defaultReturnWHCode: z.string(),
+  defaultReturnWHName: z.string(),
+  isActive: z.string(),
+  billAddress: z.string(),
+  billCity: z.string(),
+  billPostalCode: z.string(),
+  billStateCode: z.string(),
+  billStateName: z.string(),
+  billCountryCode: z.string(),
+  billCountryName: z.string(),
+  shipAddress: z.string(),
+  shipCity: z.string(),
+  shipPostalCode: z.string(),
+  shipStateCode: z.string(),
+  shipStateName: z.string(),
+  shipCountryCode: z.string(),
+  shipCountryName: z.string(),
+  contactPerson: z.string(),
+  contactNumber: z.number(),
+  alternateContactNumber: z.number(),
+  email: z.string(),
+  enteredBy: z.number(),
+  usedFor: z.string(),
+  objWareHouse: z.array(
+    z.object({
+      storeID: z.number(),
+      sourcingWarehouseCode: z.string(),
+      sourcingWarehouseName: z.string(),
+    })
+  ),
+  objPayMode: z.array(
+    z.object({
+      storeID: z.number(),
+      paymentModeID: z.number(),
+      paymentModeName: z.string(),
+      isCrossStoreUsage: z.string(),
+      ledgerCode: z.string(),
+      ledgerName: z.string(),
+      subLedgerCode: z.string(),
+      subLedgerName: z.string(),
+      discontinued: z.string(),
+    })
+  ),
+  objPettyCash: z.array(
+    z.object({
+      storeID: z.number(),
+      pettyCashID: z.number(),
+      pettyCashName: z.string(),
+      limit: z.number(),
+      modeOfOperation: z.string(),
+      ledgerCode: z.string(),
+      ledgerName: z.string(),
+      subLedgerCode: z.string(),
+      subLedgerName: z.string(),
+      discontinued: z.string(),
+    })
+  ),
+  objSeries: z.array(
+    z.object({
+      storeID: z.number(),
+      transactionType: z.number(),
+      seriesName: z.string(),
+      prefix: z.string(),
+      noOfDigit: z.number(),
+      suffix: z.string(),
+      discontinued: z.string(),
+    })
+  ),
+  objLedger: z.array(
+    z.object({
+      storeID: z.number(),
+      ledgerCode: z.string(),
+      ledgerName: z.string(),
+      subLedgerCode: z.string(),
+      subLedgerName: z.string(),
+      costCenterCode: z.string(),
+      costCenterName: z.string(),
+    })
+  ),
+});

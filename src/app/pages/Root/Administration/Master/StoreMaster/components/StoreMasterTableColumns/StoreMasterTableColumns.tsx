@@ -3,7 +3,7 @@ import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { ColumnDef } from '@tanstack/react-table'
 
 import { Customer } from '../../data/tableData'
-import useStoreMasterStore from '../../store/useStoreMasterStore'
+import useStoreMasterStore from '../../store/useStoreMasterHead'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -98,11 +98,12 @@ function TableRowDropDowns({ customer }: { customer: Customer }) {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuItem onClick={() => navigator.clipboard.writeText(customer.id)}>
-          Copy Customer ID
+          Copy StoreMaster ID
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={EditModalHandler}>Edit Customer</DropdownMenuItem>
-        <DropdownMenuItem>View Customer</DropdownMenuItem>
+        <DropdownMenuItem onClick={EditModalHandler}>Edit StoreMaster</DropdownMenuItem>
+        <DropdownMenuItem>View StoreMaster</DropdownMenuItem>
+        <DropdownMenuItem>Delete StoreMaster</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

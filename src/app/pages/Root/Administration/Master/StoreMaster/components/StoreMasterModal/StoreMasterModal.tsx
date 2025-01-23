@@ -1,4 +1,4 @@
-import useStoreMasterStore from '../../store/useStoreMasterStore'
+import useStoreMasterStore from '../../store/useStoreMasterHead'
 import StoreMasterForm from '../StoreMasterForm'
 
 import {

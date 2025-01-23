@@ -15,11 +15,15 @@ import {
 } from '@tanstack/react-table'
 import * as React from 'react'
 
-import { data } from '../../data/tableData'
-import useStoreMasterStore from '../../store/useStoreMasterStore'
+import { useStoreMasterData } from '../../hooks_api/useStoreMasterData'
+import useStoreMasterStore from '../../store/useStoreMasterHead'
 import StoreMasterModal from '../StoreMasterModal'
 import columns from '../StoreMasterTableColumns'
 
+
+//import { usePettyCashData } from '../../hooks_api/usePettyCashData'
+
+import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -38,6 +42,7 @@ import {
 } from '@/components/ui/table'
 
 function StoreMasterTable() {
+  const { storemasterData,isLoading, error } = useStoreMasterData()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -50,8 +55,24 @@ function StoreMasterTable() {
   const modalToggler = useStoreMasterStore((state) => state.toggleOpen)
   const setModalMode = useStoreMasterStore((state) => state.setMode)
 
+const columnData = React.useMemo(() => {
+    const dataArray = Array.isArray(storemasterData)
+      ? storemasterData
+      : storemasterData
+        ? [storemasterData]
+        : []
+
+    return dataArray.map((item) => ({
+      storeID: String(item.storeID),
+           fullName:item.storeName,
+             email: item.email,
+             isActive: item?.isActive ? 'Active' : 'Inactive',
+           contactNumber: String(item.contactNumber),
+    }))
+  }, [storemasterData])
+
   const table = useReactTable({
-    data,
+    data: columnData ?? [],
     columns,
     state: {
       sorting,
@@ -75,10 +96,18 @@ function StoreMasterTable() {
     modalToggler()
     setModalMode('Create')
   }
+  if (isLoading) {
+    return <SkeletonLoaderTable />
+  }
+
+  if (error) {
+    return <h3 className="text-center">{error}</h3>
+  }
 
   return (
     <>
       <div className="w-full">
+        {JSON.stringify(storemasterData)}
         <div className="flex items-center py-4">
           <Input
             placeholder="Filter emails..."
