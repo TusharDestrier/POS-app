@@ -9,7 +9,7 @@ export default defineConfig({
     loader: 'tsx'
   },
   build: {
-    outDir: 'dist', // Ensure output directory is 'dist'
+    outDir: './dist', // Ensure output directory is 'dist'
     emptyOutDir: true, // Clear old build before creating new
   },
   optimizeDeps: {
