@@ -8,6 +8,10 @@ export default defineConfig({
     logLevel: 'silent', // Ignore all TypeScript errors
     loader: 'tsx'
   },
+  build: {
+    outDir: 'dist', // Ensure output directory is 'dist'
+    emptyOutDir: true, // Clear old build before creating new
+  },
   optimizeDeps: {
     esbuildOptions: {
       loader: {
