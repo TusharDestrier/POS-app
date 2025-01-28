@@ -7,358 +7,329 @@ import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
 
 function LogisticDetailForm() {
   const { control } = useFormContext()
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'logistics.sourcingWH', // This should match your schema path
+    name: 'sourcingWarehouse', // This should match your schema path
   })
+
+
+   // Example Options for Dropdowns
+   const cityOptions = [
+    { value: "kolkata", label: "Kolkata" },
+    { value: "mumbai", label: "Mumbai" },
+    { value: "delhi", label: "Delhi" },
+  ];
+
+  const stateOptions = [
+    { value: "WB", label: "West Bengal" },
+    { value: "MH", label: "Maharashtra" },
+    { value: "DL", label: "Delhi" },
+  ];
+  const warehouseOptions = [
+    { code: "WH001", name: "Warehouse 1" },
+    { code: "WH002", name: "Warehouse 2" },
+    { code: "WH003", name: "Warehouse 3" },
+  ];
 
   return (
     <div className="grid grid-cols-2 gap-3 border p-4 border-black border-solid h-[580px] overflow-y-auto">
       <div className="space-y-3">
-        {/* Bill To Address Field */}
-        <FormField
+       {/* Bill To Address */}
+       <FormField
+        control={control}
+        name="billToAddress"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Bill To Address <span className="text-red-500">*</span></FormLabel>
+            <FormControl>
+              <Input placeholder="Enter Billing Address" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+
+         {/* Bill To City */}
+         <FormField
           control={control}
-          name="logistics.billToAddress"
+          name="billToCity"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                Bill To Address <span className="text-primary">*</span>
-              </FormLabel>
-              <FormControl>
-                <Textarea
-                  className="w-full mt-5 p-5"
-                  placeholder="Type your address here."
-                  {...field}
-                />
-              </FormControl>
+              <FormLabel>Bill To City <span className="text-red-500">*</span></FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select City" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {cityOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
+
+<FormField
+          control={control}
+          name="billToState"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Bill To State <span className="text-red-500">*</span></FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select State" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {stateOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      
+        
 
         {/* City Field */}
-        <FormField
+       {/* Bill To Postal Code */}
+       <FormField
           control={control}
-          name="logistics.city"
+          name="billToPostalCode"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                City <span className="text-primary">*</span>
-              </FormLabel>
+              <FormLabel>Bill To Postal Code <span className="text-red-500">*</span></FormLabel>
               <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select a city" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>City</SelectLabel>
-                      <SelectItem value="kolkata">Kolkata</SelectItem>
-                      <SelectItem value="pune">Pune</SelectItem>
-                      <SelectItem value="hydrabad">Hyderabad</SelectItem>
-                      <SelectItem value="bengaluru">Bengaluru</SelectItem>
-                      <SelectItem value="mumbai">Mumbai</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <Input type="text" placeholder="Enter Postal Code" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+         {/* Contact Person */}
+      <FormField
+        control={control}
+        name="contactPerson"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Contact Person <span className="text-red-500">*</span></FormLabel>
+            <FormControl>
+              <Input placeholder="Enter Contact Person Name" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
-        {/* Postal Code Field */}
+      {/* Contact Number */}
+      <FormField
+        control={control}
+        name="contactNumber"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Contact Number <span className="text-red-500">*</span></FormLabel>
+            <FormControl>
+              <Input type="tel" placeholder="Enter Contact Number" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+        {/* Email ID */}
         <FormField
-          control={control}
-          name="logistics.postalCode"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Postal Code <span className="text-primary">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="Postal Code" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* State Field */}
-        <FormField
-          control={control}
-          name="logistics.state"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                State <span className="text-primary">*</span>
-              </FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select a state" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>State</SelectLabel>
-                      <SelectItem value="wb">West Bengal</SelectItem>
-                      <SelectItem value="karnataka">Karnataka</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Contact Person Field */}
-        <FormField
-          control={control}
-          name="logistics.contactPerson"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Contact Person <span className="text-primary">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="Contact Person" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Contact No Field */}
-        <FormField
-          control={control}
-          name="logistics.contactNo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Contact No.</FormLabel>
-              <FormControl>
-                <Input placeholder="Contact No." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Alternative Contact No Field */}
-        <FormField
-          control={control}
-          name="logistics.alcontactNo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Alternative Contact No.</FormLabel>
-              <FormControl>
-                <Input placeholder="Alternative Contact No." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Email ID Field */}
-        <FormField
-          control={control}
-          name="logistics.emailId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Email Id <span className="text-primary">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="Email Id" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        control={control}
+        name="emailId"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Email ID <span className="text-red-500">*</span></FormLabel>
+            <FormControl>
+              <Input type="email" placeholder="Enter Email Address" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
       </div>
       <div className="space-y-3">
-        {/* Ship To Address Field */}
-        <FormField
+        {/* Ship To Address */}
+      <FormField
+        control={control}
+        name="shipToAddress"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Ship To Address <span className="text-red-500">*</span></FormLabel>
+            <FormControl>
+              <Input placeholder="Enter Shipping Address" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+{/* Ship To Postal Code */}
+<FormField
           control={control}
-          name="logistics.shipToAddress"
+          name="shipToPostalCode"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                Ship To Address <span className="text-primary">*</span>
-              </FormLabel>
+              <FormLabel>Ship To Postal Code <span className="text-red-500">*</span></FormLabel>
               <FormControl>
-                <Textarea
-                  className="w-full mt-5 p-5"
-                  placeholder="Type your address here."
-                  {...field}
-                />
+                <Input type="text" placeholder="Enter Postal Code" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        {/* City Field */}
+
+         {/* Ship To City, Postal Code, and State */}
+        {/* Ship To City */}
         <FormField
           control={control}
-          name="logistics.cityTo"
+          name="shipToCity"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                City <span className="text-primary">*</span>
-              </FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select a city" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>City</SelectLabel>
-                      <SelectItem value="kolkata">Kolkata</SelectItem>
-                      <SelectItem value="pune">Pune</SelectItem>
-                      <SelectItem value="hydrabad">Hyderabad</SelectItem>
-                      <SelectItem value="bengaluru">Bengaluru</SelectItem>
-                      <SelectItem value="mumbai">Mumbai</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Postal Code Field */}
-        <FormField
-          control={control}
-          name="logistics.postalCodeTo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Postal Code <span className="text-primary">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="Postal Code" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* State Field */}
-        <FormField
-          control={control}
-          name="logistics.stateTo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                State <span className="text-primary">*</span>
-              </FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select a state" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>State</SelectLabel>
-                      <SelectItem value="wb">West Bengal</SelectItem>
-                      <SelectItem value="karnataka">Karnataka</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Sourcing W/H Fields */}
-        <div className="form-head mb-4">
-          <FormLabel>Sourcing W/H</FormLabel>
-          <div className='flex items-center mb-3 m-3'>
-            <div className='text-center flex-1'>
-              <h3 className='heading-secondary'>Warehouse</h3>
-            </div>
-            <div className='flex-1 text-center'>
-              <h3 className='heading-secondary'>Transit Days</h3>
-            </div>
-          </div>
-          {fields.map((item, index) => (
-            <div key={item.id} className="">
-              {/* Warehouse Field */}
-              <div className='grid grid-cols-[1fr,1fr,50px] gap-3 items-center mb-3'>
-                <FormField
-                  control={control}
-                  name={`logistics.sourcingWH.${index}.warehouse`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormLabel>Ship To City <span className="text-red-500">*</span></FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a state" />
+                    <SelectValue placeholder="Select City" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Warehouse</SelectLabel>
-                      <SelectItem value="wb">West Bengal</SelectItem>
-                      <SelectItem value="karnataka">Karnataka</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                </FormControl>
+                <SelectContent>
+                  {cityOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-                {/* Transit Days Field */}
-                <FormField
-                  control={control}
-                  name={`logistics.sourcingWH.${index}.transitDays`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input placeholder="Transit Days" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <div>
-                  <Button type="button" size={'icon'}  onClick={() => remove(index)} className="">
-                    <Trash  size={'14'}/>
-                  </Button>
-                </div>
-              </div>
+ {/* Ship To State */}
+ <FormField
+          control={control}
+          name="shipToState"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Ship To State <span className="text-red-500">*</span></FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select State" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {stateOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-              {/* Remove Button */}
-            </div>
-          ))}
-
-          {/* Add New Row Button */}
-          <Button
-            type="button"
-            onClick={
-              () => append({ warehouse: '', transitDays: '' }) // Add a new row with empty values
-            }
-            className="mt-4"
-          >
-            Add Row
-          </Button>
+<div className="form-head mb-4">
+      <FormLabel>Sourcing W/H</FormLabel>
+      <div className="flex items-center mb-3 m-3">
+        <div className="text-center flex-1">
+          <h3 className="heading-secondary">Warehouse</h3>
         </div>
+        <div className="flex-1 text-center">
+          <h3 className="heading-secondary">Transit Days</h3>
+        </div>
+      </div>
+
+      {fields.map((item, index) => (
+        <div key={item.id} className="grid grid-cols-[1fr,1fr,50px] gap-3 items-center mb-3">
+          {/* Warehouse Field */}
+          <FormField
+            control={control}
+            name={`sourcingWarehouse.${index}.warehouseCode`}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Warehouse" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {warehouseOptions.map((option) => (
+                        <SelectItem key={option.code} value={option.code}>
+                          {option.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Transit Days Field */}
+          <FormField
+            control={control}
+            name={`sourcingWarehouse.${index}.transitDays`}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    type="number"
+                    min={1}
+                    max={30}
+                    placeholder="Transit Days"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Remove Row Button */}
+          <div>
+            <Button type="button" size={"icon"} onClick={() => remove(index)} className="">
+              <Trash size={"14"} />
+            </Button>
+          </div>
+        </div>
+      ))}
+
+      {/* Add New Row Button */}
+      <Button
+        type="button"
+        onClick={() => append({ warehouseCode: "", transitDays: 1 })} // Add a new row with default values
+        className="mt-4"
+      >
+        Add Row
+      </Button>
+    </div>
       </div>
     </div>
   )

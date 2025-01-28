@@ -4,7 +4,7 @@ import { useForm, FormProvider } from 'react-hook-form'
 import PurchaseOrderDetailForm from '../PurchaseOrderDetailForm/PurchaseOrderDetailForm'
 
 import { Button } from '@/components/ui/button'
-import { combinedSchema } from '@/schema/storeMaster.schema'
+import { combinedSchema } from '@/app/pages/Root/Administration/Master/StoreMaster/schemas/storeMaster.schema'
 // Schema for validation
 
 

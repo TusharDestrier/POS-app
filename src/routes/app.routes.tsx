@@ -63,10 +63,10 @@ import GRPO from '@/app/pages/Root/Transaction/Purchase/GRPO/page'
 //import Purchase from '@/app/pages/Root/Transaction/Purchase/page'
 import PurchaseOrder from '@/app/pages/Root/Transaction/Purchase/PurchaseOrder/page'
 import PurchaseRequest from '@/app/pages/Root/Transaction/Purchase/PurchaseRequest/page'
-import ChangePasswordPage from '@/app/pages/Root/UserManagement/ChangePassword/page'
-import Designation from '@/app/pages/Root/UserManagement/Designation/page'
 import UtilitiesLayout from '@/app/pages/Root/Utilities/layout'
 import UtilitiesPage from '@/app/pages/Root/Utilities/page'
+import DesignationMaster from '@/app/pages/Root/Administration/Security/Designation/page'
+import ChangePasswordPage from '@/app/pages/Root/Administration/Security/ChangePassword/page'
 
 export const appRoutes = {
   path: '/',
@@ -117,7 +117,7 @@ export const appRoutes = {
           children: [
             {
               path: 'designation',
-              element: <Designation />,
+              element: <DesignationMaster />,
             },
             {
               path: 'create-role',
