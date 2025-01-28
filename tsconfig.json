@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "strict": false,
+    "noEmit": false,
     "skipLibCheck": true,
+    "isolatedModules": false,
     "paths": {
       "@/*": ["./src/*"]
     }
