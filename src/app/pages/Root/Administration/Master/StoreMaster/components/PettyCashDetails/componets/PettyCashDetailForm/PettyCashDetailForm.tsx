@@ -16,14 +16,11 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-
 const PettyCashDetailsForm = () => {
   // Access central form control through useFormContext
 
-  const {pettyCashData,isLoading}=usePettyCashData();
+  const { pettyCashData, isLoading } = usePettyCashData()
   const { control, setValue, watch } = useFormContext()
-
-  
 
   // Manage dynamic field rows for petty cash values
   const { fields, append, remove } = useFieldArray({
@@ -43,14 +40,17 @@ const PettyCashDetailsForm = () => {
   ]
 
   const pettyCashOptions = useMemo(() => {
-      if (!pettyCashData || pettyCashData.length === 0) return []
-  
-      return pettyCashData.map((paymode) => ({
-        value: paymode.pettyCashName || '', // Ensure a fallback value
-        label: paymode.pettyCashName || 'Unknown', // Prevent UI crash if value is undefined
-        id: paymode.pettyCashID || 0, // Ensure an ID is always available
-      }))
-    }, [pettyCashData])
+    if (!pettyCashData || pettyCashData.length === 0) return []
+
+    return pettyCashData.map((cash) => ({
+      value: cash.pettyCashName || '',
+      label: cash.pettyCashName || 'Unknown',
+      id: cash.pettyCashID || 0,
+      pettyCashCode: cash.pettyCashCode || '',
+      limit: cash.limit || 0,
+      modeOfOperation: cash.modeOfOperation || '',
+    }))
+  }, [pettyCashData])
 
   const getSubLedgers = (parentLedger: string) => {
     return subLedgerOptions.filter((subLedger) => subLedger.parentLedger === parentLedger)
@@ -83,26 +83,39 @@ const PettyCashDetailsForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Select 
-                   onValueChange={(value) => {
-                    field.onChange(value)
-                    const selectedPettyCash = pettyCashOptions?.find((pm) => pm?.value === value)
-                    setValue(`objPettyCash.${index}.pettyCashCode`, String(selectedPettyCash?.id ?? 0))
-                  }}>
-                  <SelectTrigger>
-                  <SelectValue placeholder={isLoading ? 'Loading...' : 'Select Pettycash Name'} />
-                </SelectTrigger>
-                <SelectContent>
-                  {isLoading ? (
-                    <p className="p-2 text-gray-500">Loading...</p>
-                  ) : (
-                    pettyCashOptions?.map((pm) => (
-                      <SelectItem key={pm.id} value={pm.value}>
-                        {pm.label}
-                      </SelectItem>
-                    ))
-                  )}
-                </SelectContent>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value)
+
+                      // 🎯 Find selected Petty Cash details
+                      const selectedPettyCash = pettyCashOptions.find((pc) => pc.value === value)
+
+                      if (selectedPettyCash) {
+                        setValue(`objPettyCash.${index}.pettyCashCode`, selectedPettyCash.id)
+                        setValue(`objPettyCash.${index}.limit`, selectedPettyCash.limit)
+                        setValue(
+                          `objPettyCash.${index}.modeOfOperation`,
+                          selectedPettyCash.modeOfOperation
+                        )
+                      }
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder={isLoading ? 'Loading...' : 'Select Pettycash Name'}
+                      />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {isLoading ? (
+                        <p className="p-2 text-gray-500">Loading...</p>
+                      ) : (
+                        pettyCashOptions?.map((pm) => (
+                          <SelectItem key={pm.id} value={pm.value}>
+                            {pm.label}
+                          </SelectItem>
+                        ))
+                      )}
+                    </SelectContent>
                   </Select>
                 </FormControl>
                 <FormMessage />
@@ -121,9 +134,10 @@ const PettyCashDetailsForm = () => {
                     placeholder="Limit"
                     value={field.value || ''}
                     onChange={(e) => {
-                      const value = e.target.value;
-                      field.onChange(value !== "" ? parseFloat(value) : undefined); // Convert to number
+                      const value = e.target.value
+                      field.onChange(value !== '' ? parseFloat(value) : undefined) // Convert to number
                     }}
+                    readOnly
                   />
                 </FormControl>
                 <FormMessage />
@@ -137,15 +151,14 @@ const PettyCashDetailsForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value} disabled>
                     <SelectTrigger>
                       <SelectValue placeholder="Select Type of Transaction" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Cash">Cash</SelectItem>
-                      <SelectItem value="Bank Transfer">Bank Transfer</SelectItem>
-                      <SelectItem value="Cheque">Cheque</SelectItem>
-                      <SelectItem value="Online Payment">Online Payment</SelectItem>
+                      <SelectItem value="p">Payment</SelectItem>
+                      <SelectItem value="r">Reciept</SelectItem>
+                      <SelectItem value="b">both</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -261,12 +274,15 @@ const PettyCashDetailsForm = () => {
             type="button"
             onClick={() =>
               append({
-                pettycahHead: '',
-                limit: '',
-                typeofTransaction: '',
-                ledger: '',
-                subLedger: '',
-                discontinue: false,
+                pettyCashName: '',
+                pettyCashCode: '',
+                limit: 0,
+                modeOfOperation: '', // Initially empty, dropdown selection required
+                ledgerCode: '',
+                ledgerName: '',
+                subLedgerCode: '',
+                subLedgerName: '',
+                discontinued: 'N', // Default to "N" (not discontinued)
               })
             }
           >

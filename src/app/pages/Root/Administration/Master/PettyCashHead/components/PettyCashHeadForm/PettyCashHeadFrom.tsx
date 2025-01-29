@@ -5,7 +5,7 @@ import { z } from 'zod'
 
 import { PettyCashFormatter } from '../../helper/PettyCashFormatter'
 import { useCreatePettyCash } from '../../hooks_api/useCreatePettyCash'
-import {  usePettyCashDataById } from '../../hooks_api/usePettyCashById'
+import { usePettyCashDataById } from '../../hooks_api/usePettyCashById'
 import { PettyCashHeadSchema } from '../../schemas/PettyCashHeadSchema'
 import { usePettyCashDataStore } from '../../store/usePettyCashDataStore'
 import usePettyCashHead from '../../store/usePettyCashHead'
@@ -23,11 +23,11 @@ import { Textarea } from '@/components/ui/textarea'
 
 function PettyCashHeadForm() {
   const { createPettyCash, isPending, error } = useCreatePettyCash()
-  const pettyCashId=usePettyCashDataStore(state=>state.currentPettyCashId);
+  const pettyCashId = usePettyCashDataStore((state) => state.currentPettyCashId)
   const closeModal = usePettyCashHead((state) => state.close)
   const { pettyCash, isLoading } = usePettyCashDataById(Number(pettyCashId) || null)
- const mode=usePettyCashHead(state=>state.mode);
- const clearId=usePettyCashDataStore(state=>state.clearCurrentPettyCashId);
+  const mode = usePettyCashHead((state) => state.mode)
+  const clearId = usePettyCashDataStore((state) => state.clearCurrentPettyCashId)
   const formMethods = useForm<z.infer<typeof PettyCashHeadSchema>>({
     resolver: zodResolver(PettyCashHeadSchema),
     defaultValues: {
@@ -53,37 +53,36 @@ function PettyCashHeadForm() {
         usedFor: pettyCash?.usedFor || '',
       })
     }
-  }, [pettyCash, formMethods.reset,mode]) // ✅ Dependency mein salesPerson aur reset rakho
+  }, [pettyCash, formMethods.reset, mode]) // ✅ Dependency mein salesPerson aur reset rakho
 
-  const onSubmit = formMethods.handleSubmit(
-    async (data) => {
-      // console.log('Form Data Submitted: ',) // Logs if submission is successful
-      const transformData = PettyCashFormatter(data, Number(pettyCash?.pettyCashID))
-      try {
-        await createPettyCash(transformData)
-        closeModal()
-        clearId()
-        //z console.log(transformData);
-        
-      } catch (err: any) {
-        console.log(err)
+  const onSubmit = formMethods.handleSubmit(async (data) => {
+    // console.log('Form Data Submitted: ',) // Logs if submission is successful
+    const transformData = PettyCashFormatter(data, Number(pettyCash?.pettyCashID))
+    try {
+      await createPettyCash(transformData)
+      closeModal()
+      clearId()
+      //z console.log(transformData);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        throw new Error(err.message)
       }
-    },
-
-    (errors) => {
-      console.log('Validation Errors: ', errors) // Logs validation errors, if any
     }
-  )
+  })
 
   if (isLoading && mode === 'View') {
     return <GlobalViewerLoader />
   }
 
-  if(mode==='View' && !isLoading){
-    return <h3><PettyCashViewer data={pettyCash} /></h3>
+  if (mode === 'View' && !isLoading) {
+    return (
+      <h3>
+        <PettyCashViewer data={pettyCash} />
+      </h3>
+    )
   }
 
-  if(error){
+  if (error) {
     return <p>{error.message}</p>
   }
 

@@ -35,151 +35,102 @@ import { cn } from '@/lib/utils' // Verify this path matches your project struct
 const General = () => {
   const { control } = useFormContext()
 
-  // const { getValues } = useForm({
-  //   defaultValues: {
-  //     GeneralSchema: {
-  //       fromDate: null,
-  //       toDate: null,
-  //     },
-  //   },
-  // });
-
   return (
     <Card className="border-2 border-solid border-black overflow-y-auto h-[650px]">
       <CardHeader>
         <CardTitle> General</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex space-x-8 ml-5 gap-20">
-          <div>
-          <FormField
-          control={control}
-          name="storeID"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Store Name
-              </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Store Name" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                <SelectGroup>
-                          <SelectLabel>Store</SelectLabel>
-                          <SelectItem value="1">Apple</SelectItem>
-                          <SelectItem value="2">Banana</SelectItem>
-                          <SelectItem value="3">Blueberry</SelectItem>
-                          <SelectItem value="4">Grapes</SelectItem>
-                          <SelectItem value="5">Pineapple</SelectItem>
-                        </SelectGroup>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div>
+          <div className="grid grid-cols-3  gap-4">
+            <FormField
+              control={control}
+              name="storeID"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Store Name</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Store Name" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Store</SelectLabel>
+                        <SelectItem value="1">Apple</SelectItem>
+                        <SelectItem value="2">Banana</SelectItem>
+                        <SelectItem value="3">Blueberry</SelectItem>
+                        <SelectItem value="4">Grapes</SelectItem>
+                        <SelectItem value="5">Pineapple</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={control}
+              name="fromDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Start Date <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button variant="outline" className="w-full text-left">
+                          {field.value ? format(new Date(field.value), 'PPP') : 'Pick a date'}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value ? new Date(field.value) : undefined}
+                        onSelect={(date) => field.onChange(date?.toISOString() || null)}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Close Date */}
+            <FormField
+              control={control}
+              name="toDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Close Date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button variant="outline" className="w-full text-left">
+                          {field.value ? format(new Date(field.value), 'PPP') : 'Pick a date'}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value ? new Date(field.value) : undefined}
+                        onSelect={(date) => field.onChange(date?.toISOString() || null)}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
-          <div className="flex space-x-9">
-            <div>
-              {/* From Date */}
-              <FormField
-                control={control}
-                name="fromDate"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col col-span-1 mt-2">
-                    <FormLabel className="m-1">From Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={'outline'}
-                            className={cn(
-                              'w-[240px] pl-3 text-left font-normal',
-                              !field.value && 'text-muted-foreground'
-                            )}
-                          >
-                            {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) => {
-                            const today = new Date()
-                            today.setHours(0, 0, 0, 0) // Normalize to midnight
-                            return date < today
-                          }}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div>
-              {/* To Date */}
-              <FormField
-                control={control}
-                name="toDate"
-                rules={{
-                  validate: (toDate) => {
-                    // const fromDate = getValues('fromDate') // Get the "From Date"
-                    if (!toDate) return 'To Date is required'
-                    // if (fromDate && toDate < fromDate) {
-                    //   return 'To Date cannot be earlier than From Date'
-                    // }
-                    return true // Validation passed
-                  },
-                }}
-                render={({ field, fieldState }) => (
-                  <FormItem className="flex flex-col col-span-1 mt-2">
-                    <FormLabel className="m-1">To Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={'outline'}
-                            className={cn(
-                              'w-[240px] pl-3 text-left font-normal',
-                              !field.value && 'text-muted-foreground'
-                            )}
-                          >
-                            {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) => {
-                            const today = new Date()
-                            today.setHours(0, 0, 0, 0) // Normalize to midnight
-                            return date < today
-                          }}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    {fieldState.error && (
-                      <p className="text-red-500 text-sm mt-1">{fieldState.error.message}</p>
-                    )}
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
+         
         </div>
         <FormField
           control={control}
@@ -230,13 +181,12 @@ const General = () => {
           )}
         />
 
-<FormField
+        <FormField
           control={control}
           name="maxAllowDiscountPolicyValidationID"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Maximum Allowable Discount Policy Validation
-              </FormLabel>
+              <FormLabel>Maximum Allowable Discount Policy Validation</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -288,13 +238,12 @@ const General = () => {
           )}
         />
 
-<FormField
+        <FormField
           control={control}
           name="creditCardDetailsCapturePolicyID"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Credit Card Details Capture Policy
-              </FormLabel>
+              <FormLabel>Credit Card Details Capture Policy</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -391,13 +340,12 @@ const General = () => {
             </FormItem>
           )}
         />
-     <FormField
+        <FormField
           control={control}
           name="negativeStockCheckingModeID"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Negative Stock Checking Mode
-              </FormLabel>
+              <FormLabel>Negative Stock Checking Mode</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -405,9 +353,9 @@ const General = () => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                <SelectItem value="1">Stop</SelectItem>
-                      <SelectItem value="2">Ignore</SelectItem>
-                      <SelectItem value="3">Notify</SelectItem>
+                  <SelectItem value="1">Stop</SelectItem>
+                  <SelectItem value="2">Ignore</SelectItem>
+                  <SelectItem value="3">Notify</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />

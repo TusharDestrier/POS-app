@@ -115,12 +115,12 @@ function StoreMasterForm() {
 
   const onSubmit = formMethods.handleSubmit(
     async (data) => {
-      const transformData = StoreMasterFormatter(data,1)
+      // const transformData = StoreMasterFormatter(data,1)
       try {
-        console.log(transformData)
+        console.log(data)
 
-         await createStoremaster(transformData)
-        closeModal()
+        //  await createStoremaster(transformData)
+        // closeModal()
       } catch (err: unknown) {
         if(err instanceof Error){
           throw new Error(err.message)
