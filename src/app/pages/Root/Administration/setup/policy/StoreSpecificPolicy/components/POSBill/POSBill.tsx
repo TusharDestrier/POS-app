@@ -1,9 +1,25 @@
+// eslint-disable-next-line import/order
+import { format } from 'date-fns'
+
+import { CalendarIcon } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+// import { Button } from '@/components/ui/button'
+
+//import useGoodsIssueType from '@/app/pages/Root/Inventroty/GoodsIssue/store/useGoodsIssueType'
+
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import {
+  Card,
+  CardContent,
+  //CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
@@ -57,46 +73,66 @@ function POSBill() {
 
           <div className="flex space-x-9">
             <div>
+              {/* From Date */}
               <FormField
-                control={control}
-                name="fromDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>From Date</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        {...field}
-                        id="generalSchema.fromDate"
-                        placeholder="From Date"
-                        className="w-full mt-3"
+              control={control}
+              name="fromDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Start Date <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button variant="outline" className="w-full text-left">
+                          {field.value ? format(new Date(field.value), 'PPP') : 'Pick a date'}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value ? new Date(field.value) : undefined}
+                        onSelect={(date) => field.onChange(date?.toISOString() || null)}
                       />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             </div>
             <div>
+              {/* {To Date} */}
               <FormField
-                control={control}
-                name="toDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>To Date</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        {...field}
-                        id="generalSchema.toDate"
-                        placeholder="To Date"
-                        className="w-full mt-3"
+              control={control}
+              name="toDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Close Date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button variant="outline" className="w-full text-left">
+                          {field.value ? format(new Date(field.value), 'PPP') : 'Pick a date'}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value ? new Date(field.value) : undefined}
+                        onSelect={(date) => field.onChange(date?.toISOString() || null)}
                       />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             </div>
           </div>
         </div>
@@ -107,15 +143,23 @@ function POSBill() {
             <FormItem>
               <FormLabel>Allow Item Level Discount</FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="Y" id="Y" />
-                    <Label htmlFor="Y">Yes</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="N" id="N" />
-                    <Label htmlFor="N">No</Label>
-                  </div>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-row space-y-1 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">N</FormLabel>
+                  </FormItem>
                 </RadioGroup>
               </FormControl>
 
@@ -150,15 +194,23 @@ function POSBill() {
             <FormItem>
               <FormLabel>Allow Bill Level Discount</FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="Y" id="Y" />
-                    <Label htmlFor="Y">Yes</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="N" id="N" />
-                    <Label htmlFor="N">No</Label>
-                  </div>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-row space-y-1 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">N</FormLabel>
+                  </FormItem>
                 </RadioGroup>
               </FormControl>
 
@@ -194,15 +246,23 @@ function POSBill() {
             <FormItem>
               <FormLabel>Allow to Select Active Promotion from List</FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="Y" id="Y" />
-                    <Label htmlFor="Y">Yes</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="N" id="N" />
-                    <Label htmlFor="N">No</Label>
-                  </div>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-row space-y-1 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">N</FormLabel>
+                  </FormItem>
                 </RadioGroup>
               </FormControl>
 
@@ -218,15 +278,23 @@ function POSBill() {
             <FormItem>
               <FormLabel>Allow to Clear Applied Promotion</FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="Y" id="Y" />
-                    <Label htmlFor="Y">Yes</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="N" id="N" />
-                    <Label htmlFor="N">No</Label>
-                  </div>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-row space-y-1 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">N</FormLabel>
+                  </FormItem>
                 </RadioGroup>
               </FormControl>
 
@@ -242,15 +310,23 @@ function POSBill() {
             <FormItem>
               <FormLabel>Sale Person Tagging Mandatory</FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="Y" id="Y" />
-                    <Label htmlFor="Y">Yes</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="N" id="N" />
-                    <Label htmlFor="N">No</Label>
-                  </div>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-row space-y-1 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">N</FormLabel>
+                  </FormItem>
                 </RadioGroup>
               </FormControl>
 
@@ -287,15 +363,23 @@ function POSBill() {
             <FormItem>
               <FormLabel>Customer Tagging is Mandatory</FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="Y" id="Y" />
-                    <Label htmlFor="Y">Yes</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="N" id="N" />
-                    <Label htmlFor="N">No</Label>
-                  </div>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-row space-y-1 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">N</FormLabel>
+                  </FormItem>
                 </RadioGroup>
               </FormControl>
               <FormMessage />

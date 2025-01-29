@@ -1,10 +1,25 @@
-
+// eslint-disable-next-line import/order
+//import { Label } from '@radix-ui/react-dropdown-menu'
+import { format } from 'date-fns'
+import { CalendarIcon } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form'
+// import { Button } from '@/components/ui/button'
+
+//import useGoodsIssueType from '@/app/pages/Root/Inventroty/GoodsIssue/store/useGoodsIssueType'
+
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import {
+  Card,
+  CardContent,
+  //CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
@@ -15,7 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-
+//import { cn } from '@/lib/utils' // Verify this path matches your project structure
 
 const CreditNote = () => {
   const { control } = useFormContext()
@@ -60,46 +75,64 @@ const CreditNote = () => {
 
           <div className='flex space-x-9'>
             <div>
+              {/* {From Date} */}
               <FormField
-                control={control}
-                name="fromDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>From Date</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        {...field}
-                        id="generalSchema.fromDate"
-                        placeholder="From Date"
-                        className="w-full mt-3"
+              control={control}
+              name="fromDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>From Date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button variant ="outline" className="w-full text-left">
+                          {field.value ? format(new Date(field.value), 'PPP') : 'Pick a date'}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value ? new Date(field.value) : undefined}
+                        onSelect={(date) => field.onChange(date?.toISOString() || null)}
                       />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             </div>
             <div>
+              {/* {To Date} */}
               <FormField
-                control={control}
-                name="toDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>To Date</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        {...field}
-                        id="generalSchema.toDate"
-                        placeholder="To Date"
-                        className="w-full mt-3"
+              control={control}
+              name="toDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Close Date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button variant ="outline" className="w-full text-left">
+                          {field.value ? format(new Date(field.value), 'PPP') : 'Pick a date'}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value ? new Date(field.value) : undefined}
+                        onSelect={(date) => field.onChange(date?.toISOString() || null)}
                       />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             </div>
           </div>
         </div>
@@ -140,15 +173,23 @@ const CreditNote = () => {
             <FormItem>
               <FormLabel>Bill Tagging Mandatory during Return</FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3 roles-radio">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="Y" id="Y" />
-                    <Label htmlFor="Y">Yes</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="N" id="N" />
-                    <Label htmlFor="N">No</Label>
-                  </div>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-row space-y-1 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">N</FormLabel>
+                  </FormItem>
                 </RadioGroup>
               </FormControl>
               <FormDescription />

@@ -21,16 +21,16 @@ function StoreSpecificTab() {
           <General />
         </TabsContent>
         <TabsContent value="posBIll">
-          {/* <POSBill /> */}
+          <POSBill />
         </TabsContent>
         <TabsContent value="creditNote">
-          {/* <CreditNote /> */}
+          <CreditNote />
         </TabsContent>
         <TabsContent value="goodsReceiptReturn">
-          {/* <GoodsReceiptReturn /> */}
+          <GoodsReceiptReturn />
         </TabsContent>
         <TabsContent value="posOrder">
-          {/* <PosOrder /> */}
+          <PosOrder />
         </TabsContent>
       </div>
     </Tabs>
