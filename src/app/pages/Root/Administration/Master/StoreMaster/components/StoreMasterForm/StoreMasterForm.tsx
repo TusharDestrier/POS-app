@@ -179,9 +179,16 @@ function StoreMasterForm() {
     }
   })
 
-  if (isLoading) {
+  if (isLoading && mode==='View') {
     return <GlobalViewerLoader />
   }
+
+  if(!isLoading && mode==='View'){
+    return JSON.stringify(storeMaster)
+  }
+
+
+
 
   return (
     <FormProvider {...formMethods}>
