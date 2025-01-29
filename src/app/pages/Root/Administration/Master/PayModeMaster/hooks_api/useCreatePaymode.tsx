@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import { PaymodePostType } from '../helper/dataFormatter.sx'
+import { PaymodePostType } from '../helper/dataFormatter.tsx'
 import { usePaymodeMaster } from '../store/usePaymodeMaster'
 
 import paymodeClient from '@/services/paymodeClient'

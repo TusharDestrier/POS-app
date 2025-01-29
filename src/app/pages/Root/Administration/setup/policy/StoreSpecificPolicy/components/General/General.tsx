@@ -2,7 +2,7 @@
 import { format } from 'date-fns'
 
 import { CalendarIcon } from 'lucide-react'
-import { useForm, useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 
 // import { Button } from '@/components/ui/button'
 
@@ -19,7 +19,6 @@ import {
 } from '@/components/ui/card'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
@@ -36,14 +35,14 @@ import { cn } from '@/lib/utils' // Verify this path matches your project struct
 const General = () => {
   const { control } = useFormContext()
 
-  const { getValues } = useForm({
-    defaultValues: {
-      GeneralSchema: {
-        fromDate: null,
-        toDate: null,
-      },
-    },
-  });
+  // const { getValues } = useForm({
+  //   defaultValues: {
+  //     GeneralSchema: {
+  //       fromDate: null,
+  //       toDate: null,
+  //     },
+  //   },
+  // });
 
   return (
     <Card className="border-2 border-solid border-black overflow-y-auto h-[650px]">
@@ -51,35 +50,36 @@ const General = () => {
         <CardTitle> General</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex space-x-8 ml-5 gap-36">
+        <div className="flex space-x-8 ml-5 gap-20">
           <div>
-            <FormField
-              control={control}
-              name="GeneralSchema.storeName"
-              render={({ field }) => (
-                <FormItem className="col-span-1">
-                  <FormLabel>Store Name</FormLabel>
-                  <FormControl>
-                    <Select {...field}>
-                      <SelectTrigger className="w-full mt-3">
-                        <SelectValue placeholder="Select Store Name" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
+          <FormField
+          control={control}
+          name="storeID"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Store Name
+              </FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Store Name" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                <SelectGroup>
                           <SelectLabel>Store</SelectLabel>
-                          <SelectItem value="apple">Apple</SelectItem>
-                          <SelectItem value="banana">Banana</SelectItem>
-                          <SelectItem value="blueberry">Blueberry</SelectItem>
-                          <SelectItem value="grapes">Grapes</SelectItem>
-                          <SelectItem value="pineapple">Pineapple</SelectItem>
+                          <SelectItem value="1">Apple</SelectItem>
+                          <SelectItem value="2">Banana</SelectItem>
+                          <SelectItem value="3">Blueberry</SelectItem>
+                          <SelectItem value="4">Grapes</SelectItem>
+                          <SelectItem value="5">Pineapple</SelectItem>
                         </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
           </div>
 
           <div className="flex space-x-9">
@@ -87,7 +87,7 @@ const General = () => {
               {/* From Date */}
               <FormField
                 control={control}
-                name="GeneralSchema.fromDate"
+                name="fromDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col col-span-1 mt-2">
                     <FormLabel className="m-1">From Date</FormLabel>
@@ -129,14 +129,14 @@ const General = () => {
               {/* To Date */}
               <FormField
                 control={control}
-                name="GeneralSchema.toDate"
+                name="toDate"
                 rules={{
                   validate: (toDate) => {
-                    const fromDate = getValues('GeneralSchema.fromDate') // Get the "From Date"
+                    // const fromDate = getValues('fromDate') // Get the "From Date"
                     if (!toDate) return 'To Date is required'
-                    if (fromDate && toDate < fromDate) {
-                      return 'To Date cannot be earlier than From Date'
-                    }
+                    // if (fromDate && toDate < fromDate) {
+                    //   return 'To Date cannot be earlier than From Date'
+                    // }
                     return true // Validation passed
                   },
                 }}
@@ -183,14 +183,14 @@ const General = () => {
         </div>
         <FormField
           control={control}
-          name={'GeneralSchema.pendingSettlement'}
+          name={'pendingSettlementDays'}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Pending Settlement Days</FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  id="generalSchema.pendingSettlement"
+                  id="pendingSettlementDays"
                   placeholder="Pending Settlement Day"
                   className="w-full mt-3"
                 />
@@ -201,20 +201,28 @@ const General = () => {
         />
         <FormField
           control={control}
-          name="GeneralSchema.footfallEntry"
+          name="footfallEntryRequiredInDaySettlement"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Footfall Entry required in Day Settlement</FormLabel>
+            <FormItem className="space-y-3">
+              <FormLabel>Footfall Entry Required In Day Settlement </FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="default" id="r1" />
-                    <Label htmlFor="r1">Yes</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="comfortable" id="r2" />
-                    <Label htmlFor="r2">No</Label>
-                  </div>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-row space-y-1 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">N</FormLabel>
+                  </FormItem>
                 </RadioGroup>
               </FormControl>
               <FormMessage />
@@ -222,43 +230,39 @@ const General = () => {
           )}
         />
 
-        <FormField
+<FormField
           control={control}
-          name="GeneralSchema.maxAllowable"
+          name="maxAllowDiscountPolicyValidationID"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Maximum Allowable Discount Policy Validation</FormLabel>
-              <FormControl>
-                <Select {...field}>
-                  <SelectTrigger className="w-full mt-3">
-                    <SelectValue placeholder="Select a policy" />
+              <FormLabel>Maximum Allowable Discount Policy Validation
+              </FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a Discount Policy" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Fruits</SelectLabel>
-                      <SelectItem value="apple">Apple</SelectItem>
-                      <SelectItem value="banana">Banana</SelectItem>
-                      <SelectItem value="blueberry">Blueberry</SelectItem>
-                      <SelectItem value="grapes">Grapes</SelectItem>
-                      <SelectItem value="pineapple">Pineapple</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormControl>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="1">One</SelectItem>
+                  <SelectItem value="2">Two</SelectItem>
+                  <SelectItem value="3">Three</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={control}
-          name="GeneralSchema.maxBillingAmt"
+          name="maxBillAmountSinglePOSBill"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Maximum Billing Amount in a Single POS Billing</FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  id="maxBillingAmt"
+                  id="maxBillAmountSinglePOSBill"
                   placeholder="Maximum Billing Amount in a Single POS Billing"
                   className="w-full mt-3"
                 />
@@ -270,7 +274,7 @@ const General = () => {
 
         <FormField
           control={control}
-          name="GeneralSchema.panNo"
+          name="pan"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -284,29 +288,25 @@ const General = () => {
           )}
         />
 
-        <FormField
+<FormField
           control={control}
-          name="GeneralSchema.creditCardDetails"
+          name="creditCardDetailsCapturePolicyID"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Credit Card Details Capture Policy</FormLabel>
-              <FormControl>
-                <Select {...field}>
-                  <SelectTrigger className="w-full mt-3">
-                    <SelectValue placeholder="Select credit Card Option" />
+              <FormLabel>Credit Card Details Capture Policy
+              </FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a card capture policy" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Fruits</SelectLabel>
-                      <SelectItem value="apple">Apple</SelectItem>
-                      <SelectItem value="banana">Banana</SelectItem>
-                      <SelectItem value="blueberry">Blueberry</SelectItem>
-                      <SelectItem value="grapes">Grapes</SelectItem>
-                      <SelectItem value="pineapple">Pineapple</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormControl>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="1">One</SelectItem>
+                  <SelectItem value="2">Two</SelectItem>
+                  <SelectItem value="3">Three</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
@@ -314,20 +314,28 @@ const General = () => {
 
         <FormField
           control={control}
-          name="GeneralSchema.crcardAutho"
+          name="isCCardAuthNoEntryMandatory"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Is Credit Card Authorization No. Entry Mandatory</FormLabel>
+            <FormItem className="space-y-3">
+              <FormLabel>Is Credit Card Authorization No. Entry Mandatory </FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 mt-3">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="default" id="r3" />
-                    <Label htmlFor="r3">Yes</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="comfortable" id="r4" />
-                    <Label htmlFor="r4">No</Label>
-                  </div>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-row space-y-1 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">N</FormLabel>
+                  </FormItem>
                 </RadioGroup>
               </FormControl>
               <FormMessage />
@@ -337,37 +345,44 @@ const General = () => {
 
         <FormField
           control={control}
-          name="GeneralSchema.backDateEntry"
+          name="allowBackDateEntry"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Allow Backdate Entry</FormLabel>
+            <FormItem className="space-y-3">
+              <FormLabel>Allow Backdate Entry </FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="default" id="r5" />
-                    <Label htmlFor="r5">Yes</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="comfortable" id="r6" />
-                    <Label htmlFor="r6">No</Label>
-                  </div>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-row space-y-1 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">N</FormLabel>
+                  </FormItem>
                 </RadioGroup>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         <FormField
           control={control}
-          name="GeneralSchema.backDateDays"
+          name="backDateEntryDays"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Back Date Entry Days</FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  id="backDateDays"
+                  id="backDateEntryDays"
                   placeholder="Back Date Entry"
                   className="w-full mt-3"
                 />
@@ -376,27 +391,25 @@ const General = () => {
             </FormItem>
           )}
         />
-        <FormField
+     <FormField
           control={control}
-          name="GeneralSchema.stockCheck"
+          name="negativeStockCheckingModeID"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Negative Stock Checking Mode</FormLabel>
-              <FormControl>
-                <Select {...field}>
-                  <SelectTrigger className="w-full mt-3">
+              <FormLabel>Negative Stock Checking Mode
+              </FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
                     <SelectValue placeholder="Select Checking Mode" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Modes</SelectLabel>
-                      <SelectItem value="stop">Stop</SelectItem>
-                      <SelectItem value="ignore">Ignore</SelectItem>
-                      <SelectItem value="notify">Notify</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormControl>
+                </FormControl>
+                <SelectContent>
+                <SelectItem value="1">Stop</SelectItem>
+                      <SelectItem value="2">Ignore</SelectItem>
+                      <SelectItem value="3">Notify</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}

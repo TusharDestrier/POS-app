@@ -1,64 +1,101 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
-
-
+import { z } from 'zod'
 
 import StoreWiseSetupTab from './components/StoreSpecificTab'
-import { posBSillchema } from './schemas/POSBill.schema'
+import { StoreWisePolicyFormatter } from './helper/StoreWisePolicyFormatter'
+import { useCreateOrganizationPolicy } from './hooks_api/useCreateStoreWisePolicy'
+import { PostStoreWisePolicySchema } from './schemas/PostStoreWisePolicySchema'
+import { useStoreWisePolicyDataStore } from './store/useStoreWisePolicyDataStore'
+import useStoreWisePolicyHead from './store/useStoreWisePolicyHead'
 
 import { Button } from '@/components/ui/button'
 
 
 function StoreSpecificPolicy() {
+  const {createStoreWisePolicy,error} = useCreateOrganizationPolicy();
+  const closeModal = useStoreWisePolicyHead((state) => state.toggleOpen)
+  const clearId = useStoreWisePolicyDataStore((state) => state.clearStoreWisePolicyId)
+
+  
+
+
+
   const formMethods = useForm({
-    resolver: zodResolver(posBSillchema),
+    resolver: zodResolver(PostStoreWisePolicySchema),
     defaultValues:{
-      GeneralSchema:{
-        pendingSettlement:"23"
-      },
-      POSBill:{
-        allowItemLevelDiscount:false
-      },
-      PsOrder:{
-        dueDateMandatory:false
-      },
-      CreditNoteSchema:{
-        returnItem:'22'
-      },
-      GoodsRecRet: {
-        excessGoodsReceiptTolerance: '22'
-      }
+      storeID: "1",
+      fromDate: '',
+      toDate: '',
+      pendingSettlementDays: 20,
+      footfallEntryRequiredInDaySettlement: 'N',
+      maxAllowDiscountPolicyValidationID: 1,
+      maxBillAmountSinglePOSBill: 0,
+      pan: '8844443G',
+      creditCardDetailsCapturePolicyID: 1,
+      isCCardAuthNoEntryMandatory: 'N',
+      allowBackDateEntry: 'N',
+      backDateEntryDays: 0,
+      negativeStockCheckingModeID: 1,
+      allowItemLevelDiscount: 'N',
+      maxAllowDiscountPercentage: 2,
+      allowBillLevelDiscount: 'N',
+      maxAllowDiscountAmount: 2,
+      allowToSelectActivePromotionFromList: 'N',
+      allowToClearAppliedPromotion: 'N',
+      salePersonTaggingMandatory: 'N',
+      salePersonTaggingPolicyID: 1,
+      customerTaggingMandatory: 'N',
+      returnOfItemWithin:5,
+      creditNoteValidityDays: 3,
+      billTaggingMandatoryDuringReturn: 'N',
+      noOfCopiesToBePrint: 4,
+      excessGoodsReceiptTolerancePercentage:33,
+      shortGoodsReceiptTolerancePercentage:32,
+      dueDateMandatoryInPOSOrder: 'N',
+      minPercentageOfAdvanceDuringPOSOrder: 20,
+      posOrderCancellationIsMandatory: 'N'
+
+      
+
     }
   
   })
 
   // Handle form submission
-  const onSubmit = formMethods.handleSubmit(
-    (data) => {
-      console.log('Form Data Submitted: ', data) // Logs if submission is successful
-    },
-    (errors) => {
-      console.log('Validation Errors: ', errors) // Logs validation errors, if any
+    async function onSubmit(data: z.infer<typeof PostStoreWisePolicySchema>) {
+      const formattedData = StoreWisePolicyFormatter(data, 1)
+      console.log('Formatted Data:', formattedData)
+  
+      try {
+        // console.log("Formatted Data:", formattedData);
+        // await createStoreWisePolicy(formattedData);
+        console.log(data)
+        closeModal();
+        clearId();
+        // console.log(data)
+      } catch (err) {
+        console.error(err)
+      }
     }
-  )
+
+    // Error handling
+   if (error) {
+     return <p>{error.message}</p>;
+   }
 
   return (
     <FormProvider {...formMethods}>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault() // Ensure default form submission behavior is prevented
-          onSubmit() // Trigger submission
-        }}
-      >
+      <form onSubmit={formMethods.handleSubmit(onSubmit)} >
         <StoreWiseSetupTab />
-        <div className="h-[60px] flex justify-end items-center space-x-2">
-          <Button type="submit" className=" btn btn-primary">
-            Submit All
+        <div className="h-[60px] sticky bottom-0 right-0 flex justify-end items-center">
+          <Button type="submit" className="btn btn-primary">
+            Submit
           </Button>
-          <Button type="reset" className=" btn btn-primary">
-            Cancel All
-          </Button>
+          {/* <Button type="submit" className="btn btn-primary">
+            Cancel
+          </Button> */}
         </div>
       </form>
     </FormProvider>

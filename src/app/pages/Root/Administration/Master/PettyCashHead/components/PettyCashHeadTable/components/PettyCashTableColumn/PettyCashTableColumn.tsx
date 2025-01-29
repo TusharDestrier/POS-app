@@ -46,7 +46,7 @@ export const columns: ColumnDef<PettyCashTableData>[] = [
     accessorKey: 'pettyCashID',
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-        PettyCash Code
+        PettyCash ID
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),

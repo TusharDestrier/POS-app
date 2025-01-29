@@ -12,6 +12,7 @@ import { usePaymodeMasterDataStore } from '../../store/usePaymentMethodStore'
 import { usePaymodeMaster } from '../../store/usePaymodeMaster'
 import PaymentMethods from '../PaymentMethod'
 import PaymodeConditions from '../PaymodeConditions'
+import PayModeViewer from '../PaymodeTable/components/PayModeViewer'
 import SupportedCurrencies from '../SupportedCurrencies'
 
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
@@ -130,9 +131,9 @@ function PaymodeMasterForm() {
   }
 
   if (!isLoading && mode === 'View' && paymodeMastedId) {
-    return <div>{JSON.stringify(paymodeData)}</div>
+    return <div><PayModeViewer data={paymodeData} /></div>
   }
-
+//{JSON.stringify(paymodeData)}
   if (error) {
     return <div>{error}</div>
   }

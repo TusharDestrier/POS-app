@@ -9,12 +9,13 @@ import {
 } from '@/components/ui/card'
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+
 
 
 const GoodsReceiptReturn = () => {
   const { control } = useFormContext()
+ 
 
   return (
     <Card className='border-2 border-solid border-black overflow-y-auto h-[650px]'>
@@ -24,12 +25,12 @@ const GoodsReceiptReturn = () => {
       <CardContent className="space-y-4">
         <FormField
           control={control}
-          name="GoodsRecRet.excessGoodsReceiptTolerance"
+          name="excessGoodsReceiptTolerancePercentage"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Excess Goods Receipt Tolerance Percentage</FormLabel>
               <FormControl>
-                <Input {...field} id="egr" placeholder="Excess Goods Receipt Tolerance Percentage" className="w-full mt-3" />
+                <Input {...field} id="excessGoodsReceiptTolerancePercentage" placeholder="Excess Goods Receipt Tolerance Percentage" className="w-full mt-3" />
               </FormControl>
               <FormDescription />
               <FormMessage />
@@ -39,12 +40,12 @@ const GoodsReceiptReturn = () => {
 
         <FormField
           control={control}
-          name="GoodsRecRet.shortGoodsReceiptTolerance"
+          name="shortGoodsReceiptTolerancePercentage"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Short Goods Receipt Tolerance Percentage</FormLabel>
               <FormControl>
-                <Input {...field} id="sgr" placeholder="Short Goods Receipt Tolerance Percentage" className="w-full mt-3" />
+                <Input {...field} id="shortGoodsReceiptTolerancePercentage" placeholder="Short Goods Receipt Tolerance Percentage" className="w-full mt-3" />
               </FormControl>
               <FormDescription />
               <FormMessage />
@@ -54,19 +55,23 @@ const GoodsReceiptReturn = () => {
 
         <FormField
           control={control}
-          name="GoodsRecRet.allowReceiveDamagedGoods"
+          name="allowToReceiveDamagedGoods"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Allow to Receive Damaged Goods</FormLabel>
+              <FormLabel>Allow to Receive Damage Goods</FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
+              <RadioGroup className="flex items-center gap-3 w-full mt-3 mb-5 roles-radio"
+                  value={String(field.value)} // Bind the current value
+                  onValueChange={field.onChange} // Update the value on change
+                  >
+                
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="yes" id="allowDamagedYes" />
-                    <Label htmlFor="allowDamagedYes">Yes</Label>
+                    <RadioGroupItem value="Y" id="Y" />
+                    <label htmlFor="Y">Yes</label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="no" id="allowDamagedNo" />
-                    <Label htmlFor="allowDamagedNo">No</Label>
+                    <RadioGroupItem value="N" id="N" />
+                    <label htmlFor="N">No</label>
                   </div>
                 </RadioGroup>
               </FormControl>

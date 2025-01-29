@@ -1,5 +1,6 @@
 import { useFormContext } from 'react-hook-form'
 
+
 import {
   Card,
   CardContent,
@@ -8,11 +9,12 @@ import {
 } from '@/components/ui/card'
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+
 
 const PosOrder = () => {
   const { control } = useFormContext()
+
 
   return (
     <Card className='border-2 border-solid border-black overflow-y-auto h-[650px]'>
@@ -22,19 +24,23 @@ const PosOrder = () => {
       <CardContent className="space-y-4">
         <FormField
           control={control}
-          name="PsOrder.dueDateMandatory"
+          name="dueDateIsMandatoryInPOSOrder"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Due Date is Mandatory in POS Order</FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
+              <RadioGroup className="flex items-center gap-3 w-full mt-3 mb-5 roles-radio"
+                  value={String(field.value)} // Convert boolean to string
+                  onValueChange={field.onChange} // Update the value on change
+                  >
+                
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="yes" id="dueDateYes" />
-                    <Label htmlFor="dueDateYes">Yes</Label>
+                    <RadioGroupItem value="Y" id="Y" />
+                    <label htmlFor="Y">Yes</label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="no" id="dueDateNo" />
-                    <Label htmlFor="dueDateNo">No</Label>
+                    <RadioGroupItem value="N" id="N" />
+                    <label htmlFor="N">No</label>
                   </div>
                 </RadioGroup>
               </FormControl>
@@ -46,12 +52,12 @@ const PosOrder = () => {
 
         <FormField
           control={control}
-          name="PsOrder.minAdvancePercentage"
+          name="minPercentageOfAdvanceDuringPOSOrder"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Minimum Percentage of Advance during POS Order</FormLabel>
               <FormControl>
-                <Input {...field} id="mpa" placeholder="Minimum Percentage of Advance during POS Order" className="w-full mt-3" />
+                <Input {...field} id="minPercentageOfAdvanceDuringPOSOrder" placeholder="Minimum Percentage of Advance during POS Order" className="w-full mt-3" />
               </FormControl>
               <FormDescription />
               <FormMessage />
@@ -61,19 +67,23 @@ const PosOrder = () => {
 
         <FormField
           control={control}
-          name="PsOrder.posOrderCancellationMandatory"
+          name="posOrderCancellationIsMandatory"
           render={({ field }) => (
             <FormItem>
               <FormLabel>POS Order Cancellation is Mandatory</FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
+              <RadioGroup className="flex items-center gap-3 w-full mt-3 mb-5 roles-radio"
+                  value={String(field.value)} // Convert boolean to string
+                  onValueChange={field.onChange} // Update the value on change
+                  >
+                
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="yes" id="cancellationYes" />
-                    <Label htmlFor="cancellationYes">Yes</Label>
+                    <RadioGroupItem value="Y" id="Y" />
+                    <label htmlFor="Y">Yes</label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="no" id="cancellationNo" />
-                    <Label htmlFor="cancellationNo">No</Label>
+                    <RadioGroupItem value="N" id="N" />
+                    <label htmlFor="N">No</label>
                   </div>
                 </RadioGroup>
               </FormControl>

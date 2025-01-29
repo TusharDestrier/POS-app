@@ -9,6 +9,7 @@ import { CustomerMasterSchema } from '../../schemas/CustomerMaster.schema'
 import { useCustomerMaster } from '../../store/useCustomerMaster'
 import { useCustomerMasterDataStore } from '../../store/useCustomerMasterDataStore'
 import CustomerMasterTab from '../CustomerMasterTab/CustomerMasterTab'
+import CustomerTableViewer from '../CustomerTable/components/CustomerTableViewer'
 
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
@@ -135,7 +136,8 @@ function CustomerForm() {
   }
 
   if (!customerLoading && customerData && mode === 'View') {
-    return <h3>{JSON.stringify(customerData)}</h3>
+    return <h3><CustomerTableViewer data={customerData} /></h3>
+    //<h3>{JSON.stringify(customerData)}</h3>
   }
 
   if (customerError && mode === 'View') {
