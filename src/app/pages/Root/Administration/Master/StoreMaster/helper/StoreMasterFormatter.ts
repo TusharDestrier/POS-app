@@ -1,9 +1,8 @@
-import { z } from "zod"
+import { z } from 'zod'
 
 //import { StoreMasterHeadSchema } from "../../schemas/StoreMasterHeadSchema"
-import { StoreMasterHeadSchema } from "../schemas/StoreMasterHeadSchema"
-import useStoreMasterHead from "../store/useStoreMasterHead"
-
+import { StoreMasterHeadSchema } from '../schemas/StoreMasterHeadSchema'
+import useStoreMasterHead from '../store/useStoreMasterHead'
 
 export type StoreMasterFormatterType = z.infer<typeof StoreMasterHeadSchema>
 
@@ -13,13 +12,13 @@ const operation = {
   Delete: 'D',
 }
 
-export function StoreMasterFormatter( data: StoreMasterFormatterType,
-  id: number | string | null) {
+export function StoreMasterFormatter(data: StoreMasterFormatterType, id: number | string | null) {
   const mode = useStoreMasterHead.getState().mode as 'Create' | 'Edit' | 'Delete'
+
   const formattedData = {
-    storeID: mode === 'Create' ? 0 : id, // Default value, change if needed
+    storeID: mode === 'Create' ? 0 : id, // Default value
     storeCode: data.storeCode ?? '',
-    storeName: data.storeName ?? '', //prob
+    storeName: data.storeName ?? '',
     startDate: data.startDate ?? '',
     closeDate: data.closeDate ?? '',
     storeTypeCode: data.storeTypeCode ?? '',
@@ -33,34 +32,95 @@ export function StoreMasterFormatter( data: StoreMasterFormatterType,
     operationTypeName: data.operationTypeName ?? '',
     defaultWarehouseCode: data.defaultWarehouseCode ?? '',
     defaultWarehouseName: data.defaultWarehouseName ?? '',
-    defaultSaleWHCode: data.defaultSaleWHCode ?? '',
-    defaultSaleWHName: data.defaultSaleWHName ?? '',
-    defaultReturnWHCode: data.defaultReturnWHCode ?? '',
-    defaultReturnWHName: data.defaultReturnWHName ?? '',
-    isActive: data.isActive ? 'Y' : 'N', //prob
-    billAddress: data.billAddress ?? '',
-    billCity: data.billCity ?? '',
-    billPostalCode: data.billPostalCode ?? '',
-    billStateCode: data.billStateCode ?? '',
-    billStateName: data.billStateName ?? '',
-    billCountryCode: data.billCountryCode ?? '',
-    billCountryName: data.billCountryName ?? '',
-    shipAddress: data.shipAddress ?? '',
-    shipCity: data.shipCity ?? '',
-    shipPostalCode: data.shipPostalCode ?? '',
-    shipStateCode: data.shipStateCode ?? '',
-    shipStateName: data.shipStateName ?? '',
-    shipCountryCode: data.shipCountryCode ?? '',
-    shipCountryName: data.shipCountryName ?? '',
+    defaultSaleWHCode: data.defaultSaleWarehouseCode ?? '',
+    defaultSaleWHName: data.defaultSaleWarehouseCode ?? '',
+    defaultReturnWHCode: data.defaultReturnWarehouseCode ?? '',
+    defaultReturnWHName: data.defaultReturnWarehouseCode ?? '',
+    isActive: data.isActive ?? 'N',
+    billAddress: data.billToAddress ?? '',
+    billCity: data.billToCity ?? '',
+    billPostalCode: data.billToPostalCode ?? '',
+    billStateCode: data.billToState ?? '',
+    billStateName: data.billToState ?? '',
+    billCountryCode: 'BANG',
+    billCountryName: 'Bangladesh',
+    shipAddress: data.shipToAddress ?? '',
+    shipCity: data.shipToCity ?? '',
+    shipPostalCode: data.shipToPostalCode ?? '',
+    shipStateCode: data.shipToState ?? '',
+    shipStateName: data.shipToState ?? '',
+    shipCountryCode: 'IND',
+    shipCountryName: 'India',
     contactPerson: data.contactPerson ?? '',
-    contactNumber: data.contactNumber ?? 0,
-    alternateContactNumber: data.alternateContactNumber ?? 0,
-    email: data.email ?? '',
-    enteredBy: '0', // Default value, change if needed
-    usedFor: operation[mode], // Adjust this as required
-    objWareHouse: data.objWareHouse,
-    
+    contactNumber: Number(data.contactNumber) || 0,
+    alternateContactNumber: Number(data.contactNumber) || 0,
+    email: data.emailId ?? '',
+    enteredBy: 0,
+    usedFor: operation[mode],
+    priceListName: ['STANDARD', 'PREMIUM', 'DISCOUNTED'].includes(data.priceList)
+    ? (data.priceList as 'STANDARD' | 'PREMIUM' | 'DISCOUNTED')
+    : 'STANDARD', // Default value
+    priceListID:0,
+    gstin: data.GSTIN ?? "",
+    gstinDate: data?.GSTINDate,
+    gstinState:data?.stateCode,
+    factor: "",
+    // 🏭 Warehouse Mapping (Fix ✅)
+    objWareHouse: data.sourcingWarehouse.map((wh) => ({
+      storeID: 0,
+      sourcingWarehouseCode: wh.warehouseCode,
+      sourcingWarehouseName: wh.warehouseCode ?? '',
+    })),
+
+    // 💳 Payment Mode Mapping (Fix ✅)
+    objPayMode: data.objPayMode.map((pm) => ({
+      storeID: 0,
+      paymentModeID: 0, // Backend required but missing in frontend, default 0
+      paymentModeName: pm.payMode,
+      isCrossStoreUsage: pm.crossStore ?? 'N',
+      ledgerCode: pm.ledgersCode ?? '',
+      ledgerName: pm.ledgersName ?? '',
+      subLedgerCode: pm.subLedgerCode ?? '',
+      subLedgerName: pm.subLedgerName ?? '',
+      discontinued: pm.discontinue ?? 'N',
+    })),
+
+    // 💰 Petty Cash Mapping (Fix ✅)
+    objPettyCash: data.objPettyCash.map((pc) => ({
+      storeID: 0,
+      pettyCashID: 0, // Backend required but missing in frontend, default 0
+      pettyCashName: pc.pettyCashName ?? '',
+      limit: Number(pc.limit) || 0,
+      modeOfOperation: pc.modeOfOperation ?? '',
+      ledgerCode: pc.ledgerCode ?? '',
+      ledgerName: pc.ledgerName ?? '',
+      subLedgerCode: pc.subLedgerCode ?? '',
+      subLedgerName: pc.subLedgerName ?? '',
+      discontinued: pc.discontinued ?? 'N',
+    })),
+
+    // 📜 Series Mapping (Fix ✅)
+    objSeries: data.objSeries.map((series) => ({
+      storeID: 0,
+      transactionType: series.transactionType === 'SALE' ? 1 : 0, // Convert SALE to number
+      seriesName: series.seriesName ?? '',
+      prefix: series.prefix ?? '',
+      noOfDigit: Number(series.noOfDigit) || 0,
+      suffix: series.suffix ?? '',
+      discontinued: series.discontinued ?? 'N',
+    })),
+
+    // 📊 Ledger Mapping (Fix ✅)
+    objLedger: data.objLedger.map((ledger) => ({
+      storeID: 0,
+      ledgerCode: ledger.ledgerCode ?? '',
+      ledgerName: ledger.ledgerName ?? '',
+      subLedgerCode: ledger.subLedgerCode ?? '',
+      subLedgerName: ledger.subLedgerName ?? '',
+      costCenterCode: ledger.costCenterCode ?? '',
+      costCenterName: ledger.costCenterName ?? '',
+    })),
   }
-  return formattedData 
+
+  return formattedData
 }
- 

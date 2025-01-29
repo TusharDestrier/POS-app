@@ -15,16 +15,31 @@ import {
 
 const PettyCashDetailsForm = () => {
   // Access central form control through useFormContext
-  const { control } = useFormContext()
+  const { control, setValue, watch } = useFormContext()
 
   // Manage dynamic field rows for petty cash values
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'pettyCash.pettycashValues', // Adjusted path to match combined schema
+    name: 'objPettyCash', // Adjusted path to match combined schema
   })
 
+  // Ledger and Sub-Ledger options
+  const ledgerOptions = [
+    { value: 'LEDGER001', label: 'Ledger 1' },
+    { value: 'LEDGER002', label: 'Ledger 2' },
+  ]
+
+  const subLedgerOptions = [
+    { value: 'SUBLEDGER001', label: 'Sub Ledger 1', parentLedger: 'LEDGER001' },
+    { value: 'SUBLEDGER002', label: 'Sub Ledger 2', parentLedger: 'LEDGER002' },
+  ]
+
+  const getSubLedgers = (parentLedger: string) => {
+    return subLedgerOptions.filter((subLedger) => subLedger.parentLedger === parentLedger)
+  }
+
   return (
-    <div className='border p-4 border-black border-solid h-[580px] overflow-y-auto'>
+    <div className="border p-4 border-black border-solid h-[580px] overflow-y-auto">
       <div className="form-head mb-4">
         <ul className="grid grid-cols-6 gap-3">
           <li className="text-sm font-semibold">
@@ -46,7 +61,7 @@ const PettyCashDetailsForm = () => {
         <div key={item.id} className="grid grid-cols-6 gap-3 mb-3">
           <FormField
             control={control}
-            name={`pettyCash.pettycashValues.${index}.pettycahHead`}
+            name={`objPettyCash.${index}.pettyCashName`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -55,9 +70,9 @@ const PettyCashDetailsForm = () => {
                       <SelectValue placeholder="Select Pettycash Head" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="m@example.com">m@example.com</SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">m@support.com</SelectItem>
+                      <SelectItem value="pettyCash1">pettyCash1</SelectItem>
+                      <SelectItem value="pettyCash2">pettyCash2</SelectItem>
+                      <SelectItem value="pettyCash3">pettyCash3</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -68,11 +83,19 @@ const PettyCashDetailsForm = () => {
 
           <FormField
             control={control}
-            name={`pettyCash.pettycashValues.${index}.limit`}
+            name={`objPettyCash.${index}.limit`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Limit" {...field} />
+                  <Input
+                    type="number"
+                    placeholder="Limit"
+                    value={field.value || ''}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.onChange(value !== "" ? parseFloat(value) : undefined); // Convert to number
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -81,18 +104,19 @@ const PettyCashDetailsForm = () => {
 
           <FormField
             control={control}
-            name={`pettyCash.pettycashValues.${index}.typeofTransaction`}
+            name={`objPettyCash.${index}.modeOfOperation`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select TypeOf Transaction" />
+                      <SelectValue placeholder="Select Type of Transaction" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="m@example.com">m@example.com</SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">m@support.com</SelectItem>
+                      <SelectItem value="Cash">Cash</SelectItem>
+                      <SelectItem value="Bank Transfer">Bank Transfer</SelectItem>
+                      <SelectItem value="Cheque">Cheque</SelectItem>
+                      <SelectItem value="Online Payment">Online Payment</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -103,18 +127,28 @@ const PettyCashDetailsForm = () => {
 
           <FormField
             control={control}
-            name={`pettyCash.pettycashValues.${index}.ledger`}
+            name={`objPettyCash.${index}.ledgerName`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      const selectedLedger = ledgerOptions.find((ledger) => ledger.value === value)
+                      setValue(`objPettyCash.${index}.ledgerCode`, selectedLedger?.value || '')
+                      setValue(`objPettyCash.${index}.subLedgerName`, '')
+                    }}
+                    defaultValue={field.value}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Ledger Name" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="m@example.com">m@example.com</SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">m@support.com</SelectItem>
+                      {ledgerOptions.map((ledger) => (
+                        <SelectItem key={ledger.value} value={ledger.value}>
+                          {ledger.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -123,20 +157,36 @@ const PettyCashDetailsForm = () => {
             )}
           />
 
+          {/* Sub Ledger Name Field */}
           <FormField
             control={control}
-            name={`pettyCash.pettycashValues.${index}.subLedger`}
+            name={`objPettyCash.${index}.subLedgerName`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      const selectedSubLedger = subLedgerOptions.find(
+                        (subLedger) => subLedger.value === value
+                      )
+                      setValue(
+                        `objPettyCash.${index}.subLedgerCode`,
+                        selectedSubLedger?.value || ''
+                      )
+                    }}
+                    defaultValue={field.value}
+                    disabled={!watch(`objPettyCash.${index}.ledgerName`)}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Sub Ledger Name" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="m@example.com">m@example.com</SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">m@support.com</SelectItem>
+                      {getSubLedgers(watch(`objPettyCash.${index}.ledgerName`)).map((subLedger) => (
+                        <SelectItem key={subLedger.value} value={subLedger.value}>
+                          {subLedger.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -148,16 +198,15 @@ const PettyCashDetailsForm = () => {
           <div className="grid grid-cols-4 gap-3 mb-3">
             <FormField
               control={control}
-              name={`pettyCash.pettycashValues.${index}.discontinue`}
+              name={`objPettyCash.${index}.discontinue`}
               render={({ field }) => (
-                <FormItem className='ms-auto me-auto'>
+                <FormItem className="ms-auto me-auto">
                   <FormControl>
                     <div className="flex items-center mt-2">
                       <Checkbox
                         id={`discontinue-${index}`}
-                        {...field}
-                        checked={field.value || false}
-                        onCheckedChange={(checked) => field.onChange(checked)}
+                        checked={field.value === 'Y'} // Treat 'Y' as checked
+                        onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')} // Map true/false to 'Y'/'N'
                       />
                     </div>
                   </FormControl>
@@ -166,9 +215,9 @@ const PettyCashDetailsForm = () => {
               )}
             />
             <div className="grid grid-cols-4 gap-3 mb-3">
-            <Button size="icon" type="button" onClick={() => remove(index)}>
-              <Trash size="15" />
-            </Button>
+              <Button size="icon" type="button" onClick={() => remove(index)}>
+                <Trash size="15" />
+              </Button>
             </div>
           </div>
         </div>

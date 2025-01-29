@@ -12,11 +12,12 @@ import {
 import { ChevronDown } from 'lucide-react'
 import React from 'react'
 
-import { data } from '../../data/data'
+import { useDesignationData } from '../../hooks_api/useDesignationData'
 import { useDesignationStore } from '../../store/userDesignation'
 import { columns } from '../DesignationColumn'
 import DesignationMasterModal from '../DesignationModal/DesignationModal'
 
+import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -40,9 +41,10 @@ function DesignationTable() {
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
   const openHandler = useDesignationStore((state) => state.toggleOpen)
-
+  const { DesignationData, isLoading, error } = useDesignationData(0)
+  const globalLoading=useDesignationStore(state=>state.isLoading)
   const table = useReactTable({
-    data,
+    data: DesignationData ?? [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -60,13 +62,21 @@ function DesignationTable() {
     },
   })
 
+  if (isLoading ||globalLoading) {
+    return <SkeletonLoaderTable />
+  }
+
+  if (error) {
+    return <div>{error}</div>
+  }
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter designation..."
-          value={(table.getColumn('role')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('role')?.setFilterValue(event.target.value)}
+          value={(table.getColumn('designationName')?.getFilterValue() as string) ?? ''}
+          onChange={(event) => table.getColumn('designationName')?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         <div className="ms-auto">

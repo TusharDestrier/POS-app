@@ -20,11 +20,11 @@ const DocumentSeriesDetailForm = () => {
   // Dynamic field management for document values
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'documentSeries.documentValues', // Adjusted path for combined schema
+    name: 'objSeries', // Adjusted path for combined schema
   })
 
   return (
-    < div className='border p-4 border-black border-solid h-[580px] overflow-y-auto'>
+    <div className="border p-4 border-black border-solid h-[580px] overflow-y-auto">
       <div className="form-head mb-4 ">
         <ul className="grid grid-cols-6 gap-3">
           <li className="text-sm font-semibold">
@@ -46,7 +46,7 @@ const DocumentSeriesDetailForm = () => {
         <div key={item.id} className="grid grid-cols-6 gap-3 mb-3">
           <FormField
             control={control}
-            name={`documentSeries.documentValues.${index}.transactionType`}
+            name={`objSeries.${index}.transactionType`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -55,9 +55,10 @@ const DocumentSeriesDetailForm = () => {
                       <SelectValue placeholder="Select Transaction Type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="cash">Cash</SelectItem>
-                      <SelectItem value="creditCard">Credit Card</SelectItem>
-                      <SelectItem value="debitCard">Debit Card</SelectItem>
+                      <SelectItem value="sale">sale</SelectItem>
+                      <SelectItem value="purchase">Purchase</SelectItem>
+                      <SelectItem value="return">Return</SelectItem>
+                      <SelectItem value="transfer">Transfer</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -68,7 +69,7 @@ const DocumentSeriesDetailForm = () => {
 
           <FormField
             control={control}
-            name={`documentSeries.documentValues.${index}.seriesname`}
+            name={`objSeries.${index}.seriesName`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -81,7 +82,7 @@ const DocumentSeriesDetailForm = () => {
 
           <FormField
             control={control}
-            name={`documentSeries.documentValues.${index}.prefix`}
+            name={`objSeries.${index}.prefix`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -94,11 +95,19 @@ const DocumentSeriesDetailForm = () => {
 
           <FormField
             control={control}
-            name={`documentSeries.documentValues.${index}.noOfDigits`}
+            name={`objSeries.${index}.noOfDigit`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="No of Digits" {...field} />
+                  <Input
+                    type="number" // Ensures only numbers can be typed
+                    placeholder="No of Digits"
+                    value={field.value || ''} // Handles initial null/undefined values
+                    onChange={(e) => {
+                      const value = e.target.value
+                      field.onChange(value !== '' ? Number(value) : undefined) // Convert to number or undefined
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -107,7 +116,7 @@ const DocumentSeriesDetailForm = () => {
 
           <FormField
             control={control}
-            name={`documentSeries.documentValues.${index}.suffix`}
+            name={`objSeries.${index}.suffix`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -121,16 +130,15 @@ const DocumentSeriesDetailForm = () => {
           <div className="grid grid-cols-4 gap-3 mb-3 m-3">
             <FormField
               control={control}
-              name={`documentSeries.documentValues.${index}.checkbox`}
+              name={`objPettyCash.${index}.discontinue`}
               render={({ field }) => (
-                <FormItem className="mx-auto">
+                <FormItem className="ms-auto me-auto">
                   <FormControl>
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center mt-2">
                       <Checkbox
-                        id={`checkbox-${index}`}
-                        {...field}
-                        onCheckedChange={(checked) => field.onChange(checked)}
-                        checked={field.value || false}
+                        id={`discontinue-${index}`}
+                        checked={field.value === 'Y'} // Treat 'Y' as checked
+                        onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')} // Map true/false to 'Y'/'N'
                       />
                     </div>
                   </FormControl>
@@ -155,11 +163,11 @@ const DocumentSeriesDetailForm = () => {
             onClick={() =>
               append({
                 transactionType: '',
-                seriesname: '',
+                seriesName: '',
                 prefix: '',
-                noOfDigits: '',
+                noOfDigit: '',
                 suffix: '',
-                checkbox: false,
+                checkbox: 'N',
               })
             }
           >

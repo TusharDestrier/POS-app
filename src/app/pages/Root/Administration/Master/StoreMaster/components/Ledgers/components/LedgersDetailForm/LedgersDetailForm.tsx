@@ -14,13 +14,28 @@ import {
 
 const LedgersDetailsForm = () => {
   // Access form context for central form control
-  const { control } = useFormContext()
+  const { control, watch, setValue } = useFormContext()
 
   // Dynamic field management for ledger values
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'ledgers.ledgerValue',
+    name: 'objLedger',
   })
+
+  const ledgerOptions = [
+    { code: 'LEDGER001', name: 'Ledger 1' },
+    { code: 'LEDGER002', name: 'Ledger 2' },
+  ]
+
+  const subLedgerOptions = [
+    { code: 'SUBLEDGER001', name: 'SubLedger 1', parentLedgerCode: 'LEDGER001' },
+    { code: 'SUBLEDGER002', name: 'SubLedger 2', parentLedgerCode: 'LEDGER002' },
+  ]
+
+  const costCenterOptions = [
+    { code: 'COST001', name: 'Cost Center 1' },
+    { code: 'COST002', name: 'Cost Center 2' },
+  ]
 
   return (
     <div className="border p-4 border-black border-solid h-[580px] overflow-y-auto">
@@ -37,20 +52,34 @@ const LedgersDetailsForm = () => {
 
       {fields.map((item, index) => (
         <div key={item.id} className="grid grid-cols-4 gap-3 mb-3">
+          {/* Ledger Select */}
           <FormField
             control={control}
-            name={`ledgers.ledgerValue.${index}.ledger`}
+            name={`objLedger.${index}.ledgerName`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value || undefined}>
+                  <Select
+                    onValueChange={(value) => {
+                      const selectedLedger = ledgerOptions.find((ledger) => ledger.name === value)
+                      if (selectedLedger) {
+                        field.onChange(selectedLedger.name) // Save ledger name
+                        setValue(`objLedger.${index}.ledgerCode`, selectedLedger.code) // Save ledger code
+                        setValue(`objLedger.${index}.subLedgerName`, '') // Reset subledger
+                        setValue(`objLedger.${index}.subLedgerCode`, '') // Reset subledger code
+                      }
+                    }}
+                    defaultValue={field.value}
+                  >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select Ledger Name" />
+                      <SelectValue placeholder="Select Ledger" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="m@example.com">m@example.com</SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">m@support.com</SelectItem>
+                      {ledgerOptions.map((ledger) => (
+                        <SelectItem key={ledger.code} value={ledger.name}>
+                          {ledger.name}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -59,20 +88,42 @@ const LedgersDetailsForm = () => {
             )}
           />
 
+          {/* SubLedger Select */}
           <FormField
             control={control}
-            name={`ledgers.ledgerValue.${index}.subLedger`}
+            name={`objLedger.${index}.subLedgerName`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={(value) => {
+                      const selectedSubLedger = subLedgerOptions.find(
+                        (subLedger) =>
+                          subLedger.name === value &&
+                          subLedger.parentLedgerCode === watch(`objLedger.${index}.ledgerCode`)
+                      )
+                      if (selectedSubLedger) {
+                        field.onChange(selectedSubLedger.name) // Save subledger name
+                        setValue(`objLedger.${index}.subLedgerCode`, selectedSubLedger.code) // Save subledger code
+                      }
+                    }}
+                    defaultValue={field.value}
+                    disabled={!watch(`objLedger.${index}.ledgerCode`)} // Disable if no ledger is selected
+                  >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select Sub Ledger Name" />
+                      <SelectValue placeholder="Select SubLedger" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="m@example.com">m@example.com</SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">m@support.com</SelectItem>
+                      {subLedgerOptions
+                        .filter(
+                          (subLedger) =>
+                            subLedger.parentLedgerCode === watch(`objLedger.${index}.ledgerCode`)
+                        )
+                        .map((subLedger) => (
+                          <SelectItem key={subLedger.code} value={subLedger.name}>
+                            {subLedger.name}
+                          </SelectItem>
+                        ))}
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -81,20 +132,34 @@ const LedgersDetailsForm = () => {
             )}
           />
 
+          {/* CostCenter Select */}
           <FormField
             control={control}
-            name={`ledgers.ledgerValue.${index}.costCentre`}
+            name={`objLedger.${index}.costCenterName`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={(value) => {
+                      const selectedCostCenter = costCenterOptions.find(
+                        (costCenter) => costCenter.name === value
+                      )
+                      if (selectedCostCenter) {
+                        field.onChange(selectedCostCenter.name) // Save cost center name
+                        setValue(`objLedger.${index}.costCenterCode`, selectedCostCenter.code) // Save cost center code
+                      }
+                    }}
+                    defaultValue={field.value}
+                  >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select Cost Centre" />
+                      <SelectValue placeholder="Select Cost Center" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="m@example.com">m@example.com</SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">m@support.com</SelectItem>
+                      {costCenterOptions.map((costCenter) => (
+                        <SelectItem key={costCenter.code} value={costCenter.name}>
+                          {costCenter.name}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -103,30 +168,26 @@ const LedgersDetailsForm = () => {
             )}
           />
 
-          <div className="grid grid-cols-4 gap-3 mb-3">
-            <FormField
-              control={control}
-              name={`ledgers.ledgerValue.${index}.discontinue`}
-              render={({ field }) => (
-                <FormItem className='mx-auto'>
-                  <FormControl>
-                    <div className="flex items-center justify-center">
-                    <Checkbox
-                      id={`discontinue-${index}`}
-                      {...field}
-                      checked={field.value || false}
-                      onCheckedChange={(checked) => field.onChange(checked)}
-                    />
-                    </div> 
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button size="icon" type="button" onClick={() => remove(index)}>
-              <Trash size="15" />
-            </Button>
-          </div>
+          {/* Discontinued Checkbox */}
+          <FormField
+            control={control}
+            name={`objLedger.${index}.discontinue`}
+            render={({ field }) => (
+              <FormItem className="flex items-center justify-center">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value === 'Y'}
+                    onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button size="icon" type="button" onClick={() => remove(index)}>
+            <Trash size="15" />
+          </Button>
         </div>
       ))}
 

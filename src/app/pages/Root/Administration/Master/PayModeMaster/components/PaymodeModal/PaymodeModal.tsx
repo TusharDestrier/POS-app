@@ -22,7 +22,6 @@ function PaymodeModal() {
             <h3 className="text-xl capitalize">{modalMode} Customer Master </h3>
           </DialogTitle>
         </DialogHeader>
-        <div></div>
         <PaymodeMasterForm />
       </DialogContent>
     </Dialog>

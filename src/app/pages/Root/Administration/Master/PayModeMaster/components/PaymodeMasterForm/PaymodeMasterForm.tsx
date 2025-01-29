@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
+import { useRef } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -84,36 +85,51 @@ function PaymodeMasterForm() {
     defaultValues,
   })
 
+  const isInitialRender = useRef(true)
+
   useEffect(() => {
-    if (mode === 'Edit' && paymodeData) {
+    if (paymodeData && mode === 'Edit' && isInitialRender.current) {
+      // Normalize objCondition
+      const normalizedConditions = defaultValues.objCondition.map((defaultCondition) => {
+        const matchedCondition = paymodeData.objCondition?.find(
+          (condition) => condition.conditionID === defaultCondition.conditionId
+        )
+        return {
+          ...defaultCondition,
+          isEnabled: matchedCondition?.isEnabled || 'N', // Default to "N" if not found
+        }
+      })
+
+      // Reset form with normalized data
       form.reset({
+        ...defaultValues,
         paymentModeName: paymodeData.paymentModeName || '',
         shortCode: paymodeData.shortCode || '',
-        paymentMethod: paymodeData.availablePaymentmethod || 'cash',
-        objCondition: paymodeData.objCondition || defaultValues.objCondition,
-        objCurrency: paymodeData.objCurrency || defaultValues.objCurrency,
+        paymentMethod: paymodeData.availablePaymentmethod || '',
+        objCondition: normalizedConditions,
+        objCurrency: paymodeData.objCurrency || [],
       })
+
+      isInitialRender.current = false // Prevent further resets
     }
-  }, [mode, paymodeData, form.reset])
+  }, [paymodeData, mode, form])
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const data = transformFormData(values, mode, paymodeMastedId);
-  
+    const data = transformFormData(values, mode, paymodeMastedId)
+
     try {
-      await createPaymodeAsync(data);
-      closeModal();
-      clearID();
-      console.log('Successfully submitted data:', data );
+      await createPaymodeAsync(data)
+      closeModal()
+      clearID()
     } catch (error) {
-      console.error('Failed to submit data:', error);
+      console.error('Failed to submit data:', error)
     }
   }
-  
 
   if (isLoading && mode === 'View') {
     return <GlobalViewerLoader />
   }
-  
+
   if (!isLoading && mode === 'View' && paymodeMastedId) {
     return <div><PayModeViewer data={paymodeData} /></div>
   }
@@ -165,7 +181,6 @@ function PaymodeMasterForm() {
           <SupportedCurrencies />
         </div>
         <div className="text-end pb-4">
-          
           <Button type="submit" disabled={isPending}>
             {isPending ? 'submiting' : 'submit'}
           </Button>

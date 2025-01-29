@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 
 type DesignationStore = {
+  isLoading:boolean
+  setIsLoading: (loading: boolean) => void
   isOpen: boolean
   mode: 'Edit' | 'Create' | 'View'
   toggleOpen: () => void
@@ -9,6 +11,8 @@ type DesignationStore = {
 }
 
 export const useDesignationStore = create<DesignationStore>((set) => ({
+  isLoading: false,
+  setIsLoading: (loading) => set({ isLoading: loading }),
   isOpen: false,
   mode: 'Create',
   toggleOpen: () => set((state) => ({ isOpen: !state.isOpen })),

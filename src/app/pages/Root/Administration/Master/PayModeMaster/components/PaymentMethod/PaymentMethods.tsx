@@ -31,7 +31,7 @@ function PaymentMethods() {
           <FormControl>
             <RadioGroup
               onValueChange={field.onChange} // Update form state
-              defaultValue={field.value} // Default value from form state
+              value={field.value || ""} // Default value from form state
               className="space-y-1 grid-cols-2 bg-white/20 rounded-md roles-radio"
             >
               {paymentMethods.map((method) => (
