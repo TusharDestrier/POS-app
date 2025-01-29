@@ -4,6 +4,8 @@ import { z } from 'zod'
 import { StoreMasterHeadSchema } from '../schemas/StoreMasterHeadSchema'
 import useStoreMasterHead from '../store/useStoreMasterHead'
 
+import { formatDate } from '@/lib/utils'
+
 export type StoreMasterFormatterType = z.infer<typeof StoreMasterHeadSchema>
 
 const operation = {
@@ -19,8 +21,8 @@ export function StoreMasterFormatter(data: StoreMasterFormatterType, id: number 
     storeID: mode === 'Create' ? 0 : id, // Default value
     storeCode: data.storeCode ?? '',
     storeName: data.storeName ?? '',
-    startDate: data.startDate ?? '',
-    closeDate: data.closeDate ?? '',
+    startDate: formatDate(String(data.startDate)) ?? '',
+    closeDate: formatDate(String(data.closeDate)) ?? '',
     storeTypeCode: data.storeTypeCode ?? '',
     storeTypeName: data.storeTypeName ?? '',
     storeCategoryCode: data.storeCategoryCode ?? '',
@@ -57,14 +59,14 @@ export function StoreMasterFormatter(data: StoreMasterFormatterType, id: number 
     email: data.emailId ?? '',
     enteredBy: 0,
     usedFor: operation[mode],
-    priceListName: ['STANDARD', 'PREMIUM', 'DISCOUNTED'].includes(data.priceList)
+    priceListName: StoreMasterHeadSchema.shape.priceList.safeParse(data.priceList).success
     ? (data.priceList as 'STANDARD' | 'PREMIUM' | 'DISCOUNTED')
-    : 'STANDARD', // Default value
-    priceListID:0,
-    gstin: data.GSTIN ?? "",
-    gstinDate: data?.GSTINDate,
-    gstinState:data?.stateCode,
-    factor: "",
+    : 'STANDARD', // ✅ Ensures strict type compatibility
+    priceListID: 0,
+    gstin: data.GSTIN ?? '',
+    gstinDate: formatDate(String(data?.GSTINDate)),
+    gstinState: data?.stateCode,
+    factor: '',
     // 🏭 Warehouse Mapping (Fix ✅)
     objWareHouse: data.sourcingWarehouse.map((wh) => ({
       storeID: 0,
@@ -75,7 +77,7 @@ export function StoreMasterFormatter(data: StoreMasterFormatterType, id: number 
     // 💳 Payment Mode Mapping (Fix ✅)
     objPayMode: data.objPayMode.map((pm) => ({
       storeID: 0,
-      paymentModeID: 0, // Backend required but missing in frontend, default 0
+      paymentModeID: pm.paymentCode, // Backend required but missing in frontend, default 0
       paymentModeName: pm.payMode,
       isCrossStoreUsage: pm.crossStore ?? 'N',
       ledgerCode: pm.ledgersCode ?? '',
@@ -88,7 +90,7 @@ export function StoreMasterFormatter(data: StoreMasterFormatterType, id: number 
     // 💰 Petty Cash Mapping (Fix ✅)
     objPettyCash: data.objPettyCash.map((pc) => ({
       storeID: 0,
-      pettyCashID: 0, // Backend required but missing in frontend, default 0
+      pettyCashID: Number(pc.pettyCashCode), // Backend required but missing in frontend, default 0
       pettyCashName: pc.pettyCashName ?? '',
       limit: Number(pc.limit) || 0,
       modeOfOperation: pc.modeOfOperation ?? '',
@@ -96,7 +98,7 @@ export function StoreMasterFormatter(data: StoreMasterFormatterType, id: number 
       ledgerName: pc.ledgerName ?? '',
       subLedgerCode: pc.subLedgerCode ?? '',
       subLedgerName: pc.subLedgerName ?? '',
-      discontinued: pc.discontinued ?? 'N',
+      discontinued: pc.discontinued === 'Y' || pc.discontinued === 'N' ? pc.discontinued : 'N',
     })),
 
     // 📜 Series Mapping (Fix ✅)

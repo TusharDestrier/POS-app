@@ -1,5 +1,8 @@
 import { Trash } from 'lucide-react'
+import { useMemo } from 'react'
 import { useFormContext, useFieldArray } from 'react-hook-form'
+
+import { usePettyCashData } from '../../../../../PettyCashHead/hooks_api/usePettyCashData'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -13,9 +16,14 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
+
 const PettyCashDetailsForm = () => {
   // Access central form control through useFormContext
+
+  const {pettyCashData,isLoading}=usePettyCashData();
   const { control, setValue, watch } = useFormContext()
+
+  
 
   // Manage dynamic field rows for petty cash values
   const { fields, append, remove } = useFieldArray({
@@ -33,6 +41,16 @@ const PettyCashDetailsForm = () => {
     { value: 'SUBLEDGER001', label: 'Sub Ledger 1', parentLedger: 'LEDGER001' },
     { value: 'SUBLEDGER002', label: 'Sub Ledger 2', parentLedger: 'LEDGER002' },
   ]
+
+  const pettyCashOptions = useMemo(() => {
+      if (!pettyCashData || pettyCashData.length === 0) return []
+  
+      return pettyCashData.map((paymode) => ({
+        value: paymode.pettyCashName || '', // Ensure a fallback value
+        label: paymode.pettyCashName || 'Unknown', // Prevent UI crash if value is undefined
+        id: paymode.pettyCashID || 0, // Ensure an ID is always available
+      }))
+    }, [pettyCashData])
 
   const getSubLedgers = (parentLedger: string) => {
     return subLedgerOptions.filter((subLedger) => subLedger.parentLedger === parentLedger)
@@ -65,15 +83,26 @@ const PettyCashDetailsForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Pettycash Head" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="pettyCash1">pettyCash1</SelectItem>
-                      <SelectItem value="pettyCash2">pettyCash2</SelectItem>
-                      <SelectItem value="pettyCash3">pettyCash3</SelectItem>
-                    </SelectContent>
+                  <Select 
+                   onValueChange={(value) => {
+                    field.onChange(value)
+                    const selectedPettyCash = pettyCashOptions?.find((pm) => pm?.value === value)
+                    setValue(`objPettyCash.${index}.pettyCashCode`, String(selectedPettyCash?.id ?? 0))
+                  }}>
+                  <SelectTrigger>
+                  <SelectValue placeholder={isLoading ? 'Loading...' : 'Select Pettycash Name'} />
+                </SelectTrigger>
+                <SelectContent>
+                  {isLoading ? (
+                    <p className="p-2 text-gray-500">Loading...</p>
+                  ) : (
+                    pettyCashOptions?.map((pm) => (
+                      <SelectItem key={pm.id} value={pm.value}>
+                        {pm.label}
+                      </SelectItem>
+                    ))
+                  )}
+                </SelectContent>
                   </Select>
                 </FormControl>
                 <FormMessage />

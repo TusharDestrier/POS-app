@@ -35,7 +35,7 @@ function StoreMasterForm() {
       GSTINDate: new Date().toISOString(), // Example GSTIN
       stateCode: 'WB', // Example State Code
       stateName: 'West Bengal', // Example State Name
-      priceList: 'STANDARD', // Example Price List
+      priceList: '', // Example Price List
       factorIfAny: '1.5', // Example Factor
       storeTypeCode: 'OOWNED', // Example Store Type Code
       storeTypeName: 'Organization Owned', // Example Store Type Name
@@ -80,6 +80,7 @@ function StoreMasterForm() {
       objPettyCash: [
         {
           pettyCashName: '',
+          pettyCashCode: '',
           limit: 0,
           modeOfOperation: '', // Initially empty, dropdown selection required
           ledgerCode: '',
@@ -120,13 +121,13 @@ function StoreMasterForm() {
 
          await createStoremaster(transformData)
         closeModal()
-      } catch (err: any) {
-        console.log(err)
+      } catch (err: unknown) {
+        if(err instanceof Error){
+          throw new Error(err.message)
+        }
       }
     },
-    (errors) => {
-      console.log('Validation Errors: ', errors)
-    }
+    
   )
 
   if (isLoading) {

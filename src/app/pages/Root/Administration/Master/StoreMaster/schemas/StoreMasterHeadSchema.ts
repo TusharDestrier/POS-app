@@ -93,6 +93,7 @@ export const StoreMasterHeadSchema = z.object({
   objPettyCash: z.array(
     z.object({
       pettyCashName: z.string().nonempty('Petty Cash Head is required'), // Dropdown
+      pettyCashCode: z.string().nonempty('Petty Code is required'), // Dropdown
       limit: z
         .number()
         .min(1, 'Limit must be greater than 0')

@@ -1,5 +1,8 @@
 import { Trash } from 'lucide-react'
+import { useMemo } from 'react'
 import { useFormContext, useFieldArray } from 'react-hook-form'
+
+import { usePaymodeMasterData } from '../../../../../PayModeMaster/hooks_api/usePaymodeMasterData'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -13,8 +16,12 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
+
 function MopDetailForm() {
   // Central form control access
+
+  const { paymodeMasterData, isLoading } = usePaymodeMasterData()
+
   const { control, setValue } = useFormContext()
 
   // Field array to manage dynamic rows in mopValues
@@ -23,11 +30,16 @@ function MopDetailForm() {
     name: 'objPayMode', // Ensure this matches combined schema path exactly
   })
 
-  const payModeOptions = [
-    { value: 'Cash', label: 'Cash', id: 1 },
-    { value: 'Card', label: 'Card', id: 2 },
-    { value: 'UPI', label: 'UPI', id: 3 },
-  ]
+ 
+  const payModeOptions = useMemo(() => {
+    if (!paymodeMasterData || paymodeMasterData.length === 0) return []
+
+    return paymodeMasterData.map((paymode) => ({
+      value: paymode.paymentModeName || '', // Ensure a fallback value
+      label: paymode.paymentModeName || 'Unknown', // Prevent UI crash if value is undefined
+      id: paymode.paymentModeID || 0, // Ensure an ID is always available
+    }))
+  }, [paymodeMasterData])
 
   const ledgerOptions = [
     { value: 'Ledger 1', code: 'LEDGER001', name: 'Ledger 1' },
@@ -39,6 +51,7 @@ function MopDetailForm() {
     { value: 'SubLedger 1', code: 'SUBLEDGER001', name: 'SubLedger 1' },
     { value: 'SubLedger 2', code: 'SUBLEDGER002', name: 'SubLedger 2' },
   ]
+
 
   return (
     <div className="border p-4 border-black border-solid h-[580px] overflow-y-auto">
@@ -68,19 +81,23 @@ function MopDetailForm() {
               <Select
                 onValueChange={(value) => {
                   field.onChange(value)
-                  const selectedPayMode = payModeOptions.find((pm) => pm.value === value)
-                  setValue(`objPayMode.${index}.paymentCode`, String(selectedPayMode?.id || 0))
+                  const selectedPayMode = payModeOptions?.find((pm) => pm?.value === value)
+                  setValue(`objPayMode.${index}.paymentCode`, String(selectedPayMode?.id ?? 0))
                 }}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select Paymode Name" />
+                  <SelectValue placeholder={isLoading ? 'Loading...' : 'Select Paymode Name'} />
                 </SelectTrigger>
                 <SelectContent>
-                  {payModeOptions.map((pm) => (
-                    <SelectItem key={pm.id} value={pm.value}>
-                      {pm.label}
-                    </SelectItem>
-                  ))}
+                  {isLoading ? (
+                    <p className="p-2 text-gray-500">Loading...</p>
+                  ) : (
+                    payModeOptions?.map((pm) => (
+                      <SelectItem key={pm.id} value={pm.value}>
+                        {pm.label}
+                      </SelectItem>
+                    ))
+                  )}
                 </SelectContent>
               </Select>
             )}

@@ -251,10 +251,10 @@ class ApiClient {
 
   private handleError(error: unknown, method: string) {
     if (axios.isCancel(error)) {
-      console.warn(`${method} Request canceled`, error.message);
-      return; // Abort ka error ignore karo
+      console.warn(`${method} Request canceled`, error.message)
+      return // Abort ka error ignore karo
     }
-    
+
     if (axios.isAxiosError(error)) {
       const status = error.response?.status
       let customMessage = 'Something went wrong' // Default error message
@@ -262,16 +262,21 @@ class ApiClient {
       // ✅ Custom error handling based on status codes
       switch (status) {
         case 400: {
-          const validationErrors = error.response?.data?.errors;
+          const validationErrors = error.response?.data?.errors
           if (validationErrors) {
             // Convert validation errors into a readable string
             customMessage = Object.entries(validationErrors)
-              .map(([field, messages]) => `${field}: ${messages?.join(', ')}`)
-              .join('\n');
+              .map(([field, messages]) => {
+                const formattedMessages = Array.isArray(messages)
+                  ? messages.join(', ')
+                  : String(messages)
+                return `${field}: ${formattedMessages}`
+              })
+              .join('\n')
           } else {
-            customMessage = 'Bad Request - Invalid data provided.';
+            customMessage = 'Bad Request - Invalid data provided.'
           }
-          break;
+          break
         }
         case 401:
           customMessage = 'Unauthorized - Please log in again.'

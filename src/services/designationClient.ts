@@ -1,6 +1,6 @@
 import ApiClient from './ApiClient'
 
-
+import { DesignationPostType } from '@/app/pages/Root/Administration/Security/Designation/hooks_api/useCreateDesignation';
 import { FetchedDesignationType, DesginationResponseType } from '@/types/designation'
 
 class DesignationClient extends ApiClient {
@@ -35,8 +35,11 @@ class DesignationClient extends ApiClient {
       }
 
       return response.data
-    } catch (error: any) {
-      throw new Error(error)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+      throw new Error("An unknown error occurred.");
     }
   }
 }
