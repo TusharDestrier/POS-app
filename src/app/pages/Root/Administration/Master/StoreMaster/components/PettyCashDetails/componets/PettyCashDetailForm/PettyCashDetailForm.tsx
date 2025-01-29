@@ -91,7 +91,7 @@ const PettyCashDetailsForm = () => {
                       const selectedPettyCash = pettyCashOptions.find((pc) => pc.value === value)
 
                       if (selectedPettyCash) {
-                        setValue(`objPettyCash.${index}.pettyCashCode`, selectedPettyCash.id)
+                        setValue(`objPettyCash.${index}.pettyCashCode`, String(selectedPettyCash.id))
                         setValue(`objPettyCash.${index}.limit`, selectedPettyCash.limit)
                         setValue(
                           `objPettyCash.${index}.modeOfOperation`,

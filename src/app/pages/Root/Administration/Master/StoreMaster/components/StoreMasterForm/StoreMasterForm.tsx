@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 //import { useEffect } from 'react'
 
@@ -7,60 +8,63 @@ import { StoreMasterFormatter } from '../../helper/StoreMasterFormatter'
 import { useCreateStoreMaster } from '../../hooks_api/useCreateStoreMaster'
 import { useStoreMasterById } from '../../hooks_api/useFetchStoreMasterById'
 import { StoreMasterHeadSchema } from '../../schemas/StoreMasterHeadSchema'
-import useStoreMasterHead from '../../store/useStoreMasterHead'
+import { useStoreMasterDataStore } from '../../store/useStoreMasterDataStore'
+import useStoreMasterHead, { useStoreMasterStore } from '../../store/useStoreMasterStore'
 import StoreMasterTab from '../StoreMasterTab'
 
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
 
-
 function StoreMasterForm() {
-  const { isPending, error,createStoremaster } = useCreateStoreMaster()
+  const storeId = useStoreMasterDataStore((state) => state.currentStoreMasterId)
+  const { storeMaster, isLoading } = useStoreMasterById(Number(storeId))
+  const { isPending, error, createStoremaster } = useCreateStoreMaster()
   const closeModal = useStoreMasterHead((state) => state.close)
   // const { storeMaster, isLoading } = useStoreMasterById(Number() || null)
-  const { isLoading } = useStoreMasterById(Number() || null)
+  // const { isLoading } = useStoreMasterById(Number() || null)
+  const mode=useStoreMasterStore(state=>state.mode)
   const formMethods = useForm({
     resolver: zodResolver(StoreMasterHeadSchema),
     defaultValues: {
-      storeCode: 'SC001', // Example Store Code
-      storeName: 'Test Store', // Example Store Name
-      startDate: new Date().toISOString(), // Current Date in ISO format
-      closeDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString(), // 30 days from now
-      storeSize: 1000, // Example Store Size
-      defaultWarehouseCode: 'WH001', // Example Default Warehouse Code
-      defaultWarehouseName: 'Main Warehouse', // Example Default Warehouse Name
-      defaultSaleWarehouseCode: 'WH002', // Example Sale Warehouse Code
-      defaultReturnWarehouseCode: 'WH002', // Example Sale Warehouse Code
-      GSTIN: '29ABCDE1234F2Z5', // Example GSTIN
-      GSTINDate: new Date().toISOString(), // Example GSTIN
-      stateCode: 'WB', // Example State Code
-      stateName: 'West Bengal', // Example State Name
-      priceList: '', // Example Price List
-      factorIfAny: '1.5', // Example Factor
-      storeTypeCode: 'OOWNED', // Example Store Type Code
-      storeTypeName: 'Organization Owned', // Example Store Type Name
-      storeCategoryCode: 'COCO', // Example Store Category Code
-      storeCategoryName: 'Company Owned Company Operated', // Example Store Category Name
-      franchiseCode: 'F001', // Example Franchise Code
-      franchiseName: 'Franchise 1', // Example Franchise Name
-      operationTypeCode: 'CONSIGNMENT', // Example Operation Type Code
-      operationTypeName: 'Consignment Basis', // Example Operation Type Name
-      isActive: 'Y', // Default to "Active"
-      billToAddress: '123 Main Street, City Center', // Default Billing Address
-      shipToAddress: '456 Elm Street, Industrial Area', // Default Shipping Address
-      billToCity: 'kolkata', // Default City for Bill To
-      billToPostalCode: '700001', // Default Postal Code for Bill To
-      billToState: 'WB', // Default State for Bill To
-      shipToCity: 'mumbai', // Default City for Ship To
-      shipToPostalCode: '400001', // Default Postal Code for Ship To
-      shipToState: 'MH', // Default State for Ship To
-      contactPerson: 'John Doe', // Default Contact Person
-      contactNumber: '9876543210', // Default Contact Number
-      emailId: 'johndoe@example.com', // Default Email ID
+      storeCode: '',
+      storeName: '',
+      startDate: '',
+      closeDate: '',
+      storeSize: 0,
+      defaultWarehouseCode: '',
+      defaultWarehouseName: '',
+      defaultSaleWarehouseCode: '',
+      defaultReturnWarehouseCode: '',
+      GSTIN: '',
+      GSTINDate: '',
+      stateCode: '',
+      stateName: '',
+      priceList: '',
+      factorIfAny: '',
+      storeTypeCode: '',
+      storeTypeName: '',
+      storeCategoryCode: '',
+      storeCategoryName: '',
+      franchiseCode: '',
+      franchiseName: '',
+      operationTypeCode: '',
+      operationTypeName: '',
+      isActive: 'N',
+      billToAddress: '',
+      shipToAddress: '',
+      billToCity: '',
+      billToPostalCode: '',
+      billToState: '',
+      shipToCity: '',
+      shipToPostalCode: '',
+      shipToState: '',
+      contactPerson: '',
+      contactNumber: '',
+      emailId: '',
       sourcingWarehouse: [
         {
-          warehouseCode: 'WH001', // Default Warehouse Code
-          transitDays: 5, // Default Transit Days
+          warehouseCode: '', // Default Warehouse Code
+          transitDays: 0, // Default Transit Days
         },
       ],
 
@@ -92,43 +96,88 @@ function StoreMasterForm() {
       ],
       objSeries: [
         {
-          transactionType: 'SALE',
-          seriesName: 'Series 1',
-          prefix: 'PRX',
-          noOfDigit: 6,
-          suffix: 'SFX',
+          transactionType: '',
+          seriesName: '',
+          prefix: '',
+          noOfDigit: 0,
+          suffix: '',
           discontinued: 'N',
         },
       ],
       objLedger: [
         {
-          ledgerCode: 'LEDGER001',
-          ledgerName: 'General Ledger',
-          subLedgerCode: 'SUBLEDGER001',
-          subLedgerName: 'General Sub-Ledger',
-          costCenterCode: 'COST001',
-          costCenterName: 'Main Cost Center',
+          ledgerCode: '',
+          ledgerName: '',
+          subLedgerCode: '',
+          subLedgerName: '',
+          costCenterCode: '',
+          costCenterName: '',
         },
       ],
     },
   })
 
-  const onSubmit = formMethods.handleSubmit(
-    async (data) => {
-      // const transformData = StoreMasterFormatter(data,1)
-      try {
-        console.log(data)
+  useEffect(() => {
+    if (mode==='Edit' && storeMaster) {
+      console.log('Populating form with:', storeMaster)
+      formMethods.reset({
+        storeCode: storeMaster.storeCode ?? '',
+        storeName: storeMaster.storeName ?? '',
+        startDate: storeMaster.startDate ? new Date(storeMaster.startDate).toISOString().split('T')[0] : '',
+        closeDate: storeMaster.closeDate ? new Date(storeMaster.closeDate).toISOString().split('T')[0] : '',
+        storeSize: storeMaster.storeSize ?? 0,
+        defaultWarehouseCode: storeMaster.defaultWarehouseCode ?? '',
+        defaultWarehouseName: storeMaster.defaultWarehouseName ?? '',
+        defaultSaleWarehouseCode: storeMaster.defaultSaleWHCode ?? '',
+        defaultReturnWarehouseCode: storeMaster.defaultReturnWHCode ?? '',
+        GSTIN: storeMaster.gstin ?? '',
+        GSTINDate: storeMaster.gstinDate ? new Date(storeMaster.gstinDate).toISOString().split('T')[0] : '',
+        stateCode: storeMaster.gstinState ?? '',
+        stateName: storeMaster.gstinState ?? '',
+        priceList: storeMaster.priceListName ?? '',
+        factorIfAny: storeMaster.factor ?? '',
+        storeTypeCode: storeMaster.storeTypeCode ?? '',
+        storeTypeName: storeMaster.storeTypeName ?? '',
+        storeCategoryCode: storeMaster.storeCategoryCode ?? '',
+        storeCategoryName: storeMaster.storeCategoryName ?? '',
+        franchiseCode: storeMaster.franchiseCode ?? '',
+        franchiseName: storeMaster.franchiseName ?? '',
+        operationTypeCode: storeMaster.operationTypeCode ?? '',
+        operationTypeName: storeMaster.operationTypeName ?? '',
+        isActive: storeMaster.isActive ?? 'N',
+        billToAddress: storeMaster.billAddress ?? '',
+        shipToAddress: storeMaster.shipAddress ?? '',
+        billToCity: storeMaster.billCity ?? '',
+        billToPostalCode: storeMaster.billPostalCode ?? '',
+        billToState: storeMaster.billStateCode ?? '',
+        shipToCity: storeMaster.shipCity ?? '',
+        shipToPostalCode: storeMaster.shipPostalCode ?? '',
+        shipToState: storeMaster.shipStateCode ?? '',
+        contactPerson: storeMaster.contactPerson ?? '',
+        contactNumber: String(storeMaster.contactNumber) || "" ,
+        emailId: storeMaster.email ?? '',
+        sourcingWarehouse: storeMaster.objWareHouse || [],
+        objPayMode: storeMaster.objPayMode || [],
+        objPettyCash: storeMaster.objPettyCash || [],
+        objSeries: storeMaster.objSeries || [],
+        objLedger: storeMaster.objLedger || [],
+      })
+    }
+  }, [storeMaster, mode, formMethods.reset])
 
-        //  await createStoremaster(transformData)
-        // closeModal()
-      } catch (err: unknown) {
-        if(err instanceof Error){
-          throw new Error(err.message)
-        }
+  const onSubmit = formMethods.handleSubmit(async (data) => {
+    const transformData = StoreMasterFormatter(data, 1)
+    try {
+      console.log(transformData)
+
+      await createStoremaster(transformData)
+      // closeModal()
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        throw new Error(err.message)
       }
-    },
-    
-  )
+    }
+  })
 
   if (isLoading) {
     return <GlobalViewerLoader />
@@ -137,6 +186,7 @@ function StoreMasterForm() {
   return (
     <FormProvider {...formMethods}>
       <form onSubmit={onSubmit}>
+        {/* {JSON.stringify(storeMaster)} */}
         <div className="border p-4 border-black border-solid h-[650px] overflow-y-auto">
           <StoreMasterTab />
         </div>

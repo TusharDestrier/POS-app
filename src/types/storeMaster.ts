@@ -41,6 +41,12 @@ export type StoreMasterType = {
     email: string;
     enteredBy: number;
     usedFor: string;
+    gstinDate:string,
+    gstin:string,
+    gstinState:string,
+    priceListName:string,
+    factor:string,
+
     objWareHouse: {
       storeID: number;
       sourcingWarehouseCode: string;

@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 //import { StoreMasterHeadSchema } from "../../schemas/StoreMasterHeadSchema"
 import { StoreMasterHeadSchema } from '../schemas/StoreMasterHeadSchema'
-import useStoreMasterHead from '../store/useStoreMasterHead'
+import useStoreMasterHead from '../store/useStoreMasterStore'
 
 import { formatDate } from '@/lib/utils'
 
@@ -54,8 +54,8 @@ export function StoreMasterFormatter(data: StoreMasterFormatterType, id: number 
     shipCountryCode: 'IND',
     shipCountryName: 'India',
     contactPerson: data.contactPerson ?? '',
-    contactNumber: Number(data.contactNumber) || 0,
-    alternateContactNumber: Number(data.contactNumber) || 0,
+    contactNumber: String(data.contactNumber) || 0,
+    alternateContactNumber: String(data.contactNumber) || 0,
     email: data.emailId ?? '',
     enteredBy: 0,
     usedFor: operation[mode],
@@ -77,7 +77,7 @@ export function StoreMasterFormatter(data: StoreMasterFormatterType, id: number 
     // 💳 Payment Mode Mapping (Fix ✅)
     objPayMode: data.objPayMode.map((pm) => ({
       storeID: 0,
-      paymentModeID: pm.paymentCode, // Backend required but missing in frontend, default 0
+      paymentModeID: Number(pm.paymentCode), // Backend required but missing in frontend, default 0
       paymentModeName: pm.payMode,
       isCrossStoreUsage: pm.crossStore ?? 'N',
       ledgerCode: pm.ledgersCode ?? '',

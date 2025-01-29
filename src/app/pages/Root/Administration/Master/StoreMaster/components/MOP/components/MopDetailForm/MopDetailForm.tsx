@@ -79,6 +79,7 @@ function MopDetailForm() {
             name={`objPayMode.${index}.payMode`}
             render={({ field }) => (
               <Select
+              value={field.value}
                 onValueChange={(value) => {
                   field.onChange(value)
                   const selectedPayMode = payModeOptions?.find((pm) => pm?.value === value)

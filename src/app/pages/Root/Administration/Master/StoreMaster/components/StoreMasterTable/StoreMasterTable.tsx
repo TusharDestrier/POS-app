@@ -16,10 +16,9 @@ import {
 import * as React from 'react'
 
 import { useStoreMasterData } from '../../hooks_api/useStoreMasterData'
-import useStoreMasterStore from '../../store/useStoreMasterHead'
+import useStoreMasterStore from '../../store/useStoreMasterStore'
 import StoreMasterModal from '../StoreMasterModal'
 import columns from '../StoreMasterTableColumns'
-
 
 //import { usePettyCashData } from '../../hooks_api/usePettyCashData'
 
@@ -42,7 +41,7 @@ import {
 } from '@/components/ui/table'
 
 function StoreMasterTable() {
-  const { storemasterData,isLoading, error } = useStoreMasterData()
+  const { storemasterData, isLoading, error } = useStoreMasterData()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -55,7 +54,7 @@ function StoreMasterTable() {
   const modalToggler = useStoreMasterStore((state) => state.toggleOpen)
   const setModalMode = useStoreMasterStore((state) => state.setMode)
 
-const columnData = React.useMemo(() => {
+  const columnData = React.useMemo(() => {
     const dataArray = Array.isArray(storemasterData)
       ? storemasterData
       : storemasterData
@@ -64,10 +63,10 @@ const columnData = React.useMemo(() => {
 
     return dataArray.map((item) => ({
       storeID: String(item.storeID),
-           fullName:item.storeName,
-             email: item.email,
-             isActive: item?.isActive ? 'Active' : 'Inactive',
-           contactNumber: String(item.contactNumber),
+      storeName: item.storeName,
+      email: item.email,
+      isActive: item?.isActive,
+      contactNumber: String(item.contactNumber),
     }))
   }, [storemasterData])
 
@@ -107,12 +106,11 @@ const columnData = React.useMemo(() => {
   return (
     <>
       <div className="w-full">
-        {JSON.stringify(storemasterData)}
         <div className="flex items-center py-4">
           <Input
             placeholder="Filter emails..."
-            value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
-            onChange={(event) => table.getColumn('email')?.setFilterValue(event.target.value)}
+            value={(table.getColumn('storeName')?.getFilterValue() as string) ?? ''}
+            onChange={(event) => table.getColumn('storeName')?.setFilterValue(event.target.value)}
             className="max-w-sm"
           />
           <ul className="flex items-center gap-3 ms-auto">

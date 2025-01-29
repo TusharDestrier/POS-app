@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-type StoreMasterHeadType = {
+type StoreMasterStoreType = {
   isLoading: boolean
   setIsLoading: (loading: boolean) => void
   isOpen: boolean
@@ -9,7 +9,7 @@ type StoreMasterHeadType = {
   close: () => void
   setMode: (newMode: 'Edit' | 'Create' | 'View' | 'Delete') => void
 }
-export const useStoreMasterHead = create<StoreMasterHeadType>((set) => ({
+export const useStoreMasterStore = create<StoreMasterStoreType>((set) => ({
   isLoading: false,
   setIsLoading: (loading) => set({ isLoading: loading }),
   isOpen: false,
@@ -19,4 +19,4 @@ export const useStoreMasterHead = create<StoreMasterHeadType>((set) => ({
   setMode: (newMode) => set(() => ({ mode: newMode })),
 }))
 
-export default useStoreMasterHead
+export default useStoreMasterStore

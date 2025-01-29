@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from "sonner"
 
 import { StoreMasterFormatter } from '../helper/StoreMasterFormatter'
-import useStoreMasterStoreType from '../store/useStoreMasterHead'
+import useStoreMasterStoreType from '../store/useStoreMasterStore'
 
 import storeMasterClient from '@/services/storeMasterClient'
 import { StoreMasterResponseType } from '@/types/storeMaster'

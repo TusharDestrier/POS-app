@@ -1,22 +1,15 @@
-// tableColumns.ts
-import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
+import { CaretSortIcon } from '@radix-ui/react-icons'
 import { ColumnDef } from '@tanstack/react-table'
 
-import { Customer } from '../../data/tableData'
-import useStoreMasterStore from '../../store/useStoreMasterHead'
+
+import StoreMasterTableAction from '../StoreMasterTableActions'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+import { FetchedStoreMasterType } from '@/types/storeMaster'
 
-export const columns: ColumnDef<Customer>[] = [
+
+export const columns: ColumnDef<FetchedStoreMasterType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -39,19 +32,19 @@ export const columns: ColumnDef<Customer>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'fullName',
+    accessorKey: 'storeName',
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-        Full Name
+        Store Name
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue('fullName')}</div>,
+    cell: ({ row }) => <div>{row.getValue('storeName')}</div>,
   },
   {
-    accessorKey: 'status',
+    accessorKey: 'isActive',
     header: 'Status',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('status')}</div>,
+    cell: ({ row }) => <div className="capitalize">{row.getValue('isActive')}</div>,
   },
   {
     accessorKey: 'email',
@@ -64,47 +57,26 @@ export const columns: ColumnDef<Customer>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>,
   },
   {
-    accessorKey: 'phoneNo',
+    accessorKey: 'contactNumber',
     header: 'Phone Number',
-    cell: ({ row }) => <div>{row.getValue('phoneNo')}</div>,
+    cell: ({ row }) => <div>{row.getValue('contactNumber')}</div>,
   },
   {
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const customer = row.original
+      const storeData = row.original
 
-      return <TableRowDropDowns customer={customer} />
+      return <TableRowDropDowns storeData={storeData} />
     },
   },
 ]
 
-function TableRowDropDowns({ customer }: { customer: Customer }) {
-  const modalToggler = useStoreMasterStore((state) => state.toggleOpen)
-  const setModalMode = useStoreMasterStore((state) => state.setMode)
+function TableRowDropDowns({ storeData }: { storeData: FetchedStoreMasterType }) {
+ 
 
-  function EditModalHandler() {
-    modalToggler()
-    setModalMode('Edit')
-  }
+ 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
-          <DotsHorizontalIcon className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(customer.id)}>
-          Copy StoreMaster ID
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={EditModalHandler}>Edit StoreMaster</DropdownMenuItem>
-        <DropdownMenuItem>View StoreMaster</DropdownMenuItem>
-        <DropdownMenuItem>Delete StoreMaster</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+  <StoreMasterTableAction storeData={storeData} />
   )
 }
