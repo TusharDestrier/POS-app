@@ -9,7 +9,7 @@ import {  usePettyCashDataById } from '../../hooks_api/usePettyCashById'
 import { PettyCashHeadSchema } from '../../schemas/PettyCashHeadSchema'
 import { usePettyCashDataStore } from '../../store/usePettyCashDataStore'
 import usePettyCashHead from '../../store/usePettyCashHead'
-//import { PettyCashViewer } from '../PettyCashTableViewer/PettyCashViewer'
+import PettyCashViewer from '../PettyCashHeadTable/components/PettyCashTableViewer'
 
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
@@ -63,7 +63,7 @@ function PettyCashHeadForm() {
         await createPettyCash(transformData)
         closeModal()
         clearId()
-        // console.log(transformData);
+        //z console.log(transformData);
         
       } catch (err: any) {
         console.log(err)
@@ -80,7 +80,7 @@ function PettyCashHeadForm() {
   }
 
   if(mode==='View' && !isLoading){
-    return <h3>{JSON.stringify(pettyCash)}</h3>
+    return <h3><PettyCashViewer data={pettyCash} /></h3>
   }
 
   if(error){

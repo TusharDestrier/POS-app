@@ -26,40 +26,41 @@ const PosOrder = () => {
       <CardContent className="space-y-4">
       <div className="flex space-x-8 ml-5 gap-36">
           <div>
-            <FormField
-              control={control}
-              name="generalSchema.storeName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Store Name</FormLabel>
-                  <FormControl>
-                    <Select {...field}>
-                      <SelectTrigger className="w-full mt-3">
-                        <SelectValue placeholder="Select Store Name" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
+          <FormField
+          control={control}
+          name="storeID"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Store Name
+              </FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Store Name" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                <SelectGroup>
                           <SelectLabel>Store</SelectLabel>
-                          <SelectItem value="apple">Apple</SelectItem>
-                          <SelectItem value="banana">Banana</SelectItem>
-                          <SelectItem value="blueberry">Blueberry</SelectItem>
-                          <SelectItem value="grapes">Grapes</SelectItem>
-                          <SelectItem value="pineapple">Pineapple</SelectItem>
+                          <SelectItem value="1">Apple</SelectItem>
+                          <SelectItem value="2">Banana</SelectItem>
+                          <SelectItem value="3">Blueberry</SelectItem>
+                          <SelectItem value="4">Grapes</SelectItem>
+                          <SelectItem value="5">Pineapple</SelectItem>
                         </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
           </div>
 
           <div className='flex space-x-9'>
             <div>
               <FormField
                 control={control}
-                name="generalSchema.fromDate"
+                name="fromDate"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>From Date</FormLabel>
@@ -67,7 +68,7 @@ const PosOrder = () => {
                       <Input
                         type="date"
                         {...field}
-                        id="generalSchema.fromDate"
+                        id="fromDate"
                         placeholder="From Date"
                         className="w-full mt-3"
                       />
@@ -80,7 +81,7 @@ const PosOrder = () => {
             <div>
               <FormField
                 control={control}
-                name="generalSchema.toDate"
+                name="toDate"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>To Date</FormLabel>
@@ -102,19 +103,19 @@ const PosOrder = () => {
         </div>
         <FormField
           control={control}
-          name="PsOrder.dueDateMandatory"
+          name="dueDateMandatoryInPOSOrder"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Due Date is Mandatory in POS Order</FormLabel>
               <FormControl>
                 <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="yes" id="dueDateYes" />
-                    <Label htmlFor="dueDateYes">Yes</Label>
+                    <RadioGroupItem value="Y" id="Y" />
+                    <Label htmlFor="Y">Yes</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="no" id="dueDateNo" />
-                    <Label htmlFor="dueDateNo">No</Label>
+                    <RadioGroupItem value="N" id="N" />
+                    <Label htmlFor="N">No</Label>
                   </div>
                 </RadioGroup>
               </FormControl>
@@ -126,7 +127,7 @@ const PosOrder = () => {
 
         <FormField
           control={control}
-          name="PsOrder.minAdvancePercentage"
+          name="minPercentageOfAdvanceDuringPOSOrder"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Minimum Percentage of Advance during POS Order</FormLabel>
@@ -141,19 +142,19 @@ const PosOrder = () => {
 
         <FormField
           control={control}
-          name="PsOrder.posOrderCancellationMandatory"
+          name="posOrderCancellationIsMandatory"
           render={({ field }) => (
             <FormItem>
               <FormLabel>POS Order Cancellation is Mandatory</FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
+                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3 roles-radio">
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="yes" id="cancellationYes" />
-                    <Label htmlFor="cancellationYes">Yes</Label>
+                    <RadioGroupItem value="Y" id="Y" />
+                    <Label htmlFor="Y">Yes</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="no" id="cancellationNo" />
-                    <Label htmlFor="cancellationNo">No</Label>
+                    <RadioGroupItem value="N" id="N" />
+                    <Label htmlFor="N">No</Label>
                   </div>
                 </RadioGroup>
               </FormControl>

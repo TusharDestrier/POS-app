@@ -119,7 +119,7 @@ export default function PettyCashHeadTable() {
   return (
     <>
       <div className="w-full">
-        {/* {JSON.stringify(pettyCashData)} */}
+        {JSON.stringify(pettyCashData)}
         <div className="flex items-center py-4">
           <Input
             placeholder="Filter PettyCashName..."

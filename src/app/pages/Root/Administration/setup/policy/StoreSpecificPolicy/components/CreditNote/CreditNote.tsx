@@ -28,40 +28,41 @@ const CreditNote = () => {
       <CardContent className="space-y-4">
       <div className="flex space-x-8 ml-5 gap-36">
           <div>
-            <FormField
-              control={control}
-              name="generalSchema.storeName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Store Name</FormLabel>
-                  <FormControl>
-                    <Select {...field}>
-                      <SelectTrigger className="w-full mt-3">
-                        <SelectValue placeholder="Select Store Name" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
+          <FormField
+          control={control}
+          name="storeID"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Store Name
+              </FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Store Name" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                <SelectGroup>
                           <SelectLabel>Store</SelectLabel>
-                          <SelectItem value="apple">Apple</SelectItem>
-                          <SelectItem value="banana">Banana</SelectItem>
-                          <SelectItem value="blueberry">Blueberry</SelectItem>
-                          <SelectItem value="grapes">Grapes</SelectItem>
-                          <SelectItem value="pineapple">Pineapple</SelectItem>
+                          <SelectItem value="1">Apple</SelectItem>
+                          <SelectItem value="2">Banana</SelectItem>
+                          <SelectItem value="3">Blueberry</SelectItem>
+                          <SelectItem value="4">Grapes</SelectItem>
+                          <SelectItem value="5">Pineapple</SelectItem>
                         </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
           </div>
 
           <div className='flex space-x-9'>
             <div>
               <FormField
                 control={control}
-                name="generalSchema.fromDate"
+                name="fromDate"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>From Date</FormLabel>
@@ -82,7 +83,7 @@ const CreditNote = () => {
             <div>
               <FormField
                 control={control}
-                name="generalSchema.toDate"
+                name="toDate"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>To Date</FormLabel>
@@ -104,7 +105,7 @@ const CreditNote = () => {
         </div>
         <FormField
           control={control}
-          name="CreditNoteSchema.returnItem"
+          name="returnOfItemWithin"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Return of Item within</FormLabel>
@@ -119,7 +120,7 @@ const CreditNote = () => {
 
         <FormField
           control={control}
-          name="CreditNoteSchema.creditNoteValidityDays"
+          name="creditNoteValidityDays"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Credit Note Validity Days</FormLabel>
@@ -134,19 +135,19 @@ const CreditNote = () => {
 
         <FormField
           control={control}
-          name="CreditNoteSchema.billTaggingMandatory"
+          name="billTaggingMandatoryDuringReturn"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Bill Tagging Mandatory during Return</FormLabel>
               <FormControl>
-                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3">
+                <RadioGroup {...field} className="flex items-center gap-3 w-full mt-3 roles-radio">
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="yes" id="billTagYes" />
-                    <Label htmlFor="billTagYes">Yes</Label>
+                    <RadioGroupItem value="Y" id="Y" />
+                    <Label htmlFor="Y">Yes</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="no" id="billTagNo" />
-                    <Label htmlFor="billTagNo">No</Label>
+                    <RadioGroupItem value="N" id="N" />
+                    <Label htmlFor="N">No</Label>
                   </div>
                 </RadioGroup>
               </FormControl>
@@ -158,7 +159,7 @@ const CreditNote = () => {
 
         <FormField
           control={control}
-          name="CreditNoteSchema.numberOfCopiesPrint"
+          name="noOfCopiesToBePrint"
           render={({ field }) => (
             <FormItem>
               <FormLabel>No. of Copies to be Print</FormLabel>
