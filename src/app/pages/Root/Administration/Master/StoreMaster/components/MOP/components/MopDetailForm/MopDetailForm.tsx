@@ -1,8 +1,11 @@
 import { Trash } from 'lucide-react'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useFormContext, useFieldArray } from 'react-hook-form'
 
 import { usePaymodeMasterData } from '../../../../../PayModeMaster/hooks_api/usePaymodeMasterData'
+import { useStoreMasterById } from '../../../../hooks_api/useFetchStoreMasterById'
+import { useStoreMasterDataStore } from '../../../../store/useStoreMasterDataStore'
+import useStoreMasterStore from '../../../../store/useStoreMasterStore'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -16,21 +19,20 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-
 function MopDetailForm() {
   // Central form control access
 
   const { paymodeMasterData, isLoading } = usePaymodeMasterData()
-
+  const mode = useStoreMasterStore((state) => state.mode)
   const { control, setValue } = useFormContext()
-
+  const storeId = useStoreMasterDataStore((state) => state.currentStoreMasterId)
+  const { storeMaster, isLoading: storeLoading } = useStoreMasterById(Number(storeId))
   // Field array to manage dynamic rows in mopValues
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, replace } = useFieldArray({
     control,
     name: 'objPayMode', // Ensure this matches combined schema path exactly
   })
 
- 
   const payModeOptions = useMemo(() => {
     if (!paymodeMasterData || paymodeMasterData.length === 0) return []
 
@@ -40,6 +42,23 @@ function MopDetailForm() {
       id: paymode.paymentModeID || 0, // Ensure an ID is always available
     }))
   }, [paymodeMasterData])
+
+  useEffect(() => {
+    if (mode === 'Edit' && storeMaster?.objPayMode) {
+      replace(
+        storeMaster.objPayMode.map((pm) => ({
+          payMode: pm.paymentModeName || '',
+          paymentCode: String(pm.paymentModeID) || '',
+          crossStore: pm.isCrossStoreUsage || 'N',
+          ledgersName: pm.ledgerName || '',
+          ledgersCode: pm.ledgerCode || '',
+          subLedgerName: pm.subLedgerName || '',
+          subLedgerCode: pm.subLedgerCode || '',
+          discontinue: pm.discontinued || 'N',
+        }))
+      )
+    }
+  }, [storeMaster, mode, replace])
 
   const ledgerOptions = [
     { value: 'Ledger 1', code: 'LEDGER001', name: 'Ledger 1' },
@@ -52,6 +71,7 @@ function MopDetailForm() {
     { value: 'SubLedger 2', code: 'SUBLEDGER002', name: 'SubLedger 2' },
   ]
 
+  console.log(storeMaster)
 
   return (
     <div className="border p-4 border-black border-solid h-[580px] overflow-y-auto">
@@ -79,7 +99,7 @@ function MopDetailForm() {
             name={`objPayMode.${index}.payMode`}
             render={({ field }) => (
               <Select
-              value={field.value}
+                value={field.value}
                 onValueChange={(value) => {
                   field.onChange(value)
                   const selectedPayMode = payModeOptions?.find((pm) => pm?.value === value)
@@ -136,6 +156,8 @@ function MopDetailForm() {
             name={`objPayMode.${index}.ledgersName`}
             render={({ field }) => (
               <Select
+              value={field.value}  // Yeh bind karega existing data
+              defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhaye
                 onValueChange={(value) => {
                   field.onChange(value)
                   const selectedLedger = ledgerOptions.find((l) => l.name === value)
@@ -162,6 +184,8 @@ function MopDetailForm() {
             name={`objPayMode.${index}.subLedgerName`}
             render={({ field }) => (
               <Select
+              value={field.value}  // Yeh bind karega existing data
+              defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhaye
                 onValueChange={(value) => {
                   field.onChange(value)
                   const selectedSubLedger = subLedgerOptions.find((sl) => sl.name === value)

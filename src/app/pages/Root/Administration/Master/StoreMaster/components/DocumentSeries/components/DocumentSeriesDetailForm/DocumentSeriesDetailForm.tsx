@@ -55,10 +55,10 @@ const DocumentSeriesDetailForm = () => {
                       <SelectValue placeholder="Select Transaction Type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="sale">sale</SelectItem>
-                      <SelectItem value="purchase">Purchase</SelectItem>
-                      <SelectItem value="return">Return</SelectItem>
-                      <SelectItem value="transfer">Transfer</SelectItem>
+                      <SelectItem value="1">sale</SelectItem>
+                      <SelectItem value="2">Purchase</SelectItem>
+                      <SelectItem value="3">Return</SelectItem>
+                      <SelectItem value="4">Transfer</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>

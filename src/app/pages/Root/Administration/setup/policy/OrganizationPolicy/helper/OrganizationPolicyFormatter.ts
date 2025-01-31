@@ -19,7 +19,7 @@ export function OrganizationPolicyFormatter(
 
   // Default structure with all required fields and default values
   const defaultData = {
-    orgPolicyID: mode === 'Edit' ? id : 0,
+    orgPolicyID: mode === 'Edit' ? Number(id) : 0,
     pendingSettlementDays: 0,
     footfallEntryRequiredDaySettlement: 'string',
     maxAllowDiscountPolicyValidationID: 0,
@@ -57,5 +57,6 @@ export function OrganizationPolicyFormatter(
   return {
     ...defaultData,
     ...data,
+    pendingSettlementDays:Number(data.pendingSettlementDays)
   }
 }

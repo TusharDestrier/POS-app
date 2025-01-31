@@ -1,96 +1,127 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import OrganizationTab from './components/OrganizationTab'
 import { OrganizationPolicyFormatter } from './helper/OrganizationPolicyFormatter'
-import { useCreateOrganizationPolicy } from './hooks_api/useCreateOrganizationPolicy';
+import { useCreateOrganizationPolicy } from './hooks_api/useCreateOrganizationPolicy'
 //import { useOrganizationPolicyDataById } from './hooks_api/useOrganizationPolicyById'
+import { useOrganizationPolicyData } from './hooks_api/useOrganizationPolicyData'
 import { PostOrganizationPolicySchema } from './schemas/PostOrganizationPolicySchema'
 import { useOrganizationPolicyDataStore } from './store/useOrganizationPolicyDataStore'
 import useOrganizationPolicyHead from './store/useOrganizationPolicyHead'
 
-//import GlobalViewerLoader from '@/components/GlobalViewerLoader'
+import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
+//import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 
 function OrganizationPage() {
-  const { createOrganizationPolicy, error } = useCreateOrganizationPolicy();
-  //const { createOrganizationPolicy } = useCreateOrganizationPolicy();
-  //const orgPolicyID = useOrganizationPolicyDataStore((state) => state.currentOrganizationPolicyId)
-  // const { organizationPolicybyId, isLoading } = useOrganizationPolicyDataById(orgPolicyID);
-  //const mode = useOrganizationPolicyHead((state) => state.mode)
-  const closeModal = useOrganizationPolicyHead((state) => state.toggleOpen)
+  const { createOrganizationPolicy, isPending } = useCreateOrganizationPolicy()
+  const { organizationPolicyData, isLoading } = useOrganizationPolicyData()
   const clearId = useOrganizationPolicyDataStore((state) => state.clearOrganizationPolicyId)
-
+const setMode=useOrganizationPolicyHead(state=>state.setMode);
   const formMethods = useForm({
     resolver: zodResolver(PostOrganizationPolicySchema),
     defaultValues: {
-      pendingSettlementDays: 29,
-      footfallEntryRequiredDaySettlement: 'N',
-      maxAllowDiscountPolicyValidationID: '1',
-      maxBillAmountSinglePOSBill: '22',
-      pan: '988994670j',
-      creditCardDetailsCapturePolicyID: '1',
-      isCCardAuthNoEntryMandatory: 'N',
-      allowBackDateEntry: 'N',
-      backDateEntryDays: '5',
-      stockCheck: '1',
+      pendingSettlementDays: 0,
+      footfallEntryRequiredDaySettlement: '',
+      maxAllowDiscountPolicyValidationID: '',
+      maxBillAmountSinglePOSBill: '',
+      pan: '',
+      creditCardDetailsCapturePolicyID: '',
+      isCCardAuthNoEntryMandatory: '',
+      allowBackDateEntry: '',
+      backDateEntryDays: '',
+      negativestockcheckingmode: '',
       picture: '',
-      allowItemLevelDiscount: 'N',
-      allowBillLevelDiscount: 'N',
-      maxAllowDiscountPercentage: '0',
-      maxAllowDiscountAmount: '0',
-      allowToSelectActivePromotionFromList: 'N',
-      allowToClearAppliedPromotion:"N",
-      salePersonTaggingMandatory: 'N',
-      salePersonTaggingPolicyID: '1',
-      customerTaggingIsMandatory: 'N',
-      returnOfItemWithin: '0',
-      creditNoteValidityDays: '0',
-      billTaggingMandatoryDuringReturn: 'N',
-      numberOfCopiesPrint: '3',
-      excessGoodsReceiptTolerancePercentage: '0',
-      shortGoodsReceiptTolerancePercentage: '0',
-      allowToReceiveDamagedGoods: 'N',
-      dueDateIsMandatoryInPOSOrder: 'N',
-      minPercentageOfAdvanceDuringPOSOrder: '0',
-      posOrderCancellationIsMandatory: 'N',
+      allowItemLevelDiscount: '',
+      allowBillLevelDiscount: '',
+      maxAllowDiscountPercentage: '',
+      maxAllowDiscountAmount: '',
+      allowToSelectActivePromotionFromList: '',
+      allowToClearAppliedPromotion: '',
+      salePersonTaggingMandatory: '',
+      salePersonTaggingPolicyID: '',
+      customerTaggingIsMandatory: '',
+      returnOfItemWithin: '',
+      creditNoteValidityDays: '',
+      billTaggingMandatoryDuringReturn: '',
+      numberOfCopiesPrint: '',
+      excessGoodsReceiptTolerancePercentage: '',
+      shortGoodsReceiptTolerancePercentage: '',
+      allowToReceiveDamagedGoods: '',
+      dueDateIsMandatoryInPOSOrder: '',
+      minPercentageOfAdvanceDuringPOSOrder: '',
+      posOrderCancellationIsMandatory: '',
     },
   })
 
-  // Handle form submission
+  useEffect(() => {
+    if (organizationPolicyData?.length > 0) {
+      setMode('Edit')
+      const lastPolicy = organizationPolicyData?.[organizationPolicyData.length - 1]
+      formMethods.reset({
+        pendingSettlementDays: String(lastPolicy?.pendingSettlementDays) || 30,
+        footfallEntryRequiredDaySettlement: lastPolicy?.footfallEntryRequiredDaySettlement || 'N',
+        maxAllowDiscountPolicyValidationID: String(lastPolicy?.maxAllowDiscountPolicyValidationID) || '1',
+        maxBillAmountSinglePOSBill: String(lastPolicy?.maxBillAmountSinglePOSBill) || '22',
+        pan: String(lastPolicy?.pan) || '988994670j',
+        creditCardDetailsCapturePolicyID: String(lastPolicy?.creditCardDetailsCapturePolicyID) || '1',
+        isCCardAuthNoEntryMandatory: String(lastPolicy?.isCCardAuthNoEntryMandatory) || 'N',
+        allowBackDateEntry: String(lastPolicy?.allowBackDateEntry) || 'N',
+        backDateEntryDays: String(lastPolicy?.backDateEntryDays) || '5',
+        negativestockcheckingmode: String(lastPolicy?.stockCheck) || "1",
+        picture: String(lastPolicy?.picture) || '',
+        allowItemLevelDiscount: String(lastPolicy?.allowItemLevelDiscount) || 'N',
+        allowBillLevelDiscount: String(lastPolicy?.allowBillLevelDiscount) || 'N',
+        maxAllowDiscountPercentage: String(lastPolicy?.maxAllowDiscountPercentage) || '0',
+        maxAllowDiscountAmount: String(lastPolicy?.maxAllowDiscountAmount) || '0',
+        allowToSelectActivePromotionFromList: String(lastPolicy?.allowToSelectActivePromotionFromList) || 'N',
+        allowToClearAppliedPromotion: String(lastPolicy?.allowToClearAppliedPromotion) || 'N',
+        salePersonTaggingMandatory: String(lastPolicy?.salePersonTaggingMandatory) || 'N',
+        salePersonTaggingPolicyID: String(lastPolicy?.salePersonTaggingPolicyID) || '1',
+        customerTaggingIsMandatory: String(lastPolicy?.customerTaggingIsMandatory) || 'N',
+        returnOfItemWithin: String(lastPolicy?.returnOfItemWithin) || '0',
+        creditNoteValidityDays: String(lastPolicy?.creditNoteValidityDays) || '0',
+        billTaggingMandatoryDuringReturn: String(lastPolicy?.billTaggingMandatoryDuringReturn) || 'N',
+        noOfCopiesToBePrint: String(lastPolicy?.noOfCopiesToBePrint) || '3',
+        excessGoodsReceiptTolerancePercentage: String(lastPolicy?.excessGoodsReceiptTolerancePercentage) || '0',
+        shortGoodsReceiptTolerancePercentage: String(lastPolicy?.shortGoodsReceiptTolerancePercentage) || '0',
+        allowToReceiveDamagedGoods: String(lastPolicy?.allowToReceiveDamagedGoods) || 'N',
+        dueDateIsMandatoryInPOSOrder: String(lastPolicy?.dueDateIsMandatoryInPOSOrder) || 'N',
+        minPercentageOfAdvanceDuringPOSOrder: String(lastPolicy?.minPercentageOfAdvanceDuringPOSOrder) || '0',
+        posOrderCancellationIsMandatory: String(lastPolicy?.posOrderCancellationIsMandatory) || 'N',
+      })
+    } else {
+      setMode('Create')
+    }
+  }, [organizationPolicyData])
+  
+
   async function onSubmit(data: z.infer<typeof PostOrganizationPolicySchema>) {
-    const formattedData = OrganizationPolicyFormatter(data, 1)
+    const formattedData = OrganizationPolicyFormatter(data, String(organizationPolicyData?.[0]?.orgPolicyID))
     console.log('Formatted Data:', formattedData)
 
     try {
-      // console.log("Formatted Data:", formattedData);
-      await createOrganizationPolicy(formattedData);
-      closeModal();
-      clearId();
-      // console.log(data)
+      await createOrganizationPolicy(formattedData)
+      clearId()
     } catch (err) {
       console.error(err)
     }
   }
 
-  // Loading state
-  // if (isLoading && mode === 'View') {
-  //   return <GlobalViewerLoader />;
-  // }
-
-  // Error handling
-  // if (error) {
-  //   return <p>{error.message}</p>;
-  // }
+  if (isLoading) {
+    return <GlobalViewerLoader />
+  }
 
   return (
     <FormProvider {...formMethods}>
       <form onSubmit={formMethods.handleSubmit(onSubmit)}>
         <OrganizationTab />
         <div className="h-[60px] sticky bottom-0 right-0 flex justify-end items-center">
-          <Button type="submit" className="btn btn-primary">
-            Submit
+          <Button type="submit" className="btn btn-primary" disabled={isPending}>
+            {isPending ? 'Submiting' : 'Submit'}
           </Button>
         </div>
       </form>

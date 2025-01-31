@@ -94,7 +94,7 @@ const CreditNote = () => {
 
         <FormField
           control={control}
-          name="numberOfCopiesPrint"
+          name="noOfCopiesToBePrint"
           render={({ field }) => (
             <FormItem>
               <FormLabel>No. of Copies to be Print</FormLabel>

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const PostOrganizationPolicySchema = z.object({
-  pendingSettlementDays: z.number().optional(),
+  pendingSettlementDays: z.string().optional(),
   footfallEntryRequiredDaySettlement: z.enum(['Y', 'N']).optional(),
   maxAllowDiscountPolicyValidationID: z.string().optional(),
   maxBillAmountSinglePOSBill: z.string().optional(),
@@ -10,8 +10,9 @@ export const PostOrganizationPolicySchema = z.object({
   isCCardAuthNoEntryMandatory: z.enum(['Y', 'N']).optional(),
   allowBackDateEntry: z.enum(['Y', 'N']).optional(),
   backDateEntryDays: z.string().optional(),
-  //negativestockcheckingmode: z.string().optional(),
+  negativestockcheckingmode: z.string().optional(),
   picture: z.string().optional(),
+  noOfCopiesToBePrint: z.string().optional(),
   //POS BILL
   allowItemLevelDiscount: z.enum(['Y', 'N']).optional(),
   allowBillLevelDiscount: z.enum(['Y', 'N']).optional(),

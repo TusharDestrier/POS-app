@@ -5,11 +5,13 @@ export type FetchedOrganizationPolicyType = {
   maxAllowDiscountPolicyValidationID: number | null | string
   maxBillAmountSinglePOSBill: number | null | string
   pan: string | null
+  stockCheck: string | null
   creditCardDetailsCapturePolicyID: number | null | string
   isCCardAuthNoEntryMandatory: string | null
   allowBackDateEntry: string | null
   backDateEntryDays: number | null | string
   picture: string | null
+  numberOfCopiesPrint:string|null
   allowItemLevelDiscount: string | null
   maxAllowDiscountPercentage: number | null | string
   allowBillLevelDiscount: string | null

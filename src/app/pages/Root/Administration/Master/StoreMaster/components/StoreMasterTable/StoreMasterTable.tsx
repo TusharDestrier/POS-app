@@ -50,7 +50,7 @@ function StoreMasterTable() {
     pageIndex: 0,
     pageSize: 5, // Set the page size as desired
   })
-
+const globalLoading=useStoreMasterStore(state=>state.isLoading);
   const modalToggler = useStoreMasterStore((state) => state.toggleOpen)
   const setModalMode = useStoreMasterStore((state) => state.setMode)
 
@@ -95,7 +95,7 @@ function StoreMasterTable() {
     modalToggler()
     setModalMode('Create')
   }
-  if (isLoading) {
+  if (isLoading || globalLoading) {
     return <SkeletonLoaderTable />
   }
 

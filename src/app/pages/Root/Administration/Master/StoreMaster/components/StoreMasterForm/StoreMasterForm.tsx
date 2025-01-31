@@ -20,9 +20,8 @@ function StoreMasterForm() {
   const { storeMaster, isLoading } = useStoreMasterById(Number(storeId))
   const { isPending, error, createStoremaster } = useCreateStoreMaster()
   const closeModal = useStoreMasterHead((state) => state.close)
-  // const { storeMaster, isLoading } = useStoreMasterById(Number() || null)
-  // const { isLoading } = useStoreMasterById(Number() || null)
-  const mode=useStoreMasterStore(state=>state.mode)
+
+  const mode = useStoreMasterStore((state) => state.mode)
   const formMethods = useForm({
     resolver: zodResolver(StoreMasterHeadSchema),
     defaultValues: {
@@ -118,20 +117,25 @@ function StoreMasterForm() {
   })
 
   useEffect(() => {
-    if (mode==='Edit' && storeMaster) {
-      console.log('Populating form with:', storeMaster)
+    if (mode === 'Edit' && storeMaster) {
       formMethods.reset({
         storeCode: storeMaster.storeCode ?? '',
         storeName: storeMaster.storeName ?? '',
-        startDate: storeMaster.startDate ? new Date(storeMaster.startDate).toISOString().split('T')[0] : '',
-        closeDate: storeMaster.closeDate ? new Date(storeMaster.closeDate).toISOString().split('T')[0] : '',
+        startDate: storeMaster.startDate
+          ? new Date(storeMaster.startDate).toISOString().split('T')[0]
+          : '',
+        closeDate: storeMaster.closeDate
+          ? new Date(storeMaster.closeDate).toISOString().split('T')[0]
+          : '',
         storeSize: storeMaster.storeSize ?? 0,
         defaultWarehouseCode: storeMaster.defaultWarehouseCode ?? '',
         defaultWarehouseName: storeMaster.defaultWarehouseName ?? '',
         defaultSaleWarehouseCode: storeMaster.defaultSaleWHCode ?? '',
         defaultReturnWarehouseCode: storeMaster.defaultReturnWHCode ?? '',
         GSTIN: storeMaster.gstin ?? '',
-        GSTINDate: storeMaster.gstinDate ? new Date(storeMaster.gstinDate).toISOString().split('T')[0] : '',
+        GSTINDate: storeMaster.gstinDate
+          ? new Date(storeMaster.gstinDate).toISOString().split('T')[0]
+          : '',
         stateCode: storeMaster.gstinState ?? '',
         stateName: storeMaster.gstinState ?? '',
         priceList: storeMaster.priceListName ?? '',
@@ -154,7 +158,7 @@ function StoreMasterForm() {
         shipToPostalCode: storeMaster.shipPostalCode ?? '',
         shipToState: storeMaster.shipStateCode ?? '',
         contactPerson: storeMaster.contactPerson ?? '',
-        contactNumber: String(storeMaster.contactNumber) || "" ,
+        contactNumber: String(storeMaster.contactNumber) || '',
         emailId: storeMaster.email ?? '',
         sourcingWarehouse: storeMaster.objWareHouse || [],
         objPayMode: storeMaster.objPayMode || [],
@@ -168,10 +172,8 @@ function StoreMasterForm() {
   const onSubmit = formMethods.handleSubmit(async (data) => {
     const transformData = StoreMasterFormatter(data, 1)
     try {
-      console.log(transformData)
-
       await createStoremaster(transformData)
-      // closeModal()
+      closeModal()
     } catch (err: unknown) {
       if (err instanceof Error) {
         throw new Error(err.message)
@@ -179,16 +181,13 @@ function StoreMasterForm() {
     }
   })
 
-  if (isLoading && mode==='View') {
+  if (isLoading && mode === 'View') {
     return <GlobalViewerLoader />
   }
 
-  if(!isLoading && mode==='View'){
+  if (!isLoading && mode === 'View') {
     return JSON.stringify(storeMaster)
   }
-
-
-
 
   return (
     <FormProvider {...formMethods}>

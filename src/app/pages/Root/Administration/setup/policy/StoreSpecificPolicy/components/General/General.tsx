@@ -2,12 +2,10 @@
 import { format } from 'date-fns'
 
 import { CalendarIcon } from 'lucide-react'
+import { useMemo } from 'react'
 import { useFormContext } from 'react-hook-form'
 
-// import { Button } from '@/components/ui/button'
-
-//import useGoodsIssueType from '@/app/pages/Root/Inventroty/GoodsIssue/store/useGoodsIssueType'
-
+import { useStoreMasterData } from '@/app/pages/Root/Administration/Master/StoreMaster/hooks_api/useStoreMasterData'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import {
@@ -24,17 +22,28 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+
+
 //import { cn } from '@/lib/utils' // Verify this path matches your project structure
 
 const General = () => {
   const { control } = useFormContext()
+const {storemasterData,isLoading}=useStoreMasterData();
 
+
+const storeMasterOptions = useMemo(() => {
+    if (!storemasterData || storemasterData.length === 0) return []
+
+    return storemasterData.map((stores) => ({
+      value: stores.storeID || '', // Ensure a fallback value
+      label: stores.storeName || 'Unknown', // Prevent UI crash if value is undefined
+      id: stores.storeID || 0, // Ensure an ID is always available
+    }))
+  }, [storemasterData])
   return (
     <Card className="border-2 border-solid border-black overflow-y-auto h-[650px]">
       <CardHeader>
@@ -52,19 +61,20 @@ const General = () => {
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select Store Name" />
+                        <SelectValue placeholder={isLoading?"Loading...":"Select Store"} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Store</SelectLabel>
-                        <SelectItem value="1">Apple</SelectItem>
-                        <SelectItem value="2">Banana</SelectItem>
-                        <SelectItem value="3">Blueberry</SelectItem>
-                        <SelectItem value="4">Grapes</SelectItem>
-                        <SelectItem value="5">Pineapple</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
+                  {isLoading ? (
+                    <p className="p-2 text-gray-500">Loading...</p>
+                  ) : (
+                    storeMasterOptions?.map((pm) => (
+                      <SelectItem key={pm.id} value={String(pm.value)}>
+                        {pm.label}
+                      </SelectItem>
+                    ))
+                  )}
+                </SelectContent>
                   </Select>
                   <FormMessage />
                 </FormItem>
@@ -188,7 +198,7 @@ const General = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Maximum Allowable Discount Policy Validation</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a Discount Policy" />
@@ -245,7 +255,7 @@ const General = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Credit Card Details Capture Policy</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a card capture policy" />
@@ -347,7 +357,7 @@ const General = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Negative Stock Checking Mode</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select Checking Mode" />

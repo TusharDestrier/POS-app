@@ -1,8 +1,12 @@
 import { Trash } from 'lucide-react'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useFormContext, useFieldArray } from 'react-hook-form'
 
+
 import { usePettyCashData } from '../../../../../PettyCashHead/hooks_api/usePettyCashData'
+import { useStoreMasterById } from '../../../../hooks_api/useFetchStoreMasterById'
+import { useStoreMasterDataStore } from '../../../../store/useStoreMasterDataStore'
+import useStoreMasterStore from '../../../../store/useStoreMasterStore'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -22,11 +26,35 @@ const PettyCashDetailsForm = () => {
   const { pettyCashData, isLoading } = usePettyCashData()
   const { control, setValue, watch } = useFormContext()
 
+  const mode = useStoreMasterStore((state) => state.mode);
+const storeId = useStoreMasterDataStore((state) => state.currentStoreMasterId);
+const { storeMaster,  } = useStoreMasterById(Number(storeId));
+
   // Manage dynamic field rows for petty cash values
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove,replace } = useFieldArray({
     control,
     name: 'objPettyCash', // Adjusted path to match combined schema
   })
+
+
+  useEffect(() => {
+    if (mode === "Edit" && storeMaster?.objPettyCash) {
+      replace(
+        storeMaster.objPettyCash.map((pc) => ({
+          pettyCashName: pc.pettyCashName || "",
+          pettyCashCode: String(pc.pettyCashID) || "",
+          limit: pc.limit || 0,
+          modeOfOperation: pc.modeOfOperation || "",
+          ledgerCode: pc.ledgerCode || "",
+          ledgerName: pc.ledgerName || "",
+          subLedgerCode: pc.subLedgerCode || "",
+          subLedgerName: pc.subLedgerName || "",
+          discontinued: pc.discontinued || "N",
+        }))
+      );
+    }
+  }, [storeMaster, mode, replace]);
+
 
   // Ledger and Sub-Ledger options
   const ledgerOptions = [
@@ -84,6 +112,8 @@ const PettyCashDetailsForm = () => {
               <FormItem>
                 <FormControl>
                   <Select
+                    defaultValue={field.value}
+                    value={field.value}
                     onValueChange={(value) => {
                       field.onChange(value)
 
@@ -218,6 +248,7 @@ const PettyCashDetailsForm = () => {
                       )
                     }}
                     defaultValue={field.value}
+                    value={field.value}
                     disabled={!watch(`objPettyCash.${index}.ledgerName`)}
                   >
                     <SelectTrigger>

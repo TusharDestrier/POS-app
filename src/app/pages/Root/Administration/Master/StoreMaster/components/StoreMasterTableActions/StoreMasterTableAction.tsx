@@ -1,5 +1,7 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 
+import { useCreateStoreMaster } from '../../hooks_api/useCreateStoreMaster'
+import { useFetchStoreMasterById } from '../../hooks_api/useFetchStoreMasterById'
 import { useStoreMasterDataStore } from '../../store/useStoreMasterDataStore'
 import useStoreMasterStore from '../../store/useStoreMasterStore'
 
@@ -18,14 +20,23 @@ function StoreMasterTableAction({ storeData }: { storeData: FetchedStoreMasterTy
   const modalToggler = useStoreMasterStore((state) => state.toggleOpen)
   const setMode = useStoreMasterStore((state) => state.setMode)
   const setStoreMasterId = useStoreMasterDataStore((state) => state.setStoreMasterId)
+  const { createStoremaster } = useCreateStoreMaster()
+  const { fetchStoreMasterById } = useFetchStoreMasterById()
 
   function EditHandler() {
     modalToggler()
     setMode('Edit')
     setStoreMasterId(storeData?.storeID)
   }
-  function DeleteHandler() {
-    modalToggler()
+  async function DeleteHandler() {
+    const data = await fetchStoreMasterById(storeData?.storeID)
+    console.log(data)
+    const newData={
+      ...data,
+      usedFor:"D",
+      // priceListID:0
+    }
+    await createStoremaster(newData)
     setMode('Create')
   }
   function ViewHandler() {

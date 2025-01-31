@@ -32,7 +32,7 @@ export function useCreateStoreMaster(){
       },
       onSuccess: () => {
         // ✅ Refetch after successful creation
-        queryClient.invalidateQueries({ queryKey: ['salesPerson'] })
+        queryClient.invalidateQueries({ queryKey: ['storeMaster'] })
   
         toast.success(messages[mode], {
           style: {

@@ -1,5 +1,4 @@
 
-// Customer Table Details
 interface CustomerTableDetail {
     mobileNo: string
     firstName: string

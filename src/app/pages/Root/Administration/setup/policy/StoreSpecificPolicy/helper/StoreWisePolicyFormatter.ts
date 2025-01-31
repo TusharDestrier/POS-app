@@ -5,7 +5,7 @@ import useStoreWisePolicyHead from '../store/useStoreWisePolicyHead'
 
 import { formatDate } from '@/lib/utils'
 
-export type StoreWisePolicyFormatterType = z.infer<typeof PostStoreWisePolicySchema>
+export type StoreWisePolicyPostType = z.infer<typeof PostStoreWisePolicySchema>
 
 const operation = {
   Create: 'I',
@@ -14,7 +14,7 @@ const operation = {
 }
 
 export function StoreWisePolicyFormatter(
-  data: StoreWisePolicyFormatterType,
+  data: z.infer<typeof PostStoreWisePolicySchema>,
   id: number | string | null
 ) {
   const mode = useStoreWisePolicyHead.getState().mode as 'Create' | 'Edit' | 'Delete'

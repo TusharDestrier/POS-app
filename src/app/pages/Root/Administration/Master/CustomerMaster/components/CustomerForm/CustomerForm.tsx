@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 
 import { customerDataFormatter } from '../../helper/customerDataFormatter'
+import mapCustomerFetchedTypeToTableData from '../../helper/CustomerDataTbleExtracter'
 import { useCreateCustomer } from '../../hooks_api/useCreateCustomer'
 import { useCustomerData } from '../../hooks_api/useCustomerData'
 import { CustomerMasterSchema } from '../../schemas/CustomerMaster.schema'
@@ -10,6 +11,7 @@ import { useCustomerMaster } from '../../store/useCustomerMaster'
 import { useCustomerMasterDataStore } from '../../store/useCustomerMasterDataStore'
 import CustomerMasterTab from '../CustomerMasterTab/CustomerMasterTab'
 import CustomerTableViewer from '../CustomerTable/components/CustomerTableViewer'
+import { CustomerTableData } from '../CustomerTable/components/CustomerTableViewer/CustomerTableViewer'
 
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
@@ -106,38 +108,43 @@ function CustomerForm() {
   }, [customerData, mode, formMethods.reset])
 
   // Handle form submission
-  const onSubmit = formMethods.handleSubmit(
-    async (data) => {
-      // console.log('Form Data Submitted: ', data) // Logs if submission is successful
-      let transformData
-      transformData = customerDataFormatter(
-        {
-          ...data.communication,
-          ...data.membership,
-          ...data.personal,
-        },
-        customerID ? Number(customerID) : null
-      )
+  const onSubmit = formMethods.handleSubmit(async (data) => {
+    // console.log('Form Data Submitted: ', data) // Logs if submission is successful
+    let transformData
+    transformData = customerDataFormatter(
+      {
+        ...data.communication,
+        ...data.membership,
+        ...data.personal,
+      },
+      customerID ? Number(customerID) : null
+    )
 
-      try {
-        await createCustomerAsync(transformData)
-        closeModal() // ✅ Success pe modal close
-      } catch (err: any) {
-        console.log(err)
+    try {
+      await createCustomerAsync(transformData)
+      closeModal() // ✅ Success pe modal close
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        throw new Error(err.message)
       }
-    },
-    (errors) => {
-      console.log('Validation Errors: ', errors) // Logs validation errors, if any
     }
-  )
+  })
 
   if (customerLoading) {
     return <GlobalViewerLoader />
   }
+  if (mode === 'View' && !customerLoading) {
+    if (!customerData) return <h3>No data available</h3> // ✅ Handle undefined case
 
-  if (!customerLoading && customerData && mode === 'View') {
-    return <h3><CustomerTableViewer data={customerData} /></h3>
-    //<h3>{JSON.stringify(customerData)}</h3>
+    const formattedCustomerData: CustomerTableData = Array.isArray(customerData)
+      ? mapCustomerFetchedTypeToTableData(customerData[0]) // ✅ Extract first element
+      : mapCustomerFetchedTypeToTableData(customerData) // ✅ Direct mapping if object
+
+    return (
+      <h3>
+        <CustomerTableViewer data={formattedCustomerData} />
+      </h3>
+    )
   }
 
   if (customerError && mode === 'View') {

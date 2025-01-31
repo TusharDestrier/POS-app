@@ -2,7 +2,16 @@ import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
-import {categoryOptions, franchiseType,operationTypeOptions, franchiseOptions, stateOptions, storeTypeOptions,warehouseOptions, priceListOptions} from './data/selectOptions'
+import {
+  categoryOptions,
+  franchiseType,
+  operationTypeOptions,
+  franchiseOptions,
+  stateOptions,
+  storeTypeOptions,
+  warehouseOptions,
+  priceListOptions,
+} from './data/selectOptions'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -18,11 +27,10 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-
 function StoreDetailForm() {
-  const { control, setValue, getValues,watch } = useFormContext()
+  const { control, setValue, getValues, watch } = useFormContext()
   // const modalMode = useStoreMasterStore((state) => state.mode)
-  const storeTypeCode = watch("storeTypeCode");
+  const storeTypeCode = watch('storeTypeCode')
   return (
     <div className="grid grid-cols-2 border border-solid border-black h-[580px] overflow-y-auto">
       <div className="border p-3 space-y-3">
@@ -130,7 +138,13 @@ function StoreDetailForm() {
                 Store Size <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input type="number" placeholder="Enter Store Size" {...field} />
+                <Input
+                  type="number"
+                  placeholder="Enter Store Size"
+                  {...field}
+                  onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : '')}
+                 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -146,14 +160,15 @@ function StoreDetailForm() {
                 Default Warehouse Code <span className="text-red-500">*</span>
               </FormLabel>
               <Select
+                value={field.value} // Yeh bind karega existing data
+                defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhaye
                 onValueChange={(value) => {
                   const selectedOption = warehouseOptions.find((option) => option.code === value)
                   if (selectedOption) {
-                    setValue('defaultWarehouseCode', selectedOption.code) // Set Code
                     setValue('defaultWarehouseName', selectedOption.name) // Set Name
                   }
+                  field.onChange(value);
                 }}
-                defaultValue={field.value}
               >
                 <FormControl>
                   <SelectTrigger>
@@ -183,13 +198,9 @@ function StoreDetailForm() {
                 Default Sale Warehouse Code <span className="text-red-500">*</span>
               </FormLabel>
               <Select
-                onValueChange={(value) => {
-                  const selectedOption = warehouseOptions.find((option) => option.code === value)
-                  if (selectedOption) {
-                    setValue('defaultSaleWarehouseCode', selectedOption.code) // Set Code
-                  }
-                }}
-                defaultValue={field.value}
+                onValueChange={(value) => field.onChange(value)}
+                value={field.value} // Yeh bind karega existing data
+                defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhaye
               >
                 <FormControl>
                   <SelectTrigger>
@@ -210,20 +221,16 @@ function StoreDetailForm() {
         />
         <FormField
           control={control}
-          name="defaultSaleWarehouseCode"
+          name="defaultReturnWarehouseCode"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
                 Default Return Warehouse Code <span className="text-red-500">*</span>
               </FormLabel>
               <Select
-                onValueChange={(value) => {
-                  const selectedOption = warehouseOptions.find((option) => option.code === value)
-                  if (selectedOption) {
-                    setValue('defaultSaleWarehouseCode', selectedOption.code) // Set Code
-                  }
-                }}
-                defaultValue={field.value}
+                onValueChange={(value) => field.onChange(value)}
+                value={field.value} // Yeh bind karega existing data
+                defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhaye
               >
                 <FormControl>
                   <SelectTrigger>
@@ -259,7 +266,7 @@ function StoreDetailForm() {
             </FormItem>
           )}
         />
-         <FormField
+        <FormField
           control={control}
           name="GSTINDate"
           render={({ field }) => (
@@ -290,33 +297,39 @@ function StoreDetailForm() {
         />
       </div>
       <div className="border p-3 space-y-3">
-        <div>
-          <FormItem>
-            <FormLabel>Franchise Type</FormLabel>
-            <Select
-              onValueChange={(selectedName) => {
-                const selectedOption = franchiseType.find((option) => option.name === selectedName)
-                if (selectedOption) {
-                  setValue('franchiseName', selectedOption.name) // Set name
-                  setValue('franchiseCode', selectedOption.code) // Set code
-                }
-              }}
-            >
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Franchise" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {franchiseType.map((option) => (
-                  <SelectItem key={option.code} value={option.code}>
-                    {option.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </FormItem>
-        </div>
+        <FormField
+          control={control}
+          name="franchiseCode"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Franchise Type</FormLabel>
+              <Select
+                value={field.value} // Yeh bind karega existing data
+                defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhayes
+                onValueChange={(value) => {
+                  const selectedOption = franchiseType.find((option) => option.code === value)
+                  if (selectedOption) {
+                    setValue('franchiseName', selectedOption.name) // Set Code
+                  }
+                }}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Franchise" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {franchiseType.map((option) => (
+                    <SelectItem key={option.code} value={option.code}>
+                      {option.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         {/* Store Size */}
         <FormField
           control={control}
@@ -343,11 +356,12 @@ function StoreDetailForm() {
                 onValueChange={(value) => {
                   const selectedOption = stateOptions.find((option) => option.code === value)
                   if (selectedOption) {
-                    setValue('stateCode', selectedOption.code) // Set State Code
                     setValue('stateName', selectedOption.name) // Set State Name
                   }
+                  field.onChange(value);
                 }}
                 defaultValue={field.value}
+                value={field.value}
               >
                 <FormControl>
                   <SelectTrigger>
@@ -376,7 +390,7 @@ function StoreDetailForm() {
               <FormLabel>
                 Price List <span className="text-red-500">*</span>
               </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select Price List" />
@@ -421,13 +435,14 @@ function StoreDetailForm() {
                 onValueChange={(value) => {
                   const selectedOption = storeTypeOptions.find((option) => option.code === value)
                   if (selectedOption) {
-                    setValue('storeTypeCode', selectedOption.code) // Set Store Type Code
                     setValue('storeTypeName', selectedOption.name) // Set Store Type Name
                     setValue('storeCategoryCode', '') // Reset Category on Store Type Change
                     setValue('storeCategoryName', '')
+                    field.onChange(value);
                   }
                 }}
                 defaultValue={field.value}
+                value={field.value}
               >
                 <FormControl>
                   <SelectTrigger>
@@ -463,11 +478,13 @@ function StoreDetailForm() {
                     (option) => option.code === value
                   )
                   if (selectedOption) {
-                    setValue('storeCategoryCode', selectedOption.code) // Set Category Code
                     setValue('storeCategoryName', selectedOption.name) // Set Category Name
                   }
+                  field.onChange(value);
                 }}
+                
                 defaultValue={field.value}
+                value={field.value}
                 disabled={!getValues('storeTypeCode')} // Disable if no Store Type selected
               >
                 <FormControl>
@@ -509,6 +526,7 @@ function StoreDetailForm() {
                     }
                   }}
                   defaultValue={field.value}
+                  value={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -544,11 +562,12 @@ function StoreDetailForm() {
                     (option) => option.code === value
                   )
                   if (selectedOption) {
-                    setValue('operationTypeCode', selectedOption.code) // Set Operation Type Code
                     setValue('operationTypeName', selectedOption.name) // Set Operation Type Name
                   }
+                  field.onChange(value);
                 }}
                 defaultValue={field.value}
+                value={field.value}
               >
                 <FormControl>
                   <SelectTrigger>

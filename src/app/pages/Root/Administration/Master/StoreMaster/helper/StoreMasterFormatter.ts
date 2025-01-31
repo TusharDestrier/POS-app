@@ -69,14 +69,14 @@ export function StoreMasterFormatter(data: StoreMasterFormatterType, id: number 
     factor: '',
     // 🏭 Warehouse Mapping (Fix ✅)
     objWareHouse: data.sourcingWarehouse.map((wh) => ({
-      storeID: 0,
+      storeID: mode === 'Create' ? 0 : id,
       sourcingWarehouseCode: wh.warehouseCode,
       sourcingWarehouseName: wh.warehouseCode ?? '',
     })),
 
     // 💳 Payment Mode Mapping (Fix ✅)
     objPayMode: data.objPayMode.map((pm) => ({
-      storeID: 0,
+      storeID: mode === 'Create' ? 0 : id,
       paymentModeID: Number(pm.paymentCode), // Backend required but missing in frontend, default 0
       paymentModeName: pm.payMode,
       isCrossStoreUsage: pm.crossStore ?? 'N',
@@ -89,7 +89,7 @@ export function StoreMasterFormatter(data: StoreMasterFormatterType, id: number 
 
     // 💰 Petty Cash Mapping (Fix ✅)
     objPettyCash: data.objPettyCash.map((pc) => ({
-      storeID: 0,
+      storeID: mode === 'Create' ? 0 : id,
       pettyCashID: Number(pc.pettyCashCode), // Backend required but missing in frontend, default 0
       pettyCashName: pc.pettyCashName ?? '',
       limit: Number(pc.limit) || 0,
@@ -103,8 +103,8 @@ export function StoreMasterFormatter(data: StoreMasterFormatterType, id: number 
 
     // 📜 Series Mapping (Fix ✅)
     objSeries: data.objSeries.map((series) => ({
-      storeID: 0,
-      transactionType: series.transactionType === 'SALE' ? 1 : 0, // Convert SALE to number
+      storeID: mode === 'Create' ? 0 : id,
+      transactionType: series.transactionType ?? '', // Convert SALE to number
       seriesName: series.seriesName ?? '',
       prefix: series.prefix ?? '',
       noOfDigit: Number(series.noOfDigit) || 0,
@@ -114,7 +114,7 @@ export function StoreMasterFormatter(data: StoreMasterFormatterType, id: number 
 
     // 📊 Ledger Mapping (Fix ✅)
     objLedger: data.objLedger.map((ledger) => ({
-      storeID: 0,
+      storeID: mode === 'Create' ? 0 : id,
       ledgerCode: ledger.ledgerCode ?? '',
       ledgerName: ledger.ledgerName ?? '',
       subLedgerCode: ledger.subLedgerCode ?? '',

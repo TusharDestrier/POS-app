@@ -30,7 +30,7 @@ function General()  {
               <FormControl>
                 <Input
                   {...field}
-                  type="number"
+                 
                   id="pendingSettlementDays"
                   placeholder="Pending Settlement Day"
                   className="w-full mt-3"
@@ -49,7 +49,7 @@ function General()  {
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
-                defaultValue={field.value}
+                value={field.value}
                 className="flex flex-row space-x-4 roles-radio"
               >
                 <FormItem className="flex items-center space-x-2">
@@ -79,7 +79,7 @@ function General()  {
             <FormItem>
               <FormLabel>Maximum Allowable Discount Policy Validation</FormLabel>
               <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger className="w-full mt-3">
                     <SelectValue placeholder="Select a policy" />
                   </SelectTrigger>
@@ -140,7 +140,7 @@ function General()  {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Credit Card Details Capture Policy</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select Credit Card policy" />
@@ -167,7 +167,7 @@ function General()  {
               <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
-                defaultValue={field.value}
+                value={field.value}
                 className="flex flex-row space-x-4 roles-radio"
               >
                 <FormItem className="flex items-center space-x-2">
@@ -198,7 +198,7 @@ function General()  {
               <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
-                defaultValue={field.value}
+                value={field.value}
                 className="flex flex-row space-x-4 roles-radio"
               >
                 <FormItem className="flex items-center space-x-2">
@@ -240,12 +240,12 @@ function General()  {
         />
         <FormField
           control={control}
-          name="generalSchema.stockCheck"
+          name="negativestockcheckingmode"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Negative Stock Checking Mode</FormLabel>
               <FormControl>
-                <Select {...field}>
+                <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger className="w-full mt-3">
                     <SelectValue placeholder="Select mode" />
                   </SelectTrigger>

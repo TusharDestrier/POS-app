@@ -13,6 +13,7 @@ import {
 } from '@tanstack/react-table'
 import * as React from 'react'
 
+
 import columns from './components/CustomerTableColumn'
 //import CustomerTableViewer from './components/CustomerTableViewer'
 import { useCustomerData } from '../../hooks_api/useCustomerData'
@@ -40,6 +41,8 @@ import {
 } from '@/components/ui/table'
 
 
+
+
 export default function CustomerTable() {
   const { customerData, isLoading, error } = useCustomerData(0)
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -53,7 +56,6 @@ export default function CustomerTable() {
   const modalToggler = useCustomerMaster((state) => state.toggleOpen)
   const setModalMode = useCustomerMaster((state) => state.setMode)
   const isDeleting = useCustomerMaster((state) => state.isLoading)
-//const mode=useCustomerMaster(state=>state.mode);
   const columnData = React.useMemo(() => {
     const dataArray = Array.isArray(customerData)
       ? customerData
@@ -102,9 +104,8 @@ export default function CustomerTable() {
   if (isLoading || isDeleting) {
     return <SkeletonLoaderTable />
   }
-  // if(mode==='View' && !isLoading){
-  //   return <h3><CustomerTableViewer  /></h3>
-  // }
+  
+  
   if (error) {
     return <p className='text-center'>{error}</p>
   }
