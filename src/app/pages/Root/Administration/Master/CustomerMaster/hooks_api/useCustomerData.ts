@@ -5,7 +5,7 @@ import { CustomerFetchedType } from '@/types/customer'
 
 export function useCustomerData(id?: number) {
   const { data, isLoading, error, isError } = useQuery<CustomerFetchedType[], Error>({
-    queryKey: id ? ['customer', id] : ['customers'], // ✅ Conditionally adjust query key
+    queryKey: id ? ['customers', id] : ['customers'], // ✅ Conditionally adjust query key
     queryFn: async ({ signal }) => {
       if (id !== undefined) {
         // Fetch specific customer
@@ -38,7 +38,7 @@ export function useFetchCustomerMasterById() {
     }
 
     const data = await queryClient.fetchQuery<CustomerFetchedType>({
-      queryKey: ['customer', id], // ✅ Use a unique cache key for this query
+      queryKey: ['customers', id], // ✅ Use a unique cache key for this query
       queryFn: async ({ signal }) => {
         const response = await customerClient.getCustomers({ id, signal }) // API call to fetch customer
         if (Array.isArray(response) && response.length > 0) {

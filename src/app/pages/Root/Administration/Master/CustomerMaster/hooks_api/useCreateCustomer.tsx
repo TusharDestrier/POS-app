@@ -36,6 +36,7 @@ export function useCreateCustomer() {
     },
     onSuccess: () => {
       // ✅ Invalidate the 'customers' query to refetch updated data
+      
       queryClient.invalidateQueries({ queryKey: ['customers'] })
       toast.success(messages[mode], {
         style: {

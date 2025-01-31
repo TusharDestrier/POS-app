@@ -1,40 +1,54 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
-import * as React from 'react';
-import { DayPicker } from 'react-day-picker';
+import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
+import * as React from 'react'
+import { DayPicker } from 'react-day-picker'
 
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
-function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
-  const [selectedYear, setSelectedYear] = React.useState<number>(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = React.useState<number>(new Date().getMonth());
+function Calendar({ className, showOutsideDays = true, ...props }: CalendarProps) {
+  const currentYear = new Date().getFullYear()
+  const [selectedYear, setSelectedYear] = React.useState<number>(
+    props.month?.getFullYear() || currentYear
+  )
+  const [selectedMonth, setSelectedMonth] = React.useState<number>(
+    props.month?.getMonth() || new Date().getMonth()
+  )
 
-  // Year Range: 2000 - 2050 (customize as needed)
-  const years = Array.from({ length: 81 }, (_, i) => 1980 + i);
+  // Auto Year Range (1900 - Current Year)
+  const years = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => 1900 + i)
   const months = [
-    'January', 'February', 'March', 'April',
-    'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December'
-  ];
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
 
-  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedYear(Number(e.target.value));
-  };
-
-  const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedMonth(Number(e.target.value));
-  };
+  // Sync when props.month changes (fixes form reset issue)
+  React.useEffect(() => {
+    if (props.month) {
+      setSelectedYear(props.month.getFullYear())
+      setSelectedMonth(props.month.getMonth())
+    }
+  }, [props.month])
 
   return (
-    <div className="">
+    <div>
       {/* 🔥 Year and Month Dropdown */}
       <div className="flex justify-center space-x-2 p-3 pb-0">
         {/* 📅 Year Selector */}
         <select
           value={selectedYear}
-          onChange={handleYearChange}
+          onChange={(e) => setSelectedYear(Number(e.target.value))}
           className="border rounded-md p-1 text-sm flex-1 "
         >
           {years.map((year) => (
@@ -47,7 +61,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         {/* 📅 Month Selector */}
         <select
           value={selectedMonth}
-          onChange={handleMonthChange}
+          onChange={(e) => setSelectedMonth(Number(e.target.value))}
           className="border rounded-md p-1 text-sm flex-1"
         >
           {months.map((month, index) => (
@@ -61,10 +75,10 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
       {/* 🗓️ Updated DayPicker */}
       <DayPicker
         showOutsideDays={showOutsideDays}
-        month={new Date(selectedYear, selectedMonth)} // 📌 Set month & year dynamically
+        month={new Date(selectedYear, selectedMonth)}
         onMonthChange={(date) => {
-          setSelectedYear(date.getFullYear());
-          setSelectedMonth(date.getMonth());
+          setSelectedYear(date.getFullYear())
+          setSelectedMonth(date.getMonth())
         }}
         className={cn('p-3', className)}
         classNames={{
@@ -77,34 +91,26 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
             buttonVariants({ variant: 'outline' }),
             'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100'
           ),
-          nav_button_previous: 'absolute left-1',
-          nav_button_next: 'absolute right-1',
-          table: 'w-full border-collapse space-y-1',
-          head_row: 'flex',
-          head_cell: 'text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]',
-          row: 'flex w-full mt-2',
-          cell: cn(
-            'relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md',
-            props.mode === 'range'
-              ? '[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md'
-              : '[&:has([aria-selected])]:rounded-md'
-          ),
-          day: cn(buttonVariants({ variant: 'ghost' }), 'h-8 w-8 p-0 font-normal aria-selected:opacity-100'),
-          day_selected: 'bg-primary text-primary-foreground',
-          day_today: 'bg-accent text-accent-foreground',
-          day_outside: 'text-muted-foreground opacity-50',
-          day_disabled: 'text-muted-foreground opacity-50',
-          ...classNames,
+          nav_button_previous: 'absolute left-1 cursor-pointer', // Ensure it's clickable
+          nav_button_next: 'absolute right-1 cursor-pointer', // Ensure it's clickable
         }}
         components={{
-          IconLeft: () => <ChevronLeftIcon className="h-4 w-4" />,
-          IconRight: () => <ChevronRightIcon className="h-4 w-4" />,
+          IconLeft: () => (
+            <button onClick={() => setSelectedMonth((prev) => (prev === 0 ? 11 : prev - 1))}>
+              <ChevronLeftIcon className="h-4 w-4" />
+            </button>
+          ),
+          IconRight: () => (
+            <button onClick={() => setSelectedMonth((prev) => (prev === 11 ? 0 : prev + 1))}>
+              <ChevronRightIcon className="h-4 w-4" />
+            </button>
+          ),
         }}
         {...props}
       />
     </div>
-  );
+  )
 }
 
-Calendar.displayName = 'Calendar';
-export { Calendar };
+Calendar.displayName = 'Calendar'
+export { Calendar }

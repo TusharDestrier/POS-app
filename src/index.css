@@ -214,3 +214,8 @@ aside.sidebar > ul > li > a.a_active {
 .roles-radio  button[data-state="checked"] {
   background: #dc2626;
 }
+
+
+input::-webkit-inner-spin-button {
+  opacity: 0;
+}

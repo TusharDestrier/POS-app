@@ -17,117 +17,119 @@ import {
 import { cn } from '@/lib/utils'
 
 function MemberShipTab() {
- 
   const { control } = useFormContext()
   return (
     <div className="grid grid-cols-2 gap-4">
-    {/* Customer Category */}
-    <FormField
-      control={control}
-      name="membership.customerCategory"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Customer Category</FormLabel>
-          <FormControl>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select Customer Category" />
-              </SelectTrigger>
-              <SelectContent>
-                {/* Add options here */}
-                <SelectItem value="regular">Regular</SelectItem>
-                <SelectItem value="premium">Premium</SelectItem>
-                <SelectItem value="vip">VIP</SelectItem>
-              </SelectContent>
-            </Select>
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+      {/* Customer Category */}
+      <FormField
+        control={control}
+        name="membership.customerCategory"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Customer Category</FormLabel>
+            <FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Customer Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {/* Add options here */}
+                  <SelectItem value="regular">Regular</SelectItem>
+                  <SelectItem value="premium">Premium</SelectItem>
+                  <SelectItem value="vip">VIP</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
-    {/* Membership Category */}
-    <FormField
-      control={control}
-      name="membership.membershipCategory"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Membership Category</FormLabel>
-          <FormControl>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select Membership Category" />
-              </SelectTrigger>
-              <SelectContent>
-                {/* Add options here */}
-                <SelectItem value="basic">Basic</SelectItem>
-                <SelectItem value="silver">Silver</SelectItem>
-                <SelectItem value="gold">Gold</SelectItem>
-              </SelectContent>
-            </Select>
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+      {/* Membership Category */}
+      <FormField
+        control={control}
+        name="membership.membershipCategory"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Membership Category</FormLabel>
+            <FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Membership Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {/* Add options here */}
+                  <SelectItem value="basic">Basic</SelectItem>
+                  <SelectItem value="silver">Silver</SelectItem>
+                  <SelectItem value="gold">Gold</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
-    {/* Membership No. */}
-    <FormField
-      control={control}
-      name="membership.membershipNo"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Membership No.</FormLabel>
-          <FormControl>
-            <Input placeholder="Enter Membership No." {...field} />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+      {/* Membership No. */}
+      <FormField
+        control={control}
+        name="membership.membershipNo"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Membership No.</FormLabel>
+            <FormControl>
+              <Input placeholder="Enter Membership No." {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
-    {/* Valid Till */}
-    <FormField
-          control={control}
-          name="membership.validTill"
-          render={({ field }) => (
-            <FormItem className="flex flex-col self-end">
-              <FormLabel>Valid Till</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-full pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-  </div>
+      {/* Valid Till */}
+      <FormField
+        control={control}
+        name="membership.validTill"
+        render={({ field }) => (
+          <FormItem className="flex flex-col">
+            <FormLabel className='mt-3'>Membership Valid Till</FormLabel>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      ' pl-3 text-left font-normal',
+                      !field.value && 'text-muted-foreground'
+                    )}
+                  >
+                    {field.value && !isNaN(new Date(field.value).getTime()) ? (
+                      format(new Date(field.value), 'PPP')
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={
+                    field.value && !isNaN(new Date(field.value).getTime())
+                      ? new Date(field.value)
+                      : undefined
+                  }
+                  onSelect={field.onChange}
+                  disabled={(date) => date < new Date()} // ❌ Past Dates Disabled
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>
   )
 }
 
