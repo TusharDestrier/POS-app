@@ -9,7 +9,7 @@ export const PostStoreWisePolicySchema = z.object({
   footfallEntryRequiredInDaySettlement: z.enum(['Y', 'N']).optional(),
   maxAllowDiscountPolicyValidationID: z.string().optional(),
   maxBillAmountSinglePOSBill: z.number().optional(),
-  pan: z.string().optional(),
+  pan: z.string().min(10, { message: 'Pan No. must be at least 10 digits.' }).max(10),
   creditCardDetailsCapturePolicyID: z.string().optional(),
   isCCardAuthNoEntryMandatory: z.enum(['Y', 'N']).optional(),
   allowBackDateEntry: z.enum(['Y', 'N']).optional(),
