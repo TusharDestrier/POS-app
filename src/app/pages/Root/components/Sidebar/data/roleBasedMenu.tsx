@@ -145,6 +145,7 @@ export const roleBasedMenu: RoleBasedMenu = {
             { name: 'Pay Mode Master', path: '/administration/master/paymode-master' },
             { name: 'Petty Cash Heads', path: '/administration/master/pettycash-heads' },
             { name: 'SalesPerson Master', path: '/administration/master/salesperson-master' },
+            {name: 'Item Master', path: '/administration/master/item-master'}
           ],
         },
         // {

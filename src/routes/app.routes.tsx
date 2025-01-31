@@ -3,6 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import ErrorPage from '@/app/pages/ErrorPage/page'
 import { AdministrationLayout } from '@/app/pages/Root/Administration/layout'
 import CustomerMaster from '@/app/pages/Root/Administration/Master/CustomerMaster/page'
+import ItemMaster from '@/app/pages/Root/Administration/Master/ItemMaster/page'
 import MasterLayout from '@/app/pages/Root/Administration/Master/layout'
 import PaymodeMasterPage from '@/app/pages/Root/Administration/Master/PayModeMaster/page'
 import PettyCashHead from '@/app/pages/Root/Administration/Master/PettyCashHead/page'
@@ -10,7 +11,9 @@ import SalesPersonMasterLayout from '@/app/pages/Root/Administration/Master/Sale
 import SalesPersonMasterPage from '@/app/pages/Root/Administration/Master/SalesPersonMaster/page'
 import { StoreMaster } from '@/app/pages/Root/Administration/Master/StoreMaster/page'
 //import { SalesPersonTable } from '@/app/pages/Root/Administration/SalesPersonMaster/components/SalesPersonTable/SalesPersonTable'
+import ChangePasswordPage from '@/app/pages/Root/Administration/Security/ChangePassword/page'
 import CreateRole from '@/app/pages/Root/Administration/Security/CreateRole/page'
+import DesignationMaster from '@/app/pages/Root/Administration/Security/Designation/page'
 import SecurityLayout from '@/app/pages/Root/Administration/Security/layout'
 import RoleDefination from '@/app/pages/Root/Administration/Security/RoleDefination/page'
 import UserProfileCreationTable from '@/app/pages/Root/Administration/Security/UserProfileCreation/components/UserProfileCreationTable'
@@ -65,8 +68,6 @@ import PurchaseOrder from '@/app/pages/Root/Transaction/Purchase/PurchaseOrder/p
 import PurchaseRequest from '@/app/pages/Root/Transaction/Purchase/PurchaseRequest/page'
 import UtilitiesLayout from '@/app/pages/Root/Utilities/layout'
 import UtilitiesPage from '@/app/pages/Root/Utilities/page'
-import DesignationMaster from '@/app/pages/Root/Administration/Security/Designation/page'
-import ChangePasswordPage from '@/app/pages/Root/Administration/Security/ChangePassword/page'
 
 export const appRoutes = {
   path: '/',
@@ -259,6 +260,10 @@ export const appRoutes = {
             {
               path: 'pettycash-heads',
               element: <PettyCashHead />,
+            },
+            {
+              path: 'item-master',
+              element: <ItemMaster />,
             },
             {
               path: 'salesperson-master',
