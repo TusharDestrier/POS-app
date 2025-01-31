@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 
+import { convertToFullForm } from '../../helper/communicationMode'
 import { customerDataFormatter } from '../../helper/customerDataFormatter'
 import mapCustomerFetchedTypeToTableData from '../../helper/CustomerDataTbleExtracter'
 import { useCreateCustomer } from '../../hooks_api/useCreateCustomer'
@@ -15,6 +16,8 @@ import { CustomerTableData } from '../CustomerTable/components/CustomerTableView
 
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
+import { convertToDate } from '@/lib/utils'
+
 
 function CustomerForm() {
   const mode = useCustomerMaster((state) => state.mode)
@@ -66,7 +69,7 @@ function CustomerForm() {
   })
 
   useEffect(() => {
-    if (customerData && !Array.isArray(customerData)) {
+    if (mode!== 'Create' && customerData && !Array.isArray(customerData)) {
       formMethods.reset({
         personal: {
           mobileNo: customerData.mobile || '',
@@ -74,10 +77,8 @@ function CustomerForm() {
           middleName: customerData.customerMiddleName || '',
           lastName: customerData.customerLastName || '',
           gender: customerData.gender === 'M' ? 'male' : 'female',
-          dateOfBirth: customerData.dateOfBirth ? new Date(customerData.dateOfBirth) : new Date(),
-          anniversaryDate: customerData.anniversary
-            ? new Date(customerData.anniversary)
-            : new Date(),
+          dateOfBirth: convertToDate(customerData?.dateOfBirth),
+          anniversaryDate: convertToDate(customerData?.anniversary),
           profession: customerData.profession || '',
           spouseName: customerData.spouseName || '',
           isEmployee: customerData.isEmployee === 'Y',
@@ -95,7 +96,7 @@ function CustomerForm() {
           whatsappNo: customerData.whatsAppNo || '',
           alternatePhoneNo: customerData.alternatePhnNo || '',
           receivePushMessage: customerData.isPushMessage === 'Y',
-          preferredCommunication: customerData.preferredComMode || 'sms',
+          preferredCommunication: convertToFullForm(customerData.preferredComMode as "s" | "e" | "w") || 'sms',
         },
         membership: {
           customerCategory: customerData.customerCatName || '',
@@ -119,6 +120,9 @@ function CustomerForm() {
       },
       customerID ? Number(customerID) : null
     )
+
+    console.log(transformData);
+    
 
     try {
       await createCustomerAsync(transformData)
@@ -150,6 +154,8 @@ function CustomerForm() {
   if (customerError && mode === 'View') {
     return <h3>Sorry there is some problem</h3>
   }
+
+  
 
   return (
     <FormProvider {...formMethods}>

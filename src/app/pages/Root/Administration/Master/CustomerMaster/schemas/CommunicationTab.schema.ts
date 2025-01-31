@@ -7,8 +7,18 @@ export const CommunicationTabSchema = z.object({
   pin: z.string().optional(),
   state: z.string().optional(),
   email: z.string().email({ message: 'Invalid email address.' }).optional(),
-  whatsappNo: z.string().min(10, { message: 'WhatsApp No. must be at least 10 digits.' }),
-  alternatePhoneNo: z.string().optional(),
+  whatsappNo: z
+    .string()
+    .min(10, { message: 'WhatsApp No. must be at least 10 digits.' })
+    .max(10, { message: 'WhatsApp No. must be exactly 10 digits.' })
+    .regex(/^\d+$/, { message: 'Only numbers are allowed in WhatsApp No.' }),
+
+  alternatePhoneNo: z
+    .string()
+    .min(10, { message: 'WhatsApp No. must be at least 10 digits.' })
+    .max(10, { message: 'WhatsApp No. must be exactly 10 digits.' })
+    .regex(/^\d+$/, { message: 'Only numbers are allowed in WhatsApp No.' })
+    .optional(),
   receivePushMessage: z.boolean().optional(),
   preferredCommunication: z.enum(['sms', 'email', 'whatsapp'], {
     required_error: 'Preferred communication mode is required.',

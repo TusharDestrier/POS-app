@@ -117,7 +117,7 @@ function CommunicationTab() {
           <FormItem>
             <FormLabel>WhatsApp No.<span className="text-primary">*</span></FormLabel>
             <FormControl>
-              <Input placeholder="Enter WhatsApp No." {...field} />
+              <Input type='number' placeholder="Enter WhatsApp No." {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -132,7 +132,7 @@ function CommunicationTab() {
           <FormItem>
             <FormLabel>Alternate Phone No.</FormLabel>
             <FormControl>
-              <Input placeholder="Enter alternate phone no." {...field} />
+              <Input type='number' placeholder="Enter alternate phone no." {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -148,6 +148,7 @@ function CommunicationTab() {
             <RadioGroup
               onValueChange={field.onChange}
               defaultValue={field.value}
+              value={field.value}
               className="flex space-x-4 roles-radio"
             >
               <div className="flex items-center space-x-2">

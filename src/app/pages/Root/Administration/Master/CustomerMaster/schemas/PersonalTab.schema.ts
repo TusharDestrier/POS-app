@@ -1,13 +1,27 @@
 import { z } from "zod";
 
 export const personalTabSchema = z.object({
-  mobileNo: z.string().min(10, { message: 'Mobile No. must be at least 10 digits.' }),
+  mobileNo: z
+  .string()
+  .min(10, { message: "Mobile No. must be exactly 10 digits." })
+  .max(10, { message: "Mobile No. must be exactly 10 digits." })
+  .regex(/^\d+$/, { message: "Only numbers are allowed in Mobile No." }),
+  
   firstName: z.string().min(1, { message: 'First Name is required.' }),
-  middleName: z.string().optional(),
+  middleName: z.string().min(1, { message: 'Middle Name is required.' }),
   lastName: z.string().min(1, { message: 'Last Name is required.' }),
   gender: z.enum(['male', 'female'], { message: 'Gender is required.' }),
-  dateOfBirth: z.date({ required_error: 'Date of Birth is required.' }),
-  anniversaryDate: z.date().optional(),
+  dateOfBirth: z.coerce
+  .date()
+  .max(new Date(), { message: "DOB cannot be in the future." })
+  .min(new Date("1900-01-01"), { message: "DOB cannot be before 1900." }),
+
+anniversaryDate: z.coerce
+  .date()
+  .max(new Date(), { message: "Anniversary Date cannot be in the future." })
+  .min(new Date("1900-01-01"), { message: "Anniversary cannot be before 1900." })
+  .optional(),
+
   profession: z.string().optional(),
   spouseName: z.string().optional(),
   isEmployee: z.boolean().optional(),

@@ -29,3 +29,11 @@ export function formatDate(date: Date | string): string {
   return `${day}-${month}-${year}`;  // ✅ DD-MM-YYYY format
 }
 
+
+export const convertToDate = (dateStr:string) => {
+  if (!dateStr) return new Date(); // Default today if no date provided
+
+  // eslint-disable-next-line no-unsafe-optional-chaining
+  const [day, month, year] = dateStr?.split(" ")?.[0]?.split("/");
+  return new Date(`${year}-${month}-${day}`);
+};
