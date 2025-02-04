@@ -30,6 +30,7 @@ const PosOrder = () => {
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
+                  value={String(field.value)}
                   defaultValue={field.value}
                   className="flex flex-row space-y-1 roles-radio"
                 >
@@ -63,8 +64,12 @@ const PosOrder = () => {
                 <Input
                   {...field}
                   id="minPercentageOfAdvanceDuringPOSOrder"
+                  type="number"
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                   placeholder="Minimum Percentage of Advance during POS Order"
                   className="w-full mt-3"
+                  min={0}
+                  max={100}
                 />
               </FormControl>
               <FormDescription />

@@ -22,20 +22,24 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
 
-
 //import { cn } from '@/lib/utils' // Verify this path matches your project structure
 
 const General = () => {
-  const { control } = useFormContext()
-const {storemasterData,isLoading}=useStoreMasterData();
+  const { control, setValue, watch } = useFormContext()
+  const { storemasterData, isLoading } = useStoreMasterData()
 
+  const maxBillingAmt = watch('maxBillAmountSinglePOSBill', 0)
 
-const storeMasterOptions = useMemo(() => {
+  // Condition to disable PAN field
+  const isPanDisabled = Number(maxBillingAmt) <= 50000
+
+  const storeMasterOptions = useMemo(() => {
     if (!storemasterData || storemasterData.length === 0) return []
 
     return storemasterData.map((stores) => ({
@@ -61,27 +65,27 @@ const storeMasterOptions = useMemo(() => {
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder={isLoading?"Loading...":"Select Store"} />
+                        <SelectValue placeholder={isLoading ? 'Loading...' : 'Select Store'} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                  {isLoading ? (
-                    <p className="p-2 text-gray-500">Loading...</p>
-                  ) : (
-                    storeMasterOptions?.map((pm) => (
-                      <SelectItem key={pm.id} value={String(pm.value)}>
-                        {pm.label}
-                      </SelectItem>
-                    ))
-                  )}
-                </SelectContent>
+                      {isLoading ? (
+                        <p className="p-2 text-gray-500">Loading...</p>
+                      ) : (
+                        storeMasterOptions?.map((pm) => (
+                          <SelectItem key={pm.id} value={String(pm.value)}>
+                            {pm.label}
+                          </SelectItem>
+                        ))
+                      )}
+                    </SelectContent>
                   </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
-             {/* From Date */}
-             <FormField
+            {/* From Date */}
+            <FormField
               control={control}
               name="fromDate"
               render={({ field }) => (
@@ -140,8 +144,6 @@ const storeMasterOptions = useMemo(() => {
               )}
             />
           </div>
-
-         
         </div>
         <FormField
           control={control}
@@ -151,10 +153,16 @@ const storeMasterOptions = useMemo(() => {
               <FormLabel>Pending Settlement Days</FormLabel>
               <FormControl>
                 <Input
+                  type="number"
                   {...field}
                   id="pendingSettlementDays"
                   placeholder="Pending Settlement Day"
                   className="w-full mt-3"
+                  min={1}
+                  minLength={1}
+                  maxLength={2}
+                  max={30}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
@@ -198,18 +206,19 @@ const storeMasterOptions = useMemo(() => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Maximum Allowable Discount Policy Validation</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a Discount Policy" />
+              <FormControl>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <SelectTrigger className="w-full mt-3">
+                    <SelectValue placeholder="Select a policy" />
                   </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="1">One</SelectItem>
-                  <SelectItem value="2">Two</SelectItem>
-                  <SelectItem value="3">Three</SelectItem>
-                </SelectContent>
-              </Select>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="1">Percentage</SelectItem>
+                      <SelectItem value="2">Fixed Amt</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -223,9 +232,17 @@ const storeMasterOptions = useMemo(() => {
               <FormControl>
                 <Input
                   {...field}
-                  id="maxBillAmountSinglePOSBill"
+                  type="number"
+                  id="maxBillingAmt"
                   placeholder="Maximum Billing Amount in a Single POS Billing"
                   className="w-full mt-3"
+                  onChange={(e) => {
+                    const value = Number(e.target.value) // Convert to number
+                    field.onChange(String(value)) // ✅ Convert number to string before passing
+                    if (value <= 50000) {
+                      setValue('pan', '') // Clear PAN if below 50K
+                    }
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -239,10 +256,16 @@ const storeMasterOptions = useMemo(() => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                PAN No. Mandatory if Billing Amount Exceeds<span className="text-primary">*</span>
+                PAN No. Mandatory if Billing Amount Exceeds ₹50,000
+                {!isPanDisabled ? <span className="text-primary">*</span> : ''}
               </FormLabel>
               <FormControl>
-                <Input {...field} id="panNo" placeholder="Pan No" className="w-full mt-3" />
+                <Input
+                  {...field}
+                  placeholder="Enter PAN No."
+                  disabled={isPanDisabled} // Disable PAN field if ≤ 50K
+                  maxLength={10}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -255,18 +278,19 @@ const storeMasterOptions = useMemo(() => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Credit Card Details Capture Policy</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a card capture policy" />
+                    <SelectValue placeholder="Select Credit Card policy" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="1">One</SelectItem>
-                  <SelectItem value="2">Two</SelectItem>
-                  <SelectItem value="3">Three</SelectItem>
+                  <SelectItem value="4">4</SelectItem>
+                  <SelectItem value="6">6</SelectItem>
+                  <SelectItem value="16">16</SelectItem>
                 </SelectContent>
               </Select>
+
               <FormMessage />
             </FormItem>
           )}
@@ -342,9 +366,15 @@ const storeMasterOptions = useMemo(() => {
               <FormControl>
                 <Input
                   {...field}
-                  id="backDateEntryDays"
+                  type="number"
+                  min={1}
+                  maxLength={2}
+                  max={31}
+                  minLength={1}
+                  id="backDateDays"
                   placeholder="Back Date Entry"
                   className="w-full mt-3"
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
@@ -357,7 +387,11 @@ const storeMasterOptions = useMemo(() => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Negative Stock Checking Mode</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+              <Select
+                onValueChange={(value) => field.onChange(String(value))} // ✅ Convert value to string
+                value={String(field.value)} // ✅ Ensure field value is treated as string
+                defaultValue={String(field.value)}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select Checking Mode" />

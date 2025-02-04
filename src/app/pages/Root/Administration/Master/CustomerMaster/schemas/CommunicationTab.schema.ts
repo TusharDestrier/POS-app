@@ -9,15 +9,13 @@ export const CommunicationTabSchema = z.object({
   email: z.string().email({ message: 'Invalid email address.' }).optional(),
   whatsappNo: z
     .string()
-    .min(10, { message: 'WhatsApp No. must be at least 10 digits.' })
-    .max(10, { message: 'WhatsApp No. must be exactly 10 digits.' })
+    .length(10, { message: "Whatsapp No. must be exactly 10 digits." }) 
     .regex(/^\d+$/, { message: 'Only numbers are allowed in WhatsApp No.' }),
 
   alternatePhoneNo: z
     .string()
-    .min(10, { message: 'WhatsApp No. must be at least 10 digits.' })
-    .max(10, { message: 'WhatsApp No. must be exactly 10 digits.' })
-    .regex(/^\d+$/, { message: 'Only numbers are allowed in WhatsApp No.' })
+    .length(10, { message: "Alternate No. must be exactly 10 digits." }) 
+    .regex(/^\d+$/, { message: 'Only numbers are allowed in Alternate No.' })
     .optional(),
   receivePushMessage: z.boolean().optional(),
   preferredCommunication: z.enum(['sms', 'email', 'whatsapp'], {

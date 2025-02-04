@@ -6,7 +6,6 @@ import { z } from 'zod'
 import OrganizationTab from './components/OrganizationTab'
 import { OrganizationPolicyFormatter } from './helper/OrganizationPolicyFormatter'
 import { useCreateOrganizationPolicy } from './hooks_api/useCreateOrganizationPolicy'
-//import { useOrganizationPolicyDataById } from './hooks_api/useOrganizationPolicyById'
 import { useOrganizationPolicyData } from './hooks_api/useOrganizationPolicyData'
 import { PostOrganizationPolicySchema } from './schemas/PostOrganizationPolicySchema'
 import { useOrganizationPolicyDataStore } from './store/useOrganizationPolicyDataStore'
@@ -14,7 +13,6 @@ import useOrganizationPolicyHead from './store/useOrganizationPolicyHead'
 
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
-//import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 
 function OrganizationPage() {
   const { createOrganizationPolicy, isPending } = useCreateOrganizationPolicy()
@@ -32,9 +30,10 @@ const setMode=useOrganizationPolicyHead(state=>state.setMode);
       creditCardDetailsCapturePolicyID: '',
       isCCardAuthNoEntryMandatory: '',
       allowBackDateEntry: '',
-      backDateEntryDays: '',
+      backDateEntryDays: 0,
       negativestockcheckingmode: '',
       picture: '',
+      noOfCopiesToBePrint:0,
       allowItemLevelDiscount: '',
       allowBillLevelDiscount: '',
       maxAllowDiscountPercentage: '',
@@ -44,15 +43,15 @@ const setMode=useOrganizationPolicyHead(state=>state.setMode);
       salePersonTaggingMandatory: '',
       salePersonTaggingPolicyID: '',
       customerTaggingIsMandatory: '',
-      returnOfItemWithin: '',
-      creditNoteValidityDays: '',
+      returnOfItemWithin: 0,
+      creditNoteValidityDays: 0,
       billTaggingMandatoryDuringReturn: '',
       numberOfCopiesPrint: '',
-      excessGoodsReceiptTolerancePercentage: '',
-      shortGoodsReceiptTolerancePercentage: '',
+      excessGoodsReceiptTolerancePercentage: 0,
+      shortGoodsReceiptTolerancePercentage: 0,
       allowToReceiveDamagedGoods: '',
       dueDateIsMandatoryInPOSOrder: '',
-      minPercentageOfAdvanceDuringPOSOrder: '',
+      minPercentageOfAdvanceDuringPOSOrder: 0,
       posOrderCancellationIsMandatory: '',
     },
   })
@@ -62,15 +61,15 @@ const setMode=useOrganizationPolicyHead(state=>state.setMode);
       setMode('Edit')
       const lastPolicy = organizationPolicyData?.[organizationPolicyData.length - 1]
       formMethods.reset({
-        pendingSettlementDays: String(lastPolicy?.pendingSettlementDays) || 30,
+        pendingSettlementDays: Number(lastPolicy?.pendingSettlementDays) || 30,
         footfallEntryRequiredDaySettlement: lastPolicy?.footfallEntryRequiredDaySettlement || 'N',
-        maxAllowDiscountPolicyValidationID: String(lastPolicy?.maxAllowDiscountPolicyValidationID) || '1',
+        maxAllowDiscountPolicyValidationID: String(lastPolicy?.maxAllowDiscountPolicyValidationID) || 'PERCENT',
         maxBillAmountSinglePOSBill: String(lastPolicy?.maxBillAmountSinglePOSBill) || '22',
-        pan: String(lastPolicy?.pan) || '988994670j',
-        creditCardDetailsCapturePolicyID: String(lastPolicy?.creditCardDetailsCapturePolicyID) || '1',
+        pan: String(lastPolicy?.pan) || '',
+        creditCardDetailsCapturePolicyID: String(lastPolicy?.creditCardDetailsCapturePolicyID) || "4",
         isCCardAuthNoEntryMandatory: String(lastPolicy?.isCCardAuthNoEntryMandatory) || 'N',
         allowBackDateEntry: String(lastPolicy?.allowBackDateEntry) || 'N',
-        backDateEntryDays: String(lastPolicy?.backDateEntryDays) || '5',
+        backDateEntryDays: Number(lastPolicy?.backDateEntryDays) || 5,
         negativestockcheckingmode: String(lastPolicy?.stockCheck) || "1",
         picture: String(lastPolicy?.picture) || '',
         allowItemLevelDiscount: String(lastPolicy?.allowItemLevelDiscount) || 'N',
@@ -82,15 +81,15 @@ const setMode=useOrganizationPolicyHead(state=>state.setMode);
         salePersonTaggingMandatory: String(lastPolicy?.salePersonTaggingMandatory) || 'N',
         salePersonTaggingPolicyID: String(lastPolicy?.salePersonTaggingPolicyID) || '1',
         customerTaggingIsMandatory: String(lastPolicy?.customerTaggingIsMandatory) || 'N',
-        returnOfItemWithin: String(lastPolicy?.returnOfItemWithin) || '0',
-        creditNoteValidityDays: String(lastPolicy?.creditNoteValidityDays) || '0',
+        returnOfItemWithin: Number(lastPolicy?.returnOfItemWithin) || 0,
+        creditNoteValidityDays: Number(lastPolicy?.creditNoteValidityDays) || 0,
         billTaggingMandatoryDuringReturn: String(lastPolicy?.billTaggingMandatoryDuringReturn) || 'N',
-        noOfCopiesToBePrint: String(lastPolicy?.noOfCopiesToBePrint) || '3',
-        excessGoodsReceiptTolerancePercentage: String(lastPolicy?.excessGoodsReceiptTolerancePercentage) || '0',
-        shortGoodsReceiptTolerancePercentage: String(lastPolicy?.shortGoodsReceiptTolerancePercentage) || '0',
+        noOfCopiesToBePrint: Number(lastPolicy?.noOfCopiesToBePrint) || 0,
+        excessGoodsReceiptTolerancePercentage: Number(lastPolicy?.excessGoodsReceiptTolerancePercentage) || 0,
+        shortGoodsReceiptTolerancePercentage: Number(lastPolicy?.shortGoodsReceiptTolerancePercentage) || 0,
         allowToReceiveDamagedGoods: String(lastPolicy?.allowToReceiveDamagedGoods) || 'N',
         dueDateIsMandatoryInPOSOrder: String(lastPolicy?.dueDateIsMandatoryInPOSOrder) || 'N',
-        minPercentageOfAdvanceDuringPOSOrder: String(lastPolicy?.minPercentageOfAdvanceDuringPOSOrder) || '0',
+        minPercentageOfAdvanceDuringPOSOrder: Number(lastPolicy?.minPercentageOfAdvanceDuringPOSOrder) || 0,
         posOrderCancellationIsMandatory: String(lastPolicy?.posOrderCancellationIsMandatory) || 'N',
       })
     } else {
@@ -101,13 +100,14 @@ const setMode=useOrganizationPolicyHead(state=>state.setMode);
 
   async function onSubmit(data: z.infer<typeof PostOrganizationPolicySchema>) {
     const formattedData = OrganizationPolicyFormatter(data, String(organizationPolicyData?.[0]?.orgPolicyID))
-    console.log('Formatted Data:', formattedData)
 
     try {
       await createOrganizationPolicy(formattedData)
       clearId()
     } catch (err) {
-      console.error(err)
+      if (err instanceof Error) {
+        throw new Error(err.message)
+      }
     }
   }
 

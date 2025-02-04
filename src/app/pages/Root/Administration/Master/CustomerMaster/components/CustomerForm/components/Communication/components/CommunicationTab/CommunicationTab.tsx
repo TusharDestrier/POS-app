@@ -72,7 +72,7 @@ function CommunicationTab() {
           <FormItem>
             <FormLabel>PIN</FormLabel>
             <FormControl>
-              <Input placeholder="Enter PIN" {...field} />
+              <Input type='number' placeholder="Enter PIN" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -117,7 +117,7 @@ function CommunicationTab() {
           <FormItem>
             <FormLabel>WhatsApp No.<span className="text-primary">*</span></FormLabel>
             <FormControl>
-              <Input type='number' placeholder="Enter WhatsApp No." {...field} />
+              <Input type='number' maxLength={10} placeholder="Enter WhatsApp No." {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -132,7 +132,7 @@ function CommunicationTab() {
           <FormItem>
             <FormLabel>Alternate Phone No.</FormLabel>
             <FormControl>
-              <Input type='number' placeholder="Enter alternate phone no." {...field} />
+              <Input type='number' maxLength={10} placeholder="Enter alternate phone no." {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

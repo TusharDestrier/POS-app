@@ -6,7 +6,6 @@ export const MembershipTabSchema = z.object({
     membershipNo: z.string().optional(),
     validTill: z.coerce
     .date()
-    .min(new Date(), { message: "Membership Validity should be in the future." })
-    .max(new Date("2100-12-31"), { message: "Invalid future date." }),
+    .min(new Date(), { message: "Membership Validity cannot be less than the current date." })
   
   })

@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -11,7 +12,7 @@ import { useStoreWisePolicyDataStore } from './store/useStoreWisePolicyDataStore
 import useStoreWisePolicyHead from './store/useStoreWisePolicyHead'
 
 import { Button } from '@/components/ui/button'
-import { useEffect } from 'react'
+
 
 function StoreSpecificPolicy() {
   const {storePolicyData}=useStorePolicyData(0,1);
@@ -22,7 +23,7 @@ const setMode=useStoreWisePolicyHead(state=>state.setMode)
   const formMethods = useForm({
     resolver: zodResolver(PostStoreWisePolicySchema),
     defaultValues: {
-      storeID: '',
+      storeID: '1',
       fromDate: '',
       toDate: '',
       pendingSettlementDays: 0,
@@ -44,6 +45,7 @@ const setMode=useStoreWisePolicyHead(state=>state.setMode)
       salePersonTaggingMandatory: 'N',
       salePersonTaggingPolicyID: 0,
       customerTaggingMandatory: 'N',
+      allowReceiveDamagedGoods:"N",
       returnOfItemWithin: 0,
       creditNoteValidityDays: 0,
       billTaggingMandatoryDuringReturn: 'N',
@@ -56,7 +58,6 @@ const setMode=useStoreWisePolicyHead(state=>state.setMode)
     },
   })
 
-  console.log(storePolicyData);
   
   useEffect(() => {
     if (storePolicyData) {
@@ -65,34 +66,34 @@ const setMode=useStoreWisePolicyHead(state=>state.setMode)
         storeID: String(storePolicyData.storeID) || '1',
         fromDate: storePolicyData.fromDate || '',
         toDate: storePolicyData.toDate || '',
-        pendingSettlementDays: storePolicyData.pendingSettlementDays || 20,
-        footfallEntryRequiredInDaySettlement: storePolicyData.footfallEntryRequiredInDaySettlement || 'N',
+        pendingSettlementDays: Number(storePolicyData.pendingSettlementDays) || 20,
+        footfallEntryRequiredInDaySettlement: String(storePolicyData.footfallEntryRequiredInDaySettlement) || 'N',
         maxAllowDiscountPolicyValidationID: Number(storePolicyData.maxAllowDiscountPolicyValidationID) || 1,
-        maxBillAmountSinglePOSBill: storePolicyData.maxBillAmountSinglePOSBill || 0,
+        maxBillAmountSinglePOSBill: Number(storePolicyData.maxBillAmountSinglePOSBill) || 0,
         pan: storePolicyData.pan || '8844443G',
         creditCardDetailsCapturePolicyID: Number(storePolicyData.creditCardDetailsCapturePolicyID) || 1,
         isCCardAuthNoEntryMandatory: storePolicyData.isCCardAuthNoEntryMandatory || 'N',
         allowBackDateEntry: storePolicyData.allowBackDateEntry || 'N',
-        backDateEntryDays: storePolicyData.backDateEntryDays || 1,
-        negativeStockCheckingModeID: Number(storePolicyData.negativeStockCheckingModeID) || 1,
+        backDateEntryDays: Number(storePolicyData.backDateEntryDays) || 1,
+        // negativeStockCheckingModeID: Number(storePolicyData.negativeStockCheckingModeID) || 1,
         allowItemLevelDiscount: storePolicyData.allowItemLevelDiscount || 'N',
-        maxAllowDiscountPercentage: storePolicyData.maxAllowDiscountPercentage || 2,
+        maxAllowDiscountPercentage: Number(storePolicyData.maxAllowDiscountPercentage) || 2,
         allowBillLevelDiscount: storePolicyData.allowBillLevelDiscount || 'N',
-        maxAllowDiscountAmount: storePolicyData.maxAllowDiscountAmount || 2,
+        maxAllowDiscountAmount: Number(storePolicyData.maxAllowDiscountAmount) || 2,
         allowToSelectActivePromotionFromList: storePolicyData.allowToSelectActivePromotionFromList || 'N',
         allowToClearAppliedPromotion: storePolicyData.allowToClearAppliedPromotion || 'N',
         salePersonTaggingMandatory: storePolicyData.salePersonTaggingMandatory || 'N',
         salePersonTaggingPolicyID: Number(storePolicyData.salePersonTaggingPolicyID) || 1,
-        customerTaggingMandatory: storePolicyData.customerTaggingMandatory || 'N',
-        returnOfItemWithin: storePolicyData.returnOfItemWithin || 5,
-        creditNoteValidityDays: storePolicyData.creditNoteValidityDays || 3,
+        customerTaggingMandatory: storePolicyData.customerTaggingIsMandatory || 'N',
+        returnOfItemWithin: Number(storePolicyData.returnOfItemWithin) || 5,
+        creditNoteValidityDays: Number(storePolicyData.creditNoteValidityDays) || 3,
         billTaggingMandatoryDuringReturn: storePolicyData.billTaggingMandatoryDuringReturn || 'N',
-        noOfCopiesToBePrint: storePolicyData.noOfCopiesToBePrint || 4,
-        excessGoodsReceiptTolerancePercentage: storePolicyData.excessGoodsReceiptTolerancePercentage || 33,
-        shortGoodsReceiptTolerancePercentage: storePolicyData.shortGoodsReceiptTolerancePercentage || 32,
-        allowReceiveDamagedGoods: storePolicyData.allowReceiveDamagedGoods || 'N',
-        dueDateMandatoryInPOSOrder: storePolicyData.dueDateMandatoryInPOSOrder || 'N',
-        minPercentageOfAdvanceDuringPOSOrder: storePolicyData.minPercentageOfAdvanceDuringPOSOrder || 20,
+        noOfCopiesToBePrint: Number(storePolicyData.noOfCopiesToBePrint) || 4,
+        excessGoodsReceiptTolerancePercentage:Number( storePolicyData.excessGoodsReceiptTolerancePercentage) || 33,
+        shortGoodsReceiptTolerancePercentage: Number(storePolicyData.shortGoodsReceiptTolerancePercentage) || 32,
+        allowReceiveDamagedGoods: String(storePolicyData.allowToReceiveDamagedGoods) || 'N',
+        dueDateMandatoryInPOSOrder: String(storePolicyData.dueDateIsMandatoryInPOSOrder) || 'N',
+        minPercentageOfAdvanceDuringPOSOrder: Number(storePolicyData.minPercentageOfAdvanceDuringPOSOrder) || 20,
         posOrderCancellationIsMandatory: storePolicyData.posOrderCancellationIsMandatory || 'N',
       });
     } else {
@@ -104,17 +105,15 @@ const setMode=useStoreWisePolicyHead(state=>state.setMode)
   // Handle form submission
   async function onSubmit(data: z.infer<typeof PostStoreWisePolicySchema>) {
     const formattedData = StoreWisePolicyFormatter(data, 1)
-    console.log('Formatted Data:', formattedData)
-    console.log("API call success");
     try {
        console.log("Formatted Data:", formattedData);
        await createStoreWisePolicy(formattedData);
-     // console.log(data)
       closeModal()
       clearId()
-      // console.log(data)
     } catch (err) {
-      console.error(err)
+      if(err instanceof Error){
+        throw new Error(err.message)
+      }
     }
   }
 

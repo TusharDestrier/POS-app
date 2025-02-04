@@ -30,9 +30,11 @@ const CreditNote = () => {
               <FormControl>
                 <Input
                   {...field}
+                  type='number'
                   id="returnOfItemWithin"
                   placeholder="Return of Item within"
                   className="w-full mt-3"
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               </FormControl>
               <FormDescription />
@@ -53,6 +55,8 @@ const CreditNote = () => {
                   id="cnvd"
                   placeholder="Credit Note Validity Days"
                   className="w-full mt-3"
+                  type="number"
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               </FormControl>
               <FormDescription />
@@ -104,6 +108,8 @@ const CreditNote = () => {
                   id="ncp"
                   placeholder="No. of Copies to be Print"
                   className="w-full mt-3"
+                  type="number"
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               </FormControl>
               <FormDescription />

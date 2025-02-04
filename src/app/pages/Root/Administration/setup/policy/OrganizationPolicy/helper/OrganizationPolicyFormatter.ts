@@ -57,6 +57,7 @@ export function OrganizationPolicyFormatter(
   return {
     ...defaultData,
     ...data,
-    pendingSettlementDays:Number(data.pendingSettlementDays)
+    pendingSettlementDays:Number(data.pendingSettlementDays),
+    creditCardDetailsCapturePolicyID:Number(data.creditCardDetailsCapturePolicyID)
   }
 }

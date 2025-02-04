@@ -132,7 +132,12 @@ function CustomerForm() {
         throw new Error(err.message)
       }
     }
-  })
+  }
+,
+(err)=>{
+  console.log(err);
+  
+})
 
   if (customerLoading) {
     return <GlobalViewerLoader />

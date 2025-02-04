@@ -10,7 +10,7 @@ export function useOrganizationPolicyData() {
     error,
     isError,
   } = useQuery<FetchedOrganizationPolicyType[], Error>({
-    queryKey: ['organizationPolicyData'],
+    queryKey: ['organizationPolicy'],
     queryFn: async ({signal}) => {
       const data = await organizationPolicyClient.getOrganizationPolicies({signal})
       return data

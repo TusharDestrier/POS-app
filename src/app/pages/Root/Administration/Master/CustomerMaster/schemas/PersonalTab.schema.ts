@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+const GST_REGEX = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/;
+
 export const personalTabSchema = z.object({
   mobileNo: z
   .string()
@@ -26,6 +28,10 @@ anniversaryDate: z.coerce
   spouseName: z.string().optional(),
   isEmployee: z.boolean().optional(),
   panNo: z.string().min(10, { message: 'Pan No. can not be less than or more than 10 characters.' }),
-  gstNo: z.string().optional(),
+  gstNo: z
+  .string()
+  .regex(GST_REGEX, { message: "Invalid GST Number format." })
+  .optional(), // GST required hai ya optional, wo business rule pe depend karega
+
   gstDate: z.date().optional(),
 })

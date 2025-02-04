@@ -15,8 +15,13 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-function General()  {
-  const { control } = useFormContext()
+function General() {
+  const { control, setValue, watch } = useFormContext()
+
+  const maxBillingAmt = watch('maxBillAmountSinglePOSBill', 0)
+
+  // Condition to disable PAN field
+  const isPanDisabled = Number(maxBillingAmt) <= 50000
 
   return (
     <div className="border p-4 border-black border-solid h-[650px] overflow-y-auto">
@@ -30,48 +35,51 @@ function General()  {
               <FormControl>
                 <Input
                   {...field}
-                 
+                  type="number"
                   id="pendingSettlementDays"
                   placeholder="Pending Settlement Day"
                   className="w-full mt-3"
+                  min={1}
+                  minLength={1}
+                  maxLength={2}
+                  max={30}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField 
+        <FormField
           control={control}
           name="footfallEntryRequiredDaySettlement"
           render={({ field }) => (
             <FormItem>
-            <FormLabel>Footfall Entry required in Day Settlement</FormLabel>
-            <FormControl>
-              <RadioGroup
-                onValueChange={field.onChange}
-                value={field.value}
-                className="flex flex-row space-x-4 roles-radio"
-              >
-                <FormItem className="flex items-center space-x-2">
-                  <FormControl>
-                    <RadioGroupItem value="Y" />
-                  </FormControl>
-                  <FormLabel className="font-normal">Yes</FormLabel>
-                </FormItem>
-                <FormItem className="flex items-center space-x-2">
-                  <FormControl>
-                    <RadioGroupItem value="N" />
-                  </FormControl>
-                  <FormLabel className="font-normal">No</FormLabel>
-                </FormItem>
-              </RadioGroup>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-          
+              <FormLabel>Footfall Entry required in Day Settlement</FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  className="flex flex-row space-x-4 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-2">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-2">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">No</FormLabel>
+                  </FormItem>
+                </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
         />
-
         <FormField
           control={control}
           name="maxAllowDiscountPolicyValidationID"
@@ -85,12 +93,8 @@ function General()  {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Fruits</SelectLabel>
-                      <SelectItem value="1">Apple</SelectItem>
-                      <SelectItem value="2">Banana</SelectItem>
-                      <SelectItem value="3">Blueberry</SelectItem>
-                      <SelectItem value="4">Grapes</SelectItem>
-                
+                      <SelectItem value="1">Percentage</SelectItem>
+                      <SelectItem value="2">Fixed Amt</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -99,7 +103,7 @@ function General()  {
             </FormItem>
           )}
         />
-           <FormField
+        <FormField
           control={control}
           name="maxBillAmountSinglePOSBill"
           render={({ field }) => (
@@ -108,32 +112,47 @@ function General()  {
               <FormControl>
                 <Input
                   {...field}
+                  type="number"
                   id="maxBillingAmt"
                   placeholder="Maximum Billing Amount in a Single POS Billing"
                   className="w-full mt-3"
+                  onChange={(e) => {
+                    const value = Number(e.target.value) // Get numeric value
+                    field.onChange(e) // Update the value in the form
+
+                    // Clear PAN field if billing amount is ≤ 50K
+                    if (value <= 50000) {
+                      setValue('pan', '') // Remove PAN value
+                    }
+                  }}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         <FormField
           control={control}
           name="pan"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                PAN No. Mandatory if Billing Amount Exceeds <span className="text-primary">*</span>
+                PAN No. Mandatory if Billing Amount Exceeds ₹50,000
+                {!isPanDisabled ? <span className="text-primary">*</span> : ''}
               </FormLabel>
               <FormControl>
-                <Input placeholder="Enter PAN No." {...field} />
+                <Input
+                  {...field}
+                  placeholder="Enter PAN No."
+                  disabled={isPanDisabled} // Disable PAN field if ≤ 50K
+                  maxLength={10}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
+        
         <FormField
           control={control}
           name="creditCardDetailsCapturePolicyID"
@@ -147,9 +166,9 @@ function General()  {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="1">One</SelectItem>
-                  <SelectItem value="2">Two</SelectItem>
-                  <SelectItem value="3">Three</SelectItem>
+                  <SelectItem value="4">4</SelectItem>
+                  <SelectItem value="6">6</SelectItem>
+                  <SelectItem value="16">16</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -157,7 +176,6 @@ function General()  {
             </FormItem>
           )}
         />
-
         <FormField
           control={control}
           name="isCCardAuthNoEntryMandatory"
@@ -165,30 +183,29 @@ function General()  {
             <FormItem>
               <FormLabel>Is Credit Card Authorization No. Entry Mandatory</FormLabel>
               <FormControl>
-              <RadioGroup
-                onValueChange={field.onChange}
-                value={field.value}
-                className="flex flex-row space-x-4 roles-radio"
-              >
-                <FormItem className="flex items-center space-x-2">
-                  <FormControl>
-                    <RadioGroupItem value="Y" />
-                  </FormControl>
-                  <FormLabel className="font-normal">Yes</FormLabel>
-                </FormItem>
-                <FormItem className="flex items-center space-x-2">
-                  <FormControl>
-                    <RadioGroupItem value="N" />
-                  </FormControl>
-                  <FormLabel className="font-normal">No</FormLabel>
-                </FormItem>
-              </RadioGroup>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  className="flex flex-row space-x-4 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-2">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-2">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">No</FormLabel>
+                  </FormItem>
+                </RadioGroup>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         <FormField
           control={control}
           name="allowBackDateEntry"
@@ -196,30 +213,29 @@ function General()  {
             <FormItem>
               <FormLabel>Allow Backdate Entry</FormLabel>
               <FormControl>
-              <RadioGroup
-                onValueChange={field.onChange}
-                value={field.value}
-                className="flex flex-row space-x-4 roles-radio"
-              >
-                <FormItem className="flex items-center space-x-2">
-                  <FormControl>
-                    <RadioGroupItem value="Y" />
-                  </FormControl>
-                  <FormLabel className="font-normal">Yes</FormLabel>
-                </FormItem>
-                <FormItem className="flex items-center space-x-2">
-                  <FormControl>
-                    <RadioGroupItem value="N" />
-                  </FormControl>
-                  <FormLabel className="font-normal">No</FormLabel>
-                </FormItem>
-              </RadioGroup>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  className="flex flex-row space-x-4 roles-radio"
+                >
+                  <FormItem className="flex items-center space-x-2">
+                    <FormControl>
+                      <RadioGroupItem value="Y" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Yes</FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-2">
+                    <FormControl>
+                      <RadioGroupItem value="N" />
+                    </FormControl>
+                    <FormLabel className="font-normal">No</FormLabel>
+                  </FormItem>
+                </RadioGroup>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         <FormField
           control={control}
           name="backDateEntryDays"
@@ -229,9 +245,15 @@ function General()  {
               <FormControl>
                 <Input
                   {...field}
+                  type='number'
+                  min={1}
+                  maxLength={2}
+                  max={31}
+                  minLength={1}
                   id="backDateDays"
                   placeholder="Back Date Entry"
                   className="w-full mt-3"
+                  onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
@@ -262,8 +284,7 @@ function General()  {
               <FormMessage />
             </FormItem>
           )}
-        /> 
-
+        />
         <div className="form-item">
           <Label htmlFor="picture">Picture</Label>
           <ImageUploader />

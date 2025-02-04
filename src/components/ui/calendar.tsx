@@ -63,6 +63,10 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
       <DayPicker
         showOutsideDays={showOutsideDays}
         month={new Date(selectedYear, selectedMonth)}
+        onMonthChange={(date) => {
+          setSelectedYear(date.getFullYear());
+          setSelectedMonth(date.getMonth());
+        }}
         className={cn('p-3', className)}
         classNames={{
           months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',

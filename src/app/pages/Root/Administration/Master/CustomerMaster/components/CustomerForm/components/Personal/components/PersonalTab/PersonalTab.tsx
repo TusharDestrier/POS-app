@@ -1,15 +1,10 @@
 import { format } from 'date-fns'
-// eslint-disable-next-line import/order
 import { CalendarIcon } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
-//import { z } from 'zod'
 
-// import { validators } from 'tailwind-merge'
-// import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-//import { Checkbox } from '@/components/ui/checkbox'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
@@ -31,7 +26,7 @@ function PersonalTab() {
                 Mobile No. <span className="text-primary">*</span>
               </FormLabel>
               <FormControl>
-                <Input type="number" placeholder="Enter Mobile No." {...field} />
+                <Input type="number" minLength={10} maxLength={10} placeholder="Enter Mobile No." {...field} />
               </FormControl>
               <FormMessage></FormMessage>
 
@@ -125,7 +120,7 @@ function PersonalTab() {
                           !field.value && 'text-muted-foreground'
                         )}
                       >
-                         {field.value && !isNaN(new Date(field.value).getTime()) ? (
+                        {field.value && !isNaN(new Date(field.value).getTime()) ? (
                           format(new Date(field.value), 'PPP')
                         ) : (
                           <span>Pick a date</span>
@@ -244,19 +239,24 @@ function PersonalTab() {
           />
           <FormField
             control={control}
-            name="perosnal.gstNo"
+            name="personal.gstNo"
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel>GST No.</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter GST No." {...field} />
+                  <Input
+                    placeholder="Enter GST No."
+                    {...field}
+                    maxLength={15} // Max 15 characters
+                   
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          
-           <FormField
+
+          <FormField
             control={control}
             name="personal.gstDate"
             render={({ field }) => (
