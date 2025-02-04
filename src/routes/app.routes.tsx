@@ -16,6 +16,7 @@ import CreateRole from '@/app/pages/Root/Administration/Security/CreateRole/page
 import DesignationMaster from '@/app/pages/Root/Administration/Security/Designation/page'
 import SecurityLayout from '@/app/pages/Root/Administration/Security/layout'
 import RoleDefination from '@/app/pages/Root/Administration/Security/RoleDefination/page'
+import UserMaster from '@/app/pages/Root/Administration/Security/UserMaster/Page'
 import UserProfileCreationTable from '@/app/pages/Root/Administration/Security/UserProfileCreation/components/UserProfileCreationTable'
 import AssortmentManagementDiscountLayout from '@/app/pages/Root/Administration/setup/discount/AssortmentManagement/layout'
 import AssortmentManagementDiscountPage from '@/app/pages/Root/Administration/setup/discount/AssortmentManagement/page'
@@ -135,6 +136,10 @@ export const appRoutes = {
             {
               path: 'change-password',
               element: <ChangePasswordPage />,
+            },
+            {
+              path: 'user-master',
+              element: <UserMaster/>,
             },
           ],
         },

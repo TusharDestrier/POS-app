@@ -58,6 +58,10 @@ export const roleBasedMenu: RoleBasedMenu = {
               name: 'Change Password',
               path: '/administration/security/change-password',
             },
+            {
+              name: 'User Master',
+              path: '/administration/security/user-master',
+            },
           
           ],
         },
