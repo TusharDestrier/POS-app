@@ -11,7 +11,8 @@ export function useAssortmentIncludedData() {
       await delay(2000)
       return getAssortmentIncludedData()
     }, // Pass the service method
-    [] // No dependencies for now
+    'assortmentIncluded' // Provide a valid key
+    // [] // No dependencies for now
   )
 
   return { assortmentIncludedData: data, error, isLoading }

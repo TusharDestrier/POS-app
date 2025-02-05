@@ -1,7 +1,8 @@
+import RoleDefinationTable from "./components/RoleDefinationTable"
 
 function RoleDefination() {
   return (
-    <div className="relative z-30"><h1>Role Defination</h1></div>
+    <div className="relative z-30"><RoleDefinationTable/></div>
   )
 }
 

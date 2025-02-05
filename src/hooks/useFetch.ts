@@ -1,4 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+//import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
+
 
 import { useRefetchStore } from '@/store/useRefetchStore';
 
@@ -21,7 +23,7 @@ export default function useFetch<T>(
   const dependencies = options.dependencies ?? [];
 
   const fetchData = useCallback(async () => {
-    if (options.enabled === false || !key || key.trim() === '') {
+    if (options.enabled === false || !key || key?.trim() === '') {
       console.warn(`⚠️ Fetch skipped due to invalid or missing key: '${key}'`);
       setIsLoading(false);
       return { data: null, error: 'Invalid key provided', isLoading: false };
@@ -43,9 +45,9 @@ export default function useFetch<T>(
     }
   }, [fetchFunction, key, trigger, options.enabled, ...dependencies]);
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  // useEffect(() => {
+  //   fetchData();
+  // }, [fetchData]);
 
   return { data, error, isLoading, refetch: fetchData };
 }
