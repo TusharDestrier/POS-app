@@ -62,6 +62,9 @@ function DesignationTable() {
     },
   })
 
+console.log(DesignationData);
+
+
   if (isLoading ||globalLoading) {
     return <SkeletonLoaderTable />
   }

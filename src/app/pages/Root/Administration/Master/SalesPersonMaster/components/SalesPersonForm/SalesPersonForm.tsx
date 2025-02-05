@@ -16,14 +16,13 @@ import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-
 function SalesPersonForm() {
   const { createSalesPerson, isPending, error } = useCreateSalesPerson()
   const closeModal = useSalesPerson((state) => state.close)
   const SalesPersonId = useSalesPersonDataStore((state) => state.currentSalesPersonId)
   const clearId = useSalesPersonDataStore((state) => state.clearCurrentSalesPersonId)
   const { salesPerson, isLoading } = useSalesPersonDataById(Number(SalesPersonId) || null)
-  const mode=useSalesPerson(state=>state.mode);
+  const mode = useSalesPerson((state) => state.mode)
   const formMethods = useForm({
     resolver: zodResolver(SalesPersonFormSchema),
     defaultValues: {
@@ -97,26 +96,21 @@ function SalesPersonForm() {
         await createSalesPerson(transformData)
         closeModal()
         clearId()
-      } catch (err: any) {
-        console.log(err)
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          throw new Error(err.message)
+        }
       }
     },
-
-    (errors) => {
-      console.log('Validation Errors: ', errors) // Logs validation errors, if any
-    }
   )
 
-if(isLoading){
-  return <GlobalViewerLoader/>
-}
+  if (isLoading) {
+    return <GlobalViewerLoader />
+  }
 
-
-if(mode==='View'){
-  return <SalesPersonViewer data={salesPerson}/>
-}
-
-
+  if (mode === 'View') {
+    return <SalesPersonViewer data={salesPerson} />
+  }
 
   return (
     // <div className="border p-4 border-black border-solid h-[430px] overflow-y-auto">
@@ -127,8 +121,6 @@ if(mode==='View'){
           onSubmit() // Trigger submission
         }}
       >
-      
-
         <Tabs defaultValue="salesPerson" className="">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="salesPerson">Sales Person</TabsTrigger>
