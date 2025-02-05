@@ -1,13 +1,13 @@
-import { useAssortmentManagementStore } from '../../store/useAssortmentManagement'
+import { useDiscountAssortmentManagementStore } from '../../store/useDiscountAssortmentManagementStore'
 import AssortmentManagementForm from '../AssortmentManagementForm'
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 
 
 function AssortmentManagementModal() {
-  const isOpen = useAssortmentManagementStore((state) => state.isOpen)
-  const closeModal = useAssortmentManagementStore((state) => state.close)
-  const mode = useAssortmentManagementStore((state) => state.mode)
+  const isOpen = useDiscountAssortmentManagementStore((state) => state.isOpen)
+  const closeModal = useDiscountAssortmentManagementStore((state) => state.close)
+  const mode = useDiscountAssortmentManagementStore((state) => state.mode)
   return (
     <Dialog open={isOpen} onOpenChange={closeModal}>
       <DialogContent className="max-w-full min-h-screen h-screen overflow-auto">
