@@ -1,0 +1,3 @@
+import PromotionAssortmentManagementForm from "./PromotionAssortmentManagementForm";
+
+export default PromotionAssortmentManagementForm

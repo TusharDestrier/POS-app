@@ -27,14 +27,14 @@ import OrganizationPolicyLayout from '@/app/pages/Root/Administration/setup/poli
 import OrganizationPolicyPage from '@/app/pages/Root/Administration/setup/policy/OrganizationPolicy/page'
 import StoreSpecificLayout from '@/app/pages/Root/Administration/setup/policy/StoreSpecificPolicy/layout'
 import StoreSpecificPolicy from '@/app/pages/Root/Administration/setup/policy/StoreSpecificPolicy/page'
-import PromotionAssortmentManagement from '@/app/pages/Root/Administration/setup/promotion/AssortmentManagement/page'
 import PromotionAllocationPage from '@/app/pages/Root/Administration/setup/promotion/PromotionAllocation/page'
+import PromotionAssortmentManagementPage from '@/app/pages/Root/Administration/setup/promotion/PromotionAssortmentManagement/page'
 import PromotionPrioritySetupPage from '@/app/pages/Root/Administration/setup/promotion/PromotionPrioritySetup/page'
 import PromotionSetUpLayout from '@/app/pages/Root/Administration/setup/promotion/PromotionSetup/layout'
 import PromotionSetUpPage from '@/app/pages/Root/Administration/setup/promotion/PromotionSetup/page'
-import AssortmentManagementLayout from '@/app/pages/Root/Administration/setup/salesperson/AssortmentManagement/layout'
-import AssortmentManagementPage from '@/app/pages/Root/Administration/setup/salesperson/AssortmentManagement/page'
-import AssortmentwiseIncentivePage from '@/app/pages/Root/Administration/setup/salesperson/AssortmentwiseIncentive/page'
+import IncentiveAssortmentwiseIncentiveLayout from '@/app/pages/Root/Administration/setup/salesperson/IncentiveAssortmentwise/layout'
+import IncentiveAssortmentwiseIncentivePage from '@/app/pages/Root/Administration/setup/salesperson/IncentiveAssortmentwise/page'
+import IncentiveAssortmentManagementPage from '@/app/pages/Root/Administration/setup/salesperson/IntcentiveAssortmentManagement/page'
 import CustomerPage from '@/app/pages/Root/Customer/page'
 import DashboardLayout from '@/app/pages/Root/Dashboard/layout'
 import DashboardPage from '@/app/pages/Root/Dashboard/page'
@@ -201,7 +201,7 @@ export const appRoutes = {
               children: [
                 {
                   path: 'am-promotion',
-                  element: <PromotionAssortmentManagement />,
+                  element: <PromotionAssortmentManagementPage />,
                 },
                 {
                   path: 'promotion-setup',
@@ -229,17 +229,17 @@ export const appRoutes = {
                 },
                 {
                   path: 'incentive-allocation',
-                  element: <AssortmentManagementLayout />,
+                  element: <IncentiveAssortmentwiseIncentiveLayout />,
                   children: [
                     {
                       index: true,
-                      element: <AssortmentManagementPage />,
+                      element: <IncentiveAssortmentwiseIncentivePage />,
                     },
                   ],
                 },
                 {
                   path: 'am-incentive',
-                  element: <AssortmentwiseIncentivePage />,
+                  element: <IncentiveAssortmentManagementPage />,
                 },
               
               ],

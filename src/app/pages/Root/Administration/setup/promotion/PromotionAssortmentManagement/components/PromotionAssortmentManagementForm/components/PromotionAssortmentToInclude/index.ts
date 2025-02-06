@@ -1,0 +1,2 @@
+import  PromotionAssortmentToInclude from './PromotionAssortmentToInclude'
+export default PromotionAssortmentToInclude

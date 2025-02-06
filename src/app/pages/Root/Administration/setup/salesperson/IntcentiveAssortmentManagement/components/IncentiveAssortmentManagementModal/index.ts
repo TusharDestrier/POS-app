@@ -1,0 +1,3 @@
+import IncentiveAssortmentManagementModal from "./IncentiveAssortmentManagementModal";
+
+export default IncentiveAssortmentManagementModal

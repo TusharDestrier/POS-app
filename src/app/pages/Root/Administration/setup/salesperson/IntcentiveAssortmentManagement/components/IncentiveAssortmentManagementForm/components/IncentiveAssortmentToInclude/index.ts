@@ -1,0 +1,2 @@
+import  IncentiveAssortmentToInclude from './IncentiveAssortmentToInclude'
+export default IncentiveAssortmentToInclude
