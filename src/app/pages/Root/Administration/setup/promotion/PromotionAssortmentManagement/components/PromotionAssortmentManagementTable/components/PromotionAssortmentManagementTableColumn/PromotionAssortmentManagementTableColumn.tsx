@@ -2,13 +2,13 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
-import { AssortmentType } from "../../data/tableData"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { FetchedAssortmentIncentiveType } from "@/types/assortmentIncentive"
 
-export const columns: ColumnDef<AssortmentType>[] = [
+export const columns: ColumnDef<FetchedAssortmentIncentiveType>[] = [
     {
       id: "select",
       header: ({ table }) => (

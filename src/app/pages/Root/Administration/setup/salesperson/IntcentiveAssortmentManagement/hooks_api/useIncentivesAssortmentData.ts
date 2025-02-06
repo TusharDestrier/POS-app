@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import assortmentIncentiveClient from '@/services/assortmentIncentiveClient'
-import { FetchedAssortmentType } from '@/types/assortment'
+import {FetchedAssortmentIncentiveType} from '@/types/assortmentIncentive'
 
 export function useIncentivesAssortmentData() {
   const {
@@ -9,7 +9,7 @@ export function useIncentivesAssortmentData() {
     isLoading,
     error,
     isError,
-  } = useQuery<FetchedAssortmentType[], Error>({
+  } = useQuery<FetchedAssortmentIncentiveType[], Error>({
     queryKey: ['assortmentIncentive'],
     queryFn: async ({signal}) => {
       const data = await assortmentIncentiveClient.getAssortment({signal})

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { getFilteredDiscountAssortmentData } from './data/discountAssortmentData'
+
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import {
@@ -10,7 +12,6 @@ import {
   SelectItem,
   SelectValue,
 } from '@/components/ui/select'
-import { getFilteredDiscountAssortmentData } from './data/discountAssortmentData'
 
 interface SelectedData {
   group: string

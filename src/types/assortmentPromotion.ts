@@ -1,14 +1,11 @@
 export type FetchedAssortmentPromotionType = {
-    assortmentID: 1
-    assortmentName: 'assortment1'
-    description: 'description'
-    assortmentType: 'P'
-    enteredBy: 0
-    usedFor: null
-    store: 0
-  }
-  
-  export type AssortmentPromotionResponseType = { returnCode: string; returnMsg: string }[]
-  
-  
-  
+  assortmentID: number
+  assortmentName: string
+  description: string
+  assortmentType: 'P'
+  enteredBy: number
+  usedFor: null
+  store: number
+}
+
+export type AssortmentPromotionResponseType = { returnCode: string; returnMsg: string }[]

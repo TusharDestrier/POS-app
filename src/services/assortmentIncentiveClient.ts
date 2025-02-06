@@ -1,9 +1,10 @@
 import ApiClient from './ApiClient'
 
-import { AssortmentPostType } from '@/app/pages/Root/Administration/setup/discount/AssortmentManagement/helper/assortmentDataFormatter'
+
+import { AssortmentIncetivePostType } from '@/app/pages/Root/Administration/setup/salesperson/IntcentiveAssortmentManagement/helper/assortmentDataFormatter'
+import { FetchedAssortmentIncentiveType } from '@/types/assortmentIncentive'
 import {
   AssortmentPromotionResponseType,
-  FetchedAssortmentPromotionType,
 } from '@/types/assortmentPromotion'
 
 class AssortmentIncentiveClient extends ApiClient {
@@ -12,7 +13,7 @@ class AssortmentIncentiveClient extends ApiClient {
   }
 
   async getAssortment({ signal }: { signal: AbortSignal }) {
-    const response = await this.get<FetchedAssortmentPromotionType[]>(
+    const response = await this.get<FetchedAssortmentIncentiveType[]>(
       `assortment/GetAllAssortment?AssortmentID=0&AssortmentType=I`,
       {},
       { signal }
@@ -21,13 +22,13 @@ class AssortmentIncentiveClient extends ApiClient {
   }
 
   async getAssortmentById({ id = 0 }: { id: number | null }) {
-    const response = await this.get<FetchedAssortmentPromotionType>(`assortment/Getassortment`, {
+    const response = await this.get<FetchedAssortmentIncentiveType>(`assortment/Getassortment`, {
       AssortmentID: id,
     })
     return response.data
   }
 
-  async createAssortment(assortmentData: AssortmentPostType) {
+  async createAssortment(assortmentData: AssortmentIncetivePostType) {
     try {
       const response = await this.post<AssortmentPromotionResponseType>(
         `AssortmentRep/PostAssortment`,

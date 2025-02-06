@@ -18,6 +18,7 @@ import PromotionAssortmentManagementModal from '../PromotionAssortmentManagement
 import columns from './components/PromotionAssortmentManagementTableColumn'
 import { useIncentivesAssortmentData } from '../../../../salesperson/IntcentiveAssortmentManagement/hooks_api/useIncentivesAssortmentData'
 
+import SkeletonLoader from '@/components/SkeletonLoader'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -69,15 +70,13 @@ function PromotionAssortmentManagementTable() {
     onPaginationChange: setPagination,
   })
 
-  // if (isLoading) {
-  //   // Render skeleton loader during loading state
-  //   return (
-  //     <div className="mt-5">
-  //       {' '}
-  //       <SkeletonLoaderTable rows={5} columns={5} />
-  //     </div>
-  //   )
-  // }
+  if (isLoading) {
+    return (
+      <div className="mt-5">
+        <SkeletonLoader />
+      </div>
+    )
+  }
 
   // if (!isLoading && !assortmentData) return <h3>No data available.</h3>
 

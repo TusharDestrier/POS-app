@@ -1,12 +1,10 @@
 import { z } from 'zod'
 
-import { DiscountFormSchema } from '../components/IncentiveAssortmentManagementForm/IncentiveAssortmentManagementForm'
+import { IntensiveFormSchema } from '../components/IncentiveAssortmentManagementForm/IncentiveAssortmentManagementForm'
 
+export type AssortmentIncetivePostType = ReturnType<typeof assortmentFormatter>
 
-
-export type AssortmentPostType = ReturnType<typeof assortmentFormatter>
-
-export function assortmentFormatter(data: z.infer<typeof DiscountFormSchema>) {
+export function assortmentFormatter(data: z.infer<typeof IntensiveFormSchema>) {
   const sendedData = {
     assortmentID: 0,
     assortmentName: data.assortmentName,

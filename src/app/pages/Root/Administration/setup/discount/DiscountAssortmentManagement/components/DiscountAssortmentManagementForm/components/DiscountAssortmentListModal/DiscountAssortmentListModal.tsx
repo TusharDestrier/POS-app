@@ -8,7 +8,6 @@ function DiscountAssortmentListModal() {
   const closeModal = useDiscountAssortmentManagementStore((state) => state.close2)
   //   const mode = useDiscountAssortmentManagementStore((state) => state.mode)
 
-  console.log(isOpen);
   
   return (
     <Dialog open={isOpen} onOpenChange={closeModal}>

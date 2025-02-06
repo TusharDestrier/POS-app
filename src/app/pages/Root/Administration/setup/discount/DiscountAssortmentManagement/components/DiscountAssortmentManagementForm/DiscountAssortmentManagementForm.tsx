@@ -64,7 +64,6 @@ function DiscountAssortmentManagementForm() {
     return JSON.stringify(assortmentData)
   }
 
-  console.log(mode)
 
   return (
     <div>

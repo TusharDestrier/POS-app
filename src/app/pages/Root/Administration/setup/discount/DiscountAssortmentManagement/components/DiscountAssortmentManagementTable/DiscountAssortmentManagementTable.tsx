@@ -15,7 +15,6 @@ import React from 'react'
 import columns from './components/DiscountAssortmentManagementTableColumn'
 import { useDiscountAssortmentData } from '../../hooks_api/useDiscountAssortmentData'
 import { useDiscountAssortmentManagementStore } from '../../store/useDiscountAssortmentManagementStore'
-import DiscountAssortmentListModal from '../DiscountAssortmentManagementForm/components/DiscountAssortmentListModal'
 import DiscountAssortmentManagementModal from '../DiscountAssortmentManagementModal'
 
 

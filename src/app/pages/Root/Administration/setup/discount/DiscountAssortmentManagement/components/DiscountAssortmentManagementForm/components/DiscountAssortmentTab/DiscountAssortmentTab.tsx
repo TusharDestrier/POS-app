@@ -1,5 +1,7 @@
 import { useFormContext } from 'react-hook-form'
 
+import { useDiscountAssortmentManagementStore } from '../../../../store/useDiscountAssortmentManagementStore'
+import DiscountAssortmentListModal from '../DiscountAssortmentListModal'
 import DiscountAssortmentToExclude from '../DiscountAssortmentToExclude'
 import DiscountAssortmentToInclude from '../DiscountAssortmentToInclude'
 
@@ -18,9 +20,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 
-import { useDiscountAssortmentManagementStore } from '../../../../store/useDiscountAssortmentManagementStore'
 
-import DiscountAssortmentListModal from '../DiscountAssortmentListModal'
 
 function DiscountAssortmentTab() {
   const form = useFormContext()

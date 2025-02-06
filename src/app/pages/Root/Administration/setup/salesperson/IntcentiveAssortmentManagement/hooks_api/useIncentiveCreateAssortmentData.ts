@@ -3,8 +3,9 @@ import { toast } from 'sonner'
 
 
 
-import { AssortmentPostType } from '../helper/assortmentDataFormatter'
 import { useIncentiveAssortmentAllocationStore } from '../../IncentiveAssortmentwise/store/useIncentiveAssortmentAllocationStore'
+import { AssortmentIncetivePostType } from '../helper/assortmentDataFormatter'
+
 
 import assortmentPromotionClient from '@/services/assortmentPromotionClient'
 import { AssortmentResponseType } from '@/types/assortment'
@@ -28,9 +29,9 @@ export function useCreateAssortment() {
   const { mutateAsync, data, error, isPending, } = useMutation<
     AssortmentResponseType,
     Error,
-    AssortmentPostType
+    AssortmentIncetivePostType
   >({
-    mutationFn: async (assortmentData: AssortmentPostType) => {
+    mutationFn: async (assortmentData: AssortmentIncetivePostType) => {
       setIsLoading(true) 
       return await assortmentPromotionClient.createAssortment(assortmentData)
     },
