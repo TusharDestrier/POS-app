@@ -18,9 +18,9 @@ import SecurityLayout from '@/app/pages/Root/Administration/Security/layout'
 import RoleDefination from '@/app/pages/Root/Administration/Security/RoleDefination/page'
 import UserMaster from '@/app/pages/Root/Administration/Security/UserMaster/Page'
 import UserProfileCreationTable from '@/app/pages/Root/Administration/Security/UserProfileCreation/components/UserProfileCreationTable'
-import AssortmentManagementDiscountLayout from '@/app/pages/Root/Administration/setup/discount/AssortmentManagement/layout'
-import AssortmentManagementDiscountPage from '@/app/pages/Root/Administration/setup/discount/AssortmentManagement/page'
 import DiscountAllocation from '@/app/pages/Root/Administration/setup/discount/DiscountAllocation/page'
+import DiscountAssortmentManagementLayout from '@/app/pages/Root/Administration/setup/discount/DiscountAssortmentManagement/layout'
+import DiscountAssortmentManagementPage from '@/app/pages/Root/Administration/setup/discount/DiscountAssortmentManagement/page'
 import DiscountMasterPage from '@/app/pages/Root/Administration/setup/discount/DiscountMaster/page'
 import SectupLayout from '@/app/pages/Root/Administration/setup/layout'
 import OrganizationPolicyLayout from '@/app/pages/Root/Administration/setup/policy/OrganizationPolicy/layout'
@@ -179,11 +179,11 @@ export const appRoutes = {
             },
             {
               path: 'discount',
-              element: <AssortmentManagementDiscountLayout />,
+              element: <DiscountAssortmentManagementLayout />,
               children: [
                 {
                   path: 'am-discount',
-                  element: <AssortmentManagementDiscountPage />,
+                  element: <DiscountAssortmentManagementPage />,
                 },
                 {
                   path: 'discount-setup',

@@ -1,0 +1,3 @@
+import DiscountAssortmentManagementTable from "./DiscountAssortmentManagementTable";
+
+export default DiscountAssortmentManagementTable
