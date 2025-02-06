@@ -92,10 +92,10 @@ export const columns: ColumnDef<FetchedAssortmentIncentiveType>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem>Edit Assortment</DropdownMenuItem>
-              <DropdownMenuItem>View Assortment</DropdownMenuItem>
+              <DropdownMenuItem>Edit</DropdownMenuItem>
+              <DropdownMenuItem>View </DropdownMenuItem>
               <DropdownMenuSeparator/>
-              <DropdownMenuItem>Delete Assortment</DropdownMenuItem>
+              <DropdownMenuItem>Delete</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )

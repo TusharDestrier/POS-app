@@ -15,7 +15,7 @@ import React from 'react'
 
 import { usePromotionAssortmentManagementStore } from '../../store/usePromotionAssortmentManagementStore'
 import PromotionAssortmentManagementModal from '../PromotionAssortmentManagementModal'
-import columns from './components/PromotionAssortmentManagementTableColumn'
+import columns from './components/PromotionAssortmentManagementTableCol'
 import { useIncentivesAssortmentData } from '../../../../salesperson/IntcentiveAssortmentManagement/hooks_api/useIncentivesAssortmentData'
 
 import SkeletonLoader from '@/components/SkeletonLoader'

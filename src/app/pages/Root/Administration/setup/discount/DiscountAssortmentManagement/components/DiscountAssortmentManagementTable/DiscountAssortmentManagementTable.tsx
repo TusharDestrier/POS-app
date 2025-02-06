@@ -46,6 +46,7 @@ function DiscountAssortmentManagementTable() {
   const [rowSelection, setRowSelection] = React.useState({})
 
   const openModal = useDiscountAssortmentManagementStore((state) => state.toggleOpen)
+  const setMode = useDiscountAssortmentManagementStore((state) => state.setMode)
   const isGlobalLoading = useDiscountAssortmentManagementStore((state) => state.isLoading)
   const table = useReactTable({
     data: assortmentData ?? [],
@@ -65,6 +66,11 @@ function DiscountAssortmentManagementTable() {
       rowSelection,
     },
   })
+  
+  function createAssortment(){
+    setMode('Create');
+    openModal()
+  }
 
 
   if (isLoading || isGlobalLoading) {
@@ -89,7 +95,7 @@ function DiscountAssortmentManagementTable() {
         <div className="ms-auto">
           <ul className="flex items-center gap-4">
             <li>
-              <Button onClick={openModal}>Add</Button>
+              <Button onClick={createAssortment}>Add</Button>
             </li>
             <li>
               <DropdownMenu>

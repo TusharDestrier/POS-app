@@ -12,12 +12,13 @@ import {
 import { ChevronDown } from 'lucide-react'
 import React from 'react'
 
-import columns from './components/IncentiveAssortmentManagementTableColumn'
+import columns from './components/IncentiveAssortmentManagementTableCol'
 import { useIncentivesAssortmentData } from '../../hooks_api/useIncentivesAssortmentData'
 import { useIncentiveAssortmentManagementStore } from '../../store/useIncentiveAssortmentManagementStore'
 import IncentiveAssortmentManagementModal from '../IncentiveAssortmentManagementModal'
 
 //import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
+import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -35,8 +36,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+
 function IncentiveAssortmentManagementTable() {
-  const { assortmentData,isLoading } = useIncentivesAssortmentData()
+  const { assortmentData,isLoading,error } = useIncentivesAssortmentData()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -46,7 +48,8 @@ function IncentiveAssortmentManagementTable() {
     pageSize: 5, // Default number of rows per page
   })
 
-  const modalHandler = useIncentiveAssortmentManagementStore((state) => state.toggleOpen)
+  const openModal = useIncentiveAssortmentManagementStore((state) => state.toggleOpen)
+  const setMode = useIncentiveAssortmentManagementStore((state) => state.setMode)
 
   const table = useReactTable({
     data: assortmentData || [],
@@ -69,18 +72,18 @@ function IncentiveAssortmentManagementTable() {
     onPaginationChange: setPagination,
   })
 
-  // if (isLoading) {
-  //   // Render skeleton loader during loading state
-  //   return (
-  //     <div className="mt-5">
-  //       {' '}
-  //       <SkeletonLoaderTable rows={5} columns={5} />
-  //     </div>
-  //   )
-  // }
+  function createAssortment(){
+    setMode('Create');
+    openModal()
+  }
 
-  if (!isLoading && !assortmentData) return <h3>No data available.</h3>
+  if (isLoading ) {
+    return <SkeletonLoaderTable />
+  }
 
+  if (error) {
+    return <div>{error}</div>
+  }
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
@@ -95,7 +98,7 @@ function IncentiveAssortmentManagementTable() {
 
         <ul className="ml-auto flex mr-3 gap-4">
           <li>
-            <Button onClick={modalHandler}>Add</Button>
+            <Button onClick={createAssortment}>Add</Button>
           </li>
           <li>
             <Button variant={'outline'}>Export</Button>
