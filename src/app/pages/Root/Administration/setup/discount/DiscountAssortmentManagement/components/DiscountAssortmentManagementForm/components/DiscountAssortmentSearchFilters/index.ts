@@ -1,0 +1,3 @@
+import DiscountAssortmentSearchFilters from "./DiscountAssortmentSearchFilters";
+
+export default DiscountAssortmentSearchFilters
