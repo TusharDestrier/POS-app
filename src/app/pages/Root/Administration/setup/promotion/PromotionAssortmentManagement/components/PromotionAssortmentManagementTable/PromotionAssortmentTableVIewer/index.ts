@@ -1,0 +1,2 @@
+import PromotionAssortmentTableVIewer from "./PromotionAssortmentTableVIewer"
+export default PromotionAssortmentTableVIewer
