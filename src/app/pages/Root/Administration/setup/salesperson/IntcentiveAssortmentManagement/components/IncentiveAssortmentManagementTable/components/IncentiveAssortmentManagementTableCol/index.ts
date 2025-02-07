@@ -1,3 +1,3 @@
-import {columns}  from './IncentiveAssortmentManagementTableColumn'
+import {columns}  from './IncentiveAssortmentManagementTableCol'
 
 export default columns

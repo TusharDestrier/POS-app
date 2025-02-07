@@ -70,7 +70,7 @@ const setMode=useOrganizationPolicyHead(state=>state.setMode);
         isCCardAuthNoEntryMandatory: String(lastPolicy?.isCCardAuthNoEntryMandatory) || 'N',
         allowBackDateEntry: String(lastPolicy?.allowBackDateEntry) || 'N',
         backDateEntryDays: Number(lastPolicy?.backDateEntryDays) || 5,
-        negativestockcheckingmode: String(lastPolicy?.stockCheck) || "1",
+        negativestockcheckingmode: String(lastPolicy?.negetiveStockCheckMode) || "1",
         picture: String(lastPolicy?.picture) || '',
         allowItemLevelDiscount: String(lastPolicy?.allowItemLevelDiscount) || 'N',
         allowBillLevelDiscount: String(lastPolicy?.allowBillLevelDiscount) || 'N',

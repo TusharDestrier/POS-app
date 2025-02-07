@@ -48,6 +48,7 @@ function DiscountAssortmentManagementTable() {
   const openModal = useDiscountAssortmentManagementStore((state) => state.toggleOpen)
   const setMode = useDiscountAssortmentManagementStore((state) => state.setMode)
   const isGlobalLoading = useDiscountAssortmentManagementStore((state) => state.isLoading)
+  
   const table = useReactTable({
     data: assortmentData ?? [],
     columns,

@@ -98,8 +98,16 @@ interface DiscountAssortmentItem {
       material: "Leather",
     },
   ];
+  interface PropertyOption {
+    value: string;
+  }
 
-  
+  interface Property {
+    propertyHolder: string;
+    propertyName: string;
+    propertyObj: PropertyOption[];
+  }
+
 
   interface SelectedData {
     group: string;
@@ -135,3 +143,87 @@ interface DiscountAssortmentItem {
     });
   }
   
+
+ export function getPropertiesByGroup(group: string): Promise<Property[]> {
+  return new Promise((resolve) => {
+    if (group === "cloth") {
+      resolve([
+        {
+          propertyHolder: "Property1",
+          propertyName: "Brand",
+          propertyObj: [
+            { value: "BOSS" },
+            { value: "FILA" },
+            { value: "LEVIS" },
+          ],
+        },
+        {
+          propertyHolder: "Property2",
+          propertyName: "Color",
+          propertyObj: [
+            { value: "RED" },
+            { value: "BLUE" },
+            { value: "ORANGE" },
+          ],
+        },
+        {
+          propertyHolder: "Property3",
+          propertyName: "Size",
+          propertyObj: [
+            { value: "XL" },
+            { value: "L" },
+            { value: "M" },
+          ],
+        },
+        {
+          propertyHolder: "Property4",
+          propertyName: "Material",
+          propertyObj: [
+            { value: "Cotton" },
+            { value: "Polyester" },
+            { value: "Silk" },
+          ],
+        },
+        {
+          propertyHolder: "Property5",
+          propertyName: "Pattern",
+          propertyObj: [
+            { value: "Solid" },
+            { value: "Striped" },
+            { value: "Checked" },
+          ],
+        },
+        {
+          propertyHolder: "Property6",
+          propertyName: "Fit",
+          propertyObj: [
+            { value: "Regular" },
+            { value: "Slim" },
+            { value: "Loose" },
+          ],
+        },
+        {
+          propertyHolder: "Property7",
+          propertyName: "Fitest",
+          propertyObj: [
+            { value: "Regular" },
+            { value: "Slim" },
+            { value: "Loose" },
+          ],
+        },
+        {
+          propertyHolder: "Property8",
+          propertyName: "Fitter",
+          propertyObj: [
+            { value: "Regular" },
+            { value: "Slim" },
+            { value: "Loose" },
+          ],
+        },
+      ]);
+    } else {
+      // For other groups, return empty or different dummy data.
+      resolve([]);
+    }
+  });
+}

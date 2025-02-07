@@ -5,7 +5,7 @@ export type FetchedOrganizationPolicyType = {
   maxAllowDiscountPolicyValidationID: number | null | string
   maxBillAmountSinglePOSBill: number | null | string
   pan: string | null
-  stockCheck: string | null
+  negativestockcheckingmode: string | null
   creditCardDetailsCapturePolicyID: number | null | string
   isCCardAuthNoEntryMandatory: string | null
   allowBackDateEntry: string | null

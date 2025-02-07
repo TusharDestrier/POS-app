@@ -2,9 +2,8 @@ import DiscountMasterTable from './components/DiscountMasterTable'
 
 function DiscountMasterPage() {
   return (
-    <div className='relative z-40'>
-
-        <DiscountMasterTable/>
+    <div className="relative z-40">
+      <DiscountMasterTable />
     </div>
   )
 }
