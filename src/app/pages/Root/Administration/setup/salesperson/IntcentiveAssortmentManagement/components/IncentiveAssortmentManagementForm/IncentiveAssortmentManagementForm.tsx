@@ -1,16 +1,20 @@
-// import React from 'react'
-
-//import { useFormContext } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 //import AssortmentToExclude from './components/IncentiveAssortmentToExclude'
 //import AssortmentToInclude from './components/IncentiveAssortmentToInclude'
 import { assortmentFormatter } from '../../helper/assortmentDataFormatter'
-import { useCreateAssortment } from '../../hooks_api/useIncentiveCreateAssortmentData'
+import mapIntentivetFetchedTypeToTableData from '../../helper/IntentiveDataTbleExtractor'
+import { useIncentiveCreateAssortmentData } from '../../hooks_api/useIncentiveCreateAssortmentData'
+import { useIntentiveAssortmentDataById } from '../../hooks_api/useIntentiveAssortmentDataById'
+import { useIncentiveAssortmentManagementDataStore } from '../../store/useIncentiveAssortmentManagementDataStore'
 import { useIncentiveAssortmentManagementStore } from '../../store/useIncentiveAssortmentManagementStore'
+import IntentiveAssortmentTableVIewer from '../IncentiveAssortmentManagementTable/IntentiveAssortmentTableVIewer'
+import { IntentiveTableData } from '../IncentiveAssortmentManagementTable/IntentiveAssortmentTableVIewer/IntentiveAssortmentTableVIewer'
 
+import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -21,7 +25,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-//import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+
 
 export const IntensiveFormSchema = z.object({
   assortmentName: z.string().min(2).max(50),
@@ -29,7 +33,16 @@ export const IntensiveFormSchema = z.object({
 })
 
 function IncentiveAssortmentManagementForm() {
-  const { createAssortment, isPending } = useCreateAssortment()
+  const assortmentId = useIncentiveAssortmentManagementDataStore(
+    (state) => state.currentIntentiveMasterId
+  )
+  const clearId = useIncentiveAssortmentManagementDataStore(
+    (state) => state.clearCurrentIntentiveMasterId
+  )
+  const { assortmentData, isLoading } = useIntentiveAssortmentDataById(assortmentId)
+
+  const { createAssortment, isPending } = useIncentiveCreateAssortmentData()
+  const mode = useIncentiveAssortmentManagementStore((state) => state.mode)
   const closeModal = useIncentiveAssortmentManagementStore((state) => state.close)
 
   const form = useForm<z.infer<typeof IntensiveFormSchema>>({
@@ -40,6 +53,17 @@ function IncentiveAssortmentManagementForm() {
     },
   })
 
+  useEffect(() => {
+    if (assortmentData && mode === 'Edit') {
+      setTimeout(() => {
+        form.reset({
+          assortmentName: assortmentData.assortmentName || '',
+          description: assortmentData.description || '',
+        })
+      }, 0) // Small delay
+    }
+  }, [mode, assortmentData])
+
   async function onSubmit(values: z.infer<typeof IntensiveFormSchema>) {
     try {
       const sendedData = assortmentFormatter(values)
@@ -47,13 +71,30 @@ function IncentiveAssortmentManagementForm() {
 
       await createAssortment(sendedData)
       closeModal()
-      // clearId()
+      clearId()
     } catch (err: unknown) {
       if (err instanceof Error) {
         throw new Error(err.message)
       }
     }
   }
+
+  if (isLoading && mode === 'View') {
+    return <GlobalViewerLoader />
+  }
+
+  if (mode === 'View') {
+    if (isLoading) return <GlobalViewerLoader />
+    if (!assortmentData) return <h3>No data available</h3>
+
+    // Format data properly
+    const formattedIntentiveData: IntentiveTableData = Array.isArray(assortmentData)
+      ? mapIntentivetFetchedTypeToTableData(assortmentData[0])
+      : mapIntentivetFetchedTypeToTableData(assortmentData)
+
+    return <IntentiveAssortmentTableVIewer data={formattedIntentiveData} />
+  }
+
   return (
     <div>
       <Form {...form}>

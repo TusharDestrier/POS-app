@@ -12,7 +12,7 @@ import {
 import { ChevronDown } from 'lucide-react'
 import React from 'react'
 
-import columns from './components/IncentiveAssortmentManagementTableCol'
+import columns from './components/IncentiveAssortmentManagementTableColumn'
 import { useIncentivesAssortmentData } from '../../hooks_api/useIncentivesAssortmentData'
 import { useIncentiveAssortmentManagementStore } from '../../store/useIncentiveAssortmentManagementStore'
 import IncentiveAssortmentManagementModal from '../IncentiveAssortmentManagementModal'

@@ -1,12 +1,14 @@
 
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown } from "lucide-react"
 
+
+import IncentiveAssortmentTableActions from "../IncentiveAssortmentTableActions"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { FetchedAssortmentIncentiveType } from "@/types/assortmentIncentive"
+
 
 export const columns: ColumnDef<FetchedAssortmentIncentiveType>[] = [
     {
@@ -62,27 +64,11 @@ export const columns: ColumnDef<FetchedAssortmentIncentiveType>[] = [
       },
     },
     {
-      id: "actions",
-      header:() => <div className="text-left">Actions</div>,
+      id: 'actions',
       enableHiding: false,
-      cell: () => {
-           return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild className="">
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem>Edit SalesPerson</DropdownMenuItem>
-              <DropdownMenuItem>View SalesPerson</DropdownMenuItem>
-              <DropdownMenuSeparator/>
-              <DropdownMenuItem>Delete SalesPerson</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )
+      cell: ({ row }) => {
+        const assortment = row.original
+        return <IncentiveAssortmentTableActions assortment={assortment} />
       },
     },
   ]

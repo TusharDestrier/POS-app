@@ -2,23 +2,32 @@ import { z } from 'zod'
 
 import { PromotionFormSchema } from '../components/PromotionAssortmentManagementForm/PromotionAssortmentManagementForm'
 
+const operations = {
+  Create: 'I',
+  Edit: 'U',
+  Delete: 'D',
+  View: 'V',
+}
 
+export type AssortmentIntensivePostType = ReturnType<typeof PromotionassortmentDataFormatter>
 
-export type AssortmentPostType = ReturnType<typeof PromotionassortmentDataFormatter>
-
-export function PromotionassortmentDataFormatter(data: z.infer<typeof PromotionFormSchema>) {
+export function PromotionassortmentDataFormatter(
+  data: z.infer<typeof PromotionFormSchema>,
+  mode: keyof typeof operations,
+  id: number | string
+) {
   const sendedData = {
-    assortmentID: 0,
+    assortmentID: mode === 'Create' ? 0 : id,
     assortmentName: data.assortmentName,
     description: data.description,
     assortmentType: 'P',
     enteredBy: 0,
-    usedFor: 'I',
+    usedFor: operations[mode],
     store: 0,
     assortmentDetail: data?.assortmentDetail
       ? [
           {
-            assortmentID: 0,
+            assortmentID:mode === 'Create' ? 0 : id,
             itemCode: '0001',
             itemName: 'Park Avenue',
             tableID: 1,
@@ -27,7 +36,7 @@ export function PromotionassortmentDataFormatter(data: z.infer<typeof PromotionF
             group: 'DeoGroup',
           },
           {
-            assortmentID: 0,
+            assortmentID:mode === 'Create' ? 0 : id,
             itemCode: '0002',
             itemName: 'Vim Bar',
             tableID: 1,

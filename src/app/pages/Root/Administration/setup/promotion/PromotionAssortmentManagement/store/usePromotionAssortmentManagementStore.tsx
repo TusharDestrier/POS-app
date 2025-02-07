@@ -4,10 +4,10 @@ type PromotionAssortmentManagementStore = {
   isLoading: boolean
   setIsLoading: (loading: boolean) => void
   isOpen: boolean
-  mode: 'Edit' | 'Create' | 'View'
+  mode: 'Edit' | 'Create' | 'View' | 'Delete'
   toggleOpen: () => void
   close: () => void
-  setMode: (newMode: 'Edit' | 'Create' | 'View') => void
+  setMode: (newMode: 'Edit' | 'Create' | 'View' | 'Delete') => void
 }
 
 export const usePromotionAssortmentManagementStore = create<PromotionAssortmentManagementStore>((set) => ({
