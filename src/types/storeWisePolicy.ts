@@ -9,6 +9,7 @@ export type FetchedStoreWisePolicyType = {
   maxAllowDiscountPolicyValidationID: number | null | string
   maxBillAmountSinglePOSBill: number | null | string
   pan: string | null
+  negativeStockCheckingModeID:number|null
   stockCheck: string | null
   creditCardDetailsCapturePolicyID: number | null | string
   isCCardAuthNoEntryMandatory: string | null

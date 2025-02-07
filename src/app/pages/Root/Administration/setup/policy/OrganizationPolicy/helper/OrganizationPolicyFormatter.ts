@@ -34,6 +34,7 @@ export function OrganizationPolicyFormatter(
     maxAllowDiscountPercentage: 0,
     allowBillLevelDiscount: 'string',
     maxAllowDiscountAmount: 0,
+    negetiveStockCheckMode:0,
     allowToSelectActivePromotionFromList: 'string',
     allowToClearAppliedPromotion: 'string',
     salePersonTaggingMandatory: 'string',
@@ -58,6 +59,7 @@ export function OrganizationPolicyFormatter(
     ...defaultData,
     ...data,
     pendingSettlementDays:Number(data.pendingSettlementDays),
-    creditCardDetailsCapturePolicyID:Number(data.creditCardDetailsCapturePolicyID)
+    creditCardDetailsCapturePolicyID:Number(data.creditCardDetailsCapturePolicyID),
+    negetiveStockCheckMode:(data.negativestockcheckingmode)
   }
 }

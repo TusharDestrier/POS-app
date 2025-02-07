@@ -19,7 +19,7 @@ class ApiClient {
     options: ApiClientOptions = { withAuth: false, enableRefreshToken: false }
   ) {
     this.api = axios.create({
-      baseURL: `http://dts.connectcloud365.com:53952/${endpoint}`,
+      baseURL: `${import.meta.env.VITE_SERVER_DEV}/${endpoint}`,
       headers: {
         'Content-Type': 'application/json',
       },

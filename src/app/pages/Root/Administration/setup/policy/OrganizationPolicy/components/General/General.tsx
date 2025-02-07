@@ -276,7 +276,7 @@ function General() {
                       <SelectLabel>Mode</SelectLabel>
                       <SelectItem value="1">Stop</SelectItem>
                       <SelectItem value="2">Ignore</SelectItem>
-                      <SelectItem value="3">Notify</SelectItem>
+                      <SelectItem value="3">Warn</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>

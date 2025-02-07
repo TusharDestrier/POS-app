@@ -13,11 +13,14 @@ function DiscountMasterForm() {
   const formMethods = useForm<z.infer<typeof DiscountMasterSchema>>({
     resolver: zodResolver(DiscountMasterSchema),
     defaultValues: {
-      name: '',
+      name: 'name',
       discountType: 'General',
       discountBase: 'Percentage',
       appliedOn: 'Bill Level',
-      employeeDiscount: 'Yes',
+      employeeDiscount: 'N',
+      percentage:3,
+      maximumDiscount:2,
+      minimumBilling:2,
       otpRequired: false,
       allowToChange: false,
       inactive: false,

@@ -75,7 +75,7 @@ const setMode=useStoreWisePolicyHead(state=>state.setMode)
         isCCardAuthNoEntryMandatory: storePolicyData.isCCardAuthNoEntryMandatory || 'N',
         allowBackDateEntry: storePolicyData.allowBackDateEntry || 'N',
         backDateEntryDays: Number(storePolicyData.backDateEntryDays) || 1,
-        // negativeStockCheckingModeID: Number(storePolicyData.negativeStockCheckingModeID) || 1,
+        negativeStockCheckingModeID: Number(storePolicyData.negativeStockCheckingModeID) || 1,
         allowItemLevelDiscount: storePolicyData.allowItemLevelDiscount || 'N',
         maxAllowDiscountPercentage: Number(storePolicyData.maxAllowDiscountPercentage) || 2,
         allowBillLevelDiscount: storePolicyData.allowBillLevelDiscount || 'N',
@@ -106,7 +106,6 @@ const setMode=useStoreWisePolicyHead(state=>state.setMode)
   async function onSubmit(data: z.infer<typeof PostStoreWisePolicySchema>) {
     const formattedData = StoreWisePolicyFormatter(data, 1)
     try {
-       console.log("Formatted Data:", formattedData);
        await createStoreWisePolicy(formattedData);
       closeModal()
       clearId()
