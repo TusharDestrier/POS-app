@@ -7,7 +7,7 @@ import { useIncentiveAssortmentAllocationStore } from '../../IncentiveAssortment
 import { AssortmentIncetivePostType } from '../helper/assortmentDataFormatter'
 
 
-import assortmentPromotionClient from '@/services/assortmentPromotionClient'
+import assortmentPromotionClient from '@/services/AssortmentPromotionClient'
 import { AssortmentResponseType } from '@/types/assortment'
 
 
@@ -22,7 +22,7 @@ const messages = {
 
 
 
-export function useCreateAssortment() {
+export function useIncentiveCreateAssortmentData() {
   const queryClient = useQueryClient() // ✅ Query Invalidation ke liye
   const mode = useIncentiveAssortmentAllocationStore((state) => state.mode)
   const setIsLoading = useIncentiveAssortmentAllocationStore((state) => state.setIsLoading)

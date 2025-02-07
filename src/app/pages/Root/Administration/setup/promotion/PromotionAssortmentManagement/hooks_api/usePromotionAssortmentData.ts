@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
-import AssortmentPromotionClient from '@/services/assortmentPromotionClient'
-import { FetchedAssortmentType } from '@/types/assortment'
+import AssortmentPromotionClient from '@/services/AssortmentPromotionClient'
+import { FetchedAssortmentPromotionType } from '@/types/assortmentPromotion'
 
 export function usePromotionAssortmentData() {
   const {
@@ -9,7 +9,7 @@ export function usePromotionAssortmentData() {
     isLoading,
     error,
     isError,
-  } = useQuery<FetchedAssortmentType[], Error>({
+  } = useQuery<FetchedAssortmentPromotionType[], Error>({
     queryKey: ['promotionassortment'],
     queryFn: async ({signal}) => {
       const data = await AssortmentPromotionClient.getAssortment({signal})

@@ -15,8 +15,8 @@ import React from 'react'
 
 import { usePromotionAssortmentManagementStore } from '../../store/usePromotionAssortmentManagementStore'
 import PromotionAssortmentManagementModal from '../PromotionAssortmentManagementModal'
-import columns from './components/PromotionAssortmentManagementTableCol'
-import { useIncentivesAssortmentData } from '../../../../salesperson/IntcentiveAssortmentManagement/hooks_api/useIncentivesAssortmentData'
+import columns from './components/PromotionAssortmentManagementTableColumn'
+import { usePromotionAssortmentData } from '../../hooks_api/usePromotionAssortmentData'
 
 import SkeletonLoader from '@/components/SkeletonLoader'
 import { Button } from '@/components/ui/button'
@@ -37,7 +37,7 @@ import {
 } from '@/components/ui/table'
 
 function PromotionAssortmentManagementTable() {
-  const { assortmentData, isLoading } = useIncentivesAssortmentData()
+  const { assortmentData, isLoading } = usePromotionAssortmentData()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})

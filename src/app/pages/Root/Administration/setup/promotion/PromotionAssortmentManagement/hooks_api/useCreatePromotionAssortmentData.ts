@@ -3,10 +3,10 @@ import { toast } from 'sonner'
 
 
 
-import { AssortmentPostType } from '../helper/PromotionassortmentDataFormatter'
+import { AssortmentIntensivePostType } from '../helper/promotionassortmentDataFormatter'
 import { usePromotionAssortmentManagementStore } from '../store/usePromotionAssortmentManagementStore'
 
-import AssortmentPromotionClient from '@/services/assortmentPromotionClient'
+import AssortmentPromotionClient from '@/services/AssortmentPromotionClient'
 import { AssortmentPromotionResponseType } from '@/types/assortmentPromotion'
 
 
@@ -29,9 +29,9 @@ export function useCreatePromotionAssortmentData() {
   const { mutateAsync, data, error, isPending, } = useMutation<
   AssortmentPromotionResponseType,
     Error,
-    AssortmentPostType
+    AssortmentIntensivePostType
   >({
-    mutationFn: async (assortmentData: AssortmentPostType) => {
+    mutationFn: async (assortmentData: AssortmentIntensivePostType) => {
       setIsLoading(true) 
       return await AssortmentPromotionClient.createAssortment(assortmentData)
     },

@@ -18,7 +18,6 @@ import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
 import { convertToDate } from '@/lib/utils'
 
-
 function CustomerForm() {
   const mode = useCustomerMaster((state) => state.mode)
   const customerID = useCustomerMasterDataStore((state) => state.currentCustomerMasterId)
@@ -69,7 +68,7 @@ function CustomerForm() {
   })
 
   useEffect(() => {
-    if (mode!== 'Create' && customerData && !Array.isArray(customerData)) {
+    if (mode !== 'Create' && customerData && !Array.isArray(customerData)) {
       formMethods.reset({
         personal: {
           mobileNo: customerData.mobile || '',
@@ -96,7 +95,8 @@ function CustomerForm() {
           whatsappNo: customerData.whatsAppNo || '',
           alternatePhoneNo: customerData.alternatePhnNo || '',
           receivePushMessage: customerData.isPushMessage === 'Y',
-          preferredCommunication: convertToFullForm(customerData.preferredComMode as "s" | "e" | "w") || 'sms',
+          preferredCommunication:
+            convertToFullForm(customerData.preferredComMode as 's' | 'e' | 'w') || 'sms',
         },
         membership: {
           customerCategory: customerData.customerCatName || '',
@@ -109,39 +109,39 @@ function CustomerForm() {
   }, [customerData, mode, formMethods.reset])
 
   // Handle form submission
-  const onSubmit = formMethods.handleSubmit(async (data) => {
-    // console.log('Form Data Submitted: ', data) // Logs if submission is successful
-    let transformData
-    transformData = customerDataFormatter(
-      {
-        ...data.communication,
-        ...data.membership,
-        ...data.personal,
-      },
-      customerID ? Number(customerID) : null
-    )
+  const onSubmit = formMethods.handleSubmit(
+    async (data) => {
+      // console.log('Form Data Submitted: ', data) // Logs if submission is successful
+      let transformData
+      transformData = customerDataFormatter(
+        {
+          ...data.communication,
+          ...data.membership,
+          ...data.personal,
+        },
+        customerID ? Number(customerID) : null
+      )
 
-    console.log(transformData);
-    
+      console.log(transformData)
 
-    try {
-      await createCustomerAsync(transformData)
-      closeModal() // ✅ Success pe modal close
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        throw new Error(err.message)
+      try {
+        await createCustomerAsync(transformData)
+        closeModal() // ✅ Success pe modal close
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          throw new Error(err.message)
+        }
       }
+    },
+    (err) => {
+      console.log(err)
     }
-  }
-,
-(err)=>{
-  console.log(err);
-  
-})
+  )
 
   if (customerLoading) {
     return <GlobalViewerLoader />
   }
+  
   if (mode === 'View' && !customerLoading) {
     if (!customerData) return <h3>No data available</h3> // ✅ Handle undefined case
 
@@ -159,8 +159,6 @@ function CustomerForm() {
   if (customerError && mode === 'View') {
     return <h3>Sorry there is some problem</h3>
   }
-
-  
 
   return (
     <FormProvider {...formMethods}>
