@@ -1,4 +1,4 @@
-import { DiscountTableData } from "../components/DiscountAssortmentManagementForm/components/DiscountAssortmentListTable/DiscountAssortmentTableVIewer/DiscountAssortmentTableVIewer";
+import { DiscountTableData } from "../components/DiscountAssortmentManagementForm/components/DiscountAssortmentListTable/DiscountAssortmentTableVIewer/DiscountAssortmentVIewer";
 
 import { FetchedAssortmentType } from "@/types/assortment";
 

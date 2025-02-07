@@ -11,7 +11,7 @@ import { useCreateDiscountAssortment } from '../../hooks_api/useCreateDiscountAs
 import { useDiscountAssortmentDataById } from '../../hooks_api/useDiscountAssortmentDataById'
 import { useDiscountMasterDataStore } from '../../store/useDiscountAssortmentManagementDataStore'
 import { useDiscountAssortmentManagementStore } from '../../store/useDiscountAssortmentManagementStore'
-import DiscountAssortmentTableVIewer, { DiscountTableData } from './components/DiscountAssortmentListTable/DiscountAssortmentTableVIewer/DiscountAssortmentTableVIewer'
+import DiscountAssortmentTableVIewer, { DiscountTableData } from './components/DiscountAssortmentListTable/DiscountAssortmentTableVIewer/DiscountAssortmentVIewer'
 
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'

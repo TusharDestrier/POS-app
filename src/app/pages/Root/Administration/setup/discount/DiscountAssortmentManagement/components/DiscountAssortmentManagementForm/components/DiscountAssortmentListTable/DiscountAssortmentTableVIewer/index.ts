@@ -1,2 +1,2 @@
-import DiscountAssortmentTableVIewer from "./DiscountAssortmentTableVIewer"
+import DiscountAssortmentTableVIewer from "./DiscountAssortmentVIewer"
 export default DiscountAssortmentTableVIewer
