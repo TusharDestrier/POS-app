@@ -66,12 +66,9 @@ function PromotionAssortmentManagementForm() {
     }
   }, [mode, assortmentData])
 
-  console.log(assortmentData, mode)
-
   async function onSubmit(values: z.infer<typeof PromotionFormSchema>) {
     try {
       const sendedData = PromotionassortmentDataFormatter(values, mode, Number(assortmentId))
-      console.log(sendedData)
 
       await createAssortment(sendedData)
       closeModal()

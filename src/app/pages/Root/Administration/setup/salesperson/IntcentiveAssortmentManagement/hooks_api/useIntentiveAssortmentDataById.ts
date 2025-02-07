@@ -10,7 +10,7 @@ export function useIntentiveAssortmentDataById(id: number | null) {
     error,
     isError,
   } = useQuery<FetchedAssortmentIncentiveType>({
-    queryKey: ['assortment', id], // ✅ Unique key for caching and refetching
+    queryKey: ['assortmentIncentive', id], // ✅ Unique key for caching and refetching
     queryFn: async () => {
       if (id === null) throw new Error('Invalid Assortment ID')
       return await assortmentIncentiveClient.getAssortmentById({ id })
@@ -29,7 +29,7 @@ export function useFetchIntentiveAssortmentDataById() {
     if (!id) throw new Error('Invalid SalesPerson ID')
 
     const data = await queryClient.fetchQuery<FetchedAssortmentIncentiveType>({
-      queryKey: ['assortment', id],
+      queryKey: ['assortmentIncentive', id],
       queryFn: async () => await assortmentIncentiveClient.getAssortmentById({ id }),
       staleTime: 5 * 60 * 1000, // ✅ 5 min cache
     })

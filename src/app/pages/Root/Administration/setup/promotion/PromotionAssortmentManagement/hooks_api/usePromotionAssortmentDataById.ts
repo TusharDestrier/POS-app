@@ -10,7 +10,7 @@ export function usePromotionAssortmentDataById(id: number | null) {
     error,
     isError,
   } = useQuery<FetchedAssortmentPromotionType>({
-    queryKey: ['assortment', id], // ✅ Unique key for caching and refetching
+    queryKey: ['promotionassortment', id], // ✅ Unique key for caching and refetching
     queryFn: async () => {
       if (id === null) throw new Error('Invalid Assortment ID')
       return await assortmentPromotionClient.getAssortmentById({ id })
@@ -29,7 +29,7 @@ export function useFetchPromotionAssortmentDataById() {
     if (!id) throw new Error('Invalid SalesPerson ID')
 
     const data = await queryClient.fetchQuery<FetchedAssortmentPromotionType>({
-      queryKey: ['assortment', id],
+      queryKey: ['promotionassortment', id],
       queryFn: async () => await assortmentPromotionClient.getAssortmentById({ id }),
       staleTime: 5 * 60 * 1000, // ✅ 5 min cache
     })
