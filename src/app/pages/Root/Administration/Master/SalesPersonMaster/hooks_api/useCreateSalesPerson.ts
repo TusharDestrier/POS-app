@@ -8,10 +8,10 @@ import salesPersonClient from '@/services/salesPersonClient'
 import { SalesPersonResponseType } from '@/types/salesPerson'
 
 const messages = {
-  "Create": 'Created SuccessFully',
-  "Edit": 'Updated SuccessFully',
-  "Delete": 'Deleted SuccessFully',
-  "View": 'View SuccessFully',
+  "Create": 'Operation SuccessFully',
+  "Edit": 'Operation SuccessFully',
+  "Delete": 'Operation SuccessFully',
+  "View": 'Operation SuccessFully',
 }
 
 export type SalesPersonPostType = ReturnType<typeof salesPersonFormatter>

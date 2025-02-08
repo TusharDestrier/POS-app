@@ -8,10 +8,10 @@ import paymodeClient from '@/services/paymodeClient'
 import { PaymodeMasterResponseType } from '@/types/paymode'
 
 const messages = {
-  Create: 'Created SuccessFully',
-  Edit: 'Updated SuccessFully',
-  Delete: 'Deleted SuccessFully',
-  View: 'Deleted SuccessFully',
+  Create: 'operation SuccessFully',
+  Edit: 'operation SuccessFully',
+  Delete: 'operation SuccessFully',
+  View: 'operation SuccessFully',
 }
 
 export function useCreatePaymode() {
