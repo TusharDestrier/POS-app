@@ -19,9 +19,9 @@ interface PromotionStoreSelectionListStoreType {
 
 export const usePromotionStoreSelectionListStore = create<PromotionStoreSelectionListStoreType>((set) => ({
   promotions: [
-    { id: "1", name: "Promotion A", fromDate: "", toDate: "", allocationType: "normal", deallocate: false },
-    { id: "3", name: "Promotion B", fromDate: "", toDate: "", allocationType: "normal", deallocate: false },
-    { id: "2", name: "Promotion C", fromDate: "", toDate: "", allocationType: "normal", deallocate: false },
+    { id: "1", name: "Store A", fromDate: "", toDate: "", allocationType: "normal", deallocate: false },
+    { id: "3", name: "Store B", fromDate: "", toDate: "", allocationType: "normal", deallocate: false },
+    { id: "2", name: "Store C", fromDate: "", toDate: "", allocationType: "normal", deallocate: false },
   ],
   isSelecting: false,
   selectedRowIndex: null,

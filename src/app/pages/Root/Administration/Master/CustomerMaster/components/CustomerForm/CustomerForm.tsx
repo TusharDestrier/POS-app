@@ -122,7 +122,6 @@ function CustomerForm() {
         customerID ? Number(customerID) : null
       )
 
-      console.log(transformData)
 
       try {
         await createCustomerAsync(transformData)
@@ -133,10 +132,10 @@ function CustomerForm() {
         }
       }
     },
-    (err) => {
-      console.log(err)
-    }
+   
   )
+
+
 
   if (customerLoading) {
     return <GlobalViewerLoader />

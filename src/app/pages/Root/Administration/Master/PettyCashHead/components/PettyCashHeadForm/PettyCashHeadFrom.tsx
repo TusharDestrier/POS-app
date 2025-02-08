@@ -139,15 +139,15 @@ function PettyCashHeadForm() {
                       className="flex items-center space-x-4 roles-radio"
                     >
                       <div className="flex items-center space-x-1">
-                        <RadioGroupItem value="payment" id="r1" />
+                        <RadioGroupItem value="p" id="r1" />
                         <Label htmlFor="r1">Payment</Label>
                       </div>
                       <div className="flex items-center space-x-1">
-                        <RadioGroupItem value="receipt" id="r2" />
+                        <RadioGroupItem value="r" id="r2" />
                         <Label htmlFor="r2">Receipt</Label>
                       </div>
                       <div className="flex items-center space-x-1">
-                        <RadioGroupItem value="both" id="r3" />
+                        <RadioGroupItem value="b" id="r3" />
                         <Label htmlFor="r3">Both</Label>
                       </div>
                     </RadioGroup>

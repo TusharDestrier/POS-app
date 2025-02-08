@@ -19,7 +19,7 @@ function PromotionStoreSelectionModal() {
       
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Promotion Selection</DialogTitle>
+          <DialogTitle>Store Selection</DialogTitle>
          
         </DialogHeader>
        <PromotionStoreSelectionList/>

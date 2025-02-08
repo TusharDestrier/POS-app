@@ -10,10 +10,8 @@ import StoreDetail from '../StoreDetail'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function StoreMasterTab() {
-  // Main form instance with resolver for validation
   
   return (
-    // Wrap form in FormProvider and define form layout
    
         <Tabs defaultValue="store-detail" className="mt-3">
           <TabsList className="mb-4  flex border-none">

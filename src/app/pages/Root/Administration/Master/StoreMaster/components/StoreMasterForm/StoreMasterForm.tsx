@@ -25,8 +25,8 @@ function StoreMasterForm() {
   const formMethods = useForm({
     resolver: zodResolver(StoreMasterHeadSchema),
     defaultValues: {
-      storeCode: '',
-      storeName: '',
+      storeCode: '0022',
+      storeName: 'store234',
       startDate: '',
       closeDate: '',
       storeSize: 0,

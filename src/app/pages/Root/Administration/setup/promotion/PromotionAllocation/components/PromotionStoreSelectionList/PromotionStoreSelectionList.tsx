@@ -52,11 +52,11 @@ function PromotionStoreSelectionList() {
 
   return (
     <div className="border p-4 mt-4">
-      <ul>
+      <ul className="space-y-3">
         {promotions.map((promo) => (
           <li key={promo.id} className="flex justify-between items-center">
             <span>{promo.name}</span>
-            <Button className="text-blue-600" onClick={() => handleSelect(promo)}>
+            <Button className="text-white" onClick={() => handleSelect(promo)}>
               Select
             </Button>
           </li>

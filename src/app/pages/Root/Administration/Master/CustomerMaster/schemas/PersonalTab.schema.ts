@@ -1,37 +1,45 @@
-import { z } from "zod";
+import { z } from 'zod'
 
-const GST_REGEX = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/;
+// const GST_REGEX = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/;
 
-export const personalTabSchema = z.object({
+const personalTabBaseSchema = z.object({
   mobileNo: z
-  .string()
-  .min(10, { message: "Mobile No. must be exactly 10 digits." })
-  .max(10, { message: "Mobile No. must be exactly 10 digits." })
-  .regex(/^\d+$/, { message: "Only numbers are allowed in Mobile No." }),
-  
-  firstName: z.string().min(1, { message: 'First Name is required.' }),
-  middleName: z.string().min(1, { message: 'Middle Name is required.' }),
-  lastName: z.string().min(1, { message: 'Last Name is required.' }),
-  gender: z.enum(['male', 'female'], { message: 'Gender is required.' }),
-  dateOfBirth: z.coerce
-  .date()
-  .max(new Date(), { message: "DOB cannot be in the future." })
-  .min(new Date("1900-01-01"), { message: "DOB cannot be before 1900." }),
+    .string()
+    .min(10, { message: 'Mobile No. must be exactly 10 digits.' })
+    .max(10, { message: 'Mobile No. must be exactly 10 digits.' })
+    .regex(/^\d+$/, { message: 'Only numbers are allowed in Mobile No.' }),
 
-anniversaryDate: z.coerce
-  .date()
-  .max(new Date(), { message: "Anniversary Date cannot be in the future." })
-  .min(new Date("1900-01-01"), { message: "Anniversary cannot be before 1900." })
-  .optional(),
+  firstName: z.string().optional(),
+  middleName: z.string().optional(),
+  lastName: z.string().optional(),
+  gender: z.enum(['male', 'female', 'trans'], { message: 'Gender is required.' }),
+  dateOfBirth: z.coerce.date().optional(),
 
+  anniversaryDate: z.coerce.date().optional(),
   profession: z.string().optional(),
   spouseName: z.string().optional(),
   isEmployee: z.boolean().optional(),
-  panNo: z.string().min(10, { message: 'Pan No. can not be less than or more than 10 characters.' }),
-  gstNo: z
-  .string()
-  .regex(GST_REGEX, { message: "Invalid GST Number format." })
-  .optional(), // GST required hai ya optional, wo business rule pe depend karega
+  panNo: z
+    .string()
 
+    .optional(),
+  gstNo: z
+    .string()
+
+    .optional(),
   gstDate: z.date().optional(),
 })
+
+export const personalTabSchema = personalTabBaseSchema.refine(
+  (data) => {
+    // If gstNo is provided, then gstDate must also be provided.
+    if (data.gstNo && !data.gstDate) {
+      return false
+    }
+    return true
+  },
+  {
+    path: ['gstDate'], // error path
+    message: 'GST Date must be provided when GST Number is given.',
+  }
+)

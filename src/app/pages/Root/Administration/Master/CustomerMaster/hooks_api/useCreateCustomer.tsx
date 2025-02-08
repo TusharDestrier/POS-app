@@ -9,10 +9,10 @@ import { CustomerFetchedType, CustomerMasterResponseType } from '@/types/custome
 
 
 const messages = {
-  Create: 'Created SuccessFully',
-  Edit: 'Updated SuccessFully',
-  Delete: 'Deleted SuccessFully',
-  View: 'Deleted SuccessFully',
+  Create: 'Operation SuccessFully',
+  Edit: 'Operation SuccessFully',
+  Delete: 'Operation SuccessFully',
+  View: 'Operation SuccessFully',
 }
 
 export type CustomerPostType = Omit<CustomerFetchedType, 'status'> & {
@@ -65,6 +65,8 @@ export function useCreateCustomer() {
       setGlobalLoading(false)
     }
   })
+console.log(mode);
+  
 
   return {
     createCustomer: mutate, // For immediate calls

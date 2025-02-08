@@ -92,7 +92,7 @@ function MopDetailForm() {
       </div>
 
       {fields.map((item, index) => (
-        <div key={item.id} className="grid grid-cols-6 gap-3 mb-3 m-3">
+        <div key={item.id} className="grid grid-cols-6 gap-3 mb-3 ">
           {/* Paymode Name */}
           <FormField
             control={control}
@@ -144,6 +144,7 @@ function MopDetailForm() {
             name={`objPayMode.${index}.crossStore`}
             render={({ field }) => (
               <Checkbox
+              className='mt-2'
                 checked={field.value === 'Y'} // Check if value is 'Y' (true)
                 onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')} // Map true/false to 'Y'/'N'
               />
@@ -156,8 +157,8 @@ function MopDetailForm() {
             name={`objPayMode.${index}.ledgersName`}
             render={({ field }) => (
               <Select
-              value={field.value}  // Yeh bind karega existing data
-              defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhaye
+                value={field.value} // Yeh bind karega existing data
+                defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhaye
                 onValueChange={(value) => {
                   field.onChange(value)
                   const selectedLedger = ledgerOptions.find((l) => l.name === value)
@@ -184,8 +185,8 @@ function MopDetailForm() {
             name={`objPayMode.${index}.subLedgerName`}
             render={({ field }) => (
               <Select
-              value={field.value}  // Yeh bind karega existing data
-              defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhaye
+                value={field.value} // Yeh bind karega existing data
+                defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhaye
                 onValueChange={(value) => {
                   field.onChange(value)
                   const selectedSubLedger = subLedgerOptions.find((sl) => sl.name === value)
@@ -205,23 +206,24 @@ function MopDetailForm() {
               </Select>
             )}
           />
-
-          <FormField
-            control={control}
-            name={`objPayMode.${index}.discontinue`}
-            render={({ field }) => (
-              <Checkbox
-                checked={field.value === 'Y'} // Check if value is 'Y' (true)
-                onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')} // Map true/false to 'Y'/'N'
-              />
-            )}
-          />
-
-          {/* Remove Row Button */}
-          <div className="grid grid-cols-1 gap-3 mb-3">
-            <Button size="icon" type="button" onClick={() => remove(index)}>
-              <Trash size="15" />
-            </Button>
+          <div className="flex gap-6 ">
+            <FormField
+              control={control}
+              name={`objPayMode.${index}.discontinue`}
+              render={({ field }) => (
+                <Checkbox
+                className='mt-2 ms-4'
+                  checked={field.value === 'Y'} // Check if value is 'Y' (true)
+                  onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')} // Map true/false to 'Y'/'N'
+                />
+              )}
+            />
+            {/* Remove Row Button */}
+            <div className="grid grid-cols-1 gap-3 mb-3">
+              <Button size="icon" type="button" onClick={() => remove(index)}>
+                <Trash size="15" />
+              </Button>
+            </div>
           </div>
         </div>
       ))}

@@ -1,5 +1,6 @@
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
+import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import {
@@ -30,27 +31,15 @@ import {
 function StoreDetailForm() {
   const { control, setValue, getValues, watch } = useFormContext()
   // const modalMode = useStoreMasterStore((state) => state.mode)
+  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen2, setIsOpen2] = useState(false)
   const storeTypeCode = watch('storeTypeCode')
+
+  const startDateValue = watch('startDate')
+
   return (
     <div className="grid grid-cols-2 border border-solid border-black h-[580px] overflow-y-auto">
       <div className="border p-3 space-y-3">
-        {/* Store Code */}
-        <FormField
-          control={control}
-          name="storeCode"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Store Code <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="Enter Store Code" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         {/* Store Name */}
         <FormField
           control={control}
@@ -67,8 +56,23 @@ function StoreDetailForm() {
             </FormItem>
           )}
         />
-
-        {/* Start Date */}
+        {/* Store Code */}
+        <FormField
+          control={control}
+          name="storeCode"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Store Code <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input placeholder="Enter Store Code" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
         <FormField
           control={control}
           name="startDate"
@@ -77,11 +81,19 @@ function StoreDetailForm() {
               <FormLabel>
                 Start Date <span className="text-red-500">*</span>
               </FormLabel>
-              <Popover>
+              <Popover open={isOpen} onOpenChange={setIsOpen}>
                 <PopoverTrigger asChild>
                   <FormControl>
-                    <Button variant="outline" className="w-full text-left">
-                      {field.value ? format(new Date(field.value), 'PPP') : 'Pick a date'}
+                    <Button
+                      onClick={() => setIsOpen(true)}
+                      variant="outline"
+                      className="w-full text-left"
+                    >
+                       {field.value && !isNaN(new Date(field.value).getTime()) ? (
+                          format(new Date(field.value), 'PPP')
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>
@@ -90,7 +102,20 @@ function StoreDetailForm() {
                   <Calendar
                     mode="single"
                     selected={field.value ? new Date(field.value) : undefined}
-                    onSelect={(date) => field.onChange(date?.toISOString() || null)}
+                    onSelect={(d) => {
+                      field.onChange(d)
+                      setIsOpen(false) // close after selection
+                    }}
+                    disabled={(date) => {
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+                  
+                      const dateToCheck = new Date(date);
+                      dateToCheck.setHours(0, 0, 0, 0);
+                  
+                      return dateToCheck < today;
+                    }}
+                    initialFocus
                   />
                 </PopoverContent>
               </Popover>
@@ -99,18 +124,25 @@ function StoreDetailForm() {
           )}
         />
 
-        {/* Close Date */}
         <FormField
           control={control}
           name="closeDate"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Close Date</FormLabel>
-              <Popover>
+              <Popover open={isOpen2} onOpenChange={setIsOpen2}>
                 <PopoverTrigger asChild>
                   <FormControl>
-                    <Button variant="outline" className="w-full text-left">
-                      {field.value ? format(new Date(field.value), 'PPP') : 'Pick a date'}
+                    <Button
+                      onClick={() => setIsOpen2(true)}
+                      variant="outline"
+                      className="w-full text-left"
+                    >
+                      {field.value && !isNaN(new Date(field.value).getTime()) ? (
+                        format(new Date(field.value), 'PPP')
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>
@@ -118,8 +150,30 @@ function StoreDetailForm() {
                 <PopoverContent align="start">
                   <Calendar
                     mode="single"
+                    onSelect={(d) => {
+                      field.onChange(d)
+                      setIsOpen2(false) // close after selection
+                    }}
                     selected={field.value ? new Date(field.value) : undefined}
-                    onSelect={(date) => field.onChange(date?.toISOString() || null)}
+                    disabled={(date) => {
+                      // Strip the time portion from the date we want to check
+                      const dateToCheck = new Date(date)
+                      dateToCheck.setHours(0, 0, 0, 0)
+
+                      // Determine the lower bound: if startDateValue exists, use it;
+                      // otherwise, default to today.
+                      let minAllowedDate: Date
+                      if (startDateValue && !isNaN(new Date(startDateValue).getTime())) {
+                        minAllowedDate = new Date(startDateValue)
+                      } else {
+                        minAllowedDate = new Date()
+                      }
+                      minAllowedDate.setHours(0, 0, 0, 0)
+
+                      // Disable dates that are less than or equal to the minAllowedDate.
+                      // This ensures that the Close Date is strictly after the Start Date.
+                      return dateToCheck <= minAllowedDate
+                    }}
                   />
                 </PopoverContent>
               </Popover>
@@ -143,7 +197,6 @@ function StoreDetailForm() {
                   placeholder="Enter Store Size"
                   {...field}
                   onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : '')}
-                 
                 />
               </FormControl>
               <FormMessage />
@@ -167,7 +220,7 @@ function StoreDetailForm() {
                   if (selectedOption) {
                     setValue('defaultWarehouseName', selectedOption.name) // Set Name
                   }
-                  field.onChange(value);
+                  field.onChange(value)
                 }}
               >
                 <FormControl>
@@ -257,7 +310,7 @@ function StoreDetailForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                GSTIN <span className="text-red-500">*</span>
+                GSTIN No. <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input placeholder="Enter GSTIN" {...field} />
@@ -295,55 +348,6 @@ function StoreDetailForm() {
             </FormItem>
           )}
         />
-      </div>
-      <div className="border p-3 space-y-3">
-        <FormField
-          control={control}
-          name="franchiseCode"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Franchise Type</FormLabel>
-              <Select
-                value={field.value} // Yeh bind karega existing data
-                defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhayes
-                onValueChange={(value) => {
-                  const selectedOption = franchiseType.find((option) => option.code === value)
-                  if (selectedOption) {
-                    setValue('franchiseName', selectedOption.name) // Set Code
-                  }
-                }}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Franchise" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {franchiseType.map((option) => (
-                    <SelectItem key={option.code} value={option.code}>
-                      {option.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/* Store Size */}
-        <FormField
-          control={control}
-          name="storeSize"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Store Size</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="Store Size" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={control}
           name="stateCode"
@@ -358,7 +362,7 @@ function StoreDetailForm() {
                   if (selectedOption) {
                     setValue('stateName', selectedOption.name) // Set State Name
                   }
-                  field.onChange(value);
+                  field.onChange(value)
                 }}
                 defaultValue={field.value}
                 value={field.value}
@@ -380,7 +384,8 @@ function StoreDetailForm() {
             </FormItem>
           )}
         />
-
+      </div>
+      <div className="border p-3 space-y-3">
         {/* Price List */}
         <FormField
           control={control}
@@ -438,7 +443,7 @@ function StoreDetailForm() {
                     setValue('storeTypeName', selectedOption.name) // Set Store Type Name
                     setValue('storeCategoryCode', '') // Reset Category on Store Type Change
                     setValue('storeCategoryName', '')
-                    field.onChange(value);
+                    field.onChange(value)
                   }
                 }}
                 defaultValue={field.value}
@@ -480,9 +485,8 @@ function StoreDetailForm() {
                   if (selectedOption) {
                     setValue('storeCategoryName', selectedOption.name) // Set Category Name
                   }
-                  field.onChange(value);
+                  field.onChange(value)
                 }}
-                
                 defaultValue={field.value}
                 value={field.value}
                 disabled={!getValues('storeTypeCode')} // Disable if no Store Type selected
@@ -507,6 +511,41 @@ function StoreDetailForm() {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={control}
+          name="franchiseCode"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Franchise Type</FormLabel>
+              <Select
+                value={field.value} // Yeh bind karega existing data
+                defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhayes
+                onValueChange={(value) => {
+                  const selectedOption = franchiseType.find((option) => option.code === value)
+                  if (selectedOption) {
+                    setValue('franchiseName', selectedOption.name) // Set Code
+                  }
+                }}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Franchise" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {franchiseType.map((option) => (
+                    <SelectItem key={option.code} value={option.code}>
+                      {option.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         {/* Franchise Code and Name (Only for Franchise-Owned Stores) */}
         {storeTypeCode === 'FOWNED' && (
           <FormField
@@ -564,13 +603,13 @@ function StoreDetailForm() {
                   if (selectedOption) {
                     setValue('operationTypeName', selectedOption.name) // Set Operation Type Name
                   }
-                  field.onChange(value);
+                  field.onChange(value)
                 }}
                 defaultValue={field.value}
                 value={field.value}
               >
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="">
                     <SelectValue placeholder="Select Operation Type" />
                   </SelectTrigger>
                 </FormControl>
@@ -591,7 +630,7 @@ function StoreDetailForm() {
           control={control}
           name="isActive"
           render={({ field }) => (
-            <FormItem className="flex items-center space-x-3">
+            <FormItem className="flex items-center space-x-3 ">
               <FormControl>
                 <Checkbox
                   checked={field.value === 'Y'}

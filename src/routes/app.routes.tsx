@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import ErrorPage from '@/app/pages/ErrorPage/page'
 import { AdministrationLayout } from '@/app/pages/Root/Administration/layout'
@@ -23,9 +23,7 @@ import DiscountAssortmentManagementLayout from '@/app/pages/Root/Administration/
 import DiscountAssortmentManagementPage from '@/app/pages/Root/Administration/setup/discount/DiscountAssortmentManagement/page'
 import DiscountMasterPage from '@/app/pages/Root/Administration/setup/discount/DiscountMaster/page'
 import SectupLayout from '@/app/pages/Root/Administration/setup/layout'
-import OrganizationPolicyLayout from '@/app/pages/Root/Administration/setup/policy/OrganizationPolicy/layout'
 import OrganizationPolicyPage from '@/app/pages/Root/Administration/setup/policy/OrganizationPolicy/page'
-import StoreSpecificLayout from '@/app/pages/Root/Administration/setup/policy/StoreSpecificPolicy/layout'
 import StoreSpecificPolicy from '@/app/pages/Root/Administration/setup/policy/StoreSpecificPolicy/page'
 import PromotionAllocationPage from '@/app/pages/Root/Administration/setup/promotion/PromotionAllocation/page'
 import PromotionAssortmentManagementPage from '@/app/pages/Root/Administration/setup/promotion/PromotionAssortmentManagement/page'
@@ -77,7 +75,7 @@ export const appRoutes = {
   children: [
     {
       index: true,
-      element: <Navigate to={'/dashboard'}/>,
+      element: <Navigate to={'/dashboard'} />,
     },
     {
       path: 'dashboard',
@@ -139,7 +137,7 @@ export const appRoutes = {
             },
             {
               path: 'user-master',
-              element: <UserMaster/>,
+              element: <UserMaster />,
             },
           ],
         },
@@ -149,31 +147,15 @@ export const appRoutes = {
           children: [
             {
               path: 'policy',
-              element: (
-                <section>
-                  <Outlet />
-                </section>
-              ),
+              element:<SectupLayout />,
               children: [
                 {
                   path: 'organization-policy',
-                  element: <OrganizationPolicyLayout />,
-                  children: [
-                    {
-                      index: true,
-                      element: <OrganizationPolicyPage />,
-                    },
-                  ],
+                  element: <OrganizationPolicyPage />,
                 },
                 {
                   path: 'store-wise-policy',
-                  element: <StoreSpecificLayout />,
-                  children: [
-                    {
-                      index: true,
-                      element: <StoreSpecificPolicy />,
-                    },
-                  ],
+                  element: <StoreSpecificPolicy />,
                 },
               ],
             },
@@ -182,7 +164,7 @@ export const appRoutes = {
               element: <DiscountAssortmentManagementLayout />,
               children: [
                 {
-                  path: 'am-discount',
+                  path: 'assortment-management-discount',
                   element: <DiscountAssortmentManagementPage />,
                 },
                 {
@@ -200,7 +182,7 @@ export const appRoutes = {
               element: <PromotionSetUpLayout />,
               children: [
                 {
-                  path: 'am-promotion',
+                  path: 'assortment-mangement-promotion',
                   element: <PromotionAssortmentManagementPage />,
                 },
                 {
@@ -224,11 +206,11 @@ export const appRoutes = {
                 {
                   index: true,
                   element: (
-                    <Navigate to="/administration/setup/salesperson-incentive/am-incentive" />
+                    <Navigate to="/administration/setup/salesperson-incentive/assortment-managemnt-incentive" />
                   ),
                 },
                 {
-                  path: 'incentive-allocation',
+                  path: 'storewise-assortment-allocation',
                   element: <IncentiveAssortmentwiseIncentiveLayout />,
                   children: [
                     {
@@ -238,10 +220,9 @@ export const appRoutes = {
                   ],
                 },
                 {
-                  path: 'am-incentive',
+                  path: 'assortment-managemnt-incentive',
                   element: <IncentiveAssortmentManagementPage />,
                 },
-              
               ],
             },
           ],
@@ -275,7 +256,7 @@ export const appRoutes = {
               element: <SalesPersonMasterLayout />,
               children: [
                 {
-                  index:true,
+                  index: true,
                   element: <SalesPersonMasterPage />,
                 },
               ],
@@ -420,7 +401,7 @@ export const appRoutes = {
         },
       ],
     },
-   
+
     {
       path: 'billing',
       element: <SalesLayout />,

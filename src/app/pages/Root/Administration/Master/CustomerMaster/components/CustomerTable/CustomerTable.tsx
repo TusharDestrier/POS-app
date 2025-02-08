@@ -13,7 +13,6 @@ import {
 } from '@tanstack/react-table'
 import * as React from 'react'
 
-
 import columns from './components/CustomerTableColumn'
 //import CustomerTableViewer from './components/CustomerTableViewer'
 import { useCustomerData } from '../../hooks_api/useCustomerData'
@@ -40,9 +39,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-
-
-
 export default function CustomerTable() {
   const { customerData, isLoading, error } = useCustomerData(0)
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -68,7 +64,7 @@ export default function CustomerTable() {
       fullName:
         `${item.customerFirstName} ${item.customerMiddleName} ${item.customerLastName}`.trim(),
       email: item.email,
-      status: item?.status || CustomerStatus.INACTIVE,
+      status:CustomerStatus.ACTIVE,
       phoneNo: String(item.mobile),
     }))
   }, [customerData])
@@ -104,18 +100,19 @@ export default function CustomerTable() {
   if (isLoading || isDeleting) {
     return <SkeletonLoaderTable />
   }
-  
-  
+
   if (error) {
-    return <p className='text-center'>{error}</p>
+    return <p className="text-center">{error}</p>
   }
+
+
 
   return (
     <>
       <div className="w-full">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter emails..."
+            placeholder="Filter Name"
             value={(table.getColumn('fullName')?.getFilterValue() as string) ?? ''}
             onChange={(event) => table.getColumn('fullName')?.setFilterValue(event.target.value)}
             className="max-w-sm"

@@ -103,7 +103,6 @@ function Sidebar() {
   const image = useImageUploaderState(state=>state.image);
 
 
-  // Get the menu items based on the user's role
   const sidebarItems: SidebarItem[] =
     roleBasedMenu[user?.role?.toLowerCase() as keyof RoleBasedMenu] || []
 
@@ -143,8 +142,4 @@ function Sidebar() {
 }
 
 export default Sidebar
-// company own and transaction owned
 
-//company
-
-// admin->  customer add,edit,view

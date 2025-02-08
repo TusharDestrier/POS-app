@@ -5,38 +5,87 @@ import { DayPicker } from 'react-day-picker';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+function isSameDay(date1: Date, date2: Date): boolean {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
+}
 
-function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
+// Extend the DayPicker props with optional minDate and maxDate
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
+  minDate?: Date;
+  maxDate?: Date;
+};
+
+ function Calendar({
+  className,
+  classNames,
+  showOutsideDays = true,
+  minDate,
+  maxDate,
+  ...props
+}: CalendarProps) {
   const currentYear = new Date().getFullYear();
-  const [selectedYear, setSelectedYear] = React.useState<number>(props.month?.getFullYear() || currentYear);
-  const [selectedMonth, setSelectedMonth] = React.useState<number>(props.month?.getMonth() || new Date().getMonth());
+  // Use provided minDate and maxDate, or default to 1900 and current year
+  
 
-  // Auto Year Range (1900 - Current Year)
-  const years = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => 1900 + i);
+  // Initialize selectedYear and selectedMonth from props.month or props.selected if available
+  const [selectedYear, setSelectedYear] = React.useState<number>(
+    props.month?.getFullYear() || props.selected?.getFullYear() || currentYear
+  );
+  const [selectedMonth, setSelectedMonth] = React.useState<number>(
+    props.month?.getMonth() || props.selected?.getMonth() || new Date().getMonth()
+  );
+
+  const defaultMinYear = minDate ? minDate.getFullYear() : 1900;
+  const defaultMaxYear = maxDate ? maxDate.getFullYear() : currentYear;
+  const years = Array.from({ length: defaultMaxYear - defaultMinYear + 1 }, (_, i) => defaultMinYear + i);
+  
   const months = [
     'January', 'February', 'March', 'April',
     'May', 'June', 'July', 'August',
     'September', 'October', 'November', 'December'
   ];
 
-  // Sync when props.month changes (fixes form reset issue)
+  // Sync the calendar view when props.month or props.selected changes
   React.useEffect(() => {
-    if (props.month) {
-      setSelectedYear(props.month.getFullYear());
-      setSelectedMonth(props.month.getMonth());
+    const dateToSync = props.month || props.selected;
+    if (dateToSync) {
+      setSelectedYear(dateToSync.getFullYear());
+      setSelectedMonth(dateToSync.getMonth());
     }
-  }, [props.month]);
+  }, [props.month, props.selected]);
+
+  // Handle date selection – prevent toggling if the same day is selected
+  const handleSelect = (selectedDate: Date | undefined) => {
+    if (!selectedDate) return;
+    if (props.selected && isSameDay(props.selected, selectedDate)) {
+      return;
+    }
+    props.onSelect && props.onSelect(selectedDate);
+  };
+
+  // Compute a disabled function if not provided,
+  // so that dates outside the minDate/maxDate range are disabled.
+  const disabledDays =
+    props.disabled ||
+    ((date: Date) => {
+      if (minDate && date < minDate) return true;
+      if (maxDate && date > maxDate) return true;
+      return false;
+    });
 
   return (
     <div>
-      {/* 🔥 Year and Month Dropdown */}
+      {/* Year and Month Dropdown */}
       <div className="flex justify-center space-x-2 p-3 pb-0">
-        {/* 📅 Year Selector */}
+        {/* Year Selector */}
         <select
           value={selectedYear}
           onChange={(e) => setSelectedYear(Number(e.target.value))}
-          className="border rounded-md p-1 text-sm flex-1 "
+          className="border rounded-md p-1 text-sm flex-1"
         >
           {years.map((year) => (
             <option key={year} value={year}>
@@ -45,7 +94,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
           ))}
         </select>
 
-        {/* 📅 Month Selector */}
+        {/* Month Selector */}
         <select
           value={selectedMonth}
           onChange={(e) => setSelectedMonth(Number(e.target.value))}
@@ -59,14 +108,17 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         </select>
       </div>
 
-      {/* 🗓️ Updated DayPicker */}
+      {/* DayPicker Component */}
       <DayPicker
+        {...props}
         showOutsideDays={showOutsideDays}
         month={new Date(selectedYear, selectedMonth)}
-        onMonthChange={(date) => {
+        onMonthChange={(date: Date) => {
           setSelectedYear(date.getFullYear());
           setSelectedMonth(date.getMonth());
         }}
+        onSelect={handleSelect}
+        disabled={disabledDays}
         className={cn('p-3', className)}
         classNames={{
           months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
@@ -101,7 +153,6 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
           IconLeft: () => <ChevronLeftIcon className="h-4 w-4" />,
           IconRight: () => <ChevronRightIcon className="h-4 w-4" />,
         }}
-        {...props}
       />
     </div>
   );

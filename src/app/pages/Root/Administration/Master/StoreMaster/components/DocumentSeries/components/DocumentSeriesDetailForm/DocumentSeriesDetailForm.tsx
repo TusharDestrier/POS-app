@@ -127,7 +127,7 @@ const DocumentSeriesDetailForm = () => {
             )}
           />
 
-          <div className="grid grid-cols-4 gap-3 mb-3 m-3">
+          <div className="grid grid-cols-4 gap-3 mb-3 ">
             <FormField
               control={control}
               name={`objPettyCash.${index}.discontinue`}

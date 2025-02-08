@@ -101,6 +101,7 @@ function TableRowDropDowns({ customer }: { customer: CustomerTableRow }) {
   const {createCustomerAsync}=useCreateCustomer();
   const modalToggler = useCustomerMaster((state) => state.toggleOpen)
   const setModalMode = useCustomerMaster((state) => state.setMode)
+  const mode = useCustomerMaster((state) => state.mode)
   const setCurrentSalesPersonId = useCustomerMasterDataStore(
     (state) => state.setCurrentCustomerMasterId
   )
@@ -120,7 +121,6 @@ function TableRowDropDowns({ customer }: { customer: CustomerTableRow }) {
     try {
       setModalMode('Delete')
       const data = await fetchCustomerById(Number(customer?.customerId))
-      console.log(data)
       await createCustomerAsync({...data,usedFor:"D"});
     } catch (err) {
       console.log(err)

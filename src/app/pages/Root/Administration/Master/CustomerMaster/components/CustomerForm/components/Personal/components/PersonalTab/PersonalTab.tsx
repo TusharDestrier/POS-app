@@ -1,7 +1,7 @@
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
+import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
-
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -13,7 +13,8 @@ import { cn } from '@/lib/utils'
 
 function PersonalTab() {
   const { control } = useFormContext()
-
+  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen2, setIsOpen2] = useState(false)
   return (
     <div className=" space-y-8">
       <div className="space-y-2 ">
@@ -26,7 +27,7 @@ function PersonalTab() {
                 Mobile No. <span className="text-primary">*</span>
               </FormLabel>
               <FormControl>
-                <Input type="number" minLength={10} maxLength={10} placeholder="Enter Mobile No." {...field} />
+                <Input type="number" maxLength={10} placeholder="Enter Mobile No." {...field} />
               </FormControl>
               <FormMessage></FormMessage>
 
@@ -96,6 +97,10 @@ function PersonalTab() {
                     <RadioGroupItem value="female" id="female" />
                     <FormLabel htmlFor="female">Female</FormLabel>
                   </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="trans" id="trans" />
+                    <FormLabel htmlFor="trans">Transgender</FormLabel>
+                  </div>
                 </RadioGroup>
                 <FormMessage />
               </FormItem>
@@ -110,10 +115,11 @@ function PersonalTab() {
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Date of Birth</FormLabel>
-                <Popover>
+                <Popover open={isOpen} onOpenChange={setIsOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
+                        onClick={() => setIsOpen(true)}
                         variant="outline"
                         className={cn(
                           'w-[240px] pl-3 text-left font-normal',
@@ -133,7 +139,10 @@ function PersonalTab() {
                     <Calendar
                       mode="single"
                       selected={field.value ? new Date(field.value) : undefined}
-                      onSelect={field.onChange}
+                      onSelect={(d) => {
+                        field.onChange(d)
+                        setIsOpen(false) // close after selection
+                      }}
                       disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
                       initialFocus
                     />
@@ -150,10 +159,11 @@ function PersonalTab() {
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Anniversary Date</FormLabel>
-                <Popover>
+                <Popover open={isOpen2} onOpenChange={setIsOpen2}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
+                        onClick={() => setIsOpen2(true)}
                         variant="outline"
                         className={cn(
                           'w-[240px] pl-3 text-left font-normal',
@@ -177,7 +187,10 @@ function PersonalTab() {
                           ? new Date(field.value)
                           : undefined
                       }
-                      onSelect={field.onChange}
+                      onSelect={(d) => {
+                        field.onChange(d)
+                        setIsOpen2(false) // close after selection
+                      }}
                       disabled={(date) => date < new Date('1900-01-01')} // Allow future anniversary dates
                       initialFocus
                     />
@@ -248,7 +261,6 @@ function PersonalTab() {
                     placeholder="Enter GST No."
                     {...field}
                     maxLength={15} // Max 15 characters
-                   
                   />
                 </FormControl>
                 <FormMessage />

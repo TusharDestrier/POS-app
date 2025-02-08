@@ -24,10 +24,7 @@ function StoreMasterModal() {
           
         </DialogHeader>
         
-        {/* <div className='sticky top-0 left-0 after:h-full after:w-full after:bg-black/30 after:absolute after:top-0 after:left-0 mb-4'>
-          <h3 className='text-4xl capitalize z-30 absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] text-white font-semibold p-5 text-center '>Store Master</h3>
-        <img src="/Pay_mode.jpg" alt=""  className='h-[200px] w-full mx-auto object-cover  '/>
-        </div> */}
+        
         <div className="px-6">
           {' '}
           <StoreMasterForm />

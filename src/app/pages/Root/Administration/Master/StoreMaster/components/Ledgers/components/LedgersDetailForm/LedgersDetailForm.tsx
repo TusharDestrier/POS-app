@@ -51,7 +51,7 @@ const LedgersDetailsForm = () => {
       </div>
 
       {fields.map((item, index) => (
-        <div key={item.id} className="grid grid-cols-4 gap-3 mb-3">
+        <div key={item.id} className="grid grid-cols-4 gap-5 mb-3">
           {/* Ledger Select */}
           <FormField
             control={control}
@@ -168,26 +168,28 @@ const LedgersDetailsForm = () => {
             )}
           />
 
-          {/* Discontinued Checkbox */}
-          <FormField
-            control={control}
-            name={`objLedger.${index}.discontinue`}
-            render={({ field }) => (
-              <FormItem className="flex items-center justify-center">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value === 'Y'}
-                    onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className='flex gap-5'>
+            {/* Discontinued Checkbox */}
+            <FormField
+              control={control}
+              name={`objLedger.${index}.discontinue`}
+              render={({ field }) => (
+                <FormItem className="flex items-center justify-center">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value === 'Y'}
+                      onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')}
+                    />
+                  </FormControl>  
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button size="icon" type="button" onClick={() => remove(index)}>
-            <Trash size="15" />
-          </Button>
+            <Button size="icon" type="button" onClick={() => remove(index)}>
+              <Trash size="15" />
+            </Button>
+          </div>
         </div>
       ))}
 

@@ -1,5 +1,6 @@
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
+import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -18,6 +19,8 @@ import { cn } from '@/lib/utils'
 
 function MemberShipTab() {
   const { control } = useFormContext()
+
+  const [isOpen, setIsOpen] = useState(false)
   return (
     <div className="grid grid-cols-2 gap-4">
       {/* Customer Category */}
@@ -92,10 +95,11 @@ function MemberShipTab() {
         render={({ field }) => (
           <FormItem className="flex flex-col">
             <FormLabel>Membership Valid Till</FormLabel>
-            <Popover>
+            <Popover open={isOpen} onOpenChange={setIsOpen}>
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
+                    onClick={() => setIsOpen(true)}
                     variant="outline"
                     className={cn(
                       'pl-3 text-left font-normal',
@@ -113,13 +117,18 @@ function MemberShipTab() {
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
+                 maxDate={new Date('2050-12-31')}
+                 minDate={new Date('2025-01-01')}  
                   mode="single"
                   selected={
                     field.value && !isNaN(new Date(field.value).getTime())
                       ? new Date(field.value)
                       : undefined
                   }
-                  onSelect={field.onChange}
+                  onSelect={(d) => {
+                    field.onChange(d)
+                    setIsOpen(false) // close after selection
+                  }}
                   disabled={(date) => date < new Date()} // ❌ Past Dates Disabled
                   initialFocus
                 />

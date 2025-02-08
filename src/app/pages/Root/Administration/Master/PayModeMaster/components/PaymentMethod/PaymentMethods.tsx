@@ -15,7 +15,11 @@ function PaymentMethods() {
   const paymentMethods = [
     { id: "cash", label: "Cash" },
     { id: "creditNoteReceived", label: "Credit Note Received" },
-    { id: "gpay", label: "Google Pay (GPay)" },
+    { id: "creditNoteIssued", label: "Credit Note Issued" },
+    { id: "mobileWallet", label: "Mobile Wallet" },
+    { id: "voucher", label: "Voucher" },
+    { id: "giftVoucher", label: "Gift Voucher" },
+    { id: "redemption", label: "Redemption Token" },
     { id: "debitNoteIssued", label: "Debit Note Issued" },
     { id: "debit", label: "Debit" },
     { id: "debitNoteAdjusted", label: "Debit Note Adjusted" },

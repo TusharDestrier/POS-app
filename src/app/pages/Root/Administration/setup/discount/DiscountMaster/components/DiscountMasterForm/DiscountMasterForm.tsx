@@ -5,9 +5,11 @@ import { z } from 'zod'
 import DiscountMasterFormSetup from './components/DiscountMasterFormSetup'
 import DiscountMasterSetupAssortmentModal from './components/DiscountMasterSetupAssortmentModal'
 import { DiscountMasterSchema } from './schema'
+import discountMasterPostFormatter from '../../helper/discountMasterPostFormatter'
 
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+
 
 function DiscountMasterForm() {
   const formMethods = useForm<z.infer<typeof DiscountMasterSchema>>({
@@ -29,7 +31,8 @@ function DiscountMasterForm() {
   })
 
   function onSubmit(values: z.infer<typeof DiscountMasterSchema>) {
-    console.log(values)
+    const data= discountMasterPostFormatter(values);
+    console.log(data)
   }
   return (
     <div>

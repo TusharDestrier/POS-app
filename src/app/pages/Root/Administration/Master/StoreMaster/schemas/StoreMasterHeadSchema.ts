@@ -4,8 +4,9 @@ export const StoreMasterHeadSchema = z.object({
   // Store Details
   storeCode: z.string().nonempty('Store Code is required'),
   storeName: z.string().nonempty('Store Name is required'),
-  startDate: z.string().nonempty('Start Date is required'), // Date as a string
-  closeDate: z.string().optional(), // Optional Date field
+  startDate: z.coerce.date().max(new Date(), { message: 'DOB cannot be in the future.' }),
+
+  closeDate: z.coerce.date().optional(), // Optional Date field
   storeSize: z.number().min(1, 'Store Size must be greater than 0'), // Numeric value
 
   // Warehouse Fields

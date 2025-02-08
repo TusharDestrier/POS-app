@@ -72,7 +72,7 @@ function PromotionSelectionTable() {
                       openSelector(index)
                       openModal()
                     }}
-                    className="text-blue-600"
+                    className="text-white"
                   >
                     Select
                   </Button>

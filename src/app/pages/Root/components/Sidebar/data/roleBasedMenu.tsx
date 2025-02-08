@@ -69,22 +69,14 @@ export const roleBasedMenu: RoleBasedMenu = {
           name: 'Setup',
           path: '/administration/setup',
           subItems: [
-            {
-              name: 'Policy',
-              path: '/administration/setup/policy',
-              subItems: [
-                { name: 'Organization Policy', path: 'administration/setup/policy/organization-policy' },
-                { name: 'Store Wise Policy', path: 'administration/setup/policy/store-wise-policy' },
-              ],
-            },
-
+            
             {
               name: 'Discount',
               path: '/administration/setup/discount',
               subItems: [
                 {
                   name: 'Assortment Management (Discount)',
-                  path: '/administration/setup/discount/am-discount',
+                  path: '/administration/setup/discount/assortment-management-discount',
                 },
                 {
                   name: 'Discount Setup',
@@ -96,13 +88,17 @@ export const roleBasedMenu: RoleBasedMenu = {
                 },
               ],
             },
+           
+
+          
+            
             {
               name: 'Promition',
               path: '/administration/setup/promotion',
               subItems: [
                 {
                   name: 'Assortment Managment (Promotion)',
-                  path: '/administration/setup/promotion/am-promotion',
+                  path: '/administration/setup/promotion/assortment-mangement-promotion',
                 },
                 {
                   name: 'Promotion Setup',
@@ -124,12 +120,20 @@ export const roleBasedMenu: RoleBasedMenu = {
               subItems: [
                 {
                   name: 'Assortment Managment (Incentive)',
-                  path: '/administration/setup/salesperson-incentive/am-incentive',
+                  path: '/administration/setup/salesperson-incentive/assortment-managemnt-incentive',
                 },
                 {
                   name: 'Assortment Allocation for Incentive',
-                  path: '/administration/setup/salesperson-incentive/incentive-allocation',
+                  path: '/administration/setup/salesperson-incentive/storewise-assortment-allocation',
                 },
+              ],
+            },
+            {
+              name: 'Policy',
+              path: '/administration/setup/policy',
+              subItems: [
+                { name: 'Organization Policy', path: 'administration/setup/policy/organization-policy' },
+                { name: 'Store Wise Policy', path: 'administration/setup/policy/store-wise-policy' },
               ],
             },
             // { name: 'Generic Policy', path: '/administration/setup/generic-policy' },

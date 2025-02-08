@@ -137,7 +137,7 @@ function General() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                PAN No. Mandatory if Billing Amount Exceeds ₹50,000
+                PAN No. Mandatory
                 {!isPanDisabled ? <span className="text-primary">*</span> : ''}
               </FormLabel>
               <FormControl>

@@ -21,37 +21,37 @@ const billInformation = [
   {
     billNo: 'POSB/120',
     billDate: '02-05-2024',
-    billAmount: '$250.00',
+    billAmount: '250.00',
     paymentMethod: 'Credit Card',
   },
   {
     billNo: 'POSB/12',
     billDate: '02-06-2024',
-    billAmount: '$150.00',
+    billAmount: '150.00',
     paymentMethod: 'PayPal',
   },
   {
     billNo: 'POSB/189',
     billDate: '02-05-2023',
-    billAmount: '$350.00',
+    billAmount: '350.00',
     paymentMethod: 'Bank Transfer',
   },
   {
     billNo: 'POSB/110',
     billDate: '02-05-2014',
-    billAmount: '$450.00',
+    billAmount: '450.00',
     paymentMethod: 'Credit Card',
   },
   {
     billNo: 'POSB/89',
     billDate: '15-09-2024',
-    billAmount: '$550.00',
+    billAmount: '550.00',
     paymentMethod: 'PayPal',
   },
   {
     billNo: 'POSB/12',
     billDate: '02-05-2024',
-    billAmount: '$200.00',
+    billAmount: '200.00',
     paymentMethod: 'Bank Transfer',
   },
 ]

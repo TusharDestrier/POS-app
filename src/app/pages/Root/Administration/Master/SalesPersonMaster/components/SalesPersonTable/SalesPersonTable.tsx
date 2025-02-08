@@ -66,7 +66,7 @@ export function SalesPersonTable() {
       ...item,
       fullName: `${item.firstName ?? ''} ${item.lastName ?? ''}`.trim(),
       email: item.email,
-      status: item.isActive === 'true' ? SalesPersonStatus.ACTIVE : SalesPersonStatus.INACTIVE,
+      status: SalesPersonStatus.ACTIVE,
       mobileNo: item.mobileNo,
     }))
   }, [salesPersonData])
