@@ -69,7 +69,14 @@ export const roleBasedMenu: RoleBasedMenu = {
           name: 'Setup',
           path: '/administration/setup',
           subItems: [
-            
+            {
+              name: 'Policy',
+              path: '/administration/setup/policy',
+              subItems: [
+                { name: 'Organization Policy', path: '/administration/setup/policy/organization-policy' },
+                { name: 'Store Wise Policy', path: '/administration/setup/policy/store-wise-policy' },
+              ],
+            },
             {
               name: 'Discount',
               path: '/administration/setup/discount',
@@ -126,14 +133,6 @@ export const roleBasedMenu: RoleBasedMenu = {
                   name: 'Assortment Allocation for Incentive',
                   path: '/administration/setup/salesperson-incentive/storewise-assortment-allocation',
                 },
-              ],
-            },
-            {
-              name: 'Policy',
-              path: '/administration/setup/policy',
-              subItems: [
-                { name: 'Organization Policy', path: 'administration/setup/policy/organization-policy' },
-                { name: 'Store Wise Policy', path: 'administration/setup/policy/store-wise-policy' },
               ],
             },
             // { name: 'Generic Policy', path: '/administration/setup/generic-policy' },

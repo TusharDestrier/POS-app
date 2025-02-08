@@ -5,7 +5,7 @@ export const PostOrganizationPolicySchema = z.object({
   footfallEntryRequiredDaySettlement: z.enum(['Y', 'N']).optional(),
   maxAllowDiscountPolicyValidationID: z.string().optional(),
   maxBillAmountSinglePOSBill: z.string().optional(),
-  pan: z.string().min(10, { message: 'Pan No. must be at least 10 digits.' }),
+  pan: z.string().optional(),
   creditCardDetailsCapturePolicyID: z.string().optional(),
   isCCardAuthNoEntryMandatory: z.enum(['Y', 'N']).optional(),
   allowBackDateEntry: z.enum(['Y', 'N']).optional(),

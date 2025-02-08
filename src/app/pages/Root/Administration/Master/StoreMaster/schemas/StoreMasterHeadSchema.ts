@@ -1,27 +1,28 @@
-import { z } from 'zod'
+import { optional, z } from 'zod'
 
 export const StoreMasterHeadSchema = z.object({
   // Store Details
   storeCode: z.string().nonempty('Store Code is required'),
   storeName: z.string().nonempty('Store Name is required'),
-  startDate: z.coerce.date().max(new Date(), { message: 'DOB cannot be in the future.' }),
+  startDate: z.coerce.date().max(new Date(), { message: 'Store Start Date cannot be less than the Current Date.' }),
 
-  closeDate: z.coerce.date().optional(), // Optional Date field
-  storeSize: z.number().min(1, 'Store Size must be greater than 0'), // Numeric value
+  closeDate: z.coerce.date({message:'Store Close date cannot be prior to store Start Date'}), // Optional Date field
+  storeSize: z.number().optional(), // Numeric value
 
   // Warehouse Fields
-  defaultWarehouseCode: z.string().nonempty('Default Warehouse Code is required'),
-  defaultWarehouseName: z.string().nonempty('Default Warehouse Name is required'),
-  defaultSaleWarehouseCode: z.string().nonempty('Default Sale Warehouse Code is required'), // Selectable
-  defaultReturnWarehouseCode: z.string().nonempty('Default Sale Warehouse Code is required'), // Selectable
+  defaultWarehouseCode: z.string().optional(),
+  defaultWarehouseName: z.string().optional(),
+  defaultSaleWarehouseCode: z.string().optional(), // Selectable
+  defaultReturnWarehouseCode: z.string().optional(), // Selectable
   GSTIN: z
     .string()
-    .regex(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/, 'Invalid GSTIN'), // GSTIN validation
-  GSTINDate: z.string().nonempty('GSTIN Date is required'), // Date as a string
+    .optional()
+    , // GSTIN validation
+  GSTINDate: z.string().optional(), // Date as a string
   // Date and State Fields
-  stateCode: z.string().nonempty('State Code is required'), // Dropdown for state
+  stateCode: z.string().optional(), // Dropdown for state
   stateName: z.string().nonempty('State Name is required'),
-  priceList: z.enum(['STANDARD', 'PREMIUM', 'DISCOUNTED']), // Dropdown options
+  priceList: z.string().optional(), // Dropdown options
 
   // Optional Factor
   factorIfAny: z.string().optional(), // Optional field
@@ -42,32 +43,27 @@ export const StoreMasterHeadSchema = z.object({
 
   // Boolean as "Y" or "N"
   isActive: z.enum(['Y', 'N']), // "Y" for active, "N" for inactive
-  billToAddress: z.string().nonempty('Billing Address is required'),
-  shipToAddress: z.string().nonempty('Shipping Address is required'),
-  billToCity: z.string().nonempty('Billing City is required'),
+  billToAddress: z.string().optional(),
+  shipToAddress: z.string().optional(),
+  billToCity: z.string().optional(),
   billToPostalCode: z
     .string()
-    .regex(/^\d{5,6}$/, 'Invalid Postal Code')
-    .nonempty('Billing Postal Code is required'),
-  billToState: z.string().nonempty('Billing State is required'),
-  shipToCity: z.string().nonempty('Shipping City is required'),
+    .optional(),
+  billToState: z.string().optional(),
+  shipToCity: z.string().optional(),
   shipToPostalCode: z
-    .string()
-    .regex(/^\d{5,6}$/, 'Invalid Postal Code')
-    .nonempty('Shipping Postal Code is required'),
-  shipToState: z.string().nonempty('Shipping State is required'),
-  contactPerson: z.string().nonempty('Contact Person is required'),
+    .string().optional(),
+  shipToState: z.string().optional(),
+  contactPerson: z.string().optional(),
   contactNumber: z
-    .string()
-    .regex(/^\d{10}$/, 'Invalid Contact Number')
-    .nonempty('Contact Number is required'),
-  emailId: z.string().email('Invalid Email Address').nonempty('Email Address is required'),
+    .string().optional(),
+  emailId: z.string().optional(),
 
   // Sourcing Warehouse (dynamic rows)
   sourcingWarehouse: z
     .array(
       z.object({
-        warehouseCode: z.string().nonempty('Warehouse is required'),
+        warehouseCode: z.string().optional(),
         transitDays: z
           .number()
           .min(1, 'Transit Days must be at least 1')
@@ -93,15 +89,14 @@ export const StoreMasterHeadSchema = z.object({
 
   objPettyCash: z.array(
     z.object({
-      pettyCashName: z.string().nonempty('Petty Cash Head is required'), // Dropdown
-      pettyCashCode: z.string().nonempty('Petty Code is required'), // Dropdown
+      pettyCashName: z.string().optional(),
+      pettyCashCode: z.string().optional(),
       limit: z
         .number()
-        .min(1, 'Limit must be greater than 0')
-        .nonnegative('Limit cannot be negative'), // Numeric Input
-      modeOfOperation: z.string().nonempty('Type of Transaction is required'), // Dropdown
-      ledgerCode: z.string().nonempty('Ledger Code is required'), // Dropdown
-      ledgerName: z.string().nonempty('Ledger Name is required'), // Auto-populated
+       .optional(),
+      modeOfOperation: z.string().optional(),
+      ledgerCode: z.string().optional(),
+      ledgerName: z.string().optional(),
       subLedgerCode: z.string().optional(), // Dependent on Ledger
       subLedgerName: z.string().optional(), // Auto-populated
       discontinued: z.enum(['Y', 'N']).default('N'), // Checkbox: Y or N
@@ -109,7 +104,7 @@ export const StoreMasterHeadSchema = z.object({
   ),
   objSeries: z.array(
     z.object({
-      transactionType: z.string().nonempty('Type of Transaction is required'),
+      transactionType: z.string().optional(),
       seriesName: z.string(),
       prefix: z.string(),
       noOfDigit: z.number(),
