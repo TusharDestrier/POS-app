@@ -1,12 +1,12 @@
-import { optional, z } from 'zod'
+import { z } from 'zod'
 
 export const StoreMasterHeadSchema = z.object({
   // Store Details
   storeCode: z.string().nonempty('Store Code is required'),
   storeName: z.string().nonempty('Store Name is required'),
-  startDate: z.coerce.date().max(new Date(), { message: 'Store Start Date cannot be less than the Current Date.' }),
+  startDate: z.coerce.date({ message: 'Store Start Date cannot be less than the Current Date.' }),
 
-  closeDate: z.coerce.date({message:'Store Close date cannot be prior to store Start Date'}), // Optional Date field
+  closeDate: z.coerce.date({ message: 'Store Close date cannot be prior to store Start Date' }), // Optional Date field
   storeSize: z.number().optional(), // Numeric value
 
   // Warehouse Fields
@@ -14,14 +14,11 @@ export const StoreMasterHeadSchema = z.object({
   defaultWarehouseName: z.string().optional(),
   defaultSaleWarehouseCode: z.string().optional(), // Selectable
   defaultReturnWarehouseCode: z.string().optional(), // Selectable
-  GSTIN: z
-    .string()
-    .optional()
-    , // GSTIN validation
+  GSTIN: z.string().optional(), // GSTIN validation
   GSTINDate: z.string().optional(), // Date as a string
   // Date and State Fields
   stateCode: z.string().optional(), // Dropdown for state
-  stateName: z.string().nonempty('State Name is required'),
+  stateName: z.string().optional(),
   priceList: z.string().optional(), // Dropdown options
 
   // Optional Factor
@@ -46,17 +43,13 @@ export const StoreMasterHeadSchema = z.object({
   billToAddress: z.string().optional(),
   shipToAddress: z.string().optional(),
   billToCity: z.string().optional(),
-  billToPostalCode: z
-    .string()
-    .optional(),
+  billToPostalCode: z.string().optional(),
   billToState: z.string().optional(),
   shipToCity: z.string().optional(),
-  shipToPostalCode: z
-    .string().optional(),
+  shipToPostalCode: z.string().optional(),
   shipToState: z.string().optional(),
   contactPerson: z.string().optional(),
-  contactNumber: z
-    .string().optional(),
+  contactNumber: z.string().max(10, { message: 'Contact number cannot exceed 10 characters' }),
   emailId: z.string().optional(),
 
   // Sourcing Warehouse (dynamic rows)
@@ -64,18 +57,16 @@ export const StoreMasterHeadSchema = z.object({
     .array(
       z.object({
         warehouseCode: z.string().optional(),
-        transitDays: z
-          .number()
-          .min(1, 'Transit Days must be at least 1')
-          .max(30, 'Transit Days cannot exceed 30'),
+        transitDays: z.number().optional(),
       })
-    )
-    .min(1, 'At least one warehouse is required'), // Ensure at least one row is present
+    ),
+   
 
   objPayMode: z
     .array(
       z.object({
-        payMode: z.string().nonempty('Paymode is required'),
+        payMode: z.string(),
+
         ledgersCode: z.string().optional(),
         ledgersName: z.string().optional(),
         paymentCode: z.string().optional(),
@@ -84,16 +75,13 @@ export const StoreMasterHeadSchema = z.object({
         crossStore: z.enum(['Y', 'N']).default('N').optional(), // Enforce 'Y' or 'N'
         discontinue: z.enum(['Y', 'N']).default('N').optional(), // Enforce 'Y' or 'N'
       })
-    )
-    .min(1, 'At least one payment mode is required'),
+    ),
 
   objPettyCash: z.array(
     z.object({
-      pettyCashName: z.string().optional(),
-      pettyCashCode: z.string().optional(),
-      limit: z
-        .number()
-       .optional(),
+      pettyCashName: z.string(),
+      pettyCashCode: z.string(),
+      limit: z.number().optional(),
       modeOfOperation: z.string().optional(),
       ledgerCode: z.string().optional(),
       ledgerName: z.string().optional(),

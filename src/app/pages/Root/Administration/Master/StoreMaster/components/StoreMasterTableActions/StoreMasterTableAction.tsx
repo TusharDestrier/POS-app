@@ -37,7 +37,7 @@ function StoreMasterTableAction({ storeData }: { storeData: FetchedStoreMasterTy
       // priceListID:0
     }
     await createStoremaster(newData)
-    setMode('Create')
+    setMode('Delete')
   }
   function ViewHandler() {
     modalToggler()

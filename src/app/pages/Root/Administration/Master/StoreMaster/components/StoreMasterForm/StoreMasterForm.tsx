@@ -27,7 +27,7 @@ function StoreMasterForm() {
     defaultValues: {
       storeCode: '0022',
       storeName: 'store234',
-      startDate: '',
+      startDate:  new Date().toISOString(),
       closeDate: '',
       storeSize: 0,
       defaultWarehouseCode: '',
@@ -35,7 +35,7 @@ function StoreMasterForm() {
       defaultSaleWarehouseCode: '',
       defaultReturnWarehouseCode: '',
       GSTIN: '',
-      GSTINDate: '',
+      GSTINDate:  new Date().toISOString(),
       stateCode: '',
       stateName: '',
       priceList: '',
@@ -61,57 +61,21 @@ function StoreMasterForm() {
       contactNumber: '',
       emailId: '',
       sourcingWarehouse: [
-        {
-          warehouseCode: '', // Default Warehouse Code
-          transitDays: 0, // Default Transit Days
-        },
+        
       ],
 
       objPayMode: [
-        {
-          payMode: '',
-          ledgersName: '',
-          ledgersCode: '',
-          paymentCode: '',
-          subLedgerCode: '',
-          subLedgerName: '',
-          crossStore: 'N',
-          discontinue: 'N',
-        },
+       
       ],
 
       objPettyCash: [
-        {
-          pettyCashName: '',
-          pettyCashCode: '',
-          limit: 0,
-          modeOfOperation: '', // Initially empty, dropdown selection required
-          ledgerCode: '',
-          ledgerName: '',
-          subLedgerCode: '',
-          subLedgerName: '',
-          discontinued: 'N', // Default to "N" (not discontinued)
-        },
+       
       ],
       objSeries: [
-        {
-          transactionType: '',
-          seriesName: '',
-          prefix: '',
-          noOfDigit: 0,
-          suffix: '',
-          discontinued: 'N',
-        },
+       
       ],
       objLedger: [
-        {
-          ledgerCode: '',
-          ledgerName: '',
-          subLedgerCode: '',
-          subLedgerName: '',
-          costCenterCode: '',
-          costCenterName: '',
-        },
+        
       ],
     },
   })
@@ -169,17 +133,24 @@ function StoreMasterForm() {
     }
   }, [storeMaster, mode, formMethods.reset])
 
-  const onSubmit = formMethods.handleSubmit(async (data) => {
-    const transformData = StoreMasterFormatter(data, 1)
-    try {
-      await createStoremaster(transformData)
-      closeModal()
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        throw new Error(err.message)
+  const onSubmit = formMethods.handleSubmit(
+    async (data) => {
+      const transformData = StoreMasterFormatter(data, 1)
+      console.log(transformData);
+      
+      try {
+        await createStoremaster(transformData)
+        closeModal()
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          throw new Error(err.message)
+        }
       }
+    },
+    (err) => {
+      console.log(err)
     }
-  })
+  )
 
   if (isLoading && mode === 'View') {
     return <GlobalViewerLoader />
