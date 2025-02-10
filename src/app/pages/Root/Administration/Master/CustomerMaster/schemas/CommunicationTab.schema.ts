@@ -13,9 +13,7 @@ export const CommunicationTabSchema = z.object({
     .regex(/^\d+$/, { message: 'Only numbers are allowed in WhatsApp No.' }),
 
   alternatePhoneNo: z
-    .string()
-   
-    .optional(),
+    .string().optional(),
   receivePushMessage: z.boolean().optional(),
   preferredCommunication: z.enum(['sms', 'email', 'whatsapp'], {
     required_error: 'Preferred communication mode is required.',
