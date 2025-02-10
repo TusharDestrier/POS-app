@@ -45,7 +45,7 @@ export const columns: ColumnDef<PettyCashTableData>[] = [
   {
     accessorKey: 'pettyCashID',
     header: ({ column }) => (
-      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+      <Button className='ps-0' variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
         PettyCash ID
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
@@ -56,12 +56,12 @@ export const columns: ColumnDef<PettyCashTableData>[] = [
   {
     accessorKey: 'pettyCashName',
     header: ({ column }) => (
-      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+      <Button className='ps-0' variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
         PettyCash Name
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div className="lowercase">{row.getValue('pettyCashName')}</div>,
+    cell: ({ row }) => <div className="">{row.getValue('pettyCashName')}</div>,
   },
   {
     accessorKey: 'pettyCashCode',

@@ -72,7 +72,7 @@ function StoreDetailForm() {
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={control}
           name="startDate"
@@ -89,11 +89,11 @@ function StoreDetailForm() {
                       variant="outline"
                       className="w-full text-left"
                     >
-                       {field.value && !isNaN(new Date(field.value).getTime()) ? (
-                          format(new Date(field.value), 'PPP')
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
+                      {field.value && !isNaN(new Date(field.value).getTime()) ? (
+                        format(new Date(field.value), 'PPP')
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>
@@ -107,13 +107,13 @@ function StoreDetailForm() {
                       setIsOpen(false) // close after selection
                     }}
                     disabled={(date) => {
-                      const today = new Date();
-                      today.setHours(0, 0, 0, 0);
-                  
-                      const dateToCheck = new Date(date);
-                      dateToCheck.setHours(0, 0, 0, 0);
-                  
-                      return dateToCheck < today;
+                      const today = new Date()
+                      today.setHours(0, 0, 0, 0)
+
+                      const dateToCheck = new Date(date)
+                      dateToCheck.setHours(0, 0, 0, 0)
+
+                      return dateToCheck < today
                     }}
                     initialFocus
                   />
@@ -331,7 +331,9 @@ function StoreDetailForm() {
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button variant="outline" className="w-full text-left">
-                      {field.value ? format(new Date(field.value), 'PPP') : 'Pick a date'}
+                      {field.value && field.value !== ''
+                        ? format(new Date(field.value), 'PPP')
+                        : 'Pick a date'}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>
@@ -512,39 +514,42 @@ function StoreDetailForm() {
           )}
         />
 
-        <FormField
-          control={control}
-          name="franchiseCode"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Franchise Type</FormLabel>
-              <Select
-                value={field.value} // Yeh bind karega existing data
-                defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhayes
-                onValueChange={(value) => {
-                  const selectedOption = franchiseType.find((option) => option.code === value)
-                  if (selectedOption) {
-                    setValue('franchiseName', selectedOption.name) // Set Code
-                  }
-                }}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Franchise" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {franchiseType.map((option) => (
-                    <SelectItem key={option.code} value={option.code}>
-                      {option.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {storeTypeCode === 'OOWNED' && (
+          <FormField
+            control={control}
+            name="franchiseCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Franchise Type</FormLabel>
+                <Select
+                  value={field.value} // Yeh bind karega existing data
+                  defaultValue={field.value} // Yeh ensure karega ki dropdown me sahi value dikhayes
+                  onValueChange={(value) => {
+                    const selectedOption = franchiseType.find((option) => option.code === value)
+                    if (selectedOption) {
+                      setValue('franchiseName', selectedOption.name) // Set Code
+                    }
+                    field.onChange(value)
+                  }}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Franchise" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {franchiseType.map((option) => (
+                      <SelectItem key={option.code} value={option.code}>
+                        {option.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         {/* Franchise Code and Name (Only for Franchise-Owned Stores) */}
         {storeTypeCode === 'FOWNED' && (
@@ -560,9 +565,9 @@ function StoreDetailForm() {
                   onValueChange={(value) => {
                     const selectedOption = franchiseOptions.find((option) => option.code === value)
                     if (selectedOption) {
-                      setValue('franchiseCode', selectedOption.code) // Set Franchise Code
                       setValue('franchiseName', selectedOption.name) // Set Franchise Name
                     }
+                    field.onChange(value)
                   }}
                   defaultValue={field.value}
                   value={field.value}
@@ -637,7 +642,7 @@ function StoreDetailForm() {
                   onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')}
                 />
               </FormControl>
-              <FormLabel>Is Active</FormLabel>
+              <FormLabel>In Active</FormLabel>
               <FormMessage />
             </FormItem>
           )}
