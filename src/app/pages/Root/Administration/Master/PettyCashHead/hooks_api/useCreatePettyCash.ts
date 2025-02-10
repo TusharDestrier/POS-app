@@ -8,10 +8,10 @@ import pettyCashClient from '@/services/pettyCashClient'
 import { PettyCashResponseType } from '@/types/pettyCash'
 
 const messages = {
-  Create: 'Created SuccessFully',
-  Edit: 'Updated SuccessFully',
-  Delete: 'Deleted SuccessFully',
-  View: 'Deleted SuccessFully',
+  Create: 'Operation SuccessFully',
+  Edit: 'Operation SuccessFully',
+  Delete: 'Operation SuccessFully',
+  View: 'Operation SuccessFully',
 }
 
 export type PettyCashPostType = ReturnType<typeof PettyCashFormatter>

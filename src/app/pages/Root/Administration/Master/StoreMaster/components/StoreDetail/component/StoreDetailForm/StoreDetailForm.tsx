@@ -642,7 +642,7 @@ function StoreDetailForm() {
                   onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')}
                 />
               </FormControl>
-              <FormLabel>In Active</FormLabel>
+              <FormLabel>Inactive</FormLabel>
               <FormMessage />
             </FormItem>
           )}
