@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 
-import DiscountMasterClient from '@/services/DiscountMasterClient'
-import { FetchedDiscountMasterType } from '@/types/DiscountMaster'
+import discountSetupClient from '@/services/discountSetupClient'
+import { FetchedDiscountType } from '@/types/discountSetup'
+
+
 
 export function useDiscountMasterData() {
   const {
@@ -9,10 +11,10 @@ export function useDiscountMasterData() {
     isLoading,
     error,
     isError,
-  } = useQuery<FetchedDiscountMasterType[], Error>({
+  } = useQuery<FetchedDiscountType[], Error>({
     queryKey: ['DiscountMaster'],
     queryFn: async ({signal}) => {
-      const data = await DiscountMasterClient.getDiscountMaster({signal})
+      const data = await discountSetupClient.getDsicountSetup({ id: 0, signal })
       return data
     },
     networkMode:"always",
