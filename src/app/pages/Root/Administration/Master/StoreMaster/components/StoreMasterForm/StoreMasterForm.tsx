@@ -27,7 +27,7 @@ function StoreMasterForm() {
     defaultValues: {
       storeCode: '0022',
       storeName: 'store234',
-      startDate:  new Date().toISOString(),
+      startDate: new Date().toISOString(),
       closeDate: '',
       storeSize: 0,
       defaultWarehouseCode: '',
@@ -35,7 +35,7 @@ function StoreMasterForm() {
       defaultSaleWarehouseCode: '',
       defaultReturnWarehouseCode: '',
       GSTIN: '',
-      GSTINDate:  new Date().toISOString(),
+      GSTINDate: new Date().toISOString(),
       stateCode: '',
       stateName: '',
       priceList: '',
@@ -60,23 +60,13 @@ function StoreMasterForm() {
       contactPerson: '',
       contactNumber: '',
       emailId: '',
-      sourcingWarehouse: [
-        
-      ],
+      sourcingWarehouse: [],
 
-      objPayMode: [
-       
-      ],
+      objPayMode: [],
 
-      objPettyCash: [
-       
-      ],
-      objSeries: [
-       
-      ],
-      objLedger: [
-        
-      ],
+      objPettyCash: [],
+      objSeries: [],
+      objLedger: [],
     },
   })
 
@@ -136,8 +126,8 @@ function StoreMasterForm() {
   const onSubmit = formMethods.handleSubmit(
     async (data) => {
       const transformData = StoreMasterFormatter(data, 1)
-      console.log(transformData);
-      
+      console.log(transformData)
+
       try {
         await createStoremaster(transformData)
         closeModal()
@@ -168,10 +158,11 @@ function StoreMasterForm() {
           <StoreMasterTab />
         </div>
 
-        <div className="h-[60px] sticky bottom-0 right-0 flex justify-end items-center">
+        <div className="h-[60px]  bottom-0 right-0 flex gap-3 justify-end items-center">
           <Button type="submit" className="btn btn-primary" disabled={isPending}>
             {isPending ? 'Submitting...' : 'Submit'}
           </Button>
+          <Button onClick={closeModal}>Cancel</Button>
         </div>
         {error && <p className="text-end">{error.message}</p>}
       </form>

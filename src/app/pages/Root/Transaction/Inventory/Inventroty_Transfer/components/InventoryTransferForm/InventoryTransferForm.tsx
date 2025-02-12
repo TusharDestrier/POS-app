@@ -2,6 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import useInventoryTransferStore from '../../store/useInventoryTransferStore'
+
 import MultiSelectionPopUp from '@/components/MultiSelectionPopUp'
 import { Button } from '@/components/ui/button'
 import {
@@ -23,7 +25,8 @@ const formSchema = z.object({
 })
 
 function InventoryTransferForm() {
-
+ const closeModal = useInventoryTransferStore((state) => state.close)
+  
   // Initialize form with react-hook-form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -86,7 +89,8 @@ function InventoryTransferForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Submitdfd</Button>
+        <Button  onClick={closeModal}>Cancel</Button>
       </form>
     </Form>
   )

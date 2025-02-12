@@ -2,14 +2,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
 
+import useInventoryTransferRequestType from '../../store/useInventoryTransferRequestType'
 import InventryTransferRequestDetailForm from '../InventryTransferRequestDetailForm/InventryTransferRequestDetailForm'
 
-import { Button } from '@/components/ui/button'
 import { combinedSchema } from '@/app/pages/Root/Administration/Master/StoreMaster/schemas/storeMaster.schema'
+import { Button } from '@/components/ui/button'
 // Schema for validation
 
 function InventoryTransferRequestForm() {
-  
+ const closeModal = useInventoryTransferRequestType((state) => state.close) 
   const formMethods = useForm({
     resolver: zodResolver(combinedSchema),
     defaultValues: {
@@ -126,10 +127,11 @@ function InventoryTransferRequestForm() {
         <InventryTransferRequestDetailForm />
        
        
-        <div className="h-[60px]  flex justify-end items-center  ">
+        <div className="h-[60px]  flex  gap-3 justify-end items-center  ">
           <Button type="submit" className=" btn btn-primary">
             Save 
           </Button>
+          <Button  onClick={closeModal}>Cancel</Button>
         </div>
       </form>
     </FormProvider>

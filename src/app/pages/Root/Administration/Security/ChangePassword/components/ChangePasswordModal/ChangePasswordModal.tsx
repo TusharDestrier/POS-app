@@ -35,6 +35,7 @@ const formSchema = z.object({
 })
 
 function ChangePasswordModal() {
+  const closeModal = useChangePasswordStore((store) => store.close)
   // const [oldPassword,setoldPassword] = useState('');
   //const [newPassword,setnewPassword] = useState('');
   //const [confirmPassword,setconfirmPassword] = useState('');
@@ -128,6 +129,7 @@ function ChangePasswordModal() {
         </Form>
         <DialogFooter>
           <Button type="submit">Create</Button>
+          <Button type="submit" onClick={closeModal}>Cancel</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

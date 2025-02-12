@@ -39,7 +39,7 @@ function DesignationModal() {
   const isOpen = useCreateRoleStore((state) => state.isOpen)
   const close = useCreateRoleStore((state) => state.close)
   const modalMode = useCreateRoleStore((state) => state.mode)
-
+ const closeModal = useCreateRoleStore((state) => state.close)
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -98,7 +98,8 @@ function DesignationModal() {
           </div>
         </div> */}
         <DialogFooter>
-          <Button type="submit">Create</Button>
+          <Button type="submit">Submit</Button>
+          <Button type="submit" onClick={closeModal}>Cancel</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

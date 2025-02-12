@@ -130,9 +130,9 @@ function CommunicationTab() {
         name="communication.alternatePhoneNo"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Alternate Phone No.</FormLabel>
+            <FormLabel>Alternate Phone No. <span className="text-primary">*</span></FormLabel>
             <FormControl>
-              <Input type='number' maxLength={10} placeholder="Enter alternate phone no." {...field} />
+              <Input type='number' maxLength={10}  placeholder="Enter alternate phone no." {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

@@ -203,10 +203,11 @@ function PettyCashHeadForm() {
           </div>
         </div>
 
-        <div className="h-[60px] sticky bottom-0 right-0 flex justify-end items-center">
+        <div className="h-[60px]  bottom-0 right-0 flex gap-3 justify-end items-center">
           <Button type="submit" className="btn btn-primary" disabled={isPending}>
             {isPending ? 'Submitting...' : 'Submit'}
           </Button>
+          <Button onClick={closeModal}>Cancel</Button>
         </div>
         {error && <p className="text-end">{error}</p>}
       </form>

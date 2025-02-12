@@ -43,6 +43,16 @@ export const columns: ColumnDef<CustomerTableRow>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: 'customerID',
+    header: ({ column }) => (
+      <Button className='ps-0' variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+       Customer Id
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div>{row.getValue('customerID')}</div>,
+  },
+  {
     accessorKey: 'fullName',
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>

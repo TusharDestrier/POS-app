@@ -87,7 +87,7 @@ function StoreAllocationTab() {
                 name={`storeAllocation.allocations.${index}.startDate`}
                 render={({ field }) => (
                   <FormItem className="flex flex-col mt-2">
-                    <FormLabel className="mb-1">Start Date</FormLabel>
+                    <FormLabel className="mb-1">Start Date <span className="text-primary">*</span></FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>

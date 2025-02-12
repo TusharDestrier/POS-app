@@ -1,14 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
+import useGrpoType from '../../store/useGrpoType'
 import GrpoRequestDetailForm from '../GrpoRequestDetailForm'
 
-import { Button } from '@/components/ui/button'
 import { combinedSchema } from '@/app/pages/Root/Administration/Master/StoreMaster/schemas/storeMaster.schema'
+import { Button } from '@/components/ui/button'
 // Schema for validation
 
 function GrpoRequestForm() {
-  
+  const closeModal = useGrpoType((state) => state.close)
   const formMethods = useForm({
     resolver: zodResolver(combinedSchema),
     defaultValues: {
@@ -124,10 +125,11 @@ function GrpoRequestForm() {
       >
         <GrpoRequestDetailForm/>
        
-        <div className="h-[60px]  flex justify-end items-center  ">
+        <div className="h-[60px]  flex gap-3 justify-end items-center  ">
           <Button type="submit" className=" btn btn-primary">
             Save 
           </Button>
+          <Button onClick={closeModal}>Cancel</Button>
         </div>
       </form>
     </FormProvider>

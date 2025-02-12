@@ -1,24 +1,12 @@
 // eslint-disable-next-line import/order
-import { format } from 'date-fns'
-
-import { CalendarIcon } from 'lucide-react'
-import { useMemo } from 'react'
+import { RadioGroup, RadioGroupItem } from '@radix-ui/react-radio-group'
+import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form'
 
 import { useStoreMasterData } from '@/app/pages/Root/Administration/Master/StoreMaster/hooks_api/useStoreMasterData'
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
-import {
-  Card,
-  CardContent,
-  //CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {  FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
   SelectContent,
@@ -31,8 +19,8 @@ import {
 //import { cn } from '@/lib/utils' // Verify this path matches your project structure
 
 const General = () => {
-  const { control, setValue, watch } = useFormContext()
-  const { storemasterData, isLoading } = useStoreMasterData()
+  const { control,setValue, watch } = useFormContext()
+  const { storemasterData } = useStoreMasterData()
 
   const maxBillingAmt = watch('maxBillAmountSinglePOSBill', 0)
 
@@ -42,109 +30,18 @@ const General = () => {
   const storeMasterOptions = useMemo(() => {
     if (!storemasterData || storemasterData.length === 0) return []
 
-    return storemasterData.map((stores) => ({
+    return (storemasterData ?? []).map((stores) => ({
       value: stores.storeID || '', // Ensure a fallback value
       label: stores.storeName || 'Unknown', // Prevent UI crash if value is undefined
       id: stores.storeID || 0, // Ensure an ID is always available
     }))
   }, [storemasterData])
   return (
-    <Card className="border-2 border-solid border-black overflow-y-auto h-[650px]">
+    <Card className="border-2  overflow-y-auto h-[650px]">
       <CardHeader>
         <CardTitle> General</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div>
-          <div className="grid grid-cols-3  gap-4">
-            <FormField
-              control={control}
-              name="storeID"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Store Name</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder={isLoading ? 'Loading...' : 'Select Store'} />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {isLoading ? (
-                        <p className="p-2 text-gray-500">Loading...</p>
-                      ) : (
-                        storeMasterOptions?.map((pm) => (
-                          <SelectItem key={pm.id} value={String(pm.value)}>
-                            {pm.label}
-                          </SelectItem>
-                        ))
-                      )}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* From Date */}
-            <FormField
-              control={control}
-              name="fromDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Start Date <span className="text-red-500">*</span>
-                  </FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button variant="outline" className="w-full text-left">
-                          {field.value ? format(new Date(field.value), 'PPP') : 'Pick a date'}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value ? new Date(field.value) : undefined}
-                        onSelect={(date) => field.onChange(date?.toISOString() || null)}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Close Date */}
-            <FormField
-              control={control}
-              name="toDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Close Date</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button variant="outline" className="w-full text-left">
-                          {field.value ? format(new Date(field.value), 'PPP') : 'Pick a date'}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value ? new Date(field.value) : undefined}
-                        onSelect={(date) => field.onChange(date?.toISOString() || null)}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
         <FormField
           control={control}
           name={'pendingSettlementDays'}
@@ -256,7 +153,8 @@ const General = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                PAN No. Mandatory if Billing Amount Exceeds ₹50,000
+                {/* PAN No. Mandatory if Billing Amount Exceeds ₹50,000 */}
+                PAN No. Mandatory
                 {!isPanDisabled ? <span className="text-primary">*</span> : ''}
               </FormLabel>
               <FormControl>

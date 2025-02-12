@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/select'
 
 function UserMasterForm() {
+  const closeModal = useUserMasterStore((state) => state.close)
   const mode = useUserMasterStore((state) => state.mode)
   const form = useForm<z.infer<typeof userMasterSchema>>({
     resolver: zodResolver(userMasterSchema),
@@ -268,7 +269,7 @@ function UserMasterForm() {
 
         <div className="mt-6 space-x-2 flex justify-end">
           <Button type="submit">Submit</Button>
-          <Button type="submit">Cancel</Button>
+          <Button  onClick={closeModal}>Cancel</Button>
         </div>
       </form>
     </Form>

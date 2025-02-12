@@ -25,6 +25,7 @@ function DiscountAllocationListModal() {
         <DicsountAllocationList />
         <DialogFooter>
           <Button onClick={close}>Save</Button>
+          <Button type="button" onClick={close}>Close</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

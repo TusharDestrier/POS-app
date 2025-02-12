@@ -144,6 +144,9 @@ function IncentiveAssortmentManagementForm() {
             <Button type="submit" disabled={isPending}>
               {isPending ? 'Submiting' : 'Submit'}
             </Button>
+            <Button  className="btn btn-primary m-3" onClick={closeModal}>
+            Cancel
+          </Button>
           </div>
         </form>
       </Form>

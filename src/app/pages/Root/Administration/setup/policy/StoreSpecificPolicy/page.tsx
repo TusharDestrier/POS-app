@@ -125,13 +125,13 @@ const setMode=useStoreWisePolicyHead(state=>state.setMode)
     <FormProvider {...formMethods}>
       <form onSubmit={formMethods.handleSubmit(onSubmit)}>
         <StoreWiseSetupTab />
-        <div className="h-[60px] sticky bottom-0 right-0 flex justify-end items-center">
+        <div className="h-[60px]  bottom-0 right-0 flex gap-2 justify-end items-center">
         <Button type="submit" className="btn btn-primary">
-            Submit
+            Save
           </Button>
-          {/* <Button type="submit" className="btn btn-primary">
+          <Button  className="btn btn-primary" onClick={closeModal}>
             Cancel
-          </Button> */}
+          </Button>
         </div>
       </form>
     </FormProvider>

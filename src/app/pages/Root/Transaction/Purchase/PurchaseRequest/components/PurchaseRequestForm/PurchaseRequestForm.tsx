@@ -3,14 +3,15 @@ import { useForm, FormProvider } from 'react-hook-form'
 
 
 
+import usePurchaseRequestType from '../../store/usePurchaseRequestType'
 import PurchaseRequestDetailForm from '../PurchaseRequestDetailForm'
 
-import { Button } from '@/components/ui/button'
 import { combinedSchema } from '@/app/pages/Root/Administration/Master/StoreMaster/schemas/storeMaster.schema'
+import { Button } from '@/components/ui/button'
 // Schema for validation
 
 function PurchaseRequestForm() {
-  
+  const closeModal = usePurchaseRequestType((state) => state.close)
   const formMethods = useForm({
     resolver: zodResolver(combinedSchema),
     defaultValues: {
@@ -128,10 +129,11 @@ function PurchaseRequestForm() {
         {/* <InventryTransferRequestDetailForm />
         */}
        
-        <div className="h-[60px]  flex justify-end items-center  ">
+        <div className="h-[60px]  flex gap-3 justify-end items-center  ">
           <Button type="submit" className=" btn btn-primary">
             Save 
           </Button>
+          <Button onClick={closeModal}>Cancel</Button>
         </div>
       </form>
     </FormProvider>

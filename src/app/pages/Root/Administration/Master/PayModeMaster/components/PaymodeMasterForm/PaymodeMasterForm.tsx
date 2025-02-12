@@ -180,10 +180,11 @@ function PaymodeMasterForm() {
           </div>
           <SupportedCurrencies />
         </div>
-        <div className="text-end pb-4">
+        <div className="text-end pb-4 ">
           <Button type="submit" disabled={isPending}>
             {isPending ? 'submiting' : 'submit'}
           </Button>
+          <Button className='m-3' onClick={closeModal}>Cancel</Button>
         </div>
       </form>
     </FormProvider>

@@ -4,8 +4,8 @@ import { useForm, FormProvider } from 'react-hook-form'
 
 import GoodsReciptDetailForm from '../GoodsReciptDetailForm'
 
-import { Button } from '@/components/ui/button'
 import { combinedSchema } from '@/app/pages/Root/Administration/Master/StoreMaster/schemas/storeMaster.schema'
+import { Button } from '@/components/ui/button'
 
 function GoodsReciptForm(){
 
@@ -126,7 +126,7 @@ return (
        
         <div className="h-[60px]  flex justify-end items-center  ">
           <Button type="submit" className=" btn btn-primary">
-            Save 
+            Save
           </Button>
         </div>
       </form>

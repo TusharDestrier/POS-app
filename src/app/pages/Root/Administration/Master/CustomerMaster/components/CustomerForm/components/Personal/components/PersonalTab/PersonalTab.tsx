@@ -42,7 +42,7 @@ function PersonalTab() {
             name="personal.firstName"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>First Name</FormLabel>
+                <FormLabel>First Name <span className="text-primary">*</span> </FormLabel>
                 <FormControl>
                   <Input placeholder="First Name" {...field} />
                 </FormControl>
@@ -68,7 +68,7 @@ function PersonalTab() {
             name="personal.lastName"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>Last Name</FormLabel>
+                <FormLabel>Last Name <span className="text-primary">*</span></FormLabel>
                 <FormControl>
                   <Input placeholder="Last Name" {...field} />
                 </FormControl>
@@ -241,7 +241,8 @@ function PersonalTab() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  PAN No.<span className="text-primary">*</span>
+                {/* <span className="text-primary">*</span> */}
+                  PAN No.
                 </FormLabel>
                 <FormControl>
                   <Input placeholder="Enter PAN No." {...field} />

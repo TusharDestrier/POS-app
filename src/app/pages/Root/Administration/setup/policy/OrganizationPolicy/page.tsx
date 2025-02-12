@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -18,7 +18,8 @@ function OrganizationPage() {
   const { createOrganizationPolicy, isPending } = useCreateOrganizationPolicy()
   const { organizationPolicyData, isLoading } = useOrganizationPolicyData()
   const clearId = useOrganizationPolicyDataStore((state) => state.clearOrganizationPolicyId)
-const setMode=useOrganizationPolicyHead(state=>state.setMode);
+  const setMode = useOrganizationPolicyHead((state) => state.setMode)
+  const closeModal = useOrganizationPolicyHead( (state) => state.close)
   const formMethods = useForm({
     resolver: zodResolver(PostOrganizationPolicySchema),
     defaultValues: {
@@ -33,7 +34,7 @@ const setMode=useOrganizationPolicyHead(state=>state.setMode);
       backDateEntryDays: 0,
       negativestockcheckingmode: '',
       picture: '',
-      noOfCopiesToBePrint:0,
+      noOfCopiesToBePrint: 0,
       allowItemLevelDiscount: '',
       allowBillLevelDiscount: '',
       maxAllowDiscountPercentage: '',
@@ -63,46 +64,56 @@ const setMode=useOrganizationPolicyHead(state=>state.setMode);
       formMethods.reset({
         pendingSettlementDays: Number(lastPolicy?.pendingSettlementDays) || 30,
         footfallEntryRequiredDaySettlement: lastPolicy?.footfallEntryRequiredDaySettlement || 'N',
-        maxAllowDiscountPolicyValidationID: String(lastPolicy?.maxAllowDiscountPolicyValidationID) || 'PERCENT',
+        maxAllowDiscountPolicyValidationID:
+          String(lastPolicy?.maxAllowDiscountPolicyValidationID) || 'PERCENT',
         maxBillAmountSinglePOSBill: String(lastPolicy?.maxBillAmountSinglePOSBill) || '22',
         pan: String(lastPolicy?.pan) || '',
-        creditCardDetailsCapturePolicyID: String(lastPolicy?.creditCardDetailsCapturePolicyID) || "4",
+        creditCardDetailsCapturePolicyID:
+          String(lastPolicy?.creditCardDetailsCapturePolicyID) || '4',
         isCCardAuthNoEntryMandatory: String(lastPolicy?.isCCardAuthNoEntryMandatory) || 'N',
         allowBackDateEntry: String(lastPolicy?.allowBackDateEntry) || 'N',
         backDateEntryDays: Number(lastPolicy?.backDateEntryDays) || 5,
-        negativestockcheckingmode: String(lastPolicy?.negetiveStockCheckMode) || "1",
+        negativestockcheckingmode: String(lastPolicy?.negetiveStockCheckMode) || '1',
         picture: String(lastPolicy?.picture) || '',
         allowItemLevelDiscount: String(lastPolicy?.allowItemLevelDiscount) || 'N',
         allowBillLevelDiscount: String(lastPolicy?.allowBillLevelDiscount) || 'N',
         maxAllowDiscountPercentage: String(lastPolicy?.maxAllowDiscountPercentage) || '0',
         maxAllowDiscountAmount: String(lastPolicy?.maxAllowDiscountAmount) || '0',
-        allowToSelectActivePromotionFromList: String(lastPolicy?.allowToSelectActivePromotionFromList) || 'N',
+        allowToSelectActivePromotionFromList:
+          String(lastPolicy?.allowToSelectActivePromotionFromList) || 'N',
         allowToClearAppliedPromotion: String(lastPolicy?.allowToClearAppliedPromotion) || 'N',
         salePersonTaggingMandatory: String(lastPolicy?.salePersonTaggingMandatory) || 'N',
         salePersonTaggingPolicyID: String(lastPolicy?.salePersonTaggingPolicyID) || '1',
         customerTaggingIsMandatory: String(lastPolicy?.customerTaggingIsMandatory) || 'N',
         returnOfItemWithin: Number(lastPolicy?.returnOfItemWithin) || 0,
         creditNoteValidityDays: Number(lastPolicy?.creditNoteValidityDays) || 0,
-        billTaggingMandatoryDuringReturn: String(lastPolicy?.billTaggingMandatoryDuringReturn) || 'N',
+        billTaggingMandatoryDuringReturn:
+          String(lastPolicy?.billTaggingMandatoryDuringReturn) || 'N',
         noOfCopiesToBePrint: Number(lastPolicy?.noOfCopiesToBePrint) || 0,
-        excessGoodsReceiptTolerancePercentage: Number(lastPolicy?.excessGoodsReceiptTolerancePercentage) || 0,
-        shortGoodsReceiptTolerancePercentage: Number(lastPolicy?.shortGoodsReceiptTolerancePercentage) || 0,
+        excessGoodsReceiptTolerancePercentage:
+          Number(lastPolicy?.excessGoodsReceiptTolerancePercentage) || 0,
+        shortGoodsReceiptTolerancePercentage:
+          Number(lastPolicy?.shortGoodsReceiptTolerancePercentage) || 0,
         allowToReceiveDamagedGoods: String(lastPolicy?.allowToReceiveDamagedGoods) || 'N',
         dueDateIsMandatoryInPOSOrder: String(lastPolicy?.dueDateIsMandatoryInPOSOrder) || 'N',
-        minPercentageOfAdvanceDuringPOSOrder: Number(lastPolicy?.minPercentageOfAdvanceDuringPOSOrder) || 0,
+        minPercentageOfAdvanceDuringPOSOrder:
+          Number(lastPolicy?.minPercentageOfAdvanceDuringPOSOrder) || 0,
         posOrderCancellationIsMandatory: String(lastPolicy?.posOrderCancellationIsMandatory) || 'N',
       })
     } else {
       setMode('Create')
     }
   }, [organizationPolicyData])
-  
 
   async function onSubmit(data: z.infer<typeof PostOrganizationPolicySchema>) {
-    const formattedData = OrganizationPolicyFormatter(data, String(organizationPolicyData?.[0]?.orgPolicyID))
+    const formattedData = OrganizationPolicyFormatter(
+      data,
+      String(organizationPolicyData?.[0]?.orgPolicyID)
+    )
 
     try {
       await createOrganizationPolicy(formattedData)
+      closeModal()
       clearId()
     } catch (err) {
       if (err instanceof Error) {
@@ -115,14 +126,16 @@ const setMode=useOrganizationPolicyHead(state=>state.setMode);
     return <GlobalViewerLoader />
   }
 
+
   return (
     <FormProvider {...formMethods}>
       <form onSubmit={formMethods.handleSubmit(onSubmit)}>
         <OrganizationTab />
-        <div className="h-[60px] sticky bottom-0 right-0 flex justify-end items-center">
+        <div className="h-[60px]  bottom-0 right-0 gap-3 flex justify-end items-center">
           <Button type="submit" className="btn btn-primary" disabled={isPending}>
             {isPending ? 'Submiting' : 'Submit'}
           </Button>
+          <Button onClick={closeModal}>Cancel</Button>
         </div>
       </form>
     </FormProvider>

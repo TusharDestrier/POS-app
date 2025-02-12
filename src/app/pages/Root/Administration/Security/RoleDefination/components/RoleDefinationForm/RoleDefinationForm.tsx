@@ -2,8 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { roledefinationSchemas } from './schemas/roledefinationSchemas'
 //import { useRoleDefination } from '../../store/useRoleDefination'
+
+import { roledefinationSchemas } from './schemas/roledefinationSchemas'
+import { useRoleDefination } from '../../store/useRoleDefination'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -24,6 +26,7 @@ import {
 } from '@/components/ui/select'
 
 function RoleDefinationForm() {
+   const closeModal = useRoleDefination((state) => state.close)
   //const mode = useRoleDefination((state) => state.mode)
   const form = useForm<z.infer<typeof roledefinationSchemas>>({
     resolver: zodResolver(roledefinationSchemas),
@@ -128,7 +131,7 @@ function RoleDefinationForm() {
         </div>
         <div className="mt-6 flex justify-end gap-2">
           <Button type="submit">Save</Button>
-          <Button type="button" variant="secondary">
+          <Button type="submit" variant="secondary" onClick={closeModal}>
             Cancel
           </Button>
         </div>

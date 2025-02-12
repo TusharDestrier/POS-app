@@ -16,9 +16,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  SelectGroup
+  SelectGroup,
 } from '@/components/ui/select'
-
 
 function POSBill() {
   const { control, setValue, watch } = useFormContext()
@@ -29,7 +28,8 @@ function POSBill() {
   const isPromotionDisabled = !discountPercentage || Number(discountPercentage) <= 0
 
   return (
-    <Card className="border-2 border-solid border-black overflow-y-auto h-[650px]">
+    // <Card className="border-2 border-solid border-black overflow-y-auto h-[650px]">
+    <Card className="border-2  overflow-y-auto h-[650px]">
       <CardHeader>
         <CardTitle>POS Bill</CardTitle>
       </CardHeader>
@@ -270,7 +270,7 @@ function POSBill() {
           )}
         />
 
-<FormField
+        <FormField
           control={control}
           name="salePersonTaggingPolicyID"
           render={({ field }) => (

@@ -1,13 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
+import useGoodsIssueType from '../../store/useGoodsIssueType'
 import GoodsIssueDetailForm from '../GoodsIssueDetailForm'
 
 import { combinedSchema } from '@/app/pages/Root/Administration/Master/StoreMaster/schemas/storeMaster.schema'
 import { Button } from '@/components/ui/button'
 
 function GoodsIssueForm(){
-
+const closeModal = useGoodsIssueType((state) => state.close)
     const formMethods = useForm({
         resolver: zodResolver(combinedSchema),
         defaultValues: {
@@ -124,10 +125,11 @@ return (
        <GoodsIssueDetailForm/>
        
        
-        <div className="h-[60px]  flex justify-end items-center  ">
+        <div className="h-[60px]  flex gap-3 justify-end items-center  ">
           <Button type="submit" className=" btn btn-primary">
             Save 
           </Button>
+          <Button  onClick={closeModal}>Cancel</Button>
         </div>
       </form>
     </FormProvider>

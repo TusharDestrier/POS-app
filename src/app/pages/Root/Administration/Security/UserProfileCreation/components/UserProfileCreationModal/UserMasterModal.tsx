@@ -12,7 +12,7 @@ function UserMasterModal() {
     <Dialog open={isOpen} onOpenChange={close}>
       <DialogContent className="max-w-full h-screen block rounded-none overflow-y-scroll">
         <DialogHeader className='mb-8'>
-          <DialogTitle>{mode} User Master</DialogTitle>
+          <DialogTitle>{mode} User Profile Creation</DialogTitle>
         </DialogHeader>
         <UserMasterForm />
       </DialogContent>

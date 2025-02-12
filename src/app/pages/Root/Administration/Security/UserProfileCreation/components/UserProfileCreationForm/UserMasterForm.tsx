@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { userMasterSchema } from './schema'
+import { useUserProfileCreationStore } from '../../store/useUserProfileCreationStore'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -32,6 +33,9 @@ import {
 import { cn } from '@/lib/utils'
 
 const UserMasterForm = () => {
+
+  const closeModal = useUserProfileCreationStore((state) => state.close)
+
   const form = useForm({
     resolver: zodResolver(userMasterSchema),
     defaultValues: {
@@ -416,8 +420,9 @@ const UserMasterForm = () => {
 
         {/* Active and Approved User */}
 
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-3">
           <Button type="submit">Save</Button>
+          <Button type="submit" onClick={closeModal}>Cancel</Button>
         </div>
       </form>
     </Form>

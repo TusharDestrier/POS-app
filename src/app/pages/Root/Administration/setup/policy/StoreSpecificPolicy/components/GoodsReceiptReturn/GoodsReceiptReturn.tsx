@@ -1,4 +1,3 @@
-
 import { useFormContext } from 'react-hook-form'
 
 import {
@@ -8,21 +7,26 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-
 
 const GoodsReceiptReturn = () => {
   const { control } = useFormContext()
 
   return (
-    <Card className='border-2 border-solid border-black overflow-y-auto h-[650px]'>
+    <Card className="border-2 overflow-y-auto h-[650px]">
       <CardHeader>
         <CardTitle>Goods Receipt Return</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-      
         <FormField
           control={control}
           name="excessGoodsReceiptTolerancePercentage"

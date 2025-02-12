@@ -99,6 +99,7 @@ function DesignationForm() {
           <Button type="submit" disabled={isPending}>
             {isPending ? 'Submitting' : 'Submit'}
           </Button>
+          <Button type="button" className='ml-3' onClick={closeModal}>Cancel</Button>
         </div>
       </form>
     </Form>
