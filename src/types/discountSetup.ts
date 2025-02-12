@@ -21,4 +21,6 @@ interface DiscountAssortment {
     usedFor: string| null; // If "S" is constant, we can enforce it
     discountAssortments: DiscountAssortment[];
   }
+
+  
   export type DiscountResponseType = { returnCode: string; returnMsg: string }[]

@@ -1,44 +1,35 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import useDiscountMasterStore from '../store/useDiscountMasterStore';
+import { DiscountPostType } from '../helper/discountMasterPostFormatter'
+import useDiscountMasterStore from '../store/useDiscountMasterStore'
 
-import discountSetupClient from '@/services/discountSetupClient';
-import { DiscountResponseType, FetchedDiscountType } from '@/types/discountSetup';
-
-
+import discountSetupClient from '@/services/discountSetupClient'
+import { DiscountResponseType } from '@/types/discountSetup'
 
 const messages = {
-  "Create": 'Created SuccessFully',
-  "Edit": 'Updated SuccessFully',
-  "Delete": 'Deleted SuccessFully',
-  "View": 'View SuccessFully',
+  Create: 'Created SuccessFully',
+  Edit: 'Updated SuccessFully',
+  Delete: 'Deleted SuccessFully',
+  View: 'View SuccessFully',
 }
-
-export type DoicountSetupPostType =  Omit<FetchedDiscountType, 'status'> & {
-  customerID: number | null;
-};
-
 
 export function useCreateDiscountMaster() {
   const queryClient = useQueryClient() // ✅ Query Invalidation ke liye
-   const setGlobalLoading=useDiscountMasterStore(state=>state.setIsLoading);
   const mode = useDiscountMasterStore((state) => state.mode)
-  //const setIsLoading = useDiscountMasterStore((state) => state.isLoading)
-  const { mutateAsync, data, error, isPending, } = useMutation<
-  DiscountResponseType,
+  const setIsLoading = useDiscountMasterStore((state) => state.setIsLoading)
+  const { mutateAsync, data, error, isPending } = useMutation<
+    DiscountResponseType,
     Error,
-    DoicountSetupPostType
+    DiscountPostType
   >({
-    mutationFn: async (DiscountMasterData: DoicountSetupPostType) => {
-        setGlobalLoading(true)
-        return await discountSetupClient.createDiscountSetup(DiscountMasterData)
-      //return await DiscountSetupClient.createDiscountSetup(DiscountMasterData)
-
+    mutationFn: async (DiscountMasterData: DiscountPostType) => {
+      setIsLoading(true)
+      return await discountSetupClient.createDiscount(DiscountMasterData)
     },
     onSuccess: () => {
       // ✅ Refetch after successful creation
-      queryClient.invalidateQueries({ queryKey: ['DiscountMaster'] })
+      queryClient.invalidateQueries({ queryKey: ['discount'] })
 
       toast.success(messages[mode], {
         style: {
@@ -46,7 +37,7 @@ export function useCreateDiscountMaster() {
           color: '#3ed665',
         },
       })
-    },  
+    },
     onError: (error) => {
       toast.error(error.message, {
         style: {
@@ -55,9 +46,9 @@ export function useCreateDiscountMaster() {
         },
       })
     },
-    onSettled:()=>{
-      setGlobalLoading(false)
-    }
+    onSettled: () => {
+      setIsLoading(false)
+    },
   })
 
   return { createDiscountMaster: mutateAsync, data, error, isPending }

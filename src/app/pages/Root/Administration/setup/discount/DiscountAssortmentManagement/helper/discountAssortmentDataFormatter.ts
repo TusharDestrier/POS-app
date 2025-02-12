@@ -9,43 +9,33 @@ const operations = {
   View: 'V',
 }
 
+type assortmentDetail = {
+  assortmentID: string | number
+  itemCode: string
+  itemName: string
+  tableID: number
+  lineNum: number
+  barcode: string
+  group: string
+}[]
 export type DiscountAssortmentPostType = ReturnType<typeof discountAssortmentFormatter>
 
 export function discountAssortmentFormatter(
   data: z.infer<typeof DiscountFormSchema>,
   mode: keyof typeof operations,
-  id: number | string
+  id: number | string,
+  assortmentDetail: assortmentDetail[]
 ) {
   const sendedData = {
     assortmentID: mode === 'Create' ? 0 : id,
     assortmentName: data.assortmentName,
     description: data.description,
+    typeOfAssortment: "",
     assortmentType: 'D',
     enteredBy: 0,
     usedFor: operations[mode],
     store: 0,
-    assortmentDetail: data?.assortmentDetail?.length
-      ? [
-          {
-            assortmentID: mode === 'Create' ? 0 : id,
-            itemCode: '0001',
-            itemName: 'Park Avenue',
-            tableID: 1,
-            lineNum: 1,
-            barcode: '110011',
-            group: 'DeoGroup',
-          },
-          {
-            assortmentID: mode === 'Create' ? 0 : id,
-            itemCode: '0002',
-            itemName: 'Vim Bar',
-            tableID: 1,
-            lineNum: 2,
-            barcode: '110022',
-            group: 'House Cleaning',
-          },
-        ]
-      : [],
+    assortmentDetail: assortmentDetail?.length ? assortmentDetail : [],
   }
 
   return sendedData

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -11,7 +10,7 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/ui/select'
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table'
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
 function PromotionFormDiscountTable() {
   const { control } = useFormContext()
@@ -54,15 +53,14 @@ function PromotionFormDiscountTable() {
   )
 }
 
-export default PromotionFormDiscountTable
-
 interface DiscountType {
-  type: string
-  discountOn: string
-  condition: string
-  comparison: string
-  from?: number | null
-  to?: number | null
+  isSelected?: boolean | undefined
+  type?: null | undefined
+  discountOn?: string | undefined
+  condition?: string | undefined
+  comparison?: string | undefined
+  from?: null | undefined
+  to?: null | undefined
 }
 
 const DiscountRow = ({
@@ -72,39 +70,78 @@ const DiscountRow = ({
   index: number
   discountTypes: DiscountType[]
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false)
-  const { control,setValue   } = useFormContext()
+  const { control, setValue } = useFormContext()
 
-  const currentDiscountType = discountTypes?.[index]
+  const selectedRow = discountTypes.findIndex((row) => row.isSelected)
+  const isSelected = selectedRow === index // Check if this row is selected
 
   return (
     <TableRow>
-      <TableHead>
+     <div className=''>
+        {/* Radio Button to Select Row */}
+        <TableCell>
+        <FormField
+          control={control}
+          name={`promotionParameters.discountTypes.${index}.isSelected`}
+          render={({ field }) => (
+            <FormItem>
+              <input
+                type="radio"
+                checked={isSelected}
+                onChange={() => {
+                  // Deselect all rows first
+                  discountTypes.forEach((_, i) => {
+                    setValue(`promotionParameters.discountTypes.${i}.isSelected`, false)
+                  })
+
+                  // Select this row
+                  setValue(`promotionParameters.discountTypes.${index}.isSelected`, true)
+                }}
+              />
+            </FormItem>
+          )}
+        />
+      </TableCell>
+
+      {/* Type (Number Input) */}
+      <TableCell>
         <FormField
           control={control}
           name={`promotionParameters.discountTypes.${index}.type`}
           render={({ field }) => (
             <FormItem>
-              <input
-                type="checkbox"
-                checked={!!field.value}
-                onChange={(e) => field.onChange(e.target.checked ? 'X' : undefined)} // Default to "X"
+              <Input
+                type="number"
+                placeholder="Enter Type"
+                {...field}
+                className='w-[50px] text-center'
+                value={field.value || ''}
+                onChange={(e) => field.onChange(e.target.valueAsNumber || null)}
+                disabled={!isSelected} // Disable if not selected
               />
             </FormItem>
           )}
         />
-      </TableHead>
-      <TableCell>{currentDiscountType?.type || 'Type'}</TableCell>
+      </TableCell>
+      <TableCell>
+        <Input value='% of discount on' className='' disabled/>
+      </TableCell>
+
+      {/* Discount On (Dropdown) */}
       <TableCell>
         <FormField
           control={control}
           name={`promotionParameters.discountTypes.${index}.discountOn`}
           render={({ field }) => (
             <FormItem>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                value={field.value}
+                disabled={!isSelected} // Disable if not selected
+              >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select" />
+                    <SelectValue placeholder="Select Discount On" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -119,24 +156,42 @@ const DiscountRow = ({
           )}
         />
       </TableCell>
+
+      {/* Expand Button */}
       <TableCell>
-        <Button size="sm" variant="outline" onClick={() => setIsExpanded((prev) => !prev)}>
-          +
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => {
+            if (isSelected) {
+              const condition = discountTypes[index]?.condition
+              setValue(
+                `promotionParameters.discountTypes.${index}.condition`,
+                condition ? '' : 'MRP'
+              )
+            }
+          }}
+          disabled={!isSelected} // Disable if not selected
+        >
+          {discountTypes[index]?.condition ? '-' : '+'}
         </Button>
       </TableCell>
-      {isExpanded && (
+
+      {/* Expanded Section: Condition & Comparison */}
+      {discountTypes[index]?.condition && isSelected && (
         <>
           <TableCell>Where</TableCell>
+
           <TableCell>
             <FormField
               control={control}
               name={`promotionParameters.discountTypes.${index}.condition`}
               render={({ field }) => (
                 <FormItem>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value} disabled={!isSelected}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select" />
+                        <SelectValue placeholder="Select Condition" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -150,6 +205,8 @@ const DiscountRow = ({
               )}
             />
           </TableCell>
+
+          {/* Comparison (Dropdown) */}
           <TableCell>
             <FormField
               control={control}
@@ -164,11 +221,12 @@ const DiscountRow = ({
                         setValue(`promotionParameters.discountTypes.${index}.to`, null)
                       }
                     }}
-                    defaultValue={field.value}
+                    value={field.value}
+                    disabled={!isSelected}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select" />
+                        <SelectValue placeholder="Select Comparison" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -182,14 +240,39 @@ const DiscountRow = ({
               )}
             />
           </TableCell>
-          {currentDiscountType?.comparison === 'inBetween' && (
+
+          {/* Number Inputs Based on Comparison */}
+          {discountTypes[index]?.comparison === 'lesser' ||
+          discountTypes[index]?.comparison === 'greater' ? (
+            <TableCell>
+              <FormField
+                control={control}
+                name={`promotionParameters.discountTypes.${index}.from`}
+                render={({ field }) => (
+                  <FormItem className="w-20">
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Enter Value"
+                        {...field}
+                        value={field.value || ''}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber || null)}
+                        disabled={!isSelected}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </TableCell>
+          ) : discountTypes[index]?.comparison === 'inBetween' ? (
             <>
               <TableCell>
                 <FormField
                   control={control}
                   name={`promotionParameters.discountTypes.${index}.from`}
                   render={({ field }) => (
-                    <FormItem className='w-20'>
+                    <FormItem className="w-20">
                       <FormControl>
                         <Input
                           type="number"
@@ -197,27 +280,7 @@ const DiscountRow = ({
                           {...field}
                           value={field.value || ''}
                           onChange={(e) => field.onChange(e.target.valueAsNumber || null)}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </TableCell>
-              <TableCell>
-                <FormField
-                  control={control}
-                  name={`promotionParameters.discountTypes.${index}.to`}
-                  render={({ field }) => (
-                    <FormItem className='w-20'>
-                      <FormControl >
-                        <Input
-                          type="number"
-                          placeholder="To"
-                          
-                          {...field}
-                          value={field.value || ''} // Ensure empty string for undefined/null
-                          onChange={(e) => field.onChange(e.target.valueAsNumber || null)} // Parse as number
+                          disabled={!isSelected}
                         />
                       </FormControl>
                       <FormMessage />
@@ -226,9 +289,13 @@ const DiscountRow = ({
                 />
               </TableCell>
             </>
-          )}
+          ) : null}
         </>
       )}
+     </div>
+    
     </TableRow>
   )
 }
+
+export default PromotionFormDiscountTable

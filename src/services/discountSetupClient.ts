@@ -1,6 +1,6 @@
 import ApiClient from './ApiClient'
 
-import { DoicountSetupPostType } from '@/app/pages/Root/Administration/setup/discount/DiscountMaster/hooks_api/useCreateDiscountMasterData';
+import {  discountMasterPostFormatter } from '@/app/pages/Root/Administration/setup/discount/DiscountMaster/helper/discountMasterPostFormatter';
 import { DiscountResponseType, FetchedDiscountType } from '@/types/discountSetup';
 
 class DiscountSetupClient extends ApiClient {
@@ -8,7 +8,7 @@ class DiscountSetupClient extends ApiClient {
     super('api/')
   }
 
-  async getDsicountSetup({ id = 0, signal }: { id: number; signal?: AbortSignal }) {
+  async getDiscount({ id = 0, signal }: { id: number; signal?: AbortSignal }) {
     const response = await this.get<FetchedDiscountType[]>(
       `Discount/GetAllDiscount`,
       {
@@ -28,7 +28,7 @@ class DiscountSetupClient extends ApiClient {
       return response.data
     }
 
-  async createDiscountSetup(DesignationData:DoicountSetupPostType) {
+  async createDiscount(DesignationData:DiscountPostType) {
     try {
       const response = await this.post<DiscountResponseType>(
         `DiscountRep/PostDiscount`,
@@ -38,7 +38,7 @@ class DiscountSetupClient extends ApiClient {
       // ✅ Status check for non-200 responses
       if (response.data[0].returnCode !== 'Y') {
         throw new Error(response.data[0].returnMsg)
-       }
+      }
 
       return response.data
     } catch (error: unknown) {

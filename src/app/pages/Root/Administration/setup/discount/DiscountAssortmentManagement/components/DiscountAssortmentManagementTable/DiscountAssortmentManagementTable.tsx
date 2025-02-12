@@ -17,7 +17,6 @@ import { useDiscountAssortmentData } from '../../hooks_api/useDiscountAssortment
 import { useDiscountAssortmentManagementStore } from '../../store/useDiscountAssortmentManagementStore'
 import DiscountAssortmentManagementModal from '../DiscountAssortmentManagementModal'
 
-
 import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
 import {
@@ -36,8 +35,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-
-
 function DiscountAssortmentManagementTable() {
   const { assortmentData, isLoading, error } = useDiscountAssortmentData()
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -48,7 +45,7 @@ function DiscountAssortmentManagementTable() {
   const openModal = useDiscountAssortmentManagementStore((state) => state.toggleOpen)
   const setMode = useDiscountAssortmentManagementStore((state) => state.setMode)
   const isGlobalLoading = useDiscountAssortmentManagementStore((state) => state.isLoading)
-  
+
   const table = useReactTable({
     data: assortmentData ?? [],
     columns,
@@ -67,12 +64,11 @@ function DiscountAssortmentManagementTable() {
       rowSelection,
     },
   })
-  
-  function createAssortment(){
-    setMode('Create');
+
+  function createAssortment() {
+    setMode('Create')
     openModal()
   }
-
 
   if (isLoading || isGlobalLoading) {
     return <SkeletonLoaderTable />

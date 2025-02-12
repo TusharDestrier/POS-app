@@ -76,9 +76,10 @@ export const promotionSetupSchema = z.object({
       discountTypes: z.array(
         z
           .object({
-            type: z.enum(["X", "Y", "Z"], {
-              required_error: "Type is required",
-            }),
+            type: z.preprocess(
+              (value) => (value === "" || value === undefined ? null : Number(value)),
+              z.number().min(0, "Type must be a valid number").nullable()
+            ),
             discountOn: z.string().nonempty("Discount On is required"),
             condition: z.string().nonempty("Condition is required"),
             comparison: z.enum(["lesser", "greater", "inBetween"], {
@@ -92,36 +93,6 @@ export const promotionSetupSchema = z.object({
               (value) => (value === "" || value === undefined ? null : Number(value)),
               z.number().nullable()
             ),
-          })
-          .superRefine((discount, ctx) => {
-            // Validate `from` and `to` only when comparison is "inBetween"
-            if (discount.comparison === "inBetween") {
-              if (discount.from === null || isNaN(discount.from)) {
-                ctx.addIssue({
-                  code: "custom",
-                  path: ["from"],
-                  message: "From value is required and must be a valid number for 'In Between'.",
-                });
-              }
-              if (discount.to === null || isNaN(discount.to)) {
-                ctx.addIssue({
-                  code: "custom",
-                  path: ["to"],
-                  message: "To value is required and must be a valid number for 'In Between'.",
-                });
-              }
-              if (
-                discount.from !== null &&
-                discount.to !== null &&
-                discount.from >= discount.to
-              ) {
-                ctx.addIssue({
-                  code: "custom",
-                  path: ["from"],
-                  message: "From value must be less than To value.",
-                });
-              }
-            }
           })
       ),
     })
@@ -142,17 +113,15 @@ export const promotionSetupSchema = z.object({
       }
 
       // Ensure completeness of discountTypes
-      discountTypes?.forEach((discount, index) => {
-        if (
-          discount.comparison === "inBetween" &&
-          (discount.from === null || discount.to === null)
-        ) {
-          ctx.addIssue({
-            code: "custom",
-            path: ["discountTypes", index],
-            message:
-              "Both 'from' and 'to' values are required for 'In Between' comparison.",
-          });
+      discountTypes.forEach((discount, index) => {
+        if (discount.comparison === "inBetween") {
+          if (discount.from === null || discount.to === null || discount.from >= discount.to) {
+            ctx.addIssue({
+              code: "custom",
+              path: ["discountTypes", index, "from"],
+              message: "For 'In Between', 'From' must be a number and less than 'To'.",
+            });
+          }
         }
       });
     }),

@@ -55,13 +55,13 @@ function DiscountMasterForm() {
     resolver: zodResolver(DiscountMasterSchema),
     defaultValues: {
       name: 'name',
-      discountType: 'General',
-      discountBase: 'Percentage',
-      appliedOn: 'Bill Level',
+      discountType: 'G',
+      discountBase: 'P',
+      appliedOn: 'L',
       employeeDiscount: 'N',
-      percentage:3,
-      maximumDiscount:2,
-      minimumBilling:2,
+      percentage: 3,
+      maximumDiscount: 2,
+      minimumBilling: 2,
       otpRequired: false,
       allowToChange: false,
       inactive: false,
@@ -96,7 +96,7 @@ function DiscountMasterForm() {
           onSubmit() // Trigger submission
         }}>
           <Tabs defaultValue="setup" className="w-full  ">
-            <TabsList className='grid grid-cols-2 gap-4 mb-6'>
+            <TabsList className="grid grid-cols-2 gap-4 mb-6">
               <TabsTrigger value="setup">Setup</TabsTrigger>
               <TabsTrigger value="terms">Terms</TabsTrigger>
             </TabsList>

@@ -1,16 +1,16 @@
 import { create } from 'zustand'
 
 
-interface DiscountMasterStoreData {
-  currentDiscountSetupId: number | null // ✅ Current ID store karo
-  setCurrentDiscountSetuprId: (id: number) => void // ✅ ID setter
-  clearCurrentDiscountSetupId: () => void // ✅ ID reset
+interface DiscountnMasterState {
+  currentDiscountnMasterId: number | null // ✅ Current ID store karo
+  setCurrentDiscountnMasterId: (id: number) => void // ✅ ID setter
+  clearCurrentDiscountnMasterId: () => void // ✅ ID reset
 }
 
-export const useDiscountMasterStoreData = create<DiscountMasterStoreData>((set) => ({
-    currentDiscountSetupId: null, // ✅ Initially null
+export const useDiscountnMasterDataStore = create<DiscountnMasterState>((set) => ({
+  currentDiscountnMasterId: null, // ✅ Initially null
 
-  setCurrentDiscountSetuprId: (id) => set({ currentDiscountSetupId: id }),
+  setCurrentDiscountnMasterId: (id) => set({ currentDiscountnMasterId: id }),
 
-  clearCurrentDiscountSetupId: () => set({ currentDiscountSetupId: null }),
+  clearCurrentDiscountnMasterId: () => set({ currentDiscountnMasterId: null }),
 }))

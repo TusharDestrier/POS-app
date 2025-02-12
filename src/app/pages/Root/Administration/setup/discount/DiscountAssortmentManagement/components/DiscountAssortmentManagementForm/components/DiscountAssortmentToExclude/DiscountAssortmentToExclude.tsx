@@ -1,11 +1,10 @@
-
-// import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
+import { useGetGeneratedItems } from '../DiscountAssortmentListTable/hooks_api/useGetItemFilterWise'
+import { useGeneratedItemsDataStore } from '../DiscountAssortmentListTable/store/useGeneratedItemDataStore'
 
 import { Checkbox } from '@/components/ui/checkbox'
 import {
   Table,
   TableBody,
-  //TableCaption,
   TableCell,
   TableFooter,
   TableHead,
@@ -14,53 +13,41 @@ import {
 } from '@/components/ui/table'
 
 export const DiscountAssortmentToExclude = () => {
-  // const {assortmentExcludedData,isLoading}=useAssortmentExcludedData();
-  const assortmentExcludedData = []
+  const { generatedItems } = useGetGeneratedItems()
+  const selectedGeneratedItems = useGeneratedItemsDataStore((state) => state.selections)
+  // const filteredItems=generatedItems.filter(item=>item.hsnsacCode)
 
-  const isLoading = false
+  const excludedItems = generatedItems.filter(
+    (item) => selectedGeneratedItems[item.itemCode] === 'excluded'
+  )
 
-  if (isLoading) {
-    // Render skeleton loader during loading state
-    return (
-      <div className="mt-5">
-        {' '}
-        <SkeletonLoaderTable rows={5} columns={5} />
-      </div>
-    )
-  }
-  if (!isLoading && !assortmentExcludedData) {
-    return <h3>No data</h3>
-  }
   return (
     <div className="mt-5">
-      
       <Table>
         {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Search</TableHead>
+            <TableHead>No.</TableHead>
             <TableHead>Barcode</TableHead>
             <TableHead>Item Name</TableHead>
-            <TableHead className="text-right">Group</TableHead>
+            <TableHead className="text-right">Item Code</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {assortmentExcludedData?.map((item) => (
-            <TableRow key={item.barcode}>
-              <TableCell className="font-medium">
-                <Checkbox id="terms" />
+          {excludedItems?.map((item,ind) => (
+            <TableRow key={item.barCode}>
+               <TableCell className="font-medium">
+                {ind +1}
               </TableCell>
-              <TableCell>{item.barcode}</TableCell>
+            
+              <TableCell>{item.barCode}</TableCell>
               <TableCell>{item.itemName}</TableCell>
-              <TableCell className="text-right">{item.group}</TableCell>
+              <TableCell className="text-right">{item.itemCode}</TableCell>
             </TableRow>
           ))}
         </TableBody>
         <TableFooter>
-          <TableRow>
-            {/* <TableCell colSpan={3}>Total</TableCell>
-        <TableCell className="text-right">$2,500.00</TableCell> */}
-          </TableRow>
+          <TableRow></TableRow>
         </TableFooter>
       </Table>
     </div>
