@@ -14,7 +14,7 @@ export function useDiscountMasterData() {
   } = useQuery<FetchedDiscountType[], Error>({
     queryKey: ['DiscountMaster'],
     queryFn: async ({signal}) => {
-      const data = await discountSetupClient.getDsicountSetup({ id: 0, signal })
+      const data = await discountSetupClient.getDiscount({ signal })
       return data
     },
     networkMode:"always",

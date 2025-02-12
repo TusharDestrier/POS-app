@@ -14,9 +14,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { FetchedAssortmentType } from '@/types/assortment'
+import { FetchedDiscountType } from '@/types/discountSetup'
 
-function DiscountMasterTableActions({ assortment }: { assortment: FetchedAssortmentType }) {
+function DiscountMasterTableActions({ assortment }: { assortment: FetchedDiscountType }) {
   const setCurrentDiscountSetuprId = useDiscountnMasterDataStore(
     (state) => state.setCurrentDiscountnMasterId
   )
@@ -27,21 +27,22 @@ function DiscountMasterTableActions({ assortment }: { assortment: FetchedAssortm
 
   function editHandler() {
     openModal()
-    setCurrentDiscountSetuprId(assortment.assortmentID)
+    setCurrentDiscountSetuprId(assortment.discountID)
     setMode('Edit')
   }
   function viewHandler() {
     openModal()
-    setCurrentDiscountSetuprId(assortment.assortmentID)
+    setCurrentDiscountSetuprId(assortment.discountID)
     setMode('View')
   }
   async function deleteHandler() {
     setMode('Delete')
     try {
-      const data = await fetchDiscountMasterById(assortment.assortmentID)
+      const data = await fetchDiscountMasterById(assortment.discountID)
       const newData = {
         ...data,
         usedFor: 'D',
+        discountAssortments: data.discountAssortments ?? [],
       }
       await createDiscountMaster(newData)
     } catch (error: unknown) {
@@ -62,7 +63,7 @@ function DiscountMasterTableActions({ assortment }: { assortment: FetchedAssortm
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuItem
-          onClick={() => navigator.clipboard.writeText(String(assortment.assortmentID))}
+          onClick={() => navigator.clipboard.writeText(String(assortment.discountID))}
         >
           Assortment Id
         </DropdownMenuItem>

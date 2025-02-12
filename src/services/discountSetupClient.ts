@@ -1,18 +1,18 @@
 import ApiClient from './ApiClient'
 
-import {  discountMasterPostFormatter } from '@/app/pages/Root/Administration/setup/discount/DiscountMaster/helper/discountMasterPostFormatter';
-import { DiscountResponseType, FetchedDiscountType } from '@/types/discountSetup';
+import { DiscountPostType } from '@/app/pages/Root/Administration/setup/discount/DiscountMaster/helper/discountMasterPostFormatter'
+import { DiscountResponseType, FetchedDiscountType } from '@/types/discountSetup'
 
 class DiscountSetupClient extends ApiClient {
   constructor() {
     super('api/')
   }
 
-  async getDiscount({ id = 0, signal }: { id: number; signal?: AbortSignal }) {
+  async getDiscount({ signal }: { signal?: AbortSignal }) {
     const response = await this.get<FetchedDiscountType[]>(
       `Discount/GetAllDiscount`,
       {
-        DesignationID: id,
+        DesignationID: 0,
       },
       {
         signal,
@@ -22,17 +22,17 @@ class DiscountSetupClient extends ApiClient {
   }
 
   async getDiscountById({ id = 0 }: { id: number | null }) {
-      const response = await this.get<FetchedDiscountType>(`Discount/GetDiscount?discountID=0`, {
-        AssortmentID: id,
-      })
-      return response.data
-    }
+    const response = await this.get<FetchedDiscountType>(`Discount/GetDiscount`, {
+      discountID: id,
+    })
+    return response.data
+  }
 
-  async createDiscount(DesignationData:DiscountPostType) {
+  async createDiscount(discountData: DiscountPostType) {
     try {
       const response = await this.post<DiscountResponseType>(
         `DiscountRep/PostDiscount`,
-        DesignationData
+        discountData
       )
 
       // ✅ Status check for non-200 responses
@@ -43,9 +43,9 @@ class DiscountSetupClient extends ApiClient {
       return response.data
     } catch (error: unknown) {
       if (error instanceof Error) {
-        throw new Error(error.message);
+        throw new Error(error.message)
       }
-      throw new Error("An unknown error occurred.");
+      throw new Error('An unknown error occurred.')
     }
   }
 }

@@ -2,14 +2,14 @@
 import { CaretSortIcon } from '@radix-ui/react-icons'
 import { ColumnDef } from '@tanstack/react-table'
 
-import { Customer } from '../../data/data'
 import DiscountMasterTableActions from '../DiscountMasterTableActions'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
+import { FetchedDiscountType } from '@/types/discountSetup'
 
 
-export const columns: ColumnDef<Customer>[] = [
+export const columns: ColumnDef<FetchedDiscountType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -32,42 +32,28 @@ export const columns: ColumnDef<Customer>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'fullName',
+    accessorKey: 'discountName',
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-        Full Name
+       Discount Name
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue('fullName')}</div>,
+    cell: ({ row }) => <div className='ms-4'>{row.getValue('discountName')}</div>,
   },
   {
-    accessorKey: 'status',
+    accessorKey: 'isActive',
     header: 'Status',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('status')}</div>,
+    cell: ({ row }) => <div className="capitalize">{row.getValue('isActive')}</div>,
   },
-  {
-    accessorKey: 'email',
-    header: ({ column }) => (
-      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-        Email
-        <CaretSortIcon className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>,
-  },
-  {
-    accessorKey: 'phoneNo',
-    header: 'Phone Number',
-    cell: ({ row }) => <div>{row.getValue('phoneNo')}</div>,
-  },
+  
   {
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const customer = row.original
+      const assortment = row.original
 
-      return <DiscountMasterTableActions customer={customer} />
+      return <DiscountMasterTableActions assortment={assortment} />
     },
   },
 ]
