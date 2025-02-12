@@ -3,6 +3,10 @@ import { z } from 'zod'
 import { DiscountMasterSchema } from '../components/DiscountMasterForm/schema'
 import useDiscountMasterStore from '../store/useDiscountMasterStore'
 
+
+export type DiscountPostType=ReturnType <typeof discountMasterPostFormatter>
+
+
 export default function discountMasterPostFormatter( id: number | string | null,
   data: z.infer<typeof DiscountMasterSchema>
 ) {

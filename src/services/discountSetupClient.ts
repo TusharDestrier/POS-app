@@ -1,6 +1,6 @@
 import ApiClient from './ApiClient'
 
-import { DiscountPostType } from '@/app/pages/Root/Administration/setup/discount/DiscountMaster/helper/discountMasterPostFormatter';
+import {  discountMasterPostFormatter } from '@/app/pages/Root/Administration/setup/discount/DiscountMaster/helper/discountMasterPostFormatter';
 import { DiscountResponseType, FetchedDiscountType } from '@/types/discountSetup';
 
 class DiscountSetupClient extends ApiClient {

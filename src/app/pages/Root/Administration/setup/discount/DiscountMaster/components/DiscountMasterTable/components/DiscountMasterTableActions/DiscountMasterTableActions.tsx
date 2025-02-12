@@ -1,11 +1,9 @@
 import { MoreHorizontal } from 'lucide-react'
 
-
-
 import { useCreateDiscountMaster } from '../../../../hooks_api/useCreateDiscountMasterData'
 import { useFetchDiscountMasterById } from '../../../../hooks_api/useDiscountMasterDataById'
 import useDiscountMasterStore from '../../../../store/useDiscountMasterStore'
-import { useDiscountMasterStoreData } from '../../../../store/useDiscountMasterStoreData'
+import { useDiscountnMasterDataStore } from '../../../../store/useDiscountMasterStoreData'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -18,28 +16,24 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { FetchedAssortmentType } from '@/types/assortment'
 
-
-function DiscountMasterTableActions({
-  assortment,
-}: {
-  assortment: FetchedAssortmentType
-}) {
-  const {setCurrentDiscountSetuprId}=useDiscountMasterStoreData();
+function DiscountMasterTableActions({ assortment }: { assortment: FetchedAssortmentType }) {
+  const setCurrentDiscountSetuprId = useDiscountnMasterDataStore(
+    (state) => state.setCurrentDiscountnMasterId
+  )
   const { fetchDiscountMasterById } = useFetchDiscountMasterById()
-const {createDiscountMaster}=useCreateDiscountMaster()
+  const { createDiscountMaster } = useCreateDiscountMaster()
   const openModal = useDiscountMasterStore((state) => state.toggleOpen)
   const setMode = useDiscountMasterStore((state) => state.setMode)
 
   function editHandler() {
-    openModal();
+    openModal()
     setCurrentDiscountSetuprId(assortment.assortmentID)
-    setMode('Edit');
+    setMode('Edit')
   }
   function viewHandler() {
-    openModal();
+    openModal()
     setCurrentDiscountSetuprId(assortment.assortmentID)
-    setMode('View');
-    
+    setMode('View')
   }
   async function deleteHandler() {
     setMode('Delete')
@@ -50,7 +44,6 @@ const {createDiscountMaster}=useCreateDiscountMaster()
         usedFor: 'D',
       }
       await createDiscountMaster(newData)
-      
     } catch (error: unknown) {
       if (error instanceof Error) {
         throw new Error(error.message)
