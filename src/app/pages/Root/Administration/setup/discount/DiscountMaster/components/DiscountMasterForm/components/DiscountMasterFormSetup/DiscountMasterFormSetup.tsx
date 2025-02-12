@@ -41,11 +41,11 @@ function DiscountMasterFormSetup() {
                   className="flex gap-3 items-center roles-radio "
                 >
                   <FormItem className="flex items-center gap-1">
-                    <RadioGroupItem value="General" id="general" />
+                    <RadioGroupItem value="G" id="general" />
                     <FormLabel htmlFor="general">General</FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center gap-1">
-                    <RadioGroupItem value="Assortment" id="assortment" />
+                    <RadioGroupItem value="A" id="assortment" />
                     <FormLabel htmlFor="assortment">Assortment</FormLabel>
                   </FormItem>
                 </RadioGroup>
@@ -69,11 +69,11 @@ function DiscountMasterFormSetup() {
                   className="flex gap-3 items-center roles-radio"
                 >
                   <FormItem className="flex items-center gap-1">
-                    <RadioGroupItem value="Percentage" id="percentage" />
+                    <RadioGroupItem value="P" id="percentage" />
                     <FormLabel htmlFor="percentage">Percentage</FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center gap-1">
-                    <RadioGroupItem value="Amount" id="amount" />
+                    <RadioGroupItem value="A" id="amount" />
                     <FormLabel htmlFor="amount">Amount</FormLabel>
                   </FormItem>
                 </RadioGroup>
@@ -111,15 +111,15 @@ function DiscountMasterFormSetup() {
                   className="flex items-center gap-3 roles-radio"
                 >
                   <FormItem className="flex items-center gap-1">
-                    <RadioGroupItem value="Bill Level" id="bill-level" />
+                    <RadioGroupItem value="L" id="bill-level" />
                     <FormLabel htmlFor="bill-level">Bill Level</FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center gap-1">
-                    <RadioGroupItem value="Item Level" id="item-level" />
+                    <RadioGroupItem value="I" id="item-level" />
                     <FormLabel htmlFor="item-level">Item Level</FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center gap-1">
-                    <RadioGroupItem value="Both" id="both" />
+                    <RadioGroupItem value="B" id="both" />
                     <FormLabel htmlFor="both">Both</FormLabel>
                   </FormItem>
                 </RadioGroup>
@@ -143,11 +143,11 @@ function DiscountMasterFormSetup() {
                   className="flex items-center gap-3 roles-radio"
                 >
                   <FormItem className="flex items-center gap-1">
-                    <RadioGroupItem value="Yes" id="yes" />
+                    <RadioGroupItem value="Y" id="yes" />
                     <FormLabel htmlFor="yes">Yes</FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center gap-1">
-                    <RadioGroupItem value="No" id="no" />
+                    <RadioGroupItem value="N" id="no" />
                     <FormLabel htmlFor="no">No</FormLabel>
                   </FormItem>
                 </RadioGroup>

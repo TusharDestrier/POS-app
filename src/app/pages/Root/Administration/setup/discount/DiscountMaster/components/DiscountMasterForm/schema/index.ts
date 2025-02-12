@@ -2,11 +2,11 @@ import { z } from "zod";
 
 export const DiscountMasterSchema = z.object({
   name: z.string().nonempty("Name is required"),
-  discountType: z.enum(["General", "Assortment"]),
-  discountBase: z.enum(["Percentage", "Amount"]),
+  discountType: z.enum(["G", "A"]),
+  discountBase: z.enum(["P", "A"]),
   percentage: z
     .preprocess((value) => (value === "" ? undefined : Number(value)), z.number().min(0, "Value must be non-negative").optional()),
-  appliedOn: z.enum(["Bill Level", "Item Level", "Both"]),
+  appliedOn: z.enum(["L", "I", "B"]),
   employeeDiscount: z.enum(["Y", "N"]),
   maximumDiscount: z
     .preprocess((value) => (value === "" ? undefined : Number(value)), z.number().min(0, "Value must be non-negative").optional()),

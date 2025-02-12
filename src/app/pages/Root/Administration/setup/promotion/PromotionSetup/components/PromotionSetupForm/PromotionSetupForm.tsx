@@ -35,13 +35,11 @@ function PromotionSetupForm() {
           type: "flatDiscount", // Default to "flatDiscount"
         },
         discountTypes: [
-          {
-            type: undefined, // Initially undefined
-            discountOn: "",
-            condition: "",
-            comparison: "",
-          },
+          { isSelected: false, type: null, discountOn: "", condition: "", comparison: "", from: null, to: null },
+          { isSelected: false, type: null, discountOn: "", condition: "", comparison: "", from: null, to: null },
+          { isSelected: false, type: null, discountOn: "", condition: "", comparison: "", from: null, to: null },
         ],
+        
       },
     },
   })

@@ -6,23 +6,25 @@ import DiscountMasterFormSetup from './components/DiscountMasterFormSetup'
 import DiscountMasterSetupAssortmentModal from './components/DiscountMasterSetupAssortmentModal'
 import { DiscountMasterSchema } from './schema'
 import discountMasterPostFormatter from '../../helper/discountMasterPostFormatter'
+import { useCreateDiscountMaster } from '../../hooks_api/useCreateDiscountMasterData'
 
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 
 function DiscountMasterForm() {
+  const { createDiscountMaster, isPending } = useCreateDiscountMaster()
   const formMethods = useForm<z.infer<typeof DiscountMasterSchema>>({
     resolver: zodResolver(DiscountMasterSchema),
     defaultValues: {
       name: 'name',
-      discountType: 'General',
-      discountBase: 'Percentage',
-      appliedOn: 'Bill Level',
+      discountType: 'G',
+      discountBase: 'P',
+      appliedOn: 'L',
       employeeDiscount: 'N',
-      percentage:3,
-      maximumDiscount:2,
-      minimumBilling:2,
+      percentage: 3,
+      maximumDiscount: 2,
+      minimumBilling: 2,
       otpRequired: false,
       allowToChange: false,
       inactive: false,
@@ -30,16 +32,23 @@ function DiscountMasterForm() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof DiscountMasterSchema>) {
-    const data= discountMasterPostFormatter(values);
-    console.log(data)
+  async function onSubmit(values: z.infer<typeof DiscountMasterSchema>) {
+    try {
+      const data = discountMasterPostFormatter(values)
+      await createDiscountMaster(data)
+      console.log(data)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message)
+      }
+    }
   }
   return (
     <div>
       <FormProvider {...formMethods}>
         <form onSubmit={formMethods.handleSubmit(onSubmit)} className="">
           <Tabs defaultValue="setup" className="w-full  ">
-            <TabsList className='grid grid-cols-2 gap-4 mb-6'>
+            <TabsList className="grid grid-cols-2 gap-4 mb-6">
               <TabsTrigger value="setup">Setup</TabsTrigger>
               <TabsTrigger value="terms">terms</TabsTrigger>
             </TabsList>
@@ -49,8 +58,10 @@ function DiscountMasterForm() {
             <TabsContent value="terms">Change your terms here.</TabsContent>
           </Tabs>
           <DiscountMasterSetupAssortmentModal />
-          <div className='text-right pb-10'>
-            <Button type="submit">Submit</Button>
+          <div className="text-right pb-10">
+            <Button type="submit" disabled={isPending}>
+              {isPending ? 'Submitting' : 'Submit'}
+            </Button>
           </div>
         </form>
       </FormProvider>

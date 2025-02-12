@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 
 type DiscountMasterStoreType = {
+  isLoading:boolean
+  setIsLoading: (loading: boolean) => void
   isOpen: boolean
   mode: 'Edit' | 'Create' | 'View'
   toggleOpen: () => void
@@ -8,6 +10,8 @@ type DiscountMasterStoreType = {
   setMode: (newMode: 'Edit' | 'Create' | 'View') => void
 }
 export const useDiscountMasterStore = create<DiscountMasterStoreType>((set) => ({
+  isLoading: false,
+  setIsLoading: (loading) => set({ isLoading: loading }),
   isOpen: false,
   mode: 'Create',
   toggleOpen: () => set((state) => ({ isOpen: !state.isOpen })),

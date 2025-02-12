@@ -1,6 +1,9 @@
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
-import {  getPropertiesByGroup } from './data/discountAssortmentData'
+import { createDiscountAssortmentPayload } from '../DiscountAssortmentListTable/helpers/discountAssortmentListGenerator'
+import { useGetItemFilterWise } from '../DiscountAssortmentListTable/hooks_api/useGetItemFilterWise'
+import { useGetAllItemsGroups } from '../DiscountAssortmentListTable/hooks_api/useGetItemsGroups'
+import { useGetPropertiesByGroupID } from '../DiscountAssortmentListTable/hooks_api/useGetpropertiesByGroupId'
 
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -14,164 +17,203 @@ import {
 } from '@/components/ui/select'
 
 
-interface PropertyOption {
-  value: string;
+type propertyValue = {
+  value: 'string'
 }
-
-interface Property {
-  propertyHolder: string;
-  propertyName: string;
-  propertyObj: PropertyOption[];
-}
-
-interface FilterSelection {
-  group: string;
-  
-  properties: {
-    [propertyHolder: string]: {
-      propertyName: string;
-      selectedValues: string[];
-    }
-  };
+export type PropertiesType = {
+  propertyID: string
+  propertyName: string
+  propertyValues: propertyValue[]
 }
 
 function DiscountAssortmentSearchFilters() {
-  const [filterSelection, setFilterSelection] = useState<FilterSelection>({
-    group: '',
-    properties: {}
-  });
-  const [groupProperties, setGroupProperties] = useState<Property[]>([]);
+  
+  const { itemsGroups, isLoading, error } = useGetAllItemsGroups()
+  const { generateItemsAsync, isPending } = useGetItemFilterWise()
+  const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null)
+  const [selectedProp, setSelectedProp] = useState<PropertiesType[]>([])
+  const {
+    itemsGroupsProperties,
+    isLoading: propertiesLoading,
+    error: propertiesError,
+  } = useGetPropertiesByGroupID(Number(selectedGroupId))
 
-  const handleGroupChange = async (value: string) => {
-    setFilterSelection(prev => ({ ...prev, group: value }));
-    const propertiesData = await getPropertiesByGroup(value);
-    setGroupProperties(propertiesData);
-    const newProperties: { [propertyHolder: string]: { propertyName: string; selectedValues: string[] } } = {};
-    propertiesData.forEach(prop => {
-      newProperties[prop.propertyHolder] = {
-        propertyName: prop.propertyName,
-        selectedValues: [] // start with an empty array.
-      };
-    });
-    setFilterSelection(prev => ({ ...prev, properties: newProperties }));
-  };
-  const handleCheckboxChange = (propertyHolder: string, value: string, checked: boolean) => {
-    setFilterSelection(prev => {
-      const current = prev.properties[propertyHolder];
-      let newSelectedValues = current.selectedValues;
+  const selectOptions = useMemo(() => {
+    if (isLoading) {
+      return (
+        <SelectItem disabled value="loading">
+          Loading...
+        </SelectItem>
+      )
+    }
+    if (error) {
+      return (
+        <SelectItem disabled value="error">
+          Error loading items
+        </SelectItem>
+      )
+    }
+    return (
+      itemsGroups?.map((group) => (
+        <SelectItem key={group.itemGrpID} value={group.itemGrpID.toString()}>
+          {group.itemGrpName}
+        </SelectItem>
+      )) || []
+    )
+  }, [isLoading, error, itemsGroups])
+
+  const handleGroupChange = useCallback((value: number) => {
+    console.log('Selected group:', value)
+    setSelectedGroupId(value)
+  }, [])
+
+  async function handleListGeneration() {
+    const data = createDiscountAssortmentPayload(Number(selectedGroupId), selectedProp)
+    await generateItemsAsync(data)
+    console.log(data)
+  }
+
+
+
+  function handleCheckboxChange(id: string, name: string, option: string, checked: boolean) {
+    setSelectedProp((prevSelectedProps) => {
+      const existingProp = prevSelectedProps.find((prop) => prop.propertyID === id)
+
       if (checked) {
-        newSelectedValues = [...current.selectedValues, value];
-      } else {
-        newSelectedValues = current.selectedValues.filter(val => val !== value);
-      }
-      return {
-        ...prev,
-        properties: {
-          ...prev.properties,
-          [propertyHolder]: {
-            ...current,
-            selectedValues: newSelectedValues
+        if (existingProp) {
+          const alreadySelected = existingProp.propertyValues.some((val) => val.value === option)
+          if (!alreadySelected) {
+            return prevSelectedProps.map((prop) =>
+              prop.propertyID === id
+                ? {
+                    ...prop,
+                    propertyValues: [...prop.propertyValues, { value: option }],
+                  }
+                : prop
+            )
+          } else {
+            return prevSelectedProps
           }
+        } else {
+          return [
+            ...prevSelectedProps,
+            { propertyID: id, propertyName: name, propertyValues: [{ value: option }] },
+          ]
         }
-      };
-    });
-  };
+      } else {
+        if (existingProp) {
+          const updatedValues = existingProp.propertyValues.filter((val) => val.value !== option)
+          if (updatedValues.length > 0) {
+            return prevSelectedProps.map((prop) =>
+              prop.propertyID === id ? { ...prop, propertyValues: updatedValues } : prop
+            )
+          } else {
+            // Agar koi value nai bachi, to poora property object remove kar do
+            return prevSelectedProps.filter((prop) => prop.propertyID !== id)
+          }
+        } else {
+          return prevSelectedProps
+        }
+      }
+    })
+  }
 
-  // Function to save the selection.
-  const saveSelection = () => {
-    console.log('Saved Filter Selection:', filterSelection);
-    // Convert the properties object into an array if needed.
-    const payload = {
-      group: filterSelection.group,
-      properties: Object.entries(filterSelection.properties).map(([propertyHolder, propData]) => ({
-        propertyHolder,
-        propertyName: propData.propertyName,
-        selectedValues: propData.selectedValues
-      }))
-    };
-    console.log('Payload to Post:', payload);
-    // Here you can post the payload to your backend.
-  };
+
+  // console.log(generatedItems);
+  
 
   return (
     <div className="p-6 bg-white shadow-md rounded-lg w-full">
       <h2 className="text-lg font-semibold text-gray-800 mb-4">Filter Assortment</h2>
-      
+
       {/* Group Selection */}
       <div className="flex flex-col gap-2 mb-4">
         <Label className="text-sm">Group</Label>
-        <Select onValueChange={handleGroupChange}>
+        <Select onValueChange={(val) => handleGroupChange(Number(val))}>
           <SelectTrigger className="border p-2 w-full text-start">
             <SelectValue placeholder="Select a Group" />
           </SelectTrigger>
           <SelectContent>
-            <SelectGroup>
-              <SelectItem value="cloth">Cloth</SelectItem>
-              <SelectItem value="deos">Deos</SelectItem>
-              <SelectItem value="group3">Group3</SelectItem>
-              <SelectItem value="group4">Group4</SelectItem>
-              <SelectItem value="group5">Group5</SelectItem>
-            </SelectGroup>
+            <SelectGroup>{selectOptions}</SelectGroup>
           </SelectContent>
         </Select>
       </div>
 
-      {/* Dynamic Filtering Table */}
-      {groupProperties.length > 0 && (
-        <div className="overflow-x-scroll max-w-[900px] mx-auto w-full border">
-          <table className="w-[900px] border-collapse mx-auto">
-            <thead>
-              <tr>
-                {groupProperties.map(prop => (
-                  <th key={prop.propertyHolder} className="px-4 py-2 border text-center">
-                    {prop.propertyName}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {(() => {
-                // Determine the maximum number of options among all properties.
-                const maxRows = Math.max(...groupProperties.map(prop => prop.propertyObj.length));
-                const rows = [];
-                for (let i = 0; i < maxRows; i++) {
-                  rows.push(
-                    <tr key={i}>
-                      {groupProperties.map(prop => {
-                        const option = prop.propertyObj[i];
-                        return (
-                          <td key={prop.propertyHolder} className="px-4 py-2 border text-center">
-                            {option ? (
-                              <label className="flex items-center gap-2">
-                                <input
-                                  type="checkbox"
-                                  onChange={(e) =>
-                                    handleCheckboxChange(prop.propertyHolder, option.value, e.target.checked)
-                                  }
-                                />
-                                <span>{option.value}</span>
-                              </label>
-                            ) : null}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                }
-                return rows;
-              })()}
-            </tbody>
-          </table>
+      {selectedGroupId && (
+        <div className="mt-4">
+          <h3 className="text-md font-semibold mb-2">Group Properties</h3>
+          {propertiesLoading && <p>Loading properties...</p>}
+          {propertiesError && <p className="text-red-500">Error: {propertiesError}</p>}
+          {itemsGroupsProperties && itemsGroupsProperties.length > 0 ? (
+            <div className="overflow-x-scroll max-w-[600px] mx-auto w-full border">
+              <table className="w-[600px] border-collapse mx-auto">
+                <thead>
+                  <tr>
+                    {itemsGroupsProperties.map((prop) => (
+                      <th key={prop.propertyID} className="px-4 py-2 border text-center">
+                        {prop.propertyName}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {(() => {
+                    const maxRows = Math.max(
+                      ...itemsGroupsProperties.map((prop) => prop.propertyValues?.length)
+                    )
+                    const rows = []
+                    for (let i = 0; i < maxRows; i++) {
+                      rows.push(
+                        <tr key={i}>
+                          {itemsGroupsProperties.map((prop) => {
+                            const option = prop.propertyValues[i]
+                            return (
+                              <td key={prop.propertyID} className="px-4 py-2 border text-center">
+                                {option ? (
+                                  <label className="flex items-center gap-2">
+                                    <input
+                                      type="checkbox"
+                                      onChange={(e) => {
+                                        handleCheckboxChange(
+                                          prop.propertyID,
+                                          prop.propertyName,
+                                          option.value,
+                                          e.target.checked
+                                        )
+                                      }}
+                                    />
+                                    <span>{option.value}</span>
+                                  </label>
+                                ) : null}
+                              </td>
+                            )
+                          })}
+                        </tr>
+                      )
+                    }
+                    return rows
+                  })()}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p>No properties found for this group.</p>
+          )}
         </div>
       )}
 
       <div className="flex gap-4 mt-4">
-        <Button type="button" onClick={saveSelection} className="bg-green-500 hover:bg-green-600 text-white">
-          Save
+        <Button
+          type="button"
+          disabled={isPending}
+          onClick={() => handleListGeneration()}
+          className="ms-auto"
+        >
+          {isPending ? 'Generating' : 'Generate'}
         </Button>
       </div>
     </div>
-  );
+  )
 }
 
 export default DiscountAssortmentSearchFilters

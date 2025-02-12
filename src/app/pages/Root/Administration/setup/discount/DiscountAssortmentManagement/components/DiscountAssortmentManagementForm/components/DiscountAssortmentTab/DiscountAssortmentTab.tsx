@@ -8,15 +8,6 @@ import DiscountAssortmentToInclude from '../DiscountAssortmentToInclude'
 import { Button } from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 
@@ -28,9 +19,8 @@ function DiscountAssortmentTab() {
 const openListModal=useDiscountAssortmentManagementStore(state=>state.toggleOpen2)
 
   return (
-    <div className="">
+    <div className="mt-4">
       <div className="space-y-4">
-        {' '}
         <FormField
           control={form.control}
           name="assortmentName"
@@ -67,24 +57,12 @@ const openListModal=useDiscountAssortmentManagementStore(state=>state.toggleOpen
           </TabsList>
           <div className="flex gap-6 w-full m-3">
             <div className="w-[300px]">
-              <Select>
-                <SelectTrigger className="">
-                  <SelectValue placeholder="Select a Name" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Names</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <div>
+                <Input placeholder='Search' onClick={openListModal}/>
+              </div>
             </div>
             <div className="ml-auto flex space-x-2 float-end mr-3 gap-4">
-              <Button type="button" onClick={openListModal}>Show Items</Button>
+              <Button type="button" >Show Items</Button>
               <Button type="button">Copy Assortment</Button>
             </div>
           </div>
