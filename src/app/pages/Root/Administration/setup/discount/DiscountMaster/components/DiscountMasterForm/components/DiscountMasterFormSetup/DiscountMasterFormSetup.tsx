@@ -1,5 +1,6 @@
 import { useFormContext } from 'react-hook-form'
 
+
 import DiscountMasterAssortmentListTable from '../DiscountMasterAssortmentListTable'
 
 import { Checkbox } from '@/components/ui/checkbox'
@@ -9,7 +10,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
 function DiscountMasterFormSetup() {
   const { control } = useFormContext()
-
+  
   return (
     <div className="grid grid-cols-2 gap-4">
       <div className="space-y-3">

@@ -21,6 +21,12 @@ class DiscountSetupClient extends ApiClient {
     return response.data
   }
 
+  async getDiscountById({ id = 0 }: { id: number | null }) {
+      const response = await this.get<FetchedDiscountType>(`Discount/GetDiscount?discountID=0`, {
+        AssortmentID: id,
+      })
+      return response.data
+    }
 
   async createDiscount(DesignationData:DiscountPostType) {
     try {

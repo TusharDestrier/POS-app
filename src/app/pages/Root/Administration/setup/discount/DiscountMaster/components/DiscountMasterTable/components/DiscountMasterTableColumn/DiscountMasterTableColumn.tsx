@@ -1,25 +1,13 @@
 // tableColumns.ts
-import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
+import { CaretSortIcon } from '@radix-ui/react-icons'
 import { ColumnDef } from '@tanstack/react-table'
 
-import { useDiscountMasterStore } from '../../../../store/useDiscountMasterStore'
 import { Customer } from '../../data/data'
+import DiscountMasterTableActions from '../DiscountMasterTableActions'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 
-// import StoreDetailModalBtn from '../../StoreDetailModal'
-
-// import StoreDetailForm from '../../StoreDetailForm'
-// import useStoreDetail from '../../../store/useStoreDetail'
 
 export const columns: ColumnDef<Customer>[] = [
   {
@@ -79,36 +67,8 @@ export const columns: ColumnDef<Customer>[] = [
     cell: ({ row }) => {
       const customer = row.original
 
-      return <TableRowDropDowns customer={customer} />
+      return <DiscountMasterTableActions customer={customer} />
     },
   },
 ]
 
-function TableRowDropDowns({ customer }: { customer: Customer }) {
-  const modalToggler = useDiscountMasterStore((state) => state.toggleOpen)
-  const setModalMode = useDiscountMasterStore((state) => state.setMode)
-
-  function EditModalHandler() {
-    modalToggler()
-    setModalMode('Edit')
-  }
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
-          <DotsHorizontalIcon className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(customer.id)}>
-          Copy Customer ID
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={EditModalHandler}>Edit Customer</DropdownMenuItem>
-        <DropdownMenuItem>View Customer</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}

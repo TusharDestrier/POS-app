@@ -18,7 +18,7 @@ interface DiscountAssortment {
     allowToChange: string;
     isActive: string;
     enteredBy: number;
-    usedFor: "S"; // If "S" is constant, we can enforce it
+    usedFor: string| null; // If "S" is constant, we can enforce it
     discountAssortments: DiscountAssortment[];
   }
 
