@@ -32,6 +32,11 @@ export const columns: ColumnDef<ExtendedSalesPersonType>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: 'no',
+    header: 'No.',
+    cell: ({ row }) => <div className="">{row.index + 1}</div>, // Row index for numbering
+  },
+  {
     accessorKey: 'fullName',
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>

@@ -108,7 +108,7 @@ const globalLoading=useStoreMasterStore(state=>state.isLoading);
       <div className="w-full">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter emails..."
+            placeholder="Filter Store Name..."
             value={(table.getColumn('storeName')?.getFilterValue() as string) ?? ''}
             onChange={(event) => table.getColumn('storeName')?.setFilterValue(event.target.value)}
             className="max-w-sm"

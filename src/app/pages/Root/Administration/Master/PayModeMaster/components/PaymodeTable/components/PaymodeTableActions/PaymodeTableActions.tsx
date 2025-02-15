@@ -1,6 +1,8 @@
 import { DropdownMenuItem } from '@radix-ui/react-dropdown-menu'
 import { MoreHorizontal } from 'lucide-react'
 
+import { useCreatePaymode } from '../../../../hooks_api/useCreatePaymode'
+import { useFetchPaymodeById } from '../../../../hooks_api/usePaymodeMasterDataById'
 import { usePaymodeMasterDataStore } from '../../../../store/usePaymentMethodStore'
 import { usePaymodeMaster } from '../../../../store/usePaymodeMaster'
 import { PaymodeTableType } from '../../PaymodeTable'
@@ -13,10 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useFetchPaymodeById } from '../../../../hooks_api/usePaymodeMasterDataById'
-import { string } from 'zod'
-import { useCreateCustomer } from '../../../../../CustomerMaster/hooks_api/useCreateCustomer'
-import { useCreatePaymode } from '../../../../hooks_api/useCreatePaymode'
+
 
 function PaymodeTableActions({ paymode }: { paymode: PaymodeTableType }) {
   const setMode = usePaymodeMaster((state) => state.setMode)

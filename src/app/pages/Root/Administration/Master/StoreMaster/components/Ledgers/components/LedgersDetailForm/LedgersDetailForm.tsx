@@ -1,5 +1,10 @@
 import { Trash } from 'lucide-react'
+import { useEffect } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
+
+import { useStoreMasterById } from '../../../../hooks_api/useFetchStoreMasterById'
+import { useStoreMasterDataStore } from '../../../../store/useStoreMasterDataStore'
+import useStoreMasterStore from '../../../../store/useStoreMasterStore'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -13,10 +18,11 @@ import {
 } from '@/components/ui/select'
 
 const LedgersDetailsForm = () => {
-  // Access form context for central form control
-  const { control, watch, setValue } = useFormContext()
-
-  // Dynamic field management for ledger values
+   const { control, setValue,watch } = useFormContext()
+    const mode = useStoreMasterStore((state) => state.mode)
+    const storeId = useStoreMasterDataStore((state) => state.currentStoreMasterId)
+    const { storeMaster } = useStoreMasterById(Number(storeId))
+  
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'objLedger',
@@ -37,13 +43,18 @@ const LedgersDetailsForm = () => {
     { code: 'COST002', name: 'Cost Center 2' },
   ]
 
+   // Populate existing data in edit mode
+    useEffect(() => {
+      if (mode === 'Edit' && storeMaster?.objLedger) {
+        setValue('objLedger', storeMaster.objLedger)
+      }
+    }, [mode, storeMaster, setValue])
+
   return (
     <div className="border p-4 border-black border-solid h-[580px] overflow-y-auto">
       <div className="form-head mb-4">
         <ul className="grid grid-cols-4 gap-3 ">
-          <li className="text-sm font-semibold">
-            Ledger Name <span className="text-primary">*</span>
-          </li>
+          <li className="text-sm font-semibold">Ledger Name *</li>
           <li className="text-sm font-semibold">Sub Ledger Name</li>
           <li className="text-sm font-semibold">Cost Centre</li>
           <li className="text-sm font-semibold">Discontinued</li>
@@ -52,7 +63,6 @@ const LedgersDetailsForm = () => {
 
       {fields.map((item, index) => (
         <div key={item.id} className="grid grid-cols-4 gap-5 mb-3">
-          {/* Ledger Select */}
           <FormField
             control={control}
             name={`objLedger.${index}.ledgerName`}
@@ -62,14 +72,12 @@ const LedgersDetailsForm = () => {
                   <Select
                     onValueChange={(value) => {
                       const selectedLedger = ledgerOptions.find((ledger) => ledger.name === value)
-                      if (selectedLedger) {
-                        field.onChange(selectedLedger.name) // Save ledger name
-                        setValue(`objLedger.${index}.ledgerCode`, selectedLedger.code) // Save ledger code
-                        setValue(`objLedger.${index}.subLedgerName`, '') // Reset subledger
-                        setValue(`objLedger.${index}.subLedgerCode`, '') // Reset subledger code
-                      }
+                      field.onChange(selectedLedger?.name || '')
+                      setValue(`objLedger.${index}.ledgerCode`, selectedLedger?.code || '')
+                      setValue(`objLedger.${index}.subLedgerName`, '')
+                      setValue(`objLedger.${index}.subLedgerCode`, '')
                     }}
-                    defaultValue={field.value}
+                    value={field.value || ''}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Ledger" />
@@ -88,7 +96,6 @@ const LedgersDetailsForm = () => {
             )}
           />
 
-          {/* SubLedger Select */}
           <FormField
             control={control}
             name={`objLedger.${index}.subLedgerName`}
@@ -102,13 +109,11 @@ const LedgersDetailsForm = () => {
                           subLedger.name === value &&
                           subLedger.parentLedgerCode === watch(`objLedger.${index}.ledgerCode`)
                       )
-                      if (selectedSubLedger) {
-                        field.onChange(selectedSubLedger.name) // Save subledger name
-                        setValue(`objLedger.${index}.subLedgerCode`, selectedSubLedger.code) // Save subledger code
-                      }
+                      field.onChange(selectedSubLedger?.name || '')
+                      setValue(`objLedger.${index}.subLedgerCode`, selectedSubLedger?.code || '')
                     }}
-                    defaultValue={field.value}
-                    disabled={!watch(`objLedger.${index}.ledgerCode`)} // Disable if no ledger is selected
+                    value={field.value || ''}
+                    disabled={!watch(`objLedger.${index}.ledgerCode`)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select SubLedger" />
@@ -132,7 +137,6 @@ const LedgersDetailsForm = () => {
             )}
           />
 
-          {/* CostCenter Select */}
           <FormField
             control={control}
             name={`objLedger.${index}.costCenterName`}
@@ -144,12 +148,10 @@ const LedgersDetailsForm = () => {
                       const selectedCostCenter = costCenterOptions.find(
                         (costCenter) => costCenter.name === value
                       )
-                      if (selectedCostCenter) {
-                        field.onChange(selectedCostCenter.name) // Save cost center name
-                        setValue(`objLedger.${index}.costCenterCode`, selectedCostCenter.code) // Save cost center code
-                      }
+                      field.onChange(selectedCostCenter?.name || '')
+                      setValue(`objLedger.${index}.costCenterCode`, selectedCostCenter?.code || '')
                     }}
-                    defaultValue={field.value}
+                    value={field.value || ''}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Cost Center" />
@@ -169,7 +171,6 @@ const LedgersDetailsForm = () => {
           />
 
           <div className='flex gap-5'>
-            {/* Discontinued Checkbox */}
             <FormField
               control={control}
               name={`objLedger.${index}.discontinue`}
@@ -180,7 +181,7 @@ const LedgersDetailsForm = () => {
                       checked={field.value === 'Y'}
                       onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')}
                     />
-                  </FormControl>  
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -202,10 +203,13 @@ const LedgersDetailsForm = () => {
             type="button"
             onClick={() =>
               append({
-                ledger: '',
-                subLedger: '',
-                costCentre: '',
-                discontinue: false,
+                ledgerName: '',
+                ledgerCode: '',
+                subLedgerName: '',
+                subLedgerCode: '',
+                costCenterName: '',
+                costCenterCode: '',
+                discontinue: 'N',
               })
             }
           >

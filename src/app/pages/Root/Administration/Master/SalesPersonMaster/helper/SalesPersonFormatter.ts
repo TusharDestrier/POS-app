@@ -26,8 +26,8 @@ export function salesPersonFormatter(
     whatsAppNo: data.salesPerson.whatsappNo ?? '',
     email: data.salesPerson.email ?? '',
     employeeID: data.salesPerson.employeeId ?? '',
-    allocatedRole: Number(data.salesPerson.allocateRole) || 0,
-    allocatedUser: Number(data.salesPerson.allocateUser) || 0,
+    allocateRole: Number(data.salesPerson.allocateRole) || 1,
+    allocateUser: Number(data.salesPerson.allocateUser) || 2,
     isActive: data.salesPerson.inactive ? 'Y' : 'N',
     enteredBy: '0', // Default value, change if needed
     usedFor: operation[mode], // Adjust this as required

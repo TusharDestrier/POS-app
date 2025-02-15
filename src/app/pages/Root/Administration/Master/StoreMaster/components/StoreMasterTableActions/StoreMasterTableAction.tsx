@@ -55,9 +55,9 @@ function StoreMasterTableAction({ storeData }: { storeData: FetchedStoreMasterTy
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(String(storeData.storeID))}>
+        {/* <DropdownMenuItem onClick={() => navigator.clipboard.writeText(String(storeData.storeID))}>
           Copy StoreMaster ID
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={EditHandler}>Edit StoreMaster</DropdownMenuItem>
         <DropdownMenuItem onClick={ViewHandler}>View StoreMaster</DropdownMenuItem>

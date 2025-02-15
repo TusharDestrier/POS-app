@@ -33,8 +33,8 @@ function SalesPersonForm() {
         whatsappNo: '',
         email: '',
         employeeId: '',
-        allocateRole: '',
-        allocateUser: '',
+        allocateRole: 'admin',
+        allocateUser: '0',
         inactive: false,
       },
       storeAllocation: {
@@ -61,8 +61,8 @@ function SalesPersonForm() {
           whatsappNo: salesPerson?.whatsAppNo || '3242324242',
           email: salesPerson?.email || 'tfegegr@gmail.com',
           employeeId: salesPerson?.employeeID || 'emp1',
-          allocateRole: salesPerson?.allocatedRole || 'admin',
-          allocateUser: salesPerson?.allocatedUser || '',
+          allocateRole: salesPerson?.allocateRole || 'admin',
+          allocateUser: salesPerson?.allocateUser|| '2',
           inactive: salesPerson?.isActive === 'Y' || false,
         },
         storeAllocation: {
@@ -142,7 +142,7 @@ function SalesPersonForm() {
           <Button type="submit" className="btn btn-primary" disabled={isPending}>
             {isPending ? 'Submitting...' : 'Submit'}
           </Button>
-          <Button onClick={closeModal}>Cancel</Button>
+          <Button type='button' onClick={closeModal}>Cancel</Button>
         </div>
         {error && <p className="text-end">{error.message}</p>}
       </form>

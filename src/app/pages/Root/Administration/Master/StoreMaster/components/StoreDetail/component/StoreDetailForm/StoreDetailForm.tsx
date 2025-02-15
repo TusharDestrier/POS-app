@@ -319,37 +319,38 @@ function StoreDetailForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={control}
-          name="GSTINDate"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                GSTIN Date <span className="text-red-500">*</span>
-              </FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button variant="outline" className="w-full text-left">
-                      {field.value && field.value !== ''
-                        ? format(new Date(field.value), 'PPP')
-                        : 'Pick a date'}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value ? new Date(field.value) : undefined}
-                    onSelect={(date) => field.onChange(date?.toISOString() || null)}
-                  />
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+       <FormField
+  control={control}
+  name="GSTINDate"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>
+        GSTIN Date <span className="text-red-500">*</span>
+      </FormLabel>
+      <Popover >
+        <PopoverTrigger asChild>
+          <FormControl>
+            <Button variant="outline" className="w-full text-left pl-3 py-2">
+              {field.value ? format(new Date(field.value), 'PPP') : 'Pick a date'}
+              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+            </Button>
+          </FormControl>
+        </PopoverTrigger>
+        <PopoverContent side="bottom">
+          <Calendar
+           mode="single"
+           onSelect={(d) => {
+             field.onChange(d)
+             setIsOpen2(false) // close after selection
+            }}
+          />
+        </PopoverContent>
+      </Popover>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
         <FormField
           control={control}
           name="stateCode"

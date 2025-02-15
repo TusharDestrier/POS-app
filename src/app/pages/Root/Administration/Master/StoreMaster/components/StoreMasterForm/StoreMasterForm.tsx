@@ -4,6 +4,7 @@ import { useForm, FormProvider } from 'react-hook-form'
 //import { useEffect } from 'react'
 
 //import { StoreMasterFormatter } from '../../helper/StoreMasterFormatter'
+import mapStoreMasterFetchedTypeToTableData from '../../helper/StoreMasterDataTbleExtracter'
 import { StoreMasterFormatter } from '../../helper/StoreMasterFormatter'
 import { useCreateStoreMaster } from '../../hooks_api/useCreateStoreMaster'
 import { useStoreMasterById } from '../../hooks_api/useFetchStoreMasterById'
@@ -11,6 +12,7 @@ import { StoreMasterHeadSchema } from '../../schemas/StoreMasterHeadSchema'
 import { useStoreMasterDataStore } from '../../store/useStoreMasterDataStore'
 import useStoreMasterHead, { useStoreMasterStore } from '../../store/useStoreMasterStore'
 import StoreMasterTab from '../StoreMasterTab'
+import StoreMasterTableViewer, { StoreMasterTableData } from '../StoreMasterTable/components/StoreMasterTableViewer/StoreMasterTableViewer'
 
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
@@ -114,11 +116,11 @@ function StoreMasterForm() {
         contactPerson: storeMaster.contactPerson ?? '',
         contactNumber: String(storeMaster.contactNumber) || '',
         emailId: storeMaster.email ?? '',
-        sourcingWarehouse: storeMaster.objWareHouse || [],
-        objPayMode: storeMaster.objPayMode || [],
-        objPettyCash: storeMaster.objPettyCash || [],
-        objSeries: storeMaster.objSeries || [],
-        objLedger: storeMaster.objLedger || [],
+       // sourcingWarehouse: storeMaster.objWareHouse || [],
+        // objPayMode: storeMaster.objPayMode || [],
+        // objPettyCash: storeMaster.objPettyCash || [],
+        // objSeries: storeMaster.objSeries || [],
+        // objLedger: storeMaster.objLedger || [],
       })
     }
   }, [storeMaster, mode, formMethods.reset])
@@ -147,7 +149,15 @@ function StoreMasterForm() {
   }
 
   if (!isLoading && mode === 'View') {
-    return JSON.stringify(storeMaster)
+    if (!storeMaster) return <h3>No data available</h3> // ✅ Handle undefined case
+    const formattedStoremasterData: StoreMasterTableData = Array.isArray(storeMaster)
+      ? mapStoreMasterFetchedTypeToTableData(storeMaster[0]) // ✅ Extract first element
+      : mapStoreMasterFetchedTypeToTableData(storeMaster) // ✅ Direct mapping if object
+    return (
+      <StoreMasterTableViewer data={formattedStoremasterData} />
+    )
+   
+    // JSON.stringify(storeMaster)
   }
 
   return (

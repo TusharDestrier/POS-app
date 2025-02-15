@@ -73,12 +73,14 @@ const defaultValues = {
 }
 
 function PaymodeMasterForm() {
+  const mode = usePaymodeMaster((state) => state.mode)
   const paymodeMastedId = usePaymodeMasterDataStore((state) => state.currentPaymodeMasterId)
   const clearID = usePaymodeMasterDataStore((state) => state.clearCurrentPaymodeMasterId)
-  const mode = usePaymodeMaster((state) => state.mode)
+ 
   const { paymodeData, isLoading, error } = usePaymodeDataById(paymodeMastedId)
-  const closeModal = usePaymodeMaster((state) => state.toggleOpen)
   const { createPaymodeAsync, isPending } = useCreatePaymode()
+  const closeModal = usePaymodeMaster((state) => state.close)
+  
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -184,7 +186,7 @@ function PaymodeMasterForm() {
           <Button type="submit" disabled={isPending}>
             {isPending ? 'submiting' : 'submit'}
           </Button>
-          <Button className='m-3' onClick={closeModal}>Cancel</Button>
+          <Button type='button' className='m-3' onClick={closeModal}>Cancel</Button>
         </div>
       </form>
     </FormProvider>

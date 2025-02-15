@@ -38,10 +38,10 @@ export function ItemMasterTable() {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter Barcode..."
-          value={(table.getColumn("barCode")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter Item Name..."
+          value={(table.getColumn("itemName")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("barCode")?.setFilterValue(event.target.value)
+            table.getColumn("itemName")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

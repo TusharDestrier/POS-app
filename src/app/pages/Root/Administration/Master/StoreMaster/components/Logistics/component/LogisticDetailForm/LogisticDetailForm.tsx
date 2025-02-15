@@ -33,7 +33,7 @@ function LogisticDetailForm() {
       replace(
         storeMaster.objWareHouse.map((wh) => ({
           warehouseCode: wh.sourcingWarehouseCode || '',
-          transitDays: 1, // Default value
+          transitDays: wh.sourcingWarehouseName, // Default value
         }))
       )
     }
