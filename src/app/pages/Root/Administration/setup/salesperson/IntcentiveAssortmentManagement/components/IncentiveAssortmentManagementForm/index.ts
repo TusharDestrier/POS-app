@@ -1,3 +1,0 @@
-import IncentiveAssortmentManagementForm from "./IncentiveAssortmentManagementForm";
-
-export default IncentiveAssortmentManagementForm

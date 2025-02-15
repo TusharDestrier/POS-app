@@ -18,8 +18,8 @@ export type SalesPersonType = {
   whatsAppNo: string | null
   email: string | null
   employeeID: string | null
-  allocatedRole: string | null
-  allocatedUser: string | null
+  allocateRole: string | null
+  allocateUser: string | null
   isActive: string | null
   enteredBy: string | null
   usedFor: string | null

@@ -14,7 +14,7 @@ import {
 import * as React from 'react'
 
 import columns from './components/DiscountMasterTableColumn'
-import { useDiscountMasterDataStore } from '../../../DiscountAssortmentManagement/store/useDiscountAssortmentManagementDataStore'
+// import { useDiscountMasterDataStore } from '../../../DiscountAssortmentManagement/store/useDiscountAssortmentManagementDataStore'
 import { useDiscountMasterData } from '../../hooks_api/useDiscountMasterData'
 import { useDiscountMasterStore } from '../../store/useDiscountMasterStore'
 import DiscountMasterModal from '../DiscountMasterModal'
@@ -50,7 +50,7 @@ function DiscountMasterTable() {
   })
 
   const isDeleting = useDiscountMasterStore((state) => state.isLoading)
-  const clearId = useDiscountMasterDataStore((state) => state.clearCurrentDiscountMasterId)
+  // const clearId = useDiscountMasterDataStore((state) => state.clearCurrentDiscountMasterId)
 
   const modalToggler = useDiscountMasterStore((state) => state.toggleOpen)
   const setModalMode = useDiscountMasterStore((state) => state.setMode)

@@ -1,9 +1,6 @@
-// eslint-disable-next-line import/order
 import { RadioGroup, RadioGroupItem } from '@radix-ui/react-radio-group'
-import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form'
 
-import { useStoreMasterData } from '@/app/pages/Root/Administration/Master/StoreMaster/hooks_api/useStoreMasterData'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {  FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
@@ -20,22 +17,13 @@ import {
 
 const General = () => {
   const { control,setValue, watch } = useFormContext()
-  const { storemasterData } = useStoreMasterData()
 
   const maxBillingAmt = watch('maxBillAmountSinglePOSBill', 0)
 
   // Condition to disable PAN field
   const isPanDisabled = Number(maxBillingAmt) <= 50000
 
-  const storeMasterOptions = useMemo(() => {
-    if (!storemasterData || storemasterData.length === 0) return []
-
-    return (storemasterData ?? []).map((stores) => ({
-      value: stores.storeID || '', // Ensure a fallback value
-      label: stores.storeName || 'Unknown', // Prevent UI crash if value is undefined
-      id: stores.storeID || 0, // Ensure an ID is always available
-    }))
-  }, [storemasterData])
+  
   return (
     <Card className="border-2  overflow-y-auto h-[650px]">
       <CardHeader>
@@ -66,29 +54,29 @@ const General = () => {
             </FormItem>
           )}
         />
-        <FormField
+      <FormField
           control={control}
-          name="footfallEntryRequiredInDaySettlement"
+          name="footfallEntryRequiredDaySettlement"
           render={({ field }) => (
-            <FormItem className="space-y-3">
-              <FormLabel>Footfall Entry Required In Day Settlement </FormLabel>
+            <FormItem>
+              <FormLabel>Footfall Entry required in Day Settlement</FormLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="flex flex-row space-y-1 roles-radio"
+                  value={field.value}
+                  className="flex flex-row space-x-4 roles-radio"
                 >
-                  <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormItem className="flex items-center space-x-2">
                     <FormControl>
                       <RadioGroupItem value="Y" />
                     </FormControl>
                     <FormLabel className="font-normal">Yes</FormLabel>
                   </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormItem className="flex items-center space-x-2">
                     <FormControl>
                       <RadioGroupItem value="N" />
                     </FormControl>
-                    <FormLabel className="font-normal">N</FormLabel>
+                    <FormLabel className="font-normal">No</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>

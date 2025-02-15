@@ -5,7 +5,7 @@ import { z } from 'zod'
 import DiscountMasterFormSetup from './components/DiscountMasterFormSetup'
 import DiscountMasterSetupAssortmentModal from './components/DiscountMasterSetupAssortmentModal'
 import { DiscountMasterSchema } from './schema'
-import { useDiscountMasterDataStore } from '../../../DiscountAssortmentManagement/store/useDiscountAssortmentManagementDataStore'
+// import { useDiscountMasterDataStore } from '../../../DiscountAssortmentManagement/store/useDiscountAssortmentManagementDataStore'
 import discountMasterPostFormatter from '../../helper/discountMasterPostFormatter'
 import {  useCreateDiscountMaster } from '../../hooks_api/useCreateDiscountMasterData'
 import { useDiscountMasterData } from '../../hooks_api/useDiscountMasterData'
@@ -21,8 +21,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 function DiscountMasterForm() {
 
   const mode = useDiscountMasterStore((state) => state.mode)
-   const clearId = useDiscountMasterDataStore((state) => state.clearCurrentDiscountMasterId)
-    const DiscountMasterhId = useDiscountMasterDataStore((state) => state.currentDiscountMasterId)
+  //  const clearId = useDiscountMasterDataStore((state) => state.clearCurrentDiscountMasterId)
+  //   const DiscountMasterhId = useDiscountMasterDataStore((state) => state.currentDiscountMasterId)
   
    const { DiscountMaster, isLoading } = useDiscountMasterDataById(Number(DiscountMasterhId) || null)
    // const customerID = useDiscountMasterDataStore((state) => state.currentDiscountMasterId)

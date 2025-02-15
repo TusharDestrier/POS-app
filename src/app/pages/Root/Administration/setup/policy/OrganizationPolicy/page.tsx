@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -60,7 +60,7 @@ function OrganizationPage() {
   useEffect(() => {
     if (organizationPolicyData?.length > 0) {
       setMode('Edit')
-      const lastPolicy = organizationPolicyData?.[organizationPolicyData.length - 1]
+      const lastPolicy = organizationPolicyData?.[0]
       formMethods.reset({
         pendingSettlementDays: Number(lastPolicy?.pendingSettlementDays) || 30,
         footfallEntryRequiredDaySettlement: lastPolicy?.footfallEntryRequiredDaySettlement || 'N',
@@ -106,13 +106,16 @@ function OrganizationPage() {
   }, [organizationPolicyData])
 
   async function onSubmit(data: z.infer<typeof PostOrganizationPolicySchema>) {
-    const formattedData = OrganizationPolicyFormatter(
-      data,
-      String(organizationPolicyData?.[0]?.orgPolicyID)
-    )
+   
 
     try {
+      const formattedData = OrganizationPolicyFormatter(
+        data,
+        String(organizationPolicyData?.[0]?.orgPolicyID)
+      )
       await createOrganizationPolicy(formattedData)
+      console.log(formattedData);
+      
       closeModal()
       clearId()
     } catch (err) {

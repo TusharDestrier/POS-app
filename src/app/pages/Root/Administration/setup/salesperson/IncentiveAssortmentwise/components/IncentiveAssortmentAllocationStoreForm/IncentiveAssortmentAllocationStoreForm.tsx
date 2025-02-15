@@ -1,10 +1,10 @@
-import { useIncentiveAssortmentManagementStore } from '../../../IntcentiveAssortmentManagement/store/useIncentiveAssortmentManagementStore'
+// import { useIncentiveAssortmentManagementStore } from '../../../IntcentiveAssortmentManagement/store/useIncentiveAssortmentManagementStore'
 import AssortmentAllocationStoreTable from '../IncentiveAssortmentAllocationStoreTable'
 
 import { Button } from '@/components/ui/button'
 
 const IncentiveAssortmentAllocationStoreForm = () => {
-  const closeModal = useIncentiveAssortmentManagementStore((state) => state.close)
+  // const closeModal = useIncentiveAssortmentManagementStore((state) => state.close)
   return (
     <div>
       <div className="border-2 p-2">

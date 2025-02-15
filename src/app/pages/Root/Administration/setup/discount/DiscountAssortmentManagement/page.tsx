@@ -1,9 +1,9 @@
-import DiscountAssortmentManagementTable from './components/DiscountAssortmentManagementTable'
+import AssortmentManagement from '@/components/AssortmentManagement'
 
 function DiscountAssortmentManagementPage() {
   return (
     <div className="relative z-30">
-      <DiscountAssortmentManagementTable />
+      <AssortmentManagement type="D" />
     </div>
   )
 }

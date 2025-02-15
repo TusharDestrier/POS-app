@@ -31,8 +31,8 @@ export type FetchedStoreWisePolicyType = {
   noOfCopiesToBePrint: number | null | string
   excessGoodsReceiptTolerancePercentage: number | null | string
   shortGoodsReceiptTolerancePercentage: number | null | string
-  allowToReceiveDamagedGoods: string | null
-  dueDateIsMandatoryInPOSOrder: string | null
+  allowReceiveDamagedGoods: string | null
+  dueDateMandatoryInPOSOrder: string | null
   minPercentageOfAdvanceDuringPOSOrder: number | null | string
   posOrderCancellationIsMandatory: string | null
   enteredBy: number | null | string

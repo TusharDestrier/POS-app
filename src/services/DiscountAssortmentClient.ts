@@ -8,10 +8,10 @@ class DiscountAssortmentClient extends ApiClient {
     super('api/')
   }
 
-  async getAssortment({ signal }: { signal: AbortSignal }) {
+  async getAssortment({ signal, type = 'D' }: { signal: AbortSignal; type: 'D' | 'P' | 'S' }) {
     const response = await this.get<FetchedAssortmentType[]>(
-      `assortment/GetAllAssortment?AssortmentID=0&AssortmentType=D`,
-      {},
+      `assortment/GetAllAssortment`,
+      { AssortmentType: type, AssortmentID: 0 },
       { signal }
     )
     return response.data

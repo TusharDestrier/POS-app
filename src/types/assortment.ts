@@ -2,6 +2,8 @@ export type FetchedAssortmentType = {
   assortmentID: number
   assortmentName: string
   description: string
+  barcode: string
+  itemCode: string
   assortmentType: 'D'
   enteredBy: number
   usedFor: null
@@ -9,5 +11,6 @@ export type FetchedAssortmentType = {
 }
 
 export type AssortmentResponseType = { returnCode: string; returnMsg: string }[]
+
 
 

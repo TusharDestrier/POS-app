@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button'
 
 function StoreSpecificPolicy() {
   const {storePolicyData}=useStorePolicyData(0,1);
-  const { createStoreWisePolicy, error } = useCreateOrganizationPolicy()
+  const { createStoreWisePolicy, error,isLoading } = useCreateOrganizationPolicy()
   const closeModal = useStoreWisePolicyHead((state) => state.toggleOpen)
   const clearId = useStoreWisePolicyDataStore((state) => state.clearStoreWisePolicyId)
 const setMode=useStoreWisePolicyHead(state=>state.setMode)
@@ -35,15 +35,15 @@ const setMode=useStoreWisePolicyHead(state=>state.setMode)
       isCCardAuthNoEntryMandatory: 'N',
       allowBackDateEntry: 'N',
       backDateEntryDays: 0,
-      negativeStockCheckingModeID: 0,
+      negativeStockCheckingModeID: '1',
       allowItemLevelDiscount: 'N',
-      maxAllowDiscountPercentage: 0,
+      maxAllowDiscountPercentage: '0',
       allowBillLevelDiscount: 'N',
-      maxAllowDiscountAmount: 0,
+      maxAllowDiscountAmount: '0',
       allowToSelectActivePromotionFromList: 'N',
       allowToClearAppliedPromotion: 'N',
       salePersonTaggingMandatory: 'N',
-      salePersonTaggingPolicyID: 0,
+      salePersonTaggingPolicyID: '1',
       customerTaggingMandatory: 'N',
       allowReceiveDamagedGoods:"N",
       returnOfItemWithin: 0,
@@ -75,15 +75,15 @@ const setMode=useStoreWisePolicyHead(state=>state.setMode)
         isCCardAuthNoEntryMandatory: storePolicyData.isCCardAuthNoEntryMandatory || 'N',
         allowBackDateEntry: storePolicyData.allowBackDateEntry || 'N',
         backDateEntryDays: Number(storePolicyData.backDateEntryDays) || 1,
-        negativeStockCheckingModeID: Number(storePolicyData.negativeStockCheckingModeID) || 1,
+        negativeStockCheckingModeID: String(storePolicyData.negativeStockCheckingModeID) || "1",
         allowItemLevelDiscount: storePolicyData.allowItemLevelDiscount || 'N',
-        maxAllowDiscountPercentage: Number(storePolicyData.maxAllowDiscountPercentage) || 2,
+        maxAllowDiscountPercentage: String(storePolicyData.maxAllowDiscountPercentage) || '2',
         allowBillLevelDiscount: storePolicyData.allowBillLevelDiscount || 'N',
-        maxAllowDiscountAmount: Number(storePolicyData.maxAllowDiscountAmount) || 2,
+        maxAllowDiscountAmount: String(storePolicyData.maxAllowDiscountAmount) || '2',
         allowToSelectActivePromotionFromList: storePolicyData.allowToSelectActivePromotionFromList || 'N',
         allowToClearAppliedPromotion: storePolicyData.allowToClearAppliedPromotion || 'N',
         salePersonTaggingMandatory: storePolicyData.salePersonTaggingMandatory || 'N',
-        salePersonTaggingPolicyID: Number(storePolicyData.salePersonTaggingPolicyID) || 1,
+        salePersonTaggingPolicyID: String(storePolicyData.salePersonTaggingPolicyID) || '1',
         customerTaggingMandatory: storePolicyData.customerTaggingIsMandatory || 'N',
         returnOfItemWithin: Number(storePolicyData.returnOfItemWithin) || 5,
         creditNoteValidityDays: Number(storePolicyData.creditNoteValidityDays) || 3,
@@ -91,8 +91,8 @@ const setMode=useStoreWisePolicyHead(state=>state.setMode)
         noOfCopiesToBePrint: Number(storePolicyData.noOfCopiesToBePrint) || 4,
         excessGoodsReceiptTolerancePercentage:Number( storePolicyData.excessGoodsReceiptTolerancePercentage) || 33,
         shortGoodsReceiptTolerancePercentage: Number(storePolicyData.shortGoodsReceiptTolerancePercentage) || 32,
-        allowReceiveDamagedGoods: String(storePolicyData.allowToReceiveDamagedGoods) || 'N',
-        dueDateMandatoryInPOSOrder: String(storePolicyData.dueDateIsMandatoryInPOSOrder) || 'N',
+        allowReceiveDamagedGoods: String(storePolicyData.allowReceiveDamagedGoods) || 'N',
+        dueDateMandatoryInPOSOrder: String(storePolicyData.dueDateMandatoryInPOSOrder) || 'N',
         minPercentageOfAdvanceDuringPOSOrder: Number(storePolicyData.minPercentageOfAdvanceDuringPOSOrder) || 20,
         posOrderCancellationIsMandatory: storePolicyData.posOrderCancellationIsMandatory || 'N',
       });
@@ -126,8 +126,8 @@ const setMode=useStoreWisePolicyHead(state=>state.setMode)
       <form onSubmit={formMethods.handleSubmit(onSubmit)}>
         <StoreWiseSetupTab />
         <div className="h-[60px]  bottom-0 right-0 flex gap-2 justify-end items-center">
-        <Button type="submit" className="btn btn-primary">
-            Save
+        <Button type="submit" disabled={isLoading} className="btn btn-primary">
+            {isLoading ?"Updating":'Update'}
           </Button>
           <Button  className="btn btn-primary" onClick={closeModal}>
             Cancel

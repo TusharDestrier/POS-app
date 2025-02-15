@@ -1,3 +1,0 @@
-import DiscountAssortmentManagementForm from "./DiscountAssortmentManagementForm";
-
-export default DiscountAssortmentManagementForm

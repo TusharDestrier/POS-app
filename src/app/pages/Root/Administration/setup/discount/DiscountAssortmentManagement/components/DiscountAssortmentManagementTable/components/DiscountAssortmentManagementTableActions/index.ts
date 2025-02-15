@@ -1,3 +1,0 @@
-import DiscountAssortmentManagementTableColumnActions from "./DiscountAssortmentManagementTableActions";
-
-export default DiscountAssortmentManagementTableColumnActions

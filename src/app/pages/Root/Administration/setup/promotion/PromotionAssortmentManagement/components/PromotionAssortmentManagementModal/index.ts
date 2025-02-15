@@ -1,3 +1,0 @@
-import PromotionAssortmentManagementModal from "./PromotionAssortmentManagementModal";
-
-export default PromotionAssortmentManagementModal

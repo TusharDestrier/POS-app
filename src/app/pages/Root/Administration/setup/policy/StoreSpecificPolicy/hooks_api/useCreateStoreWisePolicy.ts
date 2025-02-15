@@ -54,6 +54,6 @@ export function useCreateOrganizationPolicy() {
     createStoreWisePolicyAsync: mutation.mutateAsync, // Async mutation function
     organizationPolicy: mutation.data, // Mutation result data
     error: mutation.error, // Any errors
-    isLoading: mutation.isError, // Loading state
+    isLoading: mutation.isPending, // Loading state
   }
 }

@@ -1,2 +1,0 @@
-import  DiscountAssortmentToInclude from './DiscountAssortmentToInclude'
-export default DiscountAssortmentToInclude

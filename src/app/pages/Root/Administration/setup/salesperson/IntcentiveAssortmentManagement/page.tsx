@@ -1,11 +1,9 @@
-import IncentiveAssortmentManagementTable from "./components/IncentiveAssortmentManagementTable"
-
+import AssortmentManagement from '@/components/AssortmentManagement'
 
 function IncentiveAssortmentManagementPage() {
   return (
     <div className="relative z-30">
-      <IncentiveAssortmentManagementTable/>
-     
+      <AssortmentManagement type={'S'}/>
     </div>
   )
 }

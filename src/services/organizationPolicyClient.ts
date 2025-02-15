@@ -24,6 +24,7 @@ class OrganizationPolicyClient extends ApiClient {
     });
     return response.data;
   }
+  
   async createOrganizationPolicy(organizationPolicyData: FetchedOrganizationPolicyType): Promise<OrganizationPolicyResponseType> {
     try {
       const response = await this.post(

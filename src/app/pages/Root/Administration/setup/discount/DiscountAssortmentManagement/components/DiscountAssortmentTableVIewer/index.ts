@@ -1,2 +1,0 @@
-import DiscountAssortmentTableVIewer from "./DiscountAssortmentVIewer"
-export default DiscountAssortmentTableVIewer

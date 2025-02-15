@@ -1,2 +1,0 @@
-import IntentiveAssortmentTableVIewer from "./IntentiveAssortmentTableVIewer"
-export default IntentiveAssortmentTableVIewer
