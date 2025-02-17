@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 type DiscountMasterStoreType = {
-  isLoading:boolean
+ isLoading:boolean
   setIsLoading: (loading: boolean) => void
   isOpen: boolean
   mode: 'Edit' | 'Create' | 'View' | 'Delete'

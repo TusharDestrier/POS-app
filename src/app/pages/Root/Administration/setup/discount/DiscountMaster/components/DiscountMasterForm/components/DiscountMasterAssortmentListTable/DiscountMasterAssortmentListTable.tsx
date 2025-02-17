@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { z } from 'zod'
 
+//import useDiscountMasterStore from '../../../../store/useDiscountMasterStore'
 import type { DiscountMasterSchema } from '../../schema'
 import { useDiscountListStore } from '../DiscountMasterAssortmentListTable/store/useDiscountListStore'
 
@@ -27,6 +28,7 @@ function DiscountMasterAssortmentListTable() {
   const selectedAssortments = useDiscountListStore((state) => state.selectedAssortments)
   const setSelectedAssortments = useDiscountListStore((state) => state.setSelectedAssortments)
   const openModal = useDiscountListStore((state) => state.openModal)
+ // const closeModal = useDiscountListStore((state) => state.closeModal) // Correct store usage
 
   // Preload the form state from the store
   useEffect(() => {
@@ -48,6 +50,8 @@ function DiscountMasterAssortmentListTable() {
   const handleSelectItem = (index: number) => {
     openModal(index) // Open the modal to select an assortment
   }
+
+ 
 
   return (
     <div>

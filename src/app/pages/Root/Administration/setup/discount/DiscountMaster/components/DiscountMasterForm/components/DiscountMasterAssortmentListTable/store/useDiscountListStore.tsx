@@ -25,11 +25,18 @@ export const useDiscountListStore = create<DiscountListType>((set) => ({
         isOpen: true,
         currentRow: rowIndex,
       })),
-    closeModal: () =>
-      set(() => ({
-        isOpen: false,
-        currentRow: null,
-      })),
+      closeModal: () =>
+        set((state) => ({
+          isOpen: false,
+          currentRow: null,
+          selectedAssortments: [...state.selectedAssortments], // Create a fresh copy of the selected assortments
+        })),
+      
+    // closeModal: () =>
+    //   set(() => ({
+    //     isOpen: false,
+    //     currentRow: null,
+    //   })),
     addSelectedAssortment: (assortment) =>
       set((state) => {
         const updatedAssortments = [...state.selectedAssortments];
