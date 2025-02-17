@@ -1,3 +1,14 @@
+type AssotmentOptions={
+  "assortmentID":number,
+  "itemCode":string,
+  "itemName":string|null,
+  "tableID":number,
+  "lineNum":1,
+  "barcode":string,
+  "group":string
+}
+
+
 export type FetchedAssortmentType = {
   assortmentID: number
   assortmentName: string
@@ -8,6 +19,7 @@ export type FetchedAssortmentType = {
   enteredBy: number
   usedFor: null
   store: number
+  assortmentDetail:AssotmentOptions[]
 }
 
 export type AssortmentResponseType = { returnCode: string; returnMsg: string }[]

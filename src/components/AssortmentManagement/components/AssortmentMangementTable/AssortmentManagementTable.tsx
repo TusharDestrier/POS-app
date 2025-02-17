@@ -37,6 +37,7 @@ import {
 
 function AssortmentManagementTable() {
   const type = useAssortmentManagementStore((state) => state.type)
+  const setMode = useAssortmentManagementStore((state) => state.setMode)
   const { assortmentData, isLoading } = useAssortmentData(type)
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -78,8 +79,14 @@ function AssortmentManagementTable() {
     )
   }
 
-  // if (!isLoading && !assortmentData) return <h3>No data available.</h3>
+  function handleModal(){
+    modalHandler();
+    setMode('Create')
 
+  }
+
+  // if (!isLoading && !assortmentData) return <h3>No data available.</h3>
+  
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
@@ -94,7 +101,7 @@ function AssortmentManagementTable() {
 
         <ul className="ml-auto flex mr-3 gap-4">
           <li>
-            <Button onClick={modalHandler}>Add</Button>
+            <Button onClick={handleModal}>Add</Button>
           </li>
           <li>
             <Button variant={'outline'}>Export</Button>

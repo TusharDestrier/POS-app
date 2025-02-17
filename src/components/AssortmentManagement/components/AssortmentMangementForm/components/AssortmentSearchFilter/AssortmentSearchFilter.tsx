@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { createAssortmentPayload } from '@/components/AssortmentManagement/helper/assortmentFilterFormatter'
 import { Button } from '@/components/ui/button'
@@ -14,6 +14,9 @@ import {
 import { useGetItemFilterWise } from '@/hooks_api/useGetItemFilterWise'
 import { useGetAllItemsGroups } from '@/hooks_api/useGetItemsGroups'
 import { useGetPropertiesByGroupID } from '@/hooks_api/useGetpropertiesByGroupId'
+import { useAssortmentDataById } from '@/components/AssortmentManagement/hooks_api/useAssortmentDataById'
+import { useAssortmentManagementDataStore } from '@/components/AssortmentManagement/store/useAssortmentManagementDataStore'
+import { useAssortmentManagementStore } from '@/components/AssortmentManagement/store/useAssortmentManagementStore'
 
 type propertyValue = {
   value: string
@@ -29,15 +32,28 @@ function AssortmentSearchFilter({
 }: {
   setShow: React.Dispatch<React.SetStateAction<boolean>>
 }) {
+  const type = useAssortmentManagementStore((state) => state.type)
+  const mode = useAssortmentManagementStore((state) => state.mode)
+  const selectedId = useAssortmentManagementDataStore((state) => state.currentAssortmentId)
   const { itemsGroups, isLoading, error } = useGetAllItemsGroups()
   const { generateItemsAsync, isPending } = useGetItemFilterWise()
   const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null)
   const [selectedProp, setSelectedProp] = useState<PropertiesType[]>([])
+  const { assortmentData } = useAssortmentDataById(selectedId, type)
+  const groupID = assortmentData?.assortmentDetail[0].group
+  console.log(groupID)
+
   const {
     itemsGroupsProperties,
     isLoading: propertiesLoading,
     error: propertiesError,
   } = useGetPropertiesByGroupID(Number(selectedGroupId))
+
+  useEffect(() => {
+    if (mode === 'Edit') {
+      setSelectedGroupId(Number(groupID))
+    }
+  }, [groupID])
 
   const selectOptions = useMemo(() => {
     if (isLoading) {
@@ -121,7 +137,10 @@ function AssortmentSearchFilter({
 
       <div className="flex flex-col gap-2 mb-4">
         <Label className="text-sm">Group</Label>
-        <Select onValueChange={(val) => handleGroupChange(Number(val))}>
+        <Select
+          onValueChange={(val) => handleGroupChange(Number(val))}
+          value={String(selectedGroupId)}
+        >
           <SelectTrigger className="border p-2 w-full text-start">
             <SelectValue placeholder="Select a Group" />
           </SelectTrigger>

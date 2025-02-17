@@ -84,6 +84,8 @@ function AssortmentManagementForm({ type }: { type: 'P' | 'D' | 'S' }) {
     }
   }, [mode, assortmentData, form.reset])
 
+  
+
   async function onSubmit(values: z.infer<typeof FormSchema>) {
     try {
       const sendedData = assortmentFormatter(
@@ -94,8 +96,8 @@ function AssortmentManagementForm({ type }: { type: 'P' | 'D' | 'S' }) {
         type
       )
 
-      await createAssortment(sendedData)
-      closeModal()
+      // await createAssortment(sendedData)
+      // closeModal()
 
       setMode('Create')
       clearSelections()
@@ -123,13 +125,13 @@ function AssortmentManagementForm({ type }: { type: 'P' | 'D' | 'S' }) {
     if (isLoading) return <GlobalViewerLoader />
     if (!assortmentData) return <h3>No data available</h3>
 
-    // // Format data properly
-    // const formattedDiscountrData: DiscountTableData = Array.isArray(assortmentData)
-    //   ? mapDiscountFetchedTypeToTableData(assortmentData[0])
-    //   : mapDiscountFetchedTypeToTableData(assortmentData)
+    
 
     return JSON.stringify(assortmentData)
   }
+
+  console.log(selectedGeneratedItems);
+  
 
   return (
     <div>

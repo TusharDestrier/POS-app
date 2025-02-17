@@ -23,6 +23,8 @@ function AssortmentManagementTab() {
   const form = useFormContext()
   const openListModal = useAssortmentManagementStore((state) => state.toggleOpen2)
   const type = useAssortmentManagementStore((state) => state.type)
+
+
   return (
     <div className="mt-4">
       <div className="space-y-4">

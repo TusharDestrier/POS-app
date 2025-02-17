@@ -25,8 +25,8 @@ const AssortmentExcluded = () => {
           {excludedItems?.map((item, ind) => (
             <TableRow key={item.itemCode}>
               <TableCell>{ind + 1}</TableCell>
-              <TableCell>{item.barCode}</TableCell>
-              <TableCell>{item.itemName}</TableCell>
+              <TableCell>{item.barCode ?? item.barcode}</TableCell>
+              <TableCell>{item.itemName ?? '-'}</TableCell>
               <TableCell>{item.itemCode}</TableCell>
             </TableRow>
           ))}

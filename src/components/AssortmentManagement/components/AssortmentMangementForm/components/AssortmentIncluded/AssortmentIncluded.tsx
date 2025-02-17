@@ -10,6 +10,8 @@ import {
 
 const AssortmentIncluded = () => {
   const { items: includedItems } = useAssortmentDiff('included')
+
+  
   return (
     <div className="mt-5">
       <Table>
@@ -25,8 +27,8 @@ const AssortmentIncluded = () => {
           {includedItems?.map((item, ind) => (
             <TableRow key={item.itemCode}>
               <TableCell>{ind + 1}</TableCell>
-              <TableCell>{item.barCode}</TableCell>
-              <TableCell>{item.itemName}</TableCell>
+              <TableCell>{item?.barCode ??item?.barcode }</TableCell>
+              <TableCell>{item.itemName ?? '-' }</TableCell>
               <TableCell>{item.itemCode}</TableCell>
             </TableRow>
           ))}

@@ -8,7 +8,7 @@ const assortments = {
   S: 'SalesPerson',
   D: 'Discount',
 }
-
+  
 function AssortmentManagementModal({ type }: { type: 'P' | 'S' | 'D' }) {
   const isOpen = useAssortmentManagementStore((state) => state.isOpen)
   const closeModal = useAssortmentManagementStore((state) => state.close)
