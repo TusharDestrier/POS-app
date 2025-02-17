@@ -22,20 +22,25 @@ function DiscountMasterTableActions({ assortment }: { assortment: FetchedDiscoun
   )
   const { fetchDiscountMasterById } = useFetchDiscountMasterById()
   const { createDiscountMaster } = useCreateDiscountMaster()
-  const openModal = useDiscountMasterStore((state) => state.toggleOpen)
+ // const openModal = useDiscountMasterStore((state) => state.toggleOpen)
   const setMode = useDiscountMasterStore((state) => state.setMode)
-
+  const modalToggler = useDiscountMasterStore( (state) => state.toggleOpen)
   function editHandler() {
-    openModal()
+    alert("Edit")
+    //openModal()
+    modalToggler()
     setCurrentDiscountSetuprId(assortment.discountID)
     setMode('Edit')
   }
   function viewHandler() {
-    openModal()
+    alert("View")
+   // openModal()
+   modalToggler()
     setCurrentDiscountSetuprId(assortment.discountID)
     setMode('View')
   }
   async function deleteHandler() {
+    alert("Delete")
     setMode('Delete')
     try {
       const data = await fetchDiscountMasterById(assortment.discountID)

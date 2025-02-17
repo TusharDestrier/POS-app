@@ -6,12 +6,15 @@ import DiscountMasterFormSetup from './components/DiscountMasterFormSetup'
 import DiscountMasterSetupAssortmentModal from './components/DiscountMasterSetupAssortmentModal'
 import { DiscountMasterSchema } from './schema'
 // import { useDiscountMasterDataStore } from '../../../DiscountAssortmentManagement/store/useDiscountAssortmentManagementDataStore'
+import mapdiscountSetupFetchedTypeToTableData from '../../helper/DiscountDataTableExtractor'
 import discountMasterPostFormatter from '../../helper/discountMasterPostFormatter'
 import {  useCreateDiscountMaster } from '../../hooks_api/useCreateDiscountMasterData'
 import { useDiscountMasterData } from '../../hooks_api/useDiscountMasterData'
 import { useDiscountMasterDataById } from '../../hooks_api/useDiscountMasterDataById'
 import useDiscountMasterStore from '../../store/useDiscountMasterStore'
 import { useDiscountnMasterDataStore } from '../../store/useDiscountMasterStoreData'
+import DiscountMasterTableViewer from '../DiscountMasterTable/components/DiscountMasterTableViewer'
+import { DiscountSetupDataType } from '../DiscountMasterTable/components/DiscountMasterTableViewer/DiscountMasterTableViewer'
 
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
@@ -24,27 +27,33 @@ function DiscountMasterForm() {
   const mode = useDiscountMasterStore((state) => state.mode)
   //  const clearId = useDiscountMasterDataStore((state) => state.clearCurrentDiscountMasterId)
      const DiscountMasterhId = useDiscountnMasterDataStore((state) => state.currentDiscountnMasterId)
-  
-   const { DiscountMaster, isLoading } = useDiscountMasterDataById(Number(DiscountMasterhId) || null)
+     const closeModal = useDiscountMasterStore((state) => state.close)
+   const { DiscountMaster } = useDiscountMasterDataById(Number(DiscountMasterhId) || null)
    // const customerID = useDiscountMasterDataStore((state) => state.currentDiscountMasterId)
     const {
-       // customerData,
+      DiscountMasterData,
         isLoading: customerLoading,
         error: customerError,
       } = useDiscountMasterData()
   const { createDiscountMaster, error, isPending } = useCreateDiscountMaster()
 
-        const closeModal = useDiscountMasterStore((state) => state.close)
+       
       
 
        if (customerLoading && mode === 'View') {
           return <GlobalViewerLoader />
         }
 
-        if (mode === 'View' && !isLoading) {
+        if (mode === 'View' && !customerLoading) {
+          if (!DiscountMasterData) return <h3>No data available</h3> // ✅ Handle undefined case
+      
+          const formattedCustomerData: DiscountSetupDataType = Array.isArray(DiscountMasterData)
+            ? mapdiscountSetupFetchedTypeToTableData(DiscountMasterData[0]) // ✅ Extract first element
+            : mapdiscountSetupFetchedTypeToTableData(DiscountMasterData) // ✅ Direct mapping if object
+      
           return (
             <h3>
-              {/* <PettyCashViewer data={pettyCash} /> */}
+              <DiscountMasterTableViewer data={formattedCustomerData} />
             </h3>
           )
         }
@@ -76,7 +85,7 @@ function DiscountMasterForm() {
      try {
        await createDiscountMaster(transformData)
        closeModal()
-       clearId()
+      // clearId()
        //z console.log(transformData);
      } catch (err: unknown) {
        if (err instanceof Error) {
@@ -107,10 +116,11 @@ function DiscountMasterForm() {
             <TabsContent value="terms">Change your terms here.</TabsContent>
           </Tabs>
           <DiscountMasterSetupAssortmentModal />
-          <div className="h-[60px] sticky bottom-0 right-0 flex justify-end items-center">
+          <div className="h-[60px] sticky bottom-0 right-0 flex gap-3 justify-end items-center">
           <Button type="submit" className="btn btn-primary" disabled={isPending}>
             {isPending ? 'Submitting...' : 'Submit'}
           </Button>
+          <Button type='button' onClick={closeModal}>Cancel</Button>
         </div>
         {error && <p className="text-end">{error.message}</p>}
         </form>

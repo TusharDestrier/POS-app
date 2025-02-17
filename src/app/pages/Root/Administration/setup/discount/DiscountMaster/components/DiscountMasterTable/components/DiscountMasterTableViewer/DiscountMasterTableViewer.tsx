@@ -15,7 +15,7 @@ interface DiscountSetupDetail {
     usedFor: string | null;
 }
 
-export interface DiscountSetupDataType {
+export type DiscountSetupDataType = {
     discountID: number;
     discountName: string;
     discountType: string;

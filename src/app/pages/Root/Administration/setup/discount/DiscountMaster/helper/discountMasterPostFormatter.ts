@@ -26,13 +26,14 @@ export default function discountMasterPostFormatter( id: number | string | null,
     isActive: data.inactive ? 'N' : 'Y', // Inactive thakle 'N', active thakle 'Y'
     enteredBy: 0,
     usedFor: 'I',
-    discountAssortments: Array.isArray(data.assortments)
-      ? data.assortments.map((item) => ({
-          discountID: 0, // Always 0
-          assortmentID: Number(item.id) || 0, // Ensure valid number
-          actionType: data.name ?? '', // Default empty string if name missing
-        }))
-      : [],
+    discountAssortments: [],
+    // discountAssortments: Array.isArray(data.assortments)
+    //   ? data.assortments.map((item) => ({
+    //       discountID: 0, // Always 0
+    //       assortmentID: Number(item.id) || 0, // Ensure valid number
+    //       actionType: data.name ?? '', // Default empty string if name missing
+    //     }))
+    //   : [],
   }
   return formattedData
 }
