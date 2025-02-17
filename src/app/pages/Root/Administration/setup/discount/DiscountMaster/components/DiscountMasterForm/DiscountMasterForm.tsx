@@ -11,6 +11,7 @@ import {  useCreateDiscountMaster } from '../../hooks_api/useCreateDiscountMaste
 import { useDiscountMasterData } from '../../hooks_api/useDiscountMasterData'
 import { useDiscountMasterDataById } from '../../hooks_api/useDiscountMasterDataById'
 import useDiscountMasterStore from '../../store/useDiscountMasterStore'
+import { useDiscountnMasterDataStore } from '../../store/useDiscountMasterStoreData'
 
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
@@ -22,7 +23,7 @@ function DiscountMasterForm() {
 
   const mode = useDiscountMasterStore((state) => state.mode)
   //  const clearId = useDiscountMasterDataStore((state) => state.clearCurrentDiscountMasterId)
-  //   const DiscountMasterhId = useDiscountMasterDataStore((state) => state.currentDiscountMasterId)
+     const DiscountMasterhId = useDiscountnMasterDataStore((state) => state.currentDiscountnMasterId)
   
    const { DiscountMaster, isLoading } = useDiscountMasterDataById(Number(DiscountMasterhId) || null)
    // const customerID = useDiscountMasterDataStore((state) => state.currentDiscountMasterId)

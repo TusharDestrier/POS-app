@@ -98,7 +98,7 @@ function DiscountMasterTable() {
   function createModalHandler() {
     modalToggler()
     setModalMode('Create')
-    clearId()
+    //clearId()
   }
   if (error) {
     return <h3 className="text-center">{error}</h3>
