@@ -49,7 +49,6 @@ function LoginForm() {
         },
       })
       navigate('/dashboard')
-
     }
   }
 
@@ -61,7 +60,7 @@ function LoginForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel className="">Username</FormLabel>
               <FormControl>
                 <Input placeholder="Username" autoComplete="username" {...field} />
               </FormControl>

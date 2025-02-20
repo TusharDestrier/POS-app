@@ -1,9 +1,9 @@
+//import { ItemGenerationType } from '@/components/AssortmentManagement/helper/assortmentFilterFormatter'
 import ApiClient from './ApiClient'
 
-import { ItemGenerationType } from '@/app/pages/Root/Administration/setup/discount/DiscountAssortmentManagement/components/DiscountAssortmentManagementForm/components/DiscountAssortmentListTable/helpers/discountAssortmentListGenerator'
 import {
   FetchedItemGroupsType,
-  ItemsResponseType,
+  //ItemsResponseType,
   FetchedItemPropertiesType,
 } from '@/types/item' // Ye types aapke project ke hisaab se adjust karo
 
@@ -16,9 +16,9 @@ class ItemClient extends ApiClient {
    * Sabhi item groups ko fetch karta hai.
    * @param signal AbortSignal for request cancellation
    */
-  async getAllItemsGroups({ signal }: { signal: AbortSignal }) {
+  async getAllItemsGroups({ id = 0, signal }: { id: number; signal?: AbortSignal }) {
     const response = await this.get<FetchedItemGroupsType[]>(
-      `ItemGroup/GetAllItemGroup?ItemGrpID=0`,
+      `Item/GetAllItem`,
       {},
       { signal }
     )
@@ -29,20 +29,20 @@ class ItemClient extends ApiClient {
    * Ek particular item group ke properties fetch karta hai.
    * @param groupId Item group id
    */
-  async getAllItemsPropertiesByGroupId({ groupId }: { groupId: number }) {
+  async getAllItemsPropertiesByGroupId({ groupId }: { groupId: string }) {
     const response = await this.get<FetchedItemPropertiesType[]>(
-      `ItemGroup/GetItemGroupWiseProperty?ItemGrpID=${groupId}`
+      `Item/GetItem?itemCode=${groupId}`
     )
     return response.data
   }
 
-  async getAllItemsAfterFiltering(filterData: ItemGenerationType){
-    // Agar backend POST chah raha hai:
-    const response = await this.post<ItemsResponseType>(`Item/GetItemFilterWise`, filterData)
-    console.log(response);
+  // async getAllItemsAfterFiltering(filterData: ItemGenerationType){
+  //   // Agar backend POST chah raha hai:
+  //   const response = await this.post<ItemsResponseType>(`Item/GetItemFilterWise`, filterData)
+  //   console.log(response);
     
-    return response.data
-  }
+  //   return response.data
+  // }
 }
 
 export default new ItemClient()

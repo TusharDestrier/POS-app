@@ -1,15 +1,23 @@
 //import { Button } from "react-day-picker"
 //import { FormProvider, useForm } from "react-hook-form"
 
+// import mapItemMasterFetchedTypeToTableData from "../../helper/ItemMasterDataTbleExtracter";
+// import { useItemDataById } from "../../hooks_api/useItemDataById";
+// import { useItemMaster } from "../../store/useItemMaster"
+import ItemMasterTab from '../ItemMasterTab'
+// import ItemMasterTableViewer from "../ItemMasterTable/components/ItemMasterTableViewer";
+// import { ItemTableData } from "../ItemMasterTable/components/ItemMasterTableViewer/ItemMasterTableViewer";
+
+
 //import { useState } from 'react';
 
-import ItemMasterTab from '../ItemMasterTab'
 
-//import { useItemMaster } from "../../store/useItemMaster"
 //import ItemMasterTab from "../ItemMasterTab"
 
 function ItemMasterForm() {
   // const mode = useItemMaster((state) => state.mode)
+  //   const { itemMasterById, isLoading } = useItemDataById(Number(useItemDataById))
+  
   //  const closeModal = useItemMaster((state) => state.close)
 
   // const methods = useForm(); // Initialize form methods
@@ -19,6 +27,20 @@ function ItemMasterForm() {
   const closeTab = () => {
     //setIsOpen(false);
   };
+
+  // if (!isLoading && mode === 'View') {
+  //   if (!itemMasterById) return <h3>No data available</h3> // ✅ Handle undefined case
+
+  //   const formattedCustomerData: ItemTableData = Array.isArray(itemMasterById)
+  //     ? mapItemMasterFetchedTypeToTableData(itemMasterById[0]) // ✅ Extract first element
+  //     : mapItemMasterFetchedTypeToTableData(itemMasterById) // ✅ Direct mapping if object
+
+  //   return (
+  //     <h3>
+  //       <ItemMasterTableViewer data={formattedCustomerData} />
+  //     </h3>
+  //   )
+  // }
 
   return (
     <>
@@ -30,6 +52,7 @@ function ItemMasterForm() {
           >
             Close
           </button>
+          {/* <ItemMasterTableViewer/> */}
         <ItemMasterTab />
       </div>
     {/* )}  */}

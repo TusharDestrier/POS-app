@@ -1,18 +1,19 @@
-import { CustomerFetchedType } from "@/types/customer";
+import { ItemFilterType } from '@/types/item'
 
-export enum CustomerStatus {
+export enum ItemStatus {
   ACTIVE = 'active',
   INACTIVE = 'inactive',
 }
 
-export type CustomerType = CustomerFetchedType & {
-  status: CustomerStatus; // ✅ Add status property
-};
+export type ItemType = ItemFilterType & {
+  status: ItemStatus // ✅ Add status property
+}
 
-export type CustomerTableRow = {
-  customerId: string;
-  fullName: string;
-  email: string;
-  status: CustomerStatus;
-  phoneNo: string;
-};
+export type ItemTableRow = {
+  status: ItemStatus
+  itemCode: string
+  barCode: string
+  itemName: string
+  itemGroup: number
+  isActive: 'Y' | 'N'
+}

@@ -5,13 +5,17 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import AssortmentManagementTab from './components/AssortmentManagementTabs'
+//import { assortmentFormatter } from '../../helper/assortmentPostFormatter'
 import { assortmentFormatter } from '../../helper/assortmentPostFormatter'
 import { useGeneratedItemsDataStore } from '../../hooks/useGeneratedItemsDataStore'
 import { useAssortmentDataById } from '../../hooks_api/useAssortmentDataById'
 import { useCreateAssortment } from '../../hooks_api/useCreateAssortment'
 import { useAssortmentManagementDataStore } from '../../store/useAssortmentManagementDataStore'
 import { useAssortmentManagementStore } from '../../store/useAssortmentManagementStore'
+import AssortmentManagementTableViewer from '../AssortmentMangementTable/components/AssortmentManagementTbleViewer'
+import { AssortmentManagementTableData } from '../AssortmentMangementTable/components/AssortmentManagementTbleViewer/AssortmentManagementTbleViewer'
 
+import { customerDataFormatter } from '@/app/pages/Root/Administration/Master/CustomerMaster/helper/customerDataFormatter'
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
 import { useGetGeneratedItems } from '@/hooks_api/useGetItemFilterWise'
@@ -120,17 +124,32 @@ function AssortmentManagementForm({ type }: { type: 'P' | 'D' | 'S' }) {
   if (isLoading && mode === 'View') {
     return <GlobalViewerLoader />
   }
+  if (mode === 'View' ) {
+    if (!assortmentData) return <h3>No data available</h3> // ✅ Handle undefined case
 
-  if (mode === 'View') {
-    if (isLoading) return <GlobalViewerLoader />
-    if (!assortmentData) return <h3>No data available</h3>
+    const formattedCustomerData: AssortmentManagementTableData = Array.isArray(assortmentData)
+      ? { ...customerDataFormatter(assortmentData[0]), objDetails: assortmentDetail, assortmentID: assortmentId, assortmentName: assortmentData[0].assortmentName, description: assortmentData[0].description, assortmentType: assortmentData[0].assortmentType, store: assortmentData[0].store } // ✅ Extract first element and add objDetails
+      : { ...assortmentFormatter({ ...assortmentData, assortmentType: assortmentData.assortmentType as 'P' | 'B' | 'C' }, mode, Number(assortmentId), assortmentDetail, type), objDetails: assortmentDetail, assortmentID: assortmentData.assortmentID, assortmentName: assortmentData.assortmentName, description: assortmentData.description, assortmentType: assortmentData.assortmentType, store: assortmentData.store } // ✅ Direct mapping if object and add objDetails
 
-    
-
-    return JSON.stringify(assortmentData)
+    return (
+      <h3>
+        <AssortmentManagementTableViewer data={formattedCustomerData} />
+      </h3>
+    )
   }
 
-  console.log(selectedGeneratedItems);
+  // if (mode === 'View') {
+  //   if (isLoading) return <GlobalViewerLoader />
+  //   if (!assortmentData) return <h3>No data available</h3>
+  //   return JSON.stringify(assortmentData)
+  // }
+  {JSON.stringify(assortmentData)}
+
+  // if ( mode === 'View') {
+  //   return <h3>Sorry there is some problem</h3>
+  // }
+
+  //console.log(selectedGeneratedItems);
   
 
   return (

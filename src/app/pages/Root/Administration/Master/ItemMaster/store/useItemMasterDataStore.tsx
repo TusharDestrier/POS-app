@@ -2,8 +2,8 @@ import { create } from 'zustand'
 
 
 interface ItemrMasterState {
-  currentItemMasterId: number | null // ✅ Current ID store karo
-  setCurrentItemMasterId: (id: number) => void // ✅ ID setter
+  currentItemMasterId: string | null // ✅ Current ID store karo
+  setCurrentItemMasterId: (id: string) => void // ✅ ID setter
   clearCurrentItemMasterId: () => void // ✅ ID reset
 }
 

@@ -5,71 +5,64 @@
 // import Personal from '../CustomerForm/components/Personal'
 // import PurchaseHistory from '../CustomerForm/components/PurchaseHistory'
 
+// import ItemDetailsTab from '../ItemMasterForm/components/ItemDetaills/components/ItemDetails'
+// import ItemRemarksTab from '../ItemMasterForm/components/ItemRemarks/components/ItemRemarks/ItemRemarksTab'
+// import PropertyDetails from '../ItemMasterForm/components/PropertyDetails'
 
+// import { Button } from '@/components/ui/button'
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+
+import mapItemMasterFetchedTypeToTableData from '../../helper/ItemMasterDataTbleExtracter'
+//import { useItemData } from "../../hooks_api/useItemData";
+import { useItemDataById } from '../../hooks_api/useItemDataById'
 import { useItemMaster } from '../../store/useItemMaster'
-import ItemDetailsTab from '../ItemMasterForm/components/ItemDetaills/components/ItemDetails'
-import ItemRemarksTab from '../ItemMasterForm/components/ItemRemarks/components/ItemRemarks/ItemRemarksTab'
-import PropertyDetails from '../ItemMasterForm/components/PropertyDetails'
+import { useItemMasterDataStore } from '../../store/useItemMasterDataStore'
+//import { useItemMasterDataStore } from "../../store/useItemMasterDataStore";
+import ItemMasterTableViewer from '../ItemMasterTable/components/ItemMasterTableViewer'
+import { ItemTableData } from '../ItemMasterTable/components/ItemMasterTableViewer/ItemMasterTableViewer'
 
 import { Button } from '@/components/ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function ItemMasterTab() {
-  //const mode = useItemMaster((state) => state.mode)
+  const mode = useItemMaster((state) => state.mode)
+  const itemId = useItemMasterDataStore((state) => state.currentItemMasterId)
+  const { itemMasterById, isLoading } = useItemDataById(itemId)
+  
+  //console.log("itemId:", itemId, itemMasterById)
+  // const closeModal = useItemData((state) =>     state.close)
+  //const { isPending } = useItemMasterDataStore()
+  
   const modalToggler = useItemMaster((state) => state.toggleOpen)
-   const setModalMode = useItemMaster((state) => state.setMode)
+  const setModalMode = useItemMaster((state) => state.setMode)
+
   function closeModal() {
- // alert(1)
-  modalToggler()
-  setModalMode('View')
+    modalToggler()
+    setModalMode('View')
+  }
+
+  if (!isLoading && mode === 'View') {
+    if (!itemMasterById) return <h3>No data available</h3> // ✅ Handle undefined case
+
+    const formattedCustomerData: ItemTableData = Array.isArray(itemMasterById)
+      ? mapItemMasterFetchedTypeToTableData(itemMasterById[0]) // ✅ Extract first element
+      : mapItemMasterFetchedTypeToTableData(itemMasterById) // ✅ Direct mapping if object
+
+    return (
+      <h3>
+        <ItemMasterTableViewer data={formattedCustomerData} />
+      </h3>
+    )
   }
   return (
     <>
-    
-    <Tabs defaultValue="itemDetails" className="mt-3">
-      <TabsList className="mb-4  flex border-none">
-        <TabsTrigger className="flex-1" value="itemDetails">
-          Item Details
-        </TabsTrigger>
-        <TabsTrigger className="flex-1" value="propertyDetails">
-          Property Details
-        </TabsTrigger>
-        <TabsTrigger className="flex-1" value="itemRemarks">
-          Item Remarks
-        </TabsTrigger>
-
-        {/* {mode !== 'Create' && (
-      <>
-        <TabsTrigger className="flex-1" value="purchaseHistory">
-          Purchase History
-        </TabsTrigger>
-        <TabsTrigger className="flex-1" value="loyaltyPoints">
-          Loyalty Points
-        </TabsTrigger>
-      </>
-    )} */}
-      </TabsList>
-
-      <div className="border p-4 border-black border-solid overflow-y-auto">
-        {/* {Item Details Tab} */}
-        <TabsContent value="itemDetails">
-          <ItemDetailsTab />
-        </TabsContent>
-        {/* {Property Details} */}
-        <TabsContent value="propertyDetails">
-          <PropertyDetails />
-        </TabsContent>
-        {/* {Item Remarks} */}
-        <TabsContent value="itemRemarks">
-          <ItemRemarksTab />
-        </TabsContent>
+      <div className="h-[60px] bottom-0 right-0 flex gap-3 justify-end items-center border border-red-500">
+        <Button type="submit" className="btn btn-primary">
+          {/* {isPending ? 'Submitting...' : 'Submit'} */}
+        </Button>
+        <Button onClick={closeModal}>Cancel</Button>
       </div>
-    </Tabs>
-    <div className="h-[60px] sticky bottom-0 right-0 flex justify-end items-center">
-    <Button type='submit' className="btn btn-primary" onClick={() => closeModal()} >Close</Button>
-    </div>
+      {/* Handle error message if needed */}
     </>
-   
   )
 }
 export default ItemMasterTab
