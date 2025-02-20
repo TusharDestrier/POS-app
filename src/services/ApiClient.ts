@@ -23,7 +23,7 @@ class ApiClient {
       headers: {
         'Content-Type': 'application/json',
       },
-      timeout: 3000,
+      // timeout: 3000,
     })
 
     this.withAuth = options.withAuth || false // ✅ Default is public

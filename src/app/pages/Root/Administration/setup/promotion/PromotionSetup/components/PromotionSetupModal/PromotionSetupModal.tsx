@@ -1,20 +1,12 @@
 import { usePromotionSetupStore } from '../../store/usePromotionSetupStore'
 import PromotionSetupForm from '../PromotionSetupForm/PromotionSetupForm'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 
 function PromotionSetupModal() {
   const isOpen = usePromotionSetupStore((state) => state.isOpen)
   const modalMode = usePromotionSetupStore((state) => state.mode)
   const closeModal = usePromotionSetupStore((state) => state.close)
-
-
-
 
   return (
     <Dialog open={isOpen} onOpenChange={closeModal}>
@@ -26,7 +18,7 @@ function PromotionSetupModal() {
         </DialogHeader>
         <div className="px-6">
           {' '}
-      <PromotionSetupForm/>
+          <PromotionSetupForm />
         </div>
       </DialogContent>
     </Dialog>

@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { useDiscountListStore } from "../DiscountMasterAssortmentListTable/store/useDiscountListStore";
 
+import { useAssortmentData } from "@/components/AssortmentManagement/hooks_api/useAssortmentData";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,29 +13,33 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { FetchedAssortmentType } from "@/types/assortment";
 
-const allAssortments = [
-  { id: "1", name: "Assortment 1" },
-  { id: "2", name: "Assortment 2" },
-  { id: "3", name: "Assortment 3" },
-  { id: "4", name: "Assortment 4" },
-  { id: "5", name: "Assortment 5" },
-];
+
 
 function DiscountMasterAssortmentList() {
   const [searchQuery, setSearchQuery] = useState("");
   const addSelectedAssortment = useDiscountListStore((state) => state.addSelectedAssortment);
   const closeModal = useDiscountListStore((state) => state.closeModal);
+  const selectedAssortments = useDiscountListStore((state) => state.selectedAssortments);
+  const { assortmentData, isLoading } = useAssortmentData("D");
 
-  const filteredAssortments = allAssortments.filter((item) =>
-    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  // ✅ Proper filtering with safety check
+  const filteredAssortments = assortmentData?.filter((item) =>
+    item.assortmentName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleAdd = (assortment: {
-    id: string;
-    name: string;
-}) => {
-    addSelectedAssortment(assortment);
+  // ✅ Properly structured `handleAdd`
+  const handleAdd = (assortment: FetchedAssortmentType) => {
+    const alreadyExists = selectedAssortments.some((item) => item.assortmentID === assortment.assortmentID);
+
+    if (alreadyExists) return; // Prevent duplicate addition
+
+    addSelectedAssortment({
+      ...assortment,
+      assortmentID: Number(assortment.assortmentID), // Ensure it's a number
+      assortmentName:assortment.assortmentName
+    });
     closeModal();
   };
 
@@ -57,17 +62,19 @@ function DiscountMasterAssortmentList() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredAssortments.length > 0 ? (
-              filteredAssortments.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.id}</TableCell>
-                  <TableCell>{item.name}</TableCell>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={3} className="text-center">
+                  Loading...
+                </TableCell>
+              </TableRow>
+            ) : filteredAssortments?.length > 0 ? (
+              filteredAssortments?.map((item) => (
+                <TableRow key={item.assortmentID}>
+                  <TableCell>{item.assortmentID}</TableCell>
+                  <TableCell>{item.assortmentName}</TableCell>
                   <TableCell>
-                    <Button
-                      type="button"
-                      onClick={() => handleAdd(item)}
-                      variant="outline"
-                    >
+                    <Button type="button" onClick={() => handleAdd(item)} variant="outline">
                       Add
                     </Button>
                   </TableCell>
@@ -86,5 +93,6 @@ function DiscountMasterAssortmentList() {
     </div>
   );
 }
+
 
 export default DiscountMasterAssortmentList;

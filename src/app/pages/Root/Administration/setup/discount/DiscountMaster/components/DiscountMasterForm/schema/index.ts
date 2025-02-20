@@ -16,11 +16,19 @@ export const DiscountMasterSchema = z.object({
   allowToChange: z.boolean(),
   inactive: z.boolean(),
   assortments: z
-    .array(
-      z.object({
-        id: z.string(),
-        name: z.string(),
-      })
-    )
-    .optional(),
+  .array(
+    z.object({
+      assortmentID: z.preprocess(
+        (val) => {
+          if (typeof val === "string" && val.trim() !== "" && !isNaN(Number(val))) {
+            return Number(val); // Convert to number if it's a valid numeric string
+          }
+          return val; // Keep the original value (or let validation fail)
+        },
+        z.number().positive("Invalid Assortment ID").or(z.literal("")),
+      ),
+      assortmentName: z.string().nonempty("Assortment name is required"),
+    })
+  )
+  .optional(),
 });

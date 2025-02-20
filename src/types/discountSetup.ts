@@ -1,7 +1,7 @@
 interface DiscountAssortment {
     discountID: number;
     assortmentID: number;
-    actionType: string;
+    assortmentName: string;
   }
   
   export type FetchedDiscountType = {
@@ -11,6 +11,7 @@ interface DiscountAssortment {
     discountBase: string;
     discountValue: number;
     appliedOn: string;
+    percentage:string,
     employeeDiscount: string;
     maximumDiscount: number;
     minimumBilling: number;

@@ -8,7 +8,6 @@ import PromotionForm2 from '../PromotionForm2'
 
 import { Button } from '@/components/ui/button'
 
-// Schema for validation
 
 function PromotionSetupForm() {
   const next = usePromotionSetupStore((state) => state.next)

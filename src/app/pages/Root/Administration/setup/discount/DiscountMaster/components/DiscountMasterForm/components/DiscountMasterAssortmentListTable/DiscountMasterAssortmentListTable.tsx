@@ -19,43 +19,43 @@ import {
 type DiscountMasterFormType = z.infer<typeof DiscountMasterSchema>
 
 function DiscountMasterAssortmentListTable() {
-  const { control } = useFormContext<DiscountMasterFormType>() // Access React Hook Form
+  const { control } = useFormContext<DiscountMasterFormType>(); // React Hook Form Context
   const { fields, append, remove, replace } = useFieldArray({
     control,
-    name: 'assortments', // Key in the form schema
-  })
+    name: "assortments", // Key in form schema
+  });
 
-  const selectedAssortments = useDiscountListStore((state) => state.selectedAssortments)
-  const setSelectedAssortments = useDiscountListStore((state) => state.setSelectedAssortments)
-  const openModal = useDiscountListStore((state) => state.openModal)
- // const closeModal = useDiscountListStore((state) => state.closeModal) // Correct store usage
+  const selectedAssortments = useDiscountListStore((state) => state.selectedAssortments);
+  const deleteSelectedAssortment = useDiscountListStore((state) => state.deleteSelectedAssortment);
+  const openModal = useDiscountListStore((state) => state.openModal);
 
-  // Preload the form state from the store
+  // 🔄 **Sync Zustand Store with React Hook Form when Zustand updates**
   useEffect(() => {
-    replace(selectedAssortments) // Sync form state with the store
-  }, [selectedAssortments, replace])
+    replace(selectedAssortments);
+  }, [selectedAssortments, replace]);
 
+  // ✅ **Handle New Row Addition**
   const handleAddRow = () => {
-    const newRow = { id: '', name: '' } // Empty row for new assortment
-    append(newRow) // Add to form
-    setSelectedAssortments([...selectedAssortments, newRow]) // Add to store
-  }
+    const newRow = { assortmentID: "", assortmentName: "" }; // Empty row
+    append(newRow); // Add in form
+  };
 
+  // ✅ **Handle Row Deletion**
   const handleDeleteRow = (index: number) => {
-    const updatedAssortments = selectedAssortments.filter((_, i) => i !== index)
-    remove(index) // Remove from form
-    setSelectedAssortments(updatedAssortments) // Update the global store
-  }
+    if (selectedAssortments[index]) {
+      deleteSelectedAssortment(selectedAssortments[index].assortmentID); // Remove from Zustand
+    }
+    remove(index); // Remove from form
+  };
 
+  // ✅ **Handle Assortment Selection (Opens Modal)**
   const handleSelectItem = (index: number) => {
-    openModal(index) // Open the modal to select an assortment
-  }
-
- 
+    openModal(index);
+  };
 
   return (
     <div>
-      <h4 className="mb-4 font-semibold text-lg ">Assortment Selection</h4>
+      <h4 className="mb-4 font-semibold text-lg">Assortment Selection</h4>
       <Table>
         <TableHeader>
           <TableRow>
@@ -66,11 +66,11 @@ function DiscountMasterAssortmentListTable() {
         </TableHeader>
         <TableBody>
           {fields.map((field, index) => (
-            <TableRow key={field.id}>
+            <TableRow key={index}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>
-                {field?.name ? (
-                  field.name
+                {field?.assortmentName ? (
+                  field.assortmentName
                 ) : (
                   <Button type="button" variant="outline" onClick={() => handleSelectItem(index)}>
                     Select
@@ -92,7 +92,7 @@ function DiscountMasterAssortmentListTable() {
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
 export default DiscountMasterAssortmentListTable
