@@ -17,7 +17,7 @@ import { useAssortmentData } from '../../hooks_api/useAssortmentData'
 import { useAssortmentManagementStore } from '../../store/useAssortmentManagementStore'
 import AssortmentManagementModal from '../AssortmentManagmentModal'
 
-import SkeletonLoader from '@/components/SkeletonLoader'
+import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -43,6 +43,7 @@ function AssortmentManagementTable() {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+  const isDeleting = useAssortmentManagementStore((state) => state.isLoading)
   const [pagination, setPagination] = React.useState({
     pageIndex: 0, // Default to first page
     pageSize: 5, // Default number of rows per page
@@ -71,12 +72,9 @@ function AssortmentManagementTable() {
     onPaginationChange: setPagination,
   })
 
-  if (isLoading) {
-    return (
-      <div className="mt-5">
-        <SkeletonLoader />
-      </div>
-    )
+ 
+  if (isLoading || isDeleting) {
+    return <SkeletonLoaderTable />
   }
 
   function handleModal(){
@@ -85,7 +83,7 @@ function AssortmentManagementTable() {
 
   }
 
-  // if (!isLoading && !assortmentData) return <h3>No data available.</h3>
+  if (!isLoading && !assortmentData) return <h3>No data available.</h3>
   
   return (
     <div className="w-full">

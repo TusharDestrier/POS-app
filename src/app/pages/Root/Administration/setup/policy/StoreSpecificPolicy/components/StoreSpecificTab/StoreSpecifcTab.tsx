@@ -38,17 +38,18 @@ function StoreSpecificTab() {
   }, [storemasterData])
 
   return (
-    <div className="p-6 rounded-lg ">
+     <div className="p-6 rounded-xl">
       <Tabs defaultValue="general" className="w-full">
-        <TabsList className="grid grid-cols-5 gap-2 p-2 rounded-md">
-          <TabsTrigger value="general" className="p-2 rounded-md hover:bg-gray-200">General</TabsTrigger>
-          <TabsTrigger value="posBIll" className="p-2 rounded-md hover:bg-gray-200">POS Bill</TabsTrigger>
-          <TabsTrigger value="creditNote" className="p-2 rounded-md hover:bg-gray-200">Credit Note</TabsTrigger>
-          <TabsTrigger value="goodsReceiptReturn" className="p-2 rounded-md hover:bg-gray-200">Goods Receipt & Return</TabsTrigger>
-          <TabsTrigger value="posOrder" className="p-2 rounded-md hover:bg-gray-200">POS Order</TabsTrigger>
+        <TabsList className='grid grid-cols-5 gap-2 p-0 rounded-lg  mb-6 border-b-2 pb-12'>
+        {/* <TabsList className="grid grid-cols-5 gap-4 p-0 rounded-md "> */}
+          <TabsTrigger value="general" className="p-2 mb-8 rounded-md hover:bg-gray-200 ">General</TabsTrigger>
+          <TabsTrigger value="posBIll" className="p-2 mb-8 rounded-md hover:bg-gray-200">POS Bill</TabsTrigger>
+          <TabsTrigger value="creditNote" className="p-2 mb-8 rounded-md hover:bg-gray-200">Credit Note</TabsTrigger>
+          <TabsTrigger value="goodsReceiptReturn" className="p-2 mb-8 rounded-md hover:bg-gray-200">Goods Receipt & Return</TabsTrigger>
+          <TabsTrigger value="posOrder" className="p-2 mb-8 rounded-md hover:bg-gray-200">POS Order</TabsTrigger>
         </TabsList>
 
-        <div className="grid grid-cols-3 gap-6 mt-6">
+        <div className="grid grid-cols-3 gap-6 mt-6 ">
           {/* Store Name */}
           <FormField
             control={control}
@@ -146,7 +147,7 @@ function StoreSpecificTab() {
           <TabsContent value="posOrder"><PosOrder /></TabsContent>
         </div>
       </Tabs>
-    </div>
+     </div>
   )
 }
 

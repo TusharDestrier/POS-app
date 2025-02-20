@@ -3,7 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 
 import { useItemMaster } from '../../../../store/useItemMaster';
 import { useItemMasterDataStore } from '../../../../store/useItemMasterDataStore';
-import { CustomerStatus, CustomerTableRow } from '../../data/data';
+import {  ItemTableRow } from '../../data/data';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-export const columns: ColumnDef<CustomerTableRow>[] = [
+export const columns: ColumnDef<ItemTableRow>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -65,25 +65,23 @@ export const columns: ColumnDef<CustomerTableRow>[] = [
   },
   {
     accessorKey: 'itemGroup',
-    header: 'Item Group',
-    cell: ({ row }) => {
-      const status = row.getValue('itemGroup') as CustomerStatus;
-      return (
-        <div className={`capitalize ${status === CustomerStatus.ACTIVE ? 'text-green-500' : 'text-red-500'}`}> 
-          {status}
-        </div>
-      );
-    },
+    header: ({ column }) => (
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        Item Group
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div>{row.getValue('itemGroup')}</div>,
   },
   {
-    accessorKey: 'active',
+    accessorKey: 'isActive',
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
         Active
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div className="lowercase">{row.getValue('active')}</div>,
+    cell: ({ row }) => <div className="lowercase">{row.getValue('isActive')}</div>,
   },
   {
     accessorKey: 'view',
@@ -106,20 +104,21 @@ export const columns: ColumnDef<CustomerTableRow>[] = [
   },
 ];
 
-function TableRowDropDowns({ item }: { item: CustomerTableRow }) {
+function TableRowDropDowns({ item }: { item: ItemTableRow }) {
   const modalToggler = useItemMaster((state) => state.toggleOpen);
   const setModalMode = useItemMaster((state) => state.setMode);
   const setCurrentItemMasterId = useItemMasterDataStore((state) => state.setCurrentItemMasterId);
 
-  function EditModalHandler() {
-    modalToggler();
-    setCurrentItemMasterId(Number(item.customerId));
-    setModalMode('Edit');
-  }
+  // function EditModalHandler() {
+  //   modalToggler();
+  //   setCurrentItemMasterId(Number(item.itemCode));
+  //   setModalMode('Edit');
+  // }
 
   function ViewHandler() {
     modalToggler();
-    setCurrentItemMasterId(Number(item.customerId));
+    
+    setCurrentItemMasterId(item.itemCode);
     setModalMode('View');
   }
 
@@ -142,11 +141,11 @@ function TableRowDropDowns({ item }: { item: CustomerTableRow }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Item Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(String(item.customerId))}>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(String(item.itemCode))}>
           Copy Item ID
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={EditModalHandler}>Edit Item</DropdownMenuItem>
+        {/* <DropdownMenuItem onClick={EditModalHandler}>Edit Item</DropdownMenuItem> */}
         <DropdownMenuItem onClick={ViewHandler}>View Item</DropdownMenuItem>
         {/* <DropdownMenuItem onClick={deleteHandler}>Delete Item</DropdownMenuItem> */}
       </DropdownMenuContent>
