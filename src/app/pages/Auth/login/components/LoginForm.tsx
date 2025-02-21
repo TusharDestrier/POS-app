@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, User, Lock } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
@@ -55,6 +55,8 @@ function LoginForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+
+        {/* {username} */}
         <FormField
           control={form.control}
           name="username"
@@ -62,13 +64,25 @@ function LoginForm() {
             <FormItem>
               <FormLabel className="">Username</FormLabel>
               <FormControl>
-                <Input placeholder="Username" autoComplete="username" {...field} />
+                {/* <Input className='border-none' placeholder="Username" autoComplete="username" {...field} /> */}
+                <div className="relative">
+                  <span className="absolute left-3 top-2.5 text-gray-400">
+                    <User size={16} />
+                  </span>
+                  <Input
+                    className="pl-9 border-none"
+                    placeholder="Username"
+                    autoComplete="username"
+                    {...field}
+                  />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
+        {/* {password} */}
+        <FormField 
           control={form.control}
           name="password"
           render={({ field }) => (
@@ -76,15 +90,21 @@ function LoginForm() {
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <div className="relative">
+                  {/* Password Icon */}
+                  <span className="absolute left-3 top-2.5 text-gray-400">
+                    <Lock size={16} />
+                  </span>
                   <Input
                     type={isShow ? 'text' : 'password'}
                     autoComplete="current-password"
                     placeholder="Password"
+                    className="pl-9 border-none"
                     {...field}
                   />
+                  {/* Show/Hide Password Toggle */}
                   <span
                     onClick={() => setShow((prev) => !prev)}
-                    className="absolute right-3 top-2  cursor-pointer"
+                    className="absolute right-3 top-2.5 cursor-pointer text-gray-400"
                   >
                     {isShow ? <Eye size={16} /> : <EyeOff size={16} />}
                   </span>
@@ -94,6 +114,7 @@ function LoginForm() {
             </FormItem>
           )}
         />
+
         <div className="text-end ">
           <Button type="submit" className="mt-2">
             Submit

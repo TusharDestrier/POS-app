@@ -106,8 +106,6 @@ function OrganizationPage() {
   }, [organizationPolicyData])
 
   async function onSubmit(data: z.infer<typeof PostOrganizationPolicySchema>) {
-   
-
     try {
       const formattedData = OrganizationPolicyFormatter(
         data,

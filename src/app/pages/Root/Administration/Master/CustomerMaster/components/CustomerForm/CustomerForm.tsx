@@ -67,6 +67,7 @@ function CustomerForm() {
     },
   })
 
+  //for view part
   useEffect(() => {
     if (mode !== 'Create' && customerData && !Array.isArray(customerData)) {
       formMethods.reset({
@@ -141,6 +142,7 @@ function CustomerForm() {
     return <GlobalViewerLoader />
   }
   
+  // display customer data in view all  mode
   if (mode === 'View' && !customerLoading) {
     if (!customerData) return <h3>No data available</h3> // ✅ Handle undefined case
 

@@ -24,6 +24,7 @@ function AssortmentManagementTab() {
   const openListModal = useAssortmentManagementStore((state) => state.toggleOpen2)
   const type = useAssortmentManagementStore((state) => state.type)
 
+  const assortmentName = form.watch('assortmentName')
 
   return (
     <div className="mt-4">
@@ -110,8 +111,10 @@ function AssortmentManagementTab() {
           <div className="flex gap-6 w-full m-3">
             <div className="w-[300px]">
               <div className='flex gap-4'>
-                <Input placeholder="Search"  className='h-9' />
-                <Button size={'icon'} type='button' onClick={openListModal}><Search size={16}/></Button>
+                <Input placeholder="Search" disabled={!assortmentName} className='h-9' />
+                <Button size={'icon'} type='button' onClick={openListModal} disabled={!assortmentName}>
+                  <Search size={16}/>
+                </Button>
               </div>
             </div>
             <div className="ml-auto flex space-x-2 float-end mr-3 gap-4">
