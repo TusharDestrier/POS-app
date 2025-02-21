@@ -15,6 +15,7 @@ import {
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react'
 import * as React from 'react'
 
+import { useRoleDefinationData } from '../../hooks_api/useRoleDefinationData'
 import { useRoleDefination } from '../../store/useRoleDefination'
 import RoleDefinationModal from '../RoleDefinationModal'
 
@@ -38,66 +39,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { FetchRoleDefinationType } from '@/types/roleDefination'
 
-const data: Payment[] = [
-  {
-    id: 'm5gr84i9',
-    amount: 316,
-    status: 'success',
-    roleName: 'Admin Head',
-    createdOn: '12-09-2022',
-    profileName: 'Store',
-    active: 'Yes',
-  },
-  {
-    id: '3u1reuv4',
-    amount: 242,
-    status: 'success',
-    roleName: 'Store Manager',
-    createdOn: '10-08-2024',
-    profileName: 'Store',
-    active: 'Yes',
-  },
-  {
-    id: 'derv1ws0',
-    amount: 837,
-    status: 'processing',
-    roleName: 'Production Head',
-    createdOn: '10-08-2024',
-    profileName: 'Admin',
-    active: 'Yes',
-  },
-  {
-    id: '5kma53ae',
-    amount: 874,
-    status: 'success',
-    roleName: 'Admin Manager',
-    createdOn: '10-08-2024',
-    profileName: 'Admin',
-    active: 'Yes',
-  },
-  {
-    id: 'bhqecj4p',
-    amount: 721,
-    status: 'failed',
-    roleName: 'Purchase Head',
-    createdOn: '10-08-2024',
-    profileName: 'Purchasing A/P',
-    active: 'Yes',
-  },
-]
 
-export type Payment = {
-  id: string
-  amount: number
-  status: 'pending' | 'processing' | 'success' | 'failed'
-  roleName: string
-  createdOn: string
-  profileName: string
-  active: string
-}
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<FetchRoleDefinationType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -120,6 +66,41 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: 'id',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Id
+          <ArrowUpDown />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue('id')}</div>,
+  },
+  {
+    accessorKey: 'amount',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Amount 
+          <ArrowUpDown />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue('amount')}</div>,
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => <div className="capitalize">{row.getValue('status')}</div>,
+  },
+  {
     accessorKey: 'roleName',
     header: ({ column }) => {
       return (
@@ -136,23 +117,13 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: 'createdOn',
-    header: 'Created On',
+    header: 'Created Name',
     cell: ({ row }) => <div className="capitalize">{row.getValue('createdOn')}</div>,
   },
   {
     accessorKey: 'profileName',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Profile Name
-          <ArrowUpDown />
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue('profileName')}</div>,
+    header: 'Profile Name',
+    cell: ({ row }) => <div className="capitalize">{row.getValue('profileName')}</div>,
   },
   {
     accessorKey: 'active',
@@ -163,7 +134,7 @@ export const columns: ColumnDef<Payment>[] = [
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original
+      const role = row.original
 
       return (
         <DropdownMenu>
@@ -175,7 +146,7 @@ export const columns: ColumnDef<Payment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(role.id)}>
               Copy payment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -189,14 +160,27 @@ export const columns: ColumnDef<Payment>[] = [
 ]
 
 function RoleDefinationTable() {
+  const {rolesData} = useRoleDefinationData()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
   const openHandler = useRoleDefination((state) => state.toggleOpen)
 
+  const columnData = React.useMemo(() => {
+      const dataArray = Array.isArray(rolesData)
+        ? rolesData
+        : rolesData
+          ? [rolesData]
+          : []
+  
+      return dataArray.map((item) => ({
+        id: (item.id),
+      }))
+    }, [rolesData])
+
   const table = useReactTable({
-    data,
+    data: columnData ?? [], // Add the data property here
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -212,6 +196,7 @@ function RoleDefinationTable() {
       columnVisibility,
       rowSelection,
     },
+    // data: []
   })
 
   return (
