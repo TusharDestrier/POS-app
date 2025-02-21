@@ -7,9 +7,15 @@ function PromotionSetupModal() {
   const isOpen = usePromotionSetupStore((state) => state.isOpen)
   const modalMode = usePromotionSetupStore((state) => state.mode)
   const closeModal = usePromotionSetupStore((state) => state.close)
+  const prev = usePromotionSetupStore((state) => state.prev)
+
+  function handleCloseModal(){
+    closeModal()
+prev();
+  }
 
   return (
-    <Dialog open={isOpen} onOpenChange={closeModal}>
+    <Dialog open={isOpen} onOpenChange={handleCloseModal}>
       <DialogContent className="w-full max-w-full  h-screen overflow-y-scroll p-0 flex flex-col gap-0">
         <DialogHeader className="p-5 border-b border-gray-50 sticky top-0 left-0 bg-white">
           <DialogTitle>

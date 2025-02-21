@@ -7,7 +7,6 @@ import PromotionFormDiscountTable from '../PromotionFormDiscountTable'
 
 function PromotionForm2() {
   const formMethods = useFormContext()
-
   const promotionType = formMethods.watch('promotionType')
 
   console.log(promotionType)

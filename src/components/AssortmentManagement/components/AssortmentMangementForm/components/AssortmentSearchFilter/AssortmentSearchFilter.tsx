@@ -41,7 +41,6 @@ function AssortmentSearchFilter({
   const [selectedProp, setSelectedProp] = useState<PropertiesType[]>([])
   const { assortmentData } = useAssortmentDataById(selectedId, type)
   const groupID = assortmentData?.assortmentDetail[0]?.group
-  console.log(groupID)
 
   const {
     itemsGroupsProperties,
@@ -72,8 +71,8 @@ function AssortmentSearchFilter({
     }
     return (
       itemsGroups?.map((group) => (
-        <SelectItem key={group.itemGrpID} value={group.itemGrpID.toString()}>
-          {group.itemGrpName}
+        <SelectItem key={group?.itemGrpID} value={group?.itemGrpID?.toString()}>
+          {group?.itemGrpName}
         </SelectItem>
       )) || []
     )
@@ -140,9 +139,12 @@ function AssortmentSearchFilter({
         <Select
           onValueChange={(val) => handleGroupChange(Number(val))}
           value={String(selectedGroupId)}
+          
         >
           <SelectTrigger className="border p-2 w-full text-start">
-            <SelectValue placeholder="Select a Group" />
+            <SelectValue placeholder="Select a Group" >
+              Select Group
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>{selectOptions}</SelectGroup>

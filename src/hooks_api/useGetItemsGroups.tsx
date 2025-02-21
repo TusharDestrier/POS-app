@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import itemsClients from '@/services/itemsClients'
+import ItemGroupClient from '@/services/ItemGroupClient'
 import { FetchedItemGroupsType } from '@/types/item'
 
 export function useGetAllItemsGroups() {
@@ -11,15 +11,16 @@ export function useGetAllItemsGroups() {
     isError,
   } = useQuery<FetchedItemGroupsType[], Error>({
     queryKey: ['itemsGroups'],
-    queryFn: async ({signal}) => {
-      const data = await itemsClients.getAllItemsGroups({signal})
+    queryFn: async ({ signal }) => {
+      const data = await ItemGroupClient.getAllItemsGroups({ signal })
       return data
     },
-    networkMode:"always",
+    
+    networkMode: 'always',
     staleTime: 5 * 60 * 1000, // ✅ 5 minutes cache time
     refetchOnWindowFocus: true, // ✅ Auto refetch on window focus
-    retry:2,
-    retryDelay:2000,
+    retry: 2,
+    retryDelay: 2000,
   })
   return { itemsGroups, isLoading, error: isError ? error?.message : null }
 }

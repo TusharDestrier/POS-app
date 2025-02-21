@@ -1,6 +1,6 @@
 import ApiClient from './ApiClient'
 
-import { DiscountAssortmentPostType } from '@/app/pages/Root/Administration/setup/discount/DiscountAssortmentManagement/helper/discountAssortmentDataFormatter'
+import { AssortmentPostType } from '@/components/AssortmentManagement/helper/assortmentPostFormatter';
 import { FetchedAssortmentType, AssortmentResponseType } from '@/types/assortment'
 
 class DiscountAssortmentClient extends ApiClient {
@@ -24,7 +24,7 @@ class DiscountAssortmentClient extends ApiClient {
     return response.data
   }
 
-  async createAssortment(assortmentData: DiscountAssortmentPostType) {
+  async createAssortment(assortmentData: AssortmentPostType) {
     try {
       const response = await this.post<AssortmentResponseType>(
         `AssortmentRep/PostAssortment`,

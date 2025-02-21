@@ -33,14 +33,38 @@ function PromotionSetupForm() {
         benefitType: {
           type: "flatDiscount", // Default to "flatDiscount"
         },
-        discountTypes: [
-          { isSelected: false, type: null, discountOn: "", condition: "", comparison: "", from: null, to: null },
-          { isSelected: false, type: null, discountOn: "", condition: "", comparison: "", from: null, to: null },
-          { isSelected: false, type: null, discountOn: "", condition: "", comparison: "", from: null, to: null },
-        ],
-        
+        discountTypes:  {
+          selectedDiscount: '',
+          types: [
+            {
+              isSelected: false,
+              type: "",
+              discountOn: "",
+              comparison: "",
+              from: "",
+              to: "",
+            },
+            {
+              isSelected: false,
+              type: "",
+              discountOn: "",
+              comparison: "",
+              from: "",
+              to: "",
+            },
+            {
+              isSelected: false,
+              type: "",
+              discountOn: "",
+              comparison: "",
+              from: "",
+              to: "",
+            },
+          ],
+        },  
       },
     },
+    
   })
 
   // Handle form submission

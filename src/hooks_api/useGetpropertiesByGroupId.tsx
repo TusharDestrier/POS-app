@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import itemsClients from '@/services/itemsClients'
+import itemsGroupClients from '@/services/ItemGroupClient'
 import { FetchedItemPropertiesType } from '@/types/item'
 
 // id ko optional bana diya taaki hum check kar sakein ki kabhi absent ho toh query run na ho.
@@ -18,7 +18,7 @@ export function useGetPropertiesByGroupID(id?: number) {
         // Yahan aap alternatively empty array return kar sakte ho.
         throw new Error('Group ID is required for fetching item groups')
       }
-      const data = await itemsClients.getAllItemsPropertiesByGroupId({ groupId: id })
+      const data = await itemsGroupClients.getAllItemsPropertiesByGroupId({ groupId: id })
       return data
     },
     networkMode: 'always',

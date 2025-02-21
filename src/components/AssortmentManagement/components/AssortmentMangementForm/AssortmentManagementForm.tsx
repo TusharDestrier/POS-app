@@ -100,8 +100,8 @@ function AssortmentManagementForm({ type }: { type: 'P' | 'D' | 'S' }) {
         type
       )
 
-      // await createAssortment(sendedData)
-      // closeModal()
+      await createAssortment(sendedData)
+      closeModal()
 
       setMode('Create')
       clearSelections()

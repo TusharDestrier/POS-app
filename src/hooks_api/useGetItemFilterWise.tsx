@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import { ItemGenerationType } from '@/components/AssortmentManagement/helper/assortmentFilterFormatter'
-import ItemClient from '@/services/itemsClients'
+import ItemGroupClient from '@/services/ItemGroupClient'
 import { ItemFilterType, ItemsResponseType } from '@/types/item'
 
 export function useGetItemFilterWise() {
@@ -14,7 +14,7 @@ export function useGetItemFilterWise() {
     ItemGenerationType // Mutation function takes ItemGenerationType as argument
   >({
     mutationFn: async (filterData: ItemGenerationType) => {
-      return await ItemClient.getAllItemsAfterFiltering(filterData)
+      return await ItemGroupClient.getAllItemsAfterFiltering(filterData)
     },
     onSuccess: (responseData) => {
       console.log(responseData)

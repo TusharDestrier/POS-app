@@ -2,6 +2,7 @@ import { Eye, PlusCircle, Trash } from 'lucide-react' // Corrected icons
 import { useState } from 'react'
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 
+import { useAssortmentData } from '@/components/AssortmentManagement/hooks_api/useAssortmentData'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
@@ -13,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { FetchedAssortmentType } from '@/types/assortment'
 
 function PromotionFormAssortmentTable() {
   const [modalOpen, setModalOpen] = useState(false)
@@ -25,36 +27,44 @@ function PromotionFormAssortmentTable() {
     name: 'promotionParameters.buyAssortments',
   })
 
-  // Watch the paidForCondition for dynamic behavior
+  // Watch values for reactivity
   const paidForCondition = useWatch({
     control,
     name: 'promotionParameters.paidForCondition',
   })
 
-  // Watch the entire buyAssortments array for reactivity
   const watchedAssortments =
     useWatch({
       control,
       name: 'promotionParameters.buyAssortments',
     }) || []
 
+  // Open Modal for Assortment Selection
   const handleModalOpen = (index: number) => {
     setSelectedRowIndex(index)
     setModalOpen(true)
   }
 
+  // Close Modal
   const handleModalClose = () => {
     setModalOpen(false)
     setSelectedRowIndex(null)
   }
 
-  const handleAssortmentSelect = (name: string) => {
+  // When user selects an Assortment
+  const handleAssortmentSelect = (selectedAssortment: FetchedAssortmentType) => {
+    console.log(selectedAssortment.assortmentID);
+    
     if (selectedRowIndex !== null) {
-      setValue(`promotionParameters.buyAssortments.${selectedRowIndex}.assortmentName`, name)
-      setModalOpen(false) // Close modal after selection
+      setValue(`promotionParameters.buyAssortments.${selectedRowIndex}`, {
+        assortmentID: String(selectedAssortment.assortmentID), // ✅ Store ID
+        assortmentName: selectedAssortment.assortmentName,
+        unit: paidForCondition.condition === "buySpecificRatio" ? null : undefined, // ✅ Ensure unit resets correctly
+      });
+      setModalOpen(false);
     }
-  }
-
+  };
+  
 
   return (
     <div className="">
@@ -65,13 +75,13 @@ function PromotionFormAssortmentTable() {
           {/* Table Header */}
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[50px] text-center">Delete</TableHead>
+              <TableHead className="w-[50px] text-center">No.</TableHead>
               <TableHead>Assortment Name</TableHead>
-              {/* Conditionally render the Unit column */}
               {paidForCondition.condition === 'buySpecificRatio' && (
                 <TableHead className="w-[100px] text-center">Unit</TableHead>
               )}
               <TableHead className="w-[50px] text-center">Show</TableHead>
+              <TableHead className="w-[50px] text-center">Delete</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -79,15 +89,9 @@ function PromotionFormAssortmentTable() {
           <TableBody>
             {fields.map((field, index) => (
               <TableRow key={field.id}>
-                {/* Delete Column */}
-                <TableCell className="text-center">
-                  <Trash
-                    className="h-5 w-5 text-red-500 cursor-pointer"
-                    onClick={() => remove(index)}
-                  />
-                </TableCell>
+                <TableCell className="text-center">{index + 1}</TableCell>
 
-                {/* Assortment Name Column */}
+                {/* Assortment Name (Clickable) */}
                 <TableCell
                   className="cursor-pointer text-blue-500"
                   onClick={() => handleModalOpen(index)}
@@ -96,22 +100,31 @@ function PromotionFormAssortmentTable() {
                 </TableCell>
 
                 {/* Conditionally Render Unit Column */}
+                {/* Conditionally Render Unit Column */}
                 {paidForCondition.condition === 'buySpecificRatio' && (
                   <TableCell className="text-center">
                     <Input
                       type="number"
                       placeholder="Unit"
                       {...register(`promotionParameters.buyAssortments.${index}.unit`, {
-                        valueAsNumber: true, // Automatically convert to number
-                        setValueAs: (value) => (value === '' ? null : value), // Handle empty inputs
+                        valueAsNumber: true,
                       })}
+                      disabled={paidForCondition.condition !== 'buySpecificRatio'} // ✅ Fix: Disable when not needed
                     />
                   </TableCell>
                 )}
 
-                {/* Show Column */}
+                {/* Show Column - Only Show if Assortment is Selected */}
                 <TableCell className="text-center">
                   <Eye className="h-5 w-5 text-gray-500 cursor-pointer" />
+                </TableCell>
+
+                {/* Delete */}
+                <TableCell className="text-center">
+                  <Trash
+                    className="h-5 w-5 text-red-500 cursor-pointer"
+                    onClick={() => remove(index)}
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -132,7 +145,7 @@ function PromotionFormAssortmentTable() {
           }
         >
           <PlusCircle className="h-5 w-5" />
-          Add Row
+          Add Assortment
         </Button>
       </div>
 
@@ -153,28 +166,34 @@ const AssortmentModal = ({
 }: {
   isOpen: boolean
   onClose: () => void
-  onSelect: (name: string) => void
+  onSelect: (assortment: FetchedAssortmentType) => void // Select whole object
 }) => {
-  const assortmentList = ['Buy Two Get One', 'Buy 3 Get 2', 'Buy 5 Get 3'] // Example list
+  const { assortmentData, isLoading } = useAssortmentData('P') // Fetch API data
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <h3 className="font-bold mb-3">Select an Assortment</h3>
-        <ul>
-          {assortmentList.map((assortment, index) => (
-            <li
-              key={index}
-              className="cursor-pointer p-2 hover:bg-gray-200"
-              onClick={() => {
-                onSelect(assortment) // Pass the selected assortment back
-                onClose()
-              }}
-            >
-              {assortment}
-            </li>
-          ))}
-        </ul>
+
+        {/* Loader */}
+        {isLoading ? (
+          <p>Loading Assortments...</p>
+        ) : (
+          <ul>
+            {assortmentData?.map((assortment) => (
+              <li
+                key={assortment.assortmentID}
+                className="cursor-pointer p-2 hover:bg-gray-200"
+                onClick={() => {
+                  onSelect(assortment) // Select full object
+                  onClose()
+                }}
+              >
+                {assortment.assortmentName}
+              </li>
+            ))}
+          </ul>
+        )}
       </DialogContent>
     </Dialog>
   )
