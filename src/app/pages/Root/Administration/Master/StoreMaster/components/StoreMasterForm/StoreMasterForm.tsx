@@ -12,7 +12,9 @@ import { StoreMasterHeadSchema } from '../../schemas/StoreMasterHeadSchema'
 import { useStoreMasterDataStore } from '../../store/useStoreMasterDataStore'
 import useStoreMasterHead, { useStoreMasterStore } from '../../store/useStoreMasterStore'
 import StoreMasterTab from '../StoreMasterTab'
-import StoreMasterTableViewer, { StoreMasterTableData } from '../StoreMasterTable/components/StoreMasterTableViewer/StoreMasterTableViewer'
+import StoreMasterTableViewer, {
+  StoreMasterTableData,
+} from '../StoreMasterTable/components/StoreMasterTableViewer/StoreMasterTableViewer'
 
 import GlobalViewerLoader from '@/components/GlobalViewerLoader'
 import { Button } from '@/components/ui/button'
@@ -77,12 +79,18 @@ function StoreMasterForm() {
       formMethods.reset({
         storeCode: storeMaster.storeCode ?? '',
         storeName: storeMaster.storeName ?? '',
-        startDate: storeMaster.startDate
-          ? new Date(storeMaster.startDate).toISOString().split('T')[0]
+        startDate: storeMaster?.startDate
+          ? new Date(storeMaster?.startDate.split('-').reverse().join()).toDateString()
           : '',
-        closeDate: storeMaster.closeDate
-          ? new Date(storeMaster.closeDate).toISOString().split('T')[0]
+        closeDate: storeMaster?.closeDate
+          ? new Date(storeMaster?.closeDate.split('-').reverse().join()).toDateString()
           : '',
+        // startDate: storeMaster.startDate
+        //   ? new Date(storeMaster?.startDate).toDateString()
+        //   : '',
+        // closeDate: storeMaster.closeDate
+        //   ? new Date(storeMaster.closeDate).toDateString()
+        //   : '',
         storeSize: storeMaster.storeSize ?? 0,
         defaultWarehouseCode: storeMaster.defaultWarehouseCode ?? '',
         defaultWarehouseName: storeMaster.defaultWarehouseName ?? '',
@@ -90,8 +98,9 @@ function StoreMasterForm() {
         defaultReturnWarehouseCode: storeMaster.defaultReturnWHCode ?? '',
         GSTIN: storeMaster.gstin ?? '',
         GSTINDate: storeMaster.gstinDate
-          ? new Date(storeMaster.gstinDate).toISOString().split('T')[0]
+          ? new Date(storeMaster?.gstinDate.split('-').reverse().join()).toDateString()
           : '',
+
         stateCode: storeMaster.gstinState ?? '',
         stateName: storeMaster.gstinState ?? '',
         priceList: storeMaster.priceListName ?? '',
@@ -116,7 +125,7 @@ function StoreMasterForm() {
         contactPerson: storeMaster.contactPerson ?? '',
         contactNumber: String(storeMaster.contactNumber) || '',
         emailId: storeMaster.email ?? '',
-       // sourcingWarehouse: storeMaster.objWareHouse || [],
+        // sourcingWarehouse: storeMaster.objWareHouse || [],
         // objPayMode: storeMaster.objPayMode || [],
         // objPettyCash: storeMaster.objPettyCash || [],
         // objSeries: storeMaster.objSeries || [],
@@ -153,10 +162,8 @@ function StoreMasterForm() {
     const formattedStoremasterData: StoreMasterTableData = Array.isArray(storeMaster)
       ? mapStoreMasterFetchedTypeToTableData(storeMaster[0]) // ✅ Extract first element
       : mapStoreMasterFetchedTypeToTableData(storeMaster) // ✅ Direct mapping if object
-    return (
-      <StoreMasterTableViewer data={formattedStoremasterData} />
-    )
-   
+    return <StoreMasterTableViewer data={formattedStoremasterData} />
+
     // JSON.stringify(storeMaster)
   }
 

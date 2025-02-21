@@ -29,7 +29,7 @@ export function useCreateDiscountMaster() {
     },
     onSuccess: () => {
       // ✅ Refetch after successful creation
-      queryClient.invalidateQueries({ queryKey: ['discount'] })
+      queryClient.invalidateQueries({ queryKey: ['DiscountMaster'] })
 
       toast.success(messages[mode], {
         style: {

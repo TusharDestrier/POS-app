@@ -13,7 +13,6 @@ function PromotionBenefit() {
     name: 'promotionParameters.benefitType',
   })
 
-  console.log('Selected Benefit Type:', selectedBenefitType) // Debugging
 
   return (
     <div className="">

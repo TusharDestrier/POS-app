@@ -12,7 +12,7 @@ class DiscountSetupClient extends ApiClient {
     const response = await this.get<FetchedDiscountType[]>(
       `Discount/GetAllDiscount`,
       {
-        DesignationID: 0,
+        DiscountID: 0,
       },
       {
         signal,
@@ -23,7 +23,7 @@ class DiscountSetupClient extends ApiClient {
 
   async getDiscountById({ id = 0 }: { id: number | null }) {
     const response = await this.get<FetchedDiscountType>(`Discount/GetDiscount`, {
-      discountID: id,
+      DiscountID: id,
     })
     return response.data
   }

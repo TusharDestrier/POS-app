@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { createAssortmentPayload } from '@/components/AssortmentManagement/helper/assortmentFilterFormatter'
+import { useAssortmentDataById } from '@/components/AssortmentManagement/hooks_api/useAssortmentDataById'
+import { useAssortmentManagementDataStore } from '@/components/AssortmentManagement/store/useAssortmentManagementDataStore'
+import { useAssortmentManagementStore } from '@/components/AssortmentManagement/store/useAssortmentManagementStore'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import {
@@ -14,9 +17,6 @@ import {
 import { useGetItemFilterWise } from '@/hooks_api/useGetItemFilterWise'
 import { useGetAllItemsGroups } from '@/hooks_api/useGetItemsGroups'
 import { useGetPropertiesByGroupID } from '@/hooks_api/useGetpropertiesByGroupId'
-import { useAssortmentDataById } from '@/components/AssortmentManagement/hooks_api/useAssortmentDataById'
-import { useAssortmentManagementDataStore } from '@/components/AssortmentManagement/store/useAssortmentManagementDataStore'
-import { useAssortmentManagementStore } from '@/components/AssortmentManagement/store/useAssortmentManagementStore'
 
 type propertyValue = {
   value: string
@@ -40,7 +40,7 @@ function AssortmentSearchFilter({
   const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null)
   const [selectedProp, setSelectedProp] = useState<PropertiesType[]>([])
   const { assortmentData } = useAssortmentDataById(selectedId, type)
-  const groupID = assortmentData?.assortmentDetail[0].group
+  const groupID = assortmentData?.assortmentDetail[0]?.group
   console.log(groupID)
 
   const {
