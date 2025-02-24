@@ -60,7 +60,8 @@ import SessionPage from '@/app/pages/Root/Session/page'
 import SalesPage from '@/app/pages/Root/Transaction/Billing/Sales/page'
 import Session from '@/app/pages/Root/Transaction/Billing/Session/page'
 import TransactionLayout from '@/app/pages/Root/Transaction/layout'
-import ApInvoice from '@/app/pages/Root/Transaction/Purchase/ApInvoice/page'
+//import ApInvoice from '@/app/pages/Root/Transaction/Purchase/ApInvoice/page'
+import GoodsReceiptAtStore from '@/app/pages/Root/Transaction/Purchase/GoodsReceiptStore/page'
 import GRPO from '@/app/pages/Root/Transaction/Purchase/GRPO/page'
 //import Purchase from '@/app/pages/Root/Transaction/Purchase/page'
 import PurchaseOrder from '@/app/pages/Root/Transaction/Purchase/PurchaseOrder/page'
@@ -286,9 +287,13 @@ export const appRoutes = {
               path: 'grpo',
               element: <GRPO />,
             },
+            // {
+            //   path: 'ap-invoice',
+            //   element: <ApInvoice />,
+            // },
             {
-              path: 'ap-invoice',
-              element: <ApInvoice />,
+              path: 'goodsReceipt-store',
+              element: <GoodsReceiptAtStore />,
             },
           ],
         },

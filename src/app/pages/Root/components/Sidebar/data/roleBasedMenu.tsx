@@ -203,9 +203,13 @@ export const roleBasedMenu: RoleBasedMenu = {
               name: 'GRPO',
               path: '/transaction/purchase/grpo',
             },
+            // {
+            //   name: 'A/P Invoice',
+            //   path: '/transaction/purchase/ap-invoice',
+            // },
             {
-              name: 'A/P Invoice',
-              path: '/transaction/purchase/ap-invoice',
+              name: 'Goods Receipt @ Store',
+              path: '/transaction/purchase/goodsReceipt-store',
             },
           ],
         },

@@ -29,8 +29,10 @@ export type ItemTableData = {
 interface ItemTableViewerProps {
     data: ItemTableData;
 }
+
 function ItemMasterTableViewer({ data }: ItemTableViewerProps) {
     const details = data?.objDetails || [];
+    console.log("ItemMasterTableViewer Data:", data);
     const closeModal = useItemMaster((state) => state.close)
     return (
         <div className="item_table_viewer space-y-6 pb-6">
@@ -63,11 +65,11 @@ function ItemMasterTableViewer({ data }: ItemTableViewerProps) {
                         <h3 className="font-semibold">Retail Price</h3>
                         <h6 className="text-sm">{data.retailPrice}</h6>
                     </div>
-                    {/* <div className="space-y-1">
+                    <div className="space-y-1">
                         <h3 className="font-semibold">Wholesale Price</h3>
                         <h6 className="text-sm">{data.wholesalePrice}</h6>
                     </div>
-                    <div className="space-y-1">
+                  {/*   <div className="space-y-1">
                         <h3 className="font-semibold">Active Status</h3>
                         <h6 className="text-sm">{data.isActive === 'Y' ? 'Active' : 'Inactive'}</h6>
                     </div> */}

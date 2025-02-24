@@ -46,7 +46,6 @@ function ItemMasterTab() {
     const formattedCustomerData: ItemTableData = Array.isArray(itemMasterById)
       ? mapItemMasterFetchedTypeToTableData(itemMasterById[0]) // ✅ Extract first element
       : mapItemMasterFetchedTypeToTableData(itemMasterById) // ✅ Direct mapping if object
-
     return (
       <h3>
         <ItemMasterTableViewer data={formattedCustomerData} />

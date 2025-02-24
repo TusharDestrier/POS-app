@@ -25,7 +25,7 @@ export type ItemFilterType = {
   hsnsacCode: string;
   wholesalePriceList: number;
   retailPriceList: number;
-  mrpPriceList: number;
+  //mrpPriceList: number;
   itemManagement: string;
   leadTime: string;         // Agar time days mein hai toh number bhi ho sakta hai
   toleranceDays: number;
@@ -43,7 +43,8 @@ export type ItemFilterType = {
   enteredBy: number;
   usedFor: string | null;
   itemDetails: unknown;     // ya koi proper type define karo, jaise: ItemDetailType | null
-  itemProperty: unknown;    // ya koi proper type define karo, jaise: ItemPropertyType | null
+  itemProperty: unknown;
+  objDetails: []    // ya koi proper type define karo, jaise: ItemPropertyType | null
 };
 
 
