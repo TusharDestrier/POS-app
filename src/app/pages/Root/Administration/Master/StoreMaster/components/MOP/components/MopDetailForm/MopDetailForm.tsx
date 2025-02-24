@@ -58,7 +58,7 @@ function MopDetailForm() {
         }))
       )
     }
-  }, [storeMaster, mode, replace])
+  }, [storeMaster, mode, replace, setValue]) // <- Added setValue
 
   const ledgerOptions = [
     { value: 'Ledger 1', code: 'LEDGER001', name: 'Ledger 1' },
@@ -71,7 +71,7 @@ function MopDetailForm() {
     { value: 'SubLedger 2', code: 'SUBLEDGER002', name: 'SubLedger 2' },
   ]
 
-  console.log(storeMaster)
+  console.log(payModeOptions)
 
   return (
     <div className="border p-4 border-black border-solid h-[580px] overflow-y-auto">
@@ -99,11 +99,16 @@ function MopDetailForm() {
             name={`objPayMode.${index}.payMode`}
             render={({ field }) => (
               <Select
-                value={field.value}
+                value={field.value || ''} // Ensure value binding
                 onValueChange={(value) => {
                   field.onChange(value)
-                  const selectedPayMode = payModeOptions?.find((pm) => pm?.value === value)
-                  setValue(`objPayMode.${index}.paymentCode`, String(selectedPayMode?.id ?? 0))
+                  const selectedPayMode = payModeOptions.find((pm) => pm.value === value)
+
+                  // Ensure updating correctly
+                  setValue(
+                    `objPayMode.${index}.paymentCode`,
+                    selectedPayMode?.id ? String(selectedPayMode.id) : ''
+                  )
                 }}
               >
                 <SelectTrigger>
@@ -113,8 +118,8 @@ function MopDetailForm() {
                   {isLoading ? (
                     <p className="p-2 text-gray-500">Loading...</p>
                   ) : (
-                    payModeOptions?.map((pm) => (
-                      <SelectItem key={pm.id} value={pm.value}>
+                    payModeOptions.map((pm) => (
+                      <SelectItem key={pm.id} value={pm.value} >
                         {pm.label}
                       </SelectItem>
                     ))
@@ -144,7 +149,7 @@ function MopDetailForm() {
             name={`objPayMode.${index}.crossStore`}
             render={({ field }) => (
               <Checkbox
-              className='mt-2'
+                className="mt-2"
                 checked={field.value === 'Y'} // Check if value is 'Y' (true)
                 onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')} // Map true/false to 'Y'/'N'
               />
@@ -212,7 +217,7 @@ function MopDetailForm() {
               name={`objPayMode.${index}.discontinue`}
               render={({ field }) => (
                 <Checkbox
-                className='mt-2 ms-4'
+                  className="mt-2 ms-4"
                   checked={field.value === 'Y'} // Check if value is 'Y' (true)
                   onCheckedChange={(checked) => field.onChange(checked ? 'Y' : 'N')} // Map true/false to 'Y'/'N'
                 />
