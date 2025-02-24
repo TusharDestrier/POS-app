@@ -33,6 +33,7 @@ function PromotionSetupForm() {
         benefitType: {
           type: "flatDiscount", // Default to "flatDiscount"
         },
+        objValue: [{ lineNum: 1, fromValue: "", toValue: "" }],
         discountTypes:  {
           selectedDiscount: '',
           types: [

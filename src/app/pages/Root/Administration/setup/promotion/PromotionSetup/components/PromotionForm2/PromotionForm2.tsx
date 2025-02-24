@@ -4,6 +4,7 @@ import PaidForCondition from '../PaidForCondition'
 import PromotionBenefit from '../PrmotionBenefit/PromotionBenefit'
 import PromotionFormAssortmentTable from '../PromotionFormAssortmentTable'
 import PromotionFormDiscountTable from '../PromotionFormDiscountTable'
+import PromotionSlabTable from '../PromotionSlabTable'
 
 function PromotionForm2() {
   const formMethods = useFormContext()
@@ -14,12 +15,23 @@ function PromotionForm2() {
   return (
     <div className="grid grid-cols-2 gap-4 h-full">
       <div className="border rounded p-4">
-        <div className="mb-10">
-          {promotionType === 'freequantityBenefit' && <PaidForCondition />}
-        </div>
+        {promotionType === 'freequantityBenefit' && (
+          <div className="mb-10">
+            {' '}
+            <PaidForCondition />{' '}
+          </div>
+        )}
+
         <div>
           <PromotionFormAssortmentTable />
         </div>
+
+        {promotionType !== 'freequantityBenefit' && (
+          <div className="mt-10">
+            <PromotionSlabTable />
+          </div>
+        )}
+      
       </div>
 
       <div className="border rounded p-4">
@@ -27,17 +39,6 @@ function PromotionForm2() {
           <h3 className="font-semibold text-md mb-3">Benefit Type</h3>
           <PromotionBenefit />
         </div>
-
-        {promotionType === 'quantityslabBenefit' && (
-          <div className="mb-10">
-            <h3 className="font-semibold text-md mb-3">Benefit Type</h3>{' '}
-          </div>
-        )}
-        {promotionType === 'billvalueslabBenefit' && (
-          <div className="mb-10">
-            <h3 className="font-semibold text-md mb-3">Define Bill Amount Base Slab</h3>{' '}
-          </div>
-        )}
 
         <div>
           <h3 className="font-semibold text-md mb-3">Discount Type</h3>
