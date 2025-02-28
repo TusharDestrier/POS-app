@@ -1,23 +1,31 @@
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext } from 'react-hook-form'
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from '@/components/ui/table'
 
 function PromotionSlabTable() {
-    const { control, register,watch } = useFormContext();
-    
-      const { fields, append, remove } = useFieldArray({
-        control,
-        name: "promotionParameters.objValue",
-      });
+  const { control, register, watch } = useFormContext()
 
-      const promotionType = watch('promotionType')
-    
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'promotionParameters.objValue',
+  })
+
+  const promotionType = watch('promotionType')
+
   return (
     <div className=" rounded-md">
-          <h4 className="font-bold mb-3">{promotionType==='billvalueslabBenefit' ?"Define Bill Amount Base Slab" :"Define Slab" }</h4>
+      <h4 className="font-semibold mb-3">
+        {promotionType === 'B' ? 'Define Bill Amount Base Slab' : 'Define Slab'}
+      </h4>
       <Table>
         <TableHeader>
           <TableRow>
@@ -31,29 +39,39 @@ function PromotionSlabTable() {
         <TableBody>
           {fields.map((field, index) => (
             <TableRow key={field.id}>
+              <TableCell>1</TableCell>
               <TableCell>
-               1
+                <Input
+                  type="number"
+                  {...register(`promotionParameters.objValue.${index}.fromValue`, { valueAsNumber: true })}
+                />
               </TableCell>
               <TableCell>
-                <Input type="number" {...register(`objValue.${index}.fromValue`, { valueAsNumber: true })} />
-              </TableCell>
-              <TableCell>
-                <Input type="number" {...register(`objValue.${index}.toValue`, { valueAsNumber: true })} />
+                <Input
+                  type="number"
+                  {...register(`promotionParameters.objValue.${index}.toValue`, { valueAsNumber: true })}
+                />
               </TableCell>
               <TableCell>℮</TableCell>
               <Button variant="ghost" size="sm" onClick={() => remove(index)}>
-                  ❌
-                </Button>
+                ❌
+              </Button>
             </TableRow>
           ))}
         </TableBody>
       </Table>
 
-      <Button type="button" className="mt-4" onClick={() => append({ lineNum: fields.length + 1, fromValue: "", toValue: "" })}>
+      <Button
+        type="button"
+        className="mt-4"
+        onClick={() => append({ lineNum: fields.length + 1, fromValue: '', toValue: '' })}
+      >
         Add Row
       </Button>
-      <Button type="submit" className="ml-4 mt-4">Submit</Button>
-  </div>
+      <Button type="submit" className="ml-4 mt-4">
+        Submit
+      </Button>
+    </div>
   )
 }
 

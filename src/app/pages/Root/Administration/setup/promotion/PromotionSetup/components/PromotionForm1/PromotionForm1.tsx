@@ -82,8 +82,8 @@ function PromotionForm1() {
                     <SelectValue placeholder="Applied On" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="eachItem">Applied on Each Item</SelectItem>
-                    <SelectItem value="billValue">Applied on Bill Value</SelectItem>
+                    <SelectItem value="E">Applied on Each Item</SelectItem>
+                    <SelectItem value="B">Applied on Bill Value</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
@@ -106,15 +106,15 @@ function PromotionForm1() {
                 className="mb-5 roles-radio"
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="freequantityBenefit" id="r1" />
+                  <RadioGroupItem value="F" id="r1" />
                   <label htmlFor="r1">Free Quantity Benefit</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="quantityslabBenefit" id="r2" />
+                  <RadioGroupItem value="Q" id="r2" />
                   <label htmlFor="r2">Quantity Slab Benefit</label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="billvalueslabBenefit" id="r3" />
+                  <RadioGroupItem value="B" id="r3" />
                   <label htmlFor="r3">Bill Value Slab Benefit</label>
                 </div>
               </RadioGroup>

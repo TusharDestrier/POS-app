@@ -15,11 +15,12 @@ import {
 } from '@tanstack/react-table'
 import * as React from 'react'
 
-import { data } from '../../data/data'
+import { usePromotionData } from '../../hooks_api/usePromotionData'
 import { usePromotionSetupStore } from '../../store/usePromotionSetupStore'
 import columns from '../PromotionSetupColumn'
 import PromotionSetupModal from '../PromotionSetupModal'
 
+import SkeletonLoaderTable from '@/components/SkeletonLoaderTable'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -38,6 +39,9 @@ import {
 } from '@/components/ui/table'
 
 function PromotionSetupTable() {
+  // const [data,]=use
+  const { promotionData, isLoading, error } = usePromotionData(0)
+  const globalLoading = usePromotionSetupStore((state) => state.isLoading)
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -51,7 +55,7 @@ function PromotionSetupTable() {
   const setModalMode = usePromotionSetupStore((state) => state.setMode)
 
   const table = useReactTable({
-    data,
+    data: promotionData ?? [],
     columns,
     state: {
       sorting,
@@ -75,6 +79,15 @@ function PromotionSetupTable() {
     modalToggler()
     setModalMode('Create')
   }
+  console.log(promotionData)
+
+  if (isLoading || globalLoading) {
+    return <SkeletonLoaderTable />
+  }
+
+  if (error) {
+    return <div>{error}</div>
+  }
 
   return (
     <>
@@ -82,8 +95,10 @@ function PromotionSetupTable() {
         <div className="flex items-center py-4">
           <Input
             placeholder="Filter promotion Name..."
-            value={(table.getColumn('PromotionName')?.getFilterValue() as string) ?? ''}
-            onChange={(event) => table.getColumn('PromotionName')?.setFilterValue(event.target.value)}
+            value={(table.getColumn('promotionName')?.getFilterValue() as string) ?? ''}
+            onChange={(event) =>
+              table.getColumn('promotionName')?.setFilterValue(event.target.value)
+            }
             className="max-w-sm"
           />
           <ul className="flex items-center gap-3 ms-auto">
@@ -187,7 +202,7 @@ function PromotionSetupTable() {
           </div>
         </div>
       </div>
-      <PromotionSetupModal/>
+      <PromotionSetupModal />
     </>
   )
 }

@@ -21,19 +21,23 @@ const PaidForCondition = () => {
               onValueChange={(value) => {
                 field.onChange(value)
                 // Clear quantity if condition changes
-                if (value !== 'buyAny') {
-                  setValue('promotionParameters.paidForCondition.quantity', undefined)
+                if (value === "A") {
+                  // ✅ Reset quantity and unit when "A" is selected
+                  setValue("promotionParameters.paidForCondition.quantity", undefined);
+                  
+                  
                 }
+                
               }}
               className="space-y-1 roles-radio"
             >
               {/* Buy Any */}
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="buyAny" id="buyAny" />
-                <label htmlFor="buyAny" className="text-sm">
+                <RadioGroupItem value="A" id="A" />
+                <label htmlFor="A" className="text-sm">
                   Buy Any
                 </label>
-                {field.value === 'buyAny' && (
+                {field.value === 'A' && (
                   <FormControl>
                     <Input
                       type="number"
@@ -51,16 +55,16 @@ const PaidForCondition = () => {
 
               {/* Buy Specific Quantity in Ratio */}
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="buySpecificRatio" id="buySpecificRatio" />
-                <label htmlFor="buySpecificRatio" className="text-sm">
+                <RadioGroupItem value="R" id="R" />
+                <label htmlFor="R" className="text-sm">
                   Buy Specific Quantity in Ratio from Assortment
                 </label>
               </div>
 
               {/* Buy Any Quantity from Assortment */}
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="buyAnyQuantity" id="buyAnyQuantity" />
-                <label htmlFor="buyAnyQuantity" className="text-sm">
+                <RadioGroupItem value="Q" id="Q" />
+                <label htmlFor="Q" className="text-sm">
                   Buy Any Quantity from Assortment
                 </label>
               </div>

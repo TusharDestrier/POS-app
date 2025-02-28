@@ -14,6 +14,12 @@ import {
 } from '@/components/ui/select'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
+const discountOn=[
+  "% of Discount on",
+  "Rs of Discount on",
+  "Rs Fixed Amount on",
+]
+
 function PromotionFormDiscountTable() {
   const { control, setValue, watch } = useFormContext()
   const discountTypes = watch("promotionParameters.discountTypes.types");
@@ -66,9 +72,13 @@ function PromotionFormDiscountTable() {
                       control={control}
                       name={`promotionParameters.discountTypes.types.${index}.type`}
                       render={({ field }) => (
-                        <Input type="number" {...field} disabled={!isSelected} placeholder={type.label} />
+                        <Input type="number" className='w-[50px]' min={1} {...field} disabled={!isSelected} placeholder={type.label} />
                       )}
                     />
+                  </TableCell>
+                  <TableCell>
+                    <label className='w-[140px] inline-block' htmlFor=""> {discountOn[index]}</label>
+                  
                   </TableCell>
 
                   {/* ✅ Discount On Dropdown */}
@@ -82,10 +92,10 @@ function PromotionFormDiscountTable() {
                             <SelectValue placeholder="Select Discount On" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="LMRP">Lowest MRP</SelectItem>
-                            <SelectItem value="HMRP">Highest MRP</SelectItem>
-                            <SelectItem value="LRSP">Lowest RSP</SelectItem>
-                            <SelectItem value="HRSP">Highest RSP</SelectItem>
+                            <SelectItem value="A">Lowest MRP</SelectItem>
+                            <SelectItem value="B">Highest MRP</SelectItem>
+                            <SelectItem value="C">Lowest RSP</SelectItem>
+                            <SelectItem value="D">Highest RSP</SelectItem>
                           </SelectContent>
                         </Select>
                       )}
@@ -98,11 +108,7 @@ function PromotionFormDiscountTable() {
                       {isExpanded ? "-" : "+"}
                     </Button>
                   </TableCell>
-                </TableRow>
-
-                {/* ✅ Expanded Row with Advanced Fields */}
-                {isExpanded && (
-                  <TableRow>
+                  {isExpanded && (
                     <TableCell colSpan={4} className="p-4 bg-gray-100">
                       <div className="flex gap-4 items-center">
                         <span>Where</span>
@@ -117,9 +123,9 @@ function PromotionFormDiscountTable() {
                                 <SelectValue placeholder="Select Condition" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="MRP">MRP</SelectItem>
-                                <SelectItem value="RSP">RSP</SelectItem>
-                                <SelectItem value="WSP">WSP</SelectItem>
+                                <SelectItem value="A">MRP</SelectItem>
+                                <SelectItem value="B">RSP</SelectItem>
+                                <SelectItem value="C">WSP</SelectItem>
                               </SelectContent>
                             </Select>
                           )}
@@ -145,29 +151,29 @@ function PromotionFormDiscountTable() {
                                 <SelectValue placeholder="Select Comparison" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="lesser">Less than</SelectItem>
-                                <SelectItem value="greater">Greater than</SelectItem>
-                                <SelectItem value="inBetween">In Between</SelectItem>
+                                <SelectItem value="A">Less than</SelectItem>
+                                <SelectItem value="B">Greater than</SelectItem>
+                                <SelectItem value="C">In Between</SelectItem>
                               </SelectContent>
                             </Select>
                           )}
                         />
 
                         {/* ✅ From & To Inputs */}
-                        {comparison === "inBetween" ? (
+                        {comparison === "C" ? (
                           <>
                             <FormField
                               control={control}
                               name={`promotionParameters.discountTypes.types.${index}.from`}
                               render={({ field }) => (
-                                <Input type="number" {...field} disabled={!isSelected} placeholder="From" />
+                                <Input className="w-[70px] " type="number" {...field} disabled={!isSelected} placeholder="From" />
                               )}
                             />
                             <FormField
                               control={control}
                               name={`promotionParameters.discountTypes.types.${index}.to`}
                               render={({ field }) => (
-                                <Input type="number" {...field} disabled={!isSelected} placeholder="To" />
+                                <Input className="w-[70px] " type="number" {...field} disabled={!isSelected} placeholder="To" />
                               )}
                             />
                           </>
@@ -176,14 +182,17 @@ function PromotionFormDiscountTable() {
                             control={control}
                             name={`promotionParameters.discountTypes.types.${index}.from`}
                             render={({ field }) => (
-                              <Input type="number" {...field} disabled={!isSelected} placeholder="Value" />
+                              <Input className="w-[70px] " type="number" {...field} disabled={!isSelected} placeholder="Value" />
                             )}
                           />
                         ) : null}
                       </div>
                     </TableCell>
-                  </TableRow>
                 )}
+                </TableRow>
+
+                {/* ✅ Expanded Row with Advanced Fields */}
+               
               </>
             );
           })}

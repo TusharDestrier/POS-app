@@ -1,11 +1,41 @@
-import { useFormContext, useWatch } from 'react-hook-form'
+import { useState } from 'react'
+import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
+import { useAssortmentData } from '@/components/AssortmentManagement/hooks_api/useAssortmentData'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from '@/components/ui/table'
+
+interface Assortment {
+  assortmentID: string;
+  assortmentName: string;
+}
+
+interface PromotionBenefitForm {
+  promotionParameters: {
+    benefitType: {
+      type: 'F' | 'P' | 'B';
+      value?: number;
+      assortmentID?: string;
+      assortmentName?: string;
+    };
+  };
+}
+
 
 function PromotionBenefit() {
-  const { control, setValue } = useFormContext()
+  const { control, setValue, watch } = useFormContext<PromotionBenefitForm>()
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   // Watch the selected benefit type to dynamically show/hide inputs
   const selectedBenefitType = useWatch({
@@ -13,94 +43,153 @@ function PromotionBenefit() {
     name: 'promotionParameters.benefitType',
   })
 
+  const selectedAssortment = watch('promotionParameters.benefitType')
 
+  const handleSelectAssortment = (assortment: Assortment) => {
+    setValue('promotionParameters.benefitType.assortmentID', String(assortment.assortmentID))
+    setValue('promotionParameters.benefitType.assortmentName', assortment.assortmentName)
+    setIsModalOpen(false)
+  }
+  
   return (
-    <div className="">
-
- 
+    <div>
       <FormField
         control={control}
         name="promotionParameters.benefitType.type"
         render={({ field }) => (
           <FormItem>
             <RadioGroup
-              value={field.value || 'flatDiscount'} // Fallback to default
-              
+              value={field.value || 'F'}
               onValueChange={(value) => {
-                console.log('RadioGroup value changed to:', value) // Debugging
-                field.onChange(value)
-                if (value === 'flatDiscount') {
-                  // Reset unnecessary fields when switching to "flatDiscount"
+                field.onChange(value as 'F' | 'P' | 'B')
+                if (value === 'F') {
                   setValue('promotionParameters.benefitType.value', undefined)
+                  setValue('promotionParameters.benefitType.assortmentID', undefined)
+                  setValue('promotionParameters.benefitType.assortmentName', undefined)
                 }
               }}
               className="space-y-3 roles-radio"
             >
-              {/* Flat Discount */}
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="flatDiscount" id="flatDiscount" />
-                <label htmlFor="flatDiscount" className="text-sm font-medium">
-                  Flat Discount
-                </label>
+                <RadioGroupItem value="F" id="F" />
+                <label htmlFor="F" className="text-sm ">Flat Discount</label>
               </div>
 
-              {/* Specific Unit from Paid From Assortment */}
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="paidSpecificUnit" id="paidSpecificUnit" />
-                <label htmlFor="paidSpecificUnit" className="text-sm font-medium">
-                  Specific Unit from Paid From Assortment
-                </label>
-              </div>
-
-              {/* Specific Unit from Benefit Assortment */}
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="benefitSpecificUnit" id="benefitSpecificUnit" />
-                <label htmlFor="benefitSpecificUnit" className="text-sm font-medium">
-                  Specific Unit from Benefit Assortment
-                </label>
-              </div>
+              {['P', 'B'].map((type) => (
+                <div key={type} className="flex flex-col space-x-2">
+                  <div className="flex space-x-2 items-center">
+                    <RadioGroupItem value={type} id={type} />
+                    <label htmlFor={type} className="text-sm">
+                      {type === 'P'
+                        ? 'Specific Unit from Paid From Assortment'
+                        : 'Specific Unit from Benefit Assortment'}
+                    </label>
+                  </div>
+                  {selectedBenefitType.type === type && (
+                    <div className="flex flex-col mt-4 space-y-3">
+                      <Controller
+                        control={control}
+                        name="promotionParameters.benefitType.value"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Specific Unit</FormLabel>
+                            <FormControl>
+                              <Input type="number" placeholder="Enter Quantity" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button type="button" onClick={() => setIsModalOpen(true)}>
+                        Select Assortment
+                      </Button>
+                      {selectedAssortment.assortmentName && (
+                        <Table className="mt-2">
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead>Assortment ID</TableHead>
+                              <TableHead>Assortment Name</TableHead>
+                              <TableHead>Action</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow>
+                              <TableCell>{selectedAssortment.assortmentID}</TableCell>
+                              <TableCell>{selectedAssortment.assortmentName}</TableCell>
+                              <TableCell>
+                                <Button onClick={() => handleSelectAssortment({ id: 0, name: '' })}>
+                                  Remove
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
             </RadioGroup>
             <FormMessage />
           </FormItem>
         )}
       />
-
-      {/* Dynamic Input Fields */}
-      <div className="mt-4">
-        {selectedBenefitType.type === 'paidSpecificUnit' && (
-          <FormField
-            control={control}
-            name="promotionParameters.benefitType.value"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Specific Unit from Paid From Assortment</FormLabel>
-                <FormControl>
-                  <Input type="number" placeholder="Enter Quantity" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
-
-        {selectedBenefitType.type === 'benefitSpecificUnit' && (
-          <FormField
-            control={control}
-            name="promotionParameters.benefitType.value"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Specific Unit from Benefit Assortment</FormLabel>
-                <FormControl>
-                  <Input type="number" placeholder="Enter Quantity" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
-      </div>
+      <BenefitAssortmentSelectionModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        handleSelectAssortment={handleSelectAssortment}
+      />
     </div>
   )
 }
 
 export default PromotionBenefit
+
+function BenefitAssortmentSelectionModal({
+  isModalOpen,
+  setIsModalOpen,
+  handleSelectAssortment,
+}: {
+  isModalOpen: boolean
+  setIsModalOpen: Function
+  handleSelectAssortment: Function
+}) {
+
+
+  const {assortmentData,isLoading,error}=useAssortmentData('P')
+  
+  if(isLoading){
+    return <p>Loading Assortments...</  p>
+  }
+
+  if(error){
+    return <p>Failed to load Assortments</p>
+  }
+  return (
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+      <DialogContent>
+        <h3 className="text-xl font-semibold mb-3">Select an Assortment</h3>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>ID</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Select</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {assortmentData?.map((assortment,ind) => (
+              <TableRow key={assortment.assortmentID}>
+                <TableCell>{ind}</TableCell>
+                <TableCell>{assortment.assortmentName}</TableCell>
+                <TableCell>
+                  <Button onClick={() => handleSelectAssortment(assortment)}>Select</Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </DialogContent>
+    </Dialog>
+  )
+}

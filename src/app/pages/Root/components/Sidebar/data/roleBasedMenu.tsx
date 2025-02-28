@@ -62,7 +62,6 @@ export const roleBasedMenu: RoleBasedMenu = {
               name: 'User Master',
               path: '/administration/security/user-master',
             },
-          
           ],
         },
         {
@@ -73,8 +72,14 @@ export const roleBasedMenu: RoleBasedMenu = {
               name: 'Policy',
               path: '/administration/setup/policy',
               subItems: [
-                { name: 'Organization Policy', path: '/administration/setup/policy/organization-policy' },
-                { name: 'Store Wise Policy', path: '/administration/setup/policy/store-wise-policy' },
+                {
+                  name: 'Organization Policy',
+                  path: '/administration/setup/policy/organization-policy',
+                },
+                {
+                  name: 'Store Wise Policy',
+                  path: '/administration/setup/policy/store-wise-policy',
+                },
               ],
             },
             {
@@ -95,10 +100,7 @@ export const roleBasedMenu: RoleBasedMenu = {
                 },
               ],
             },
-           
 
-          
-            
             {
               name: 'Promition',
               path: '/administration/setup/promotion',
@@ -152,7 +154,7 @@ export const roleBasedMenu: RoleBasedMenu = {
             { name: 'Pay Mode Master', path: '/administration/master/paymode-master' },
             { name: 'Petty Cash Heads', path: '/administration/master/pettycash-heads' },
             { name: 'SalesPerson Master', path: '/administration/master/salesperson-master' },
-            {name: 'Item Master', path: '/administration/master/item-master'}
+            { name: 'Item Master', path: '/administration/master/item-master' },
           ],
         },
         // {
@@ -283,19 +285,155 @@ export const roleBasedMenu: RoleBasedMenu = {
       path: '/administration',
       icon: <Settings />,
       subItems: [
-        { name: 'Store Master', path: '/administration/store-master' },
-        { name: 'Customer Master', path: '/administration/customer-master' },
+        {
+          name: 'Security',
+          path: '/administration/security',
+
+          subItems: [
+            {
+              name: 'Designation',
+              path: '/administration/security/designation',
+            },
+            {
+              name: 'Create Role',
+              path: '/administration/security/create-role',
+            },
+            {
+              name: 'Role Defination',
+              path: '/administration/security/role-defination',
+            },
+            {
+              name: 'User Profile Creation',
+              path: '/administration/security/user-profile-creation',
+            },
+            {
+              name: 'Change Password',
+              path: '/administration/security/change-password',
+            },
+            {
+              name: 'User Master',
+              path: '/administration/security/user-master',
+            },
+          ],
+        },
+        {
+          name: 'Setup',
+          path: '/administration/setup',
+          subItems: [
+            {
+              name: 'Policy',
+              path: '/administration/setup/policy',
+              subItems: [
+                {
+                  name: 'Organization Policy',
+                  path: '/administration/setup/policy/organization-policy',
+                },
+                {
+                  name: 'Store Wise Policy',
+                  path: '/administration/setup/policy/store-wise-policy',
+                },
+              ],
+            },
+            {
+              name: 'Discount',
+              path: '/administration/setup/discount',
+              subItems: [
+                {
+                  name: 'Assortment Management (Discount)',
+                  path: '/administration/setup/discount/assortment-management-discount',
+                },
+                {
+                  name: 'Discount Setup',
+                  path: '/administration/setup/discount/discount-setup',
+                },
+                {
+                  name: 'Discount Allocation',
+                  path: '/administration/setup/discount/discount-allocation',
+                },
+              ],
+            },
+
+            {
+              name: 'Promition',
+              path: '/administration/setup/promotion',
+              subItems: [
+                {
+                  name: 'Assortment Managment (Promotion)',
+                  path: '/administration/setup/promotion/assortment-mangement-promotion',
+                },
+                {
+                  name: 'Promotion Setup',
+                  path: '/administration/setup/promotion/promotion-setup',
+                },
+                {
+                  name: 'Promotion Allocation',
+                  path: '/administration/setup/promotion/promotion-allocation',
+                },
+                {
+                  name: 'Promotion Priorty Setup',
+                  path: '/administration/setup/promotion/promotion-priority-setup',
+                },
+              ],
+            },
+            {
+              name: 'Sales Person Incentive',
+              path: '/administration/setup/salesperson-incentive',
+              subItems: [
+                {
+                  name: 'Assortment Managment (Incentive)',
+                  path: '/administration/setup/salesperson-incentive/assortment-managemnt-incentive',
+                },
+                {
+                  name: 'Assortment Allocation for Incentive',
+                  path: '/administration/setup/salesperson-incentive/storewise-assortment-allocation',
+                },
+              ],
+            },
+            // { name: 'Generic Policy', path: '/administration/setup/generic-policy' },
+            // { name: 'Store Specific Policy', path: '/administration/setup/store-specific-policy' },
+            // { name: 'Discount Policy', path: '/administration/setup/discount-policy' },
+            // { name: 'Petty Cash Heads', path: '/administration/setup/petty-cash-heads' },
+            // { name: 'Organization Policy', path: '/administration/setup/general-setup-option' },
+            // { name: 'Store Specific Policy', path: '/administration/setup/storewise-setup-option' },
+          ],
+        },
+        {
+          name: 'Master',
+          path: '/administration/master',
+          subItems: [
+            { name: 'Customer Master', path: '/administration/master/customer-master' },
+            { name: 'Store Master', path: '/administration/master/store-master' },
+            { name: 'Pay Mode Master', path: '/administration/master/paymode-master' },
+            { name: 'Petty Cash Heads', path: '/administration/master/pettycash-heads' },
+            { name: 'SalesPerson Master', path: '/administration/master/salesperson-master' },
+            { name: 'Item Master', path: '/administration/master/item-master' },
+          ],
+        },
+        // {
+        //   name: 'Promotions',
+        //   path: '/administration/promotions',
+        //   subItems: [
+        //     {
+        //       name: 'Assortment Managements',
+        //       path: '/administration/promotions/assortment-managements',
+        //     },
+        //     { name: 'Promotion Setup', path: '/administration/promotions/promotion-setup' },
+
+        //     {
+        //       name: 'Assortment Promotion',
+        //       path: '/administration/promotions/assortment-promotion',
+        //     },
+        //     {
+        //       name: 'Promotion Allocation',
+        //       path: '/administration/promotions/promotion-allocation',
+        //     },
+        //     {
+        //       name: 'Promotion Priority Setup',
+        //       path: '/administration/promotions/promotion-priority-setup',
+        //     },
+        //   ],
+        // },
       ],
-    },
-    {
-      name: 'Billing',
-      path: '/billing',
-      icon: <BadgeDollarSign />,
-    },
-    {
-      name: 'Reports',
-      path: '/reports',
-      icon: <BookText />,
     },
   ],
   storemanager: [

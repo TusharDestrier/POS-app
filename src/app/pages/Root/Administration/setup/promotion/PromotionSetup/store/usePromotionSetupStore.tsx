@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 
 type PromotionSetupStore = {
+  isLoading:boolean
+  setIsLoading: (loading: boolean) => void
   isOpen: boolean
   mode: 'Edit' | 'Create' | 'View'
   step:number
@@ -12,6 +14,8 @@ type PromotionSetupStore = {
 }
 
 export const usePromotionSetupStore = create<PromotionSetupStore>((set) => ({
+  isLoading: false,
+  setIsLoading: (loading) => set({ isLoading: loading }),
   isOpen: false,
   step:1,
   mode: 'Create',

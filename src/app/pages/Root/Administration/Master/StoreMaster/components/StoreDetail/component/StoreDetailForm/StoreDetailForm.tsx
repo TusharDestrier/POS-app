@@ -34,9 +34,13 @@ function StoreDetailForm() {
   const [isOpen, setIsOpen] = useState(false)
   const [isOpen2, setIsOpen2] = useState(false)
   const storeTypeCode = watch('storeTypeCode')
+  const storeCattegory = watch('storeCategoryCode')
 
   const startDateValue = watch('startDate')
 
+
+  console.log(storeCattegory);
+  
   return (
     <div className="grid grid-cols-2 border border-solid border-black h-[580px] overflow-y-auto">
       <div className="border p-3 space-y-3">
@@ -515,7 +519,7 @@ function StoreDetailForm() {
           )}
         />
 
-        {storeTypeCode === 'OOWNED' && (
+        {storeTypeCode === 'OOWNED' &&  storeCattegory==='COFO' &&  (
           <FormField
             control={control}
             name="franchiseCode"
@@ -553,7 +557,7 @@ function StoreDetailForm() {
         )}
 
         {/* Franchise Code and Name (Only for Franchise-Owned Stores) */}
-        {storeTypeCode === 'FOWNED' && (
+        {storeTypeCode === 'FOWNED' &&  storeCattegory==='FOFO' && (
           <FormField
             control={control}
             name="franchiseCode"

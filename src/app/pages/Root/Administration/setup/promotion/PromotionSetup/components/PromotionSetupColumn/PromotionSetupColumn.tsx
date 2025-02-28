@@ -2,8 +2,10 @@
 import { CaretSortIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { ColumnDef } from '@tanstack/react-table'
 
-import { Customer } from '../../data/data'
+import { useCreatePromotion } from '../../hooks_api/useCreatePromotion'
+import { useFetchPromotionMasterById } from '../../hooks_api/usePromotionData'
 import { usePromotionSetupStore } from '../../store/usePromotionSetupStore'
+import { usePromotionSetupDataStore } from '../../store/usePromotionSetupStoreData'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -15,11 +17,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { FetchedPromotionType } from '@/types/Promotion'
 
-export const columns: ColumnDef<Customer>[] = [
+export const columns: ColumnDef<FetchedPromotionType>[] = [
   {
     id: 'select',
-    accessorKey: 'PromotionName',
+    accessorKey: 'promotionName',
     header: ({ table }) => (
       <Checkbox
         checked={
@@ -40,54 +43,102 @@ export const columns: ColumnDef<Customer>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'PromotionName',
+    accessorKey: 'promotionID',
+    header: 'PromotionId',
+    cell: ({ row }) => <div className="capitalize">{row.getValue('promotionID')}</div>,
+  },
+  {
+    accessorKey: 'promotionName',
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
         Promotion Name
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue('PromotionName')}</div>,
+    cell: ({ row }) => <div>{row.getValue('promotionName')}</div>,
   },
+
   {
-    accessorKey: 'CreatedOn',
-    header: ({ column }) => (
-      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-        Created On
-        <CaretSortIcon className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => <div className="lowercase">{row.getValue('CreatedOn')}</div>,
-  },
-  {
-    accessorKey: 'Priority',
-    header: 'Priority',
-    cell: ({ row }) => <div>{row.getValue('Priority')}</div>,
-  },
-  {
-    accessorKey: 'status',
+    accessorKey: 'isActive',
     header: 'Status',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('status')}</div>,
+    cell: ({ row }) => <div className="capitalize">{row.getValue('isActive')}</div>,
   },
   {
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const customer = row.original
+      const promotion = row.original
 
-      return <TableRowDropDowns customer={customer} />
+      return <TableRowDropDowns promotion={promotion} />
     },
   },
 ]
 
-function TableRowDropDowns({ customer }: { customer: Customer }) {
+function TableRowDropDowns({ promotion }: { promotion: FetchedPromotionType }) {
   const modalToggler = usePromotionSetupStore((state) => state.toggleOpen)
   const setModalMode = usePromotionSetupStore((state) => state.setMode)
+  const setPromotionID=usePromotionSetupDataStore(state=>state.setCurrentPromotionSetupId)
+  const { fetchPromotionById } = useFetchPromotionMasterById()
+  const { createPromotionAsync } = useCreatePromotion()
 
-  function EditModalHandler() {
-    modalToggler()
-    setModalMode('Edit')
+  async function EditModalHandler() {
+    try {
+      const data = await fetchPromotionById(Number(promotion.promotionID))
+
+      if (!data) {
+        console.error('Promotion data not found')
+        return
+      }
+      setPromotionID(Number(promotion.promotionID))
+      modalToggler()
+      setModalMode('Edit')
+    } catch (err) {
+      console.log(err)
+    }
   }
+
+  async function ViewModalHandler() {
+    try {
+      const data = await fetchPromotionById(Number(promotion.promotionID))
+
+      if (!data) {
+        console.error('Promotion data not found')
+        return
+      }
+      setPromotionID(Number(promotion.promotionID))
+      modalToggler()
+      setModalMode('View')
+    } catch (error) {
+      console.error('Error deleting promotion:', error)
+    }
+  }
+
+  async function DeleteModalHandler() {
+    try {
+      if (!promotion?.promotionID) {
+        console.error('Invalid promotion ID')
+        return
+      }
+
+      const data = await fetchPromotionById(Number(promotion.promotionID))
+
+      if (!data) {
+        console.error('Promotion data not found')
+        return
+      }
+
+      const updatedData = { ...data, usedFor: 'D' }
+
+      await createPromotionAsync(updatedData)
+
+      console.log('Promotion successfully deleted:', updatedData)
+
+      setModalMode('Create')
+    } catch (error) {
+      console.error('Error deleting promotion:', error)
+    }
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -98,12 +149,13 @@ function TableRowDropDowns({ customer }: { customer: Customer }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(customer.id)}>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(String(promotion.promotionID))}>
           Copy Customer ID
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={EditModalHandler}>Edit Customer</DropdownMenuItem>
-        <DropdownMenuItem>View Customer</DropdownMenuItem>
+        <DropdownMenuItem onClick={ViewModalHandler}>View Customer</DropdownMenuItem>
+        <DropdownMenuItem onClick={DeleteModalHandler}>Delete Customer</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

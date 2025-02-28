@@ -1,7 +1,8 @@
 import ApiClient from './ApiClient'
 
-import { DesignationPostType } from '@/app/pages/Root/Administration/Security/Designation/hooks_api/useCreateDesignation';
-import { FetchedDesignationType, DesginationResponseType } from '@/types/designation'
+
+import { PromotionPostType } from '@/app/pages/Root/Administration/setup/promotion/PromotionSetup/helpers/promotionDataFormatter';
+import { FetchedPromotionType,PromotionResponseType } from '@/types/Promotion';
 
 class PromotionSetupClient extends ApiClient {
   constructor() {
@@ -9,8 +10,20 @@ class PromotionSetupClient extends ApiClient {
   }
 
   async getPromotion({ id = 0, signal }: { id: number; signal?: AbortSignal }) {
-    const response = await this.get<FetchedDesignationType[]>(
-      `PromotionRep/GetAllPromotion`,
+    const response = await this.get<FetchedPromotionType[]>(
+      `Promotion/GetAllPromotion`,
+      {
+        PromotionID: id,
+      },
+      {
+        signal,
+      }
+    )
+    return response.data
+  }
+  async getPromotionByID({ id = 0, signal }: { id: number; signal?: AbortSignal }) {
+    const response = await this.get<FetchedPromotionType>(
+      `Promotion/GetPromotion`,
       {
         PromotionID: id,
       },
@@ -22,9 +35,9 @@ class PromotionSetupClient extends ApiClient {
   }
 
 
-  async createPromotion(Promotiondata:DesignationPostType) {
+  async createPromotion(Promotiondata:PromotionPostType) {
     try {
-      const response = await this.post<DesginationResponseType>(
+      const response = await this.post<PromotionResponseType>(
         `PromotionRep/PostPromotion`,
         Promotiondata
       )

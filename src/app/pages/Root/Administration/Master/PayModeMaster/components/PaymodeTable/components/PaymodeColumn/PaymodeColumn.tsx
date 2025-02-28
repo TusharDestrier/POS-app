@@ -51,7 +51,7 @@ export const columns: ColumnDef<PaymodeTableType>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue('paymentModeName')}</div>,
+    cell: ({ row }) => <div className="">{row.getValue('paymentModeName')}</div>,
   },
   {
     accessorKey: 'isActive',

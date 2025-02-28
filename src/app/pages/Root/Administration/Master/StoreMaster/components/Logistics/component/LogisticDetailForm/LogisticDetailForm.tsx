@@ -1,4 +1,4 @@
-import { Trash } from 'lucide-react'
+import { Copy, Trash } from 'lucide-react'
 import { useEffect } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/select'
 
 function LogisticDetailForm() {
-  const { control } = useFormContext()
+  const { control,getValues,setValue } = useFormContext()
   const mode = useStoreMasterStore((state) => state.mode)
   const storeId = useStoreMasterDataStore((state) => state.currentStoreMasterId)
   const { storeMaster } = useStoreMasterById(Number(storeId))
@@ -38,6 +38,13 @@ function LogisticDetailForm() {
       )
     }
   }, [storeMaster, mode, replace])
+
+  const copyBillingToShipping = () => {
+    const billAddress = getValues("billToAddress");
+    if (billAddress) {
+      setValue("shipToAddress", billAddress, { shouldValidate: true });
+    }
+  };
 
   // Example Options for Dropdowns
   const cityOptions = [
@@ -66,9 +73,13 @@ function LogisticDetailForm() {
           name="billToAddress"
           render={({ field }) => (
             <FormItem>
+              <div className=' flex justify-between'>
               <FormLabel>
                 Bill To Address <span className="text-red-500">*</span>
               </FormLabel>
+              <Copy color='red' size={15} onClick={copyBillingToShipping} />
+              </div>
+              
               <FormControl>
                 <Input placeholder="Enter Billing Address" {...field} />
               </FormControl>

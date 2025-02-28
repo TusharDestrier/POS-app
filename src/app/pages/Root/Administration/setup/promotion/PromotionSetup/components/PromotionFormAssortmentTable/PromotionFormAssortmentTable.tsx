@@ -1,10 +1,10 @@
-import { Eye, PlusCircle, Trash } from 'lucide-react' // Corrected icons
+import { Eye, Plus, Trash } from 'lucide-react' // Corrected icons
 import { useState } from 'react'
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 
 import { useAssortmentData } from '@/components/AssortmentManagement/hooks_api/useAssortmentData'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import {
   Table,
@@ -59,7 +59,7 @@ function PromotionFormAssortmentTable() {
       setValue(`promotionParameters.buyAssortments.${selectedRowIndex}`, {
         assortmentID: String(selectedAssortment.assortmentID), // ✅ Store ID
         assortmentName: selectedAssortment.assortmentName,
-        unit: paidForCondition.condition === "buySpecificRatio" ? null : undefined, // ✅ Ensure unit resets correctly
+        unit: paidForCondition.condition === "R" ? null : undefined, // ✅ Ensure unit resets correctly
       });
       setModalOpen(false);
     }
@@ -68,7 +68,7 @@ function PromotionFormAssortmentTable() {
 
   return (
     <div className="">
-      <h4 className="font-bold mb-3">Buy Assortment</h4>
+      <h4 className="font-semibold mb-4">Buy Assortment</h4>
 
       <div className="overflow-x-auto">
         <Table>
@@ -77,11 +77,12 @@ function PromotionFormAssortmentTable() {
             <TableRow>
               <TableHead className="w-[50px] text-center">No.</TableHead>
               <TableHead>Assortment Name</TableHead>
-              {paidForCondition.condition === 'buySpecificRatio' && (
-                <TableHead className="w-[100px] text-center">Unit</TableHead>
+              {paidForCondition.condition === 'R' && (
+                <TableHead className="w-[70px] text-center">Unit</TableHead>
               )}
               <TableHead className="w-[50px] text-center">Show</TableHead>
               <TableHead className="w-[50px] text-center">Delete</TableHead>
+              <TableHead className="w-[50px] text-center">Add</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -93,15 +94,15 @@ function PromotionFormAssortmentTable() {
 
                 {/* Assortment Name (Clickable) */}
                 <TableCell
-                  className="cursor-pointer text-blue-500"
-                  onClick={() => handleModalOpen(index)}
+                  className=" text-black  "
+                  
                 >
                   {watchedAssortments[index]?.assortmentName || 'Select Assortment'}
                 </TableCell>
 
                 {/* Conditionally Render Unit Column */}
                 {/* Conditionally Render Unit Column */}
-                {paidForCondition.condition === 'buySpecificRatio' && (
+                {paidForCondition.condition === 'R' && (
                   <TableCell className="text-center">
                     <Input
                       type="number"
@@ -109,7 +110,7 @@ function PromotionFormAssortmentTable() {
                       {...register(`promotionParameters.buyAssortments.${index}.unit`, {
                         valueAsNumber: true,
                       })}
-                      disabled={paidForCondition.condition !== 'buySpecificRatio'} // ✅ Fix: Disable when not needed
+                      disabled={paidForCondition.condition !== 'R'} // ✅ Fix: Disable when not needed
                     />
                   </TableCell>
                 )}
@@ -126,6 +127,12 @@ function PromotionFormAssortmentTable() {
                     onClick={() => remove(index)}
                   />
                 </TableCell>
+                <TableCell className="text-center">
+                  <Plus
+                    className="h-5 w-5 text-red-500 cursor-pointer"
+                    onClick={() => handleModalOpen(index)}
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -133,10 +140,10 @@ function PromotionFormAssortmentTable() {
       </div>
 
       {/* Add Row Button */}
-      <div className="mt-4">
+      <div className="mt-4 ">
         <Button
           type="button"
-          className="bg-green-500 text-white flex items-center gap-2"
+          className=" flex items-center gap-2"
           onClick={() =>
             append({
               assortmentName: '',
@@ -144,7 +151,6 @@ function PromotionFormAssortmentTable() {
             })
           }
         >
-          <PlusCircle className="h-5 w-5" />
           Add Assortment
         </Button>
       </div>
@@ -166,37 +172,48 @@ const AssortmentModal = ({
 }: {
   isOpen: boolean
   onClose: () => void
-  onSelect: (assortment: FetchedAssortmentType) => void // Select whole object
+  onSelect: (assortment: FetchedAssortmentType) => void
 }) => {
   const { assortmentData, isLoading } = useAssortmentData('P') // Fetch API data
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
-        <h3 className="font-bold mb-3">Select an Assortment</h3>
+        <DialogHeader>
+          <h3 className="text-xl font-semibold mb-3">Select an Assortment</h3>
+        </DialogHeader>
 
         {/* Loader */}
         {isLoading ? (
           <p>Loading Assortments...</p>
         ) : (
-          <ul>
-            {assortmentData?.map((assortment) => (
-              <li
-                key={assortment.assortmentID}
-                className="cursor-pointer p-2 hover:bg-gray-200"
-                onClick={() => {
-                  onSelect(assortment) // Select full object
-                  onClose()
-                }}
-              >
-                {assortment.assortmentName}
-              </li>
-            ))}
-          </ul>
+          <Table className="w-full border-collapse">
+            <TableHeader>
+              <TableRow>
+                <TableHead>No.</TableHead>
+                <TableHead>Assortment Name</TableHead>
+                <TableHead>Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {assortmentData?.map((assortment,ind) => (
+                <TableRow key={assortment.assortmentID}>
+                  <TableCell>{ind +1 }</TableCell>
+                  <TableCell>{assortment.assortmentName}</TableCell>
+                  <TableCell>
+                    <Button onClick={() => { onSelect(assortment); onClose(); }}>
+                      Select
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         )}
       </DialogContent>
     </Dialog>
   )
 }
+
 
 export default PromotionFormAssortmentTable

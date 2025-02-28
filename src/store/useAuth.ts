@@ -19,9 +19,9 @@ const fakeUsers = [
   },
   {
     id: "2",
-    username: "manager",
-    email: "manager@pos.com",
-    password: "manager123",
+    username: "user@sg",
+    email: "sg@pos.com",
+    password: "Test@1234",
     role: "manager",
   },
   {
