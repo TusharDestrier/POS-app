@@ -197,10 +197,10 @@ export const roleBasedMenu: RoleBasedMenu = {
               name: 'Purchase Request',
               path: '/transaction/purchase/purchase-request',
             },
-            {
-              name: 'Purchase Order',
-              path: '/transaction/purchase/purchase-order',
-            },
+            // {
+            //   name: 'Purchase Order',
+            //   path: '/transaction/purchase/purchase-order',
+            // },
             {
               name: 'GRPO',
               path: '/transaction/purchase/grpo',
@@ -209,10 +209,6 @@ export const roleBasedMenu: RoleBasedMenu = {
             //   name: 'A/P Invoice',
             //   path: '/transaction/purchase/ap-invoice',
             // },
-            {
-              name: 'Goods Receipt @ Store',
-              path: '/transaction/purchase/goodsReceipt-store',
-            },
           ],
         },
         {
@@ -234,6 +230,10 @@ export const roleBasedMenu: RoleBasedMenu = {
             {
               name: 'Goods Issue',
               path: '/transaction/inventory/goods-issue',
+            },
+            {
+              name: 'Goods Receipt @ Store',
+              path: '/transaction/inventory/goodsReceipt-store',
             },
           ],
         },

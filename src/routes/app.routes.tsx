@@ -41,6 +41,7 @@ import HelpPage from '@/app/pages/Root/Help/page'
 import GoodsIssueLayout from '@/app/pages/Root/Inventroty/GoodsIssue/layout'
 import GoodsIssuePage from '@/app/pages/Root/Inventroty/GoodsIssue/page'
 import GoodsIssue from '@/app/pages/Root/Inventroty/GoodsIssue/page'
+import GoodsReceiptAtStore from '@/app/pages/Root/Inventroty/GoodsReceiptStore/page'
 import GoodsRecieptLayout from '@/app/pages/Root/Inventroty/GoodsReciept/layout'
 import GoodsRecieptPage from '@/app/pages/Root/Inventroty/GoodsReciept/page'
 import GoodsReciept from '@/app/pages/Root/Inventroty/GoodsReciept/page'
@@ -61,10 +62,9 @@ import SalesPage from '@/app/pages/Root/Transaction/Billing/Sales/page'
 import Session from '@/app/pages/Root/Transaction/Billing/Session/page'
 import TransactionLayout from '@/app/pages/Root/Transaction/layout'
 //import ApInvoice from '@/app/pages/Root/Transaction/Purchase/ApInvoice/page'
-import GoodsReceiptAtStore from '@/app/pages/Root/Transaction/Purchase/GoodsReceiptStore/page'
 import GRPO from '@/app/pages/Root/Transaction/Purchase/GRPO/page'
 //import Purchase from '@/app/pages/Root/Transaction/Purchase/page'
-import PurchaseOrder from '@/app/pages/Root/Transaction/Purchase/PurchaseOrder/page'
+//import PurchaseOrder from '@/app/pages/Root/Transaction/Purchase/PurchaseOrder/page'
 import PurchaseRequest from '@/app/pages/Root/Transaction/Purchase/PurchaseRequest/page'
 import UtilitiesLayout from '@/app/pages/Root/Utilities/layout'
 import UtilitiesPage from '@/app/pages/Root/Utilities/page'
@@ -279,10 +279,10 @@ export const appRoutes = {
               element: <PurchaseRequest />,
               // element: <Purchase />,
             },
-            {
-              path: 'purchase-order',
-              element: <PurchaseOrder />,
-            },
+            // {
+            //   path: 'purchase-order',
+            //   element: <PurchaseOrder />,
+            // },
             {
               path: 'grpo',
               element: <GRPO />,
@@ -291,10 +291,6 @@ export const appRoutes = {
             //   path: 'ap-invoice',
             //   element: <ApInvoice />,
             // },
-            {
-              path: 'goodsReceipt-store',
-              element: <GoodsReceiptAtStore />,
-            },
           ],
         },
         {
@@ -316,6 +312,10 @@ export const appRoutes = {
             {
               path: 'goods-issue',
               element: <GoodsIssue />,
+            },
+            {
+              path: 'goodsReceipt-store',
+              element: <GoodsReceiptAtStore />,
             },
           ],
         },

@@ -14,6 +14,7 @@ function PaymentMethods() {
 
   const paymentMethods = [
     { id: "cash", label: "Cash" },
+    {id: "creditCard", label: "Credit Card" },
     { id: "creditNoteReceived", label: "Credit Note Received" },
     { id: "creditNoteIssued", label: "Credit Note Issued" },
     { id: "mobileWallet", label: "Mobile Wallet" },
