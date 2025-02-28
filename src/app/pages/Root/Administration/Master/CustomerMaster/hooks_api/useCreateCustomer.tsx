@@ -59,7 +59,6 @@ export function useCreateCustomer() {
         },
       });
 
-      console.error('Error creating customer:', err.message);
     },
     onSettled:()=>{
       setGlobalLoading(false)
