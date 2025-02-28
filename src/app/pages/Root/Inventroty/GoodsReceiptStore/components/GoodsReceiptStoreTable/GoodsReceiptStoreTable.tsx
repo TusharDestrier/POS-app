@@ -1,5 +1,3 @@
-'use client'
-
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -15,11 +13,7 @@ import {
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react'
 import * as React from 'react'
 
-//import useGoodsReceiptStoreType from '../../store/useGoodsReceiptStoreType'
-//import GoodsReceiptStoreModal from '../GoodsReceiptStoreModal'
-
-//import { useGoodsReceiptStoreType } from '../../store/useGoodsReceiptStoreType'
-
+import useGoodsReceiptStoreType from '../../store/useGoodsReceiptStoreType'
 import GoodsReceiptStoreModal from '../GoodsReceiptStoreModal'
 
 import { Button } from '@/components/ui/button'
@@ -69,6 +63,18 @@ const data: Payment[] = [
     currentStatus: 'Not Received',
   },
   {
+    id: 'dsw84i9',
+    date: '2025-03-16',
+    transferNo: 40,
+    replenishmentSource: 'success',
+    noofPackets: 22,
+    totalQty: 85,
+    totalAmount: 8000,
+    // status: 'failed',
+    currentStatus: 'Not Received',
+
+  },
+  {
     id: 'm22ggr84i9',
     date: '2022-12-12',
     transferNo: 66,
@@ -96,21 +102,12 @@ export type Payment = {
   id: string
   date: string
   transferNo: number
- // status: 'pending' | 'processing' | 'success' | 'failed'
+  // status: 'pending' | 'processing' | 'success' | 'failed'
   replenishmentSource: string
   noofPackets: number
   totalQty: number
   totalAmount: number
   currentStatus: 'Received' | 'Not Received' | 'Partial Received' | 'Pending'
-}
-// const modalToggler = useGoodsReceiptStoreType((state) => state?.toggleOpen)
-// const setModalMode = useGoodsReceiptStoreType((state) => state.setMode)
-
-function createModalHandler() {
-  <GoodsReceiptStoreModal/>
-  // modalToggler()
-  // setModalMode("Create")
-  alert('Generate Receipt')
 }
 
 export const columns: ColumnDef<Payment>[] = [
@@ -201,18 +198,27 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue('totalQty')}</div>,
   },
 
-  
   {
     accessorKey: 'currentStatus',
     header: 'Current Status',
-    cell: ({ row }) => (
-      <div>
-        {row.getValue('currentStatus')}
-        {row.getValue('currentStatus') === 'Not Received' && (
+    cell: ({ row }) => {
+      const modalToggler = useGoodsReceiptStoreType((state) => state.toggleOpen)
+      const setModalMode = useGoodsReceiptStoreType((state) => state.setMode)
+
+      function createModalHandler() {
+        setModalMode('Create')
+        modalToggler()
+        // alert('Generate Receipt')
+      }
+      return (
+        <div>
+          {row.getValue('currentStatus')}
+          {row.getValue('currentStatus') === 'Not Received' && (
           <Button onClick={createModalHandler} className="ml-2">Generate Receipt</Button>
         )}
-      </div>
-    ),
+        </div>
+      )
+    },
   },
   {
     id: 'actions',
@@ -250,6 +256,7 @@ export function GoodsReceiptStoreTable() {
   const [rowSelection, setRowSelection] = React.useState({})
   const [filteredData, setFilteredData] = React.useState(data) // State for filtered data
 
+
   const table = useReactTable({
     data: filteredData, // Use filtered data instead of static data
     columns,
@@ -273,9 +280,6 @@ export function GoodsReceiptStoreTable() {
     if (status === 'All') {
       setFilteredData(data)
     }
-    // else if(status === "Not Received") {
-    //  <Button>Generate Receipt</Button>
-    // }
     else {
       setFilteredData(data.filter((item) => item.currentStatus === status))
     }
@@ -283,89 +287,89 @@ export function GoodsReceiptStoreTable() {
 
   return (
     <>
-    <div className="w-full">
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter Transfer No..."
-          value={(table.getColumn('transferNo')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('transferNo')?.setFilterValue(event.target.value)}
-          className="max-w-sm"
-        />
+      <div className="w-full">
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter Transfer No..."
+            value={(table.getColumn('transferNo')?.getFilterValue() as string) ?? ''}
+            onChange={(event) => table.getColumn('transferNo')?.setFilterValue(event.target.value)}
+            className="max-w-sm"
+          />
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <Button onClick={() => filterData('All')} className=" m-2">
-          All
-        </Button>
-        <Button onClick={() => filterData('Received')} className="m-2">
-          Received
-        </Button>
-        <Button onClick={() => filterData('Not Received')} className="m-2">
-          Not Received
-        </Button>
-      </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto">
+                Columns <ChevronDown />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  )
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Button onClick={() => filterData('All')} className=" m-2">
+            All
+          </Button>
+          <Button onClick={() => filterData('Received')} className="m-2">
+            Received
+          </Button>
+          <Button onClick={() => filterData('Not Received')} className="m-2">
+            Not Received
+          </Button>
+        </div>
 
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(header.column.columnDef.header, header.getContext())}
+                    </TableHead>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="h-24 text-center">
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
-    </div>
 
-    {/* <GoodsReceiptStoreModal/> */}
+      <GoodsReceiptStoreModal />
     </>
   )
 }
