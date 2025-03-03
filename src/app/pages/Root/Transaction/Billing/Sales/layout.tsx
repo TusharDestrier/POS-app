@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 
 function SalesLayout() {
   return (
-    <div className="sales-layout px-4 ">
+    <div className="sales-layout px-4 relative z-20 ">
       <div className="sales-header py-3 flex justify-between">
         <h3 className="page-title">Billing Request </h3>
         <ul className="nav-btns flex gap-3 items-center">

@@ -1,7 +1,10 @@
 export const warehouseOptions = [
-    { code: 'WH001', name: 'Main Warehouse' },
-    { code: 'WH002', name: 'Secondary Warehouse' },
-    { code: 'WH003', name: 'Backup Warehouse' },
+    { code: 'WH001', name: 'General Warehouse' },
+    { code: 'WH002', name: 'Lake Garden Store' },
+    { code: 'WH003', name: 'SaltLake Store' },
+    { code: 'WH004', name: 'NewTown Warehouse' },
+    { code: 'WH005', name: 'Warehouse ' },
+    { code: 'WH006', name: 'Warehouse2 ' },
   ]
 
   export const franchiseType = [
@@ -20,6 +23,9 @@ export const warehouseOptions = [
 
   // Example Price List Options
   export const priceListOptions = [
+    { code: 'STANDARD', name: 'Retail Price List' },
+    { code: 'STANDARD', name: 'B2B Price List' },
+    { code: 'STANDARD', name: 'MRP' },
     { code: 'STANDARD', name: 'Standard Pricing' },
     { code: 'PREMIUM', name: 'Premium Pricing' },
     { code: 'DISCOUNTED', name: 'Discounted Pricing' },

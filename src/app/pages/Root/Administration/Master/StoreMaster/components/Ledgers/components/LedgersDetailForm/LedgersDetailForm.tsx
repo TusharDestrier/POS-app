@@ -29,8 +29,12 @@ const LedgersDetailsForm = () => {
   })
 
   const ledgerOptions = [
-    { code: 'LEDGER001', name: 'Ledger 1' },
-    { code: 'LEDGER002', name: 'Ledger 2' },
+    { code: 'LEDGER001', name: 'Salary Expenses' },
+    { code: 'LEDGER002', name: 'Travelling Expenses' },
+    { code: 'LEDGER003', name: 'Internet Charges' },
+    { code: 'LEDGER004', name: 'Rent' },
+    { code: 'LEDGER005', name: 'Maintenance Charges' },
+    { code: 'LEDGER006', name: 'Annual Maintenance Charges' },
   ]
 
   const subLedgerOptions = [

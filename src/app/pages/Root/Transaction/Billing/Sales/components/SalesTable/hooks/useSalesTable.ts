@@ -26,7 +26,7 @@ function useSalesTable() {
   useEffect(() => {
     if (!scanID || !salesData) return
 
-    const selectedProduct = salesData.find((item) => item.id === scanID)
+    const selectedProduct = salesData.find((item) => item.itemCode === scanID)
 
     if (!selectedProduct) {
       toast.error('There is no product with this No.')
@@ -34,10 +34,10 @@ function useSalesTable() {
     }
 
     // Prepare the new product to be added
-    const newProduct: ProductModified = {
+    const newProduct = {
       ...selectedProduct,
       quantity: 1,
-      amount: selectedProduct.mrp + (selectedProduct.mrp * selectedProduct.gst) / 100,
+      amount: selectedProduct.mrp + (selectedProduct.mrp * 1) / 100,
     }
 
     // Add product to selectedSalesData and toggle the selected item in useSearchItemsStore
@@ -60,10 +60,10 @@ function useSalesTable() {
       if (selectedProduct) {
         const existingProduct = selectedSalesData.find((p) => p.id === id)
         if (!existingProduct) {
-          const newProduct: ProductModified = {
+          const newProduct = {
             ...selectedProduct,
             quantity: 1, // Default quantity
-            amount: selectedProduct.mrp + (selectedProduct.mrp * selectedProduct.gst) / 100,
+            amount: selectedProduct.mrp + (selectedProduct.mrp * 1) / 100,
           }
 
           // Only call updateSelectedSalesData if the product doesn't already exist in sales

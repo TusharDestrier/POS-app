@@ -17,10 +17,8 @@ function ProductTable({ data, onIncrease, onDecrease }: ProductTableProps) {
           <TableRow>
             <TableHead>No.</TableHead>
             <TableHead>Item</TableHead>
-            <TableHead className="  hidden sm:table-cell">UOM</TableHead>
             <TableHead>Qty</TableHead>
             <TableHead>MRP.</TableHead>
-            <TableHead className="hidden sm:table-cell">GST</TableHead>
             <TableHead>Amt</TableHead>
             <TableHead></TableHead>
           </TableRow>

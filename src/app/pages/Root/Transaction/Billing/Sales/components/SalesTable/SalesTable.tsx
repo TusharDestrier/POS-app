@@ -1,11 +1,13 @@
-import { toast } from 'sonner'
+
+import { toast } from 'sonner';
 
 import ProductTable from './components/ProductTable'
-import { useSalesTable } from './hooks/useSalesTable'
+import { useSalesTable } from './hooks/useSalesTable';
 
 function SalesTable() {
   const { selectedSalesData, increaseQuantity, decreaseQuantity, error, isLoading } =
     useSalesTable()
+
 
   const renderContent = () => {
     if (isLoading) return <div>Loading products...</div>

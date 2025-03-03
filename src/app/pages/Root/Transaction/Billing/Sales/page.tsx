@@ -10,8 +10,8 @@ import { Card, CardContent } from '@/components/ui/card'
 function SalesPage() {
   return (
     <>
-      <div className=" grid gap-3 grid-cols-[1fr,80px] ">
-        <div className="grid gap-3 grid-cols-[2fr,1fr] ">
+      <div className="grid gap-3 grid-cols-[1fr,80px] ">
+        <div className="grid gap-3 grid-cols-[2fr,1fr] relative z-30">
           <div className="customer-box">
             <div className="">
               <Card>

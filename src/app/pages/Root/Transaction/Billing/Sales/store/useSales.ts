@@ -39,7 +39,7 @@ const useSales = create<SalesState>((set) => ({
                 ...item,
                 quantity: item.quantity + newProduct.quantity,
                 amount:
-                  (item.quantity + newProduct.quantity) * (item.mrp + (item.mrp * item.gst) / 100),
+                  (item.quantity + newProduct.quantity) * (item.mrp + (item.mrp *1) / 100),
               }
             : item
         )
@@ -68,7 +68,7 @@ const useSales = create<SalesState>((set) => ({
               ? {
                   ...item,
                   quantity: item.quantity + 1,
-                  amount: (item.quantity + 1) * (item.mrp + (item.mrp * item.gst) / 100),
+                  amount: (item.quantity + 1) * (item.mrp + (item.mrp * 1) / 100),
                 }
               : item
           ),
@@ -88,7 +88,7 @@ const useSales = create<SalesState>((set) => ({
               ? {
                   ...item,
                   quantity: item.quantity - 1,
-                  amount: (item.quantity - 1) * (item.mrp + (item.mrp * item.gst) / 100),
+                  amount: (item.quantity - 1) * (item.mrp + (item.mrp * 1) / 100),
                 }
               : item
           ),

@@ -77,7 +77,7 @@ function PromotionForm1() {
                 Applied On <span className="text-primary">*</span>
               </FormLabel>
               <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger>
                     <SelectValue placeholder="Applied On" />
                   </SelectTrigger>

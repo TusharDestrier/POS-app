@@ -58,8 +58,11 @@ const { storeMaster,  } = useStoreMasterById(Number(storeId));
 
   // Ledger and Sub-Ledger options
   const ledgerOptions = [
-    { value: 'LEDGER001', label: 'Ledger 1' },
-    { value: 'LEDGER002', label: 'Ledger 2' },
+    { value: 'LEDGER001', label: 'Local Conveyance' },
+    { value: 'LEDGER002', label: 'Clearing Charges' },
+    { value: 'LEDGER003', label: 'Courier Charges' },
+    { value: 'LEDGER004', label: 'Tiffin Expenses' },
+    { value: 'LEDGER005', label: 'Scrap Sale' },
   ]
 
   const subLedgerOptions = [

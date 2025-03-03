@@ -56,7 +56,7 @@ function POSBill() {
                     <FormControl>
                       <RadioGroupItem value="N" />
                     </FormControl>
-                    <FormLabel className="font-normal">N</FormLabel>
+                    <FormLabel className="font-normal">No</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>
@@ -140,7 +140,7 @@ function POSBill() {
                     <FormControl>
                       <RadioGroupItem value="N" />
                     </FormControl>
-                    <FormLabel className="font-normal">N</FormLabel>
+                    <FormLabel className="font-normal">No</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>
@@ -196,7 +196,7 @@ function POSBill() {
                     <FormControl>
                       <RadioGroupItem value="N" />
                     </FormControl>
-                    <FormLabel className="font-normal">N</FormLabel>
+                    <FormLabel className="font-normal">No</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>
@@ -228,7 +228,7 @@ function POSBill() {
                     <FormControl>
                       <RadioGroupItem value="N" />
                     </FormControl>
-                    <FormLabel className="font-normal">N</FormLabel>
+                    <FormLabel className="font-normal">No</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>
@@ -260,7 +260,7 @@ function POSBill() {
                     <FormControl>
                       <RadioGroupItem value="N" />
                     </FormControl>
-                    <FormLabel className="font-normal">N</FormLabel>
+                    <FormLabel className="font-normal">No</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>
@@ -316,7 +316,7 @@ function POSBill() {
                     <FormControl>
                       <RadioGroupItem value="N" />
                     </FormControl>
-                    <FormLabel className="font-normal">N</FormLabel>
+                    <FormLabel className="font-normal">No</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>

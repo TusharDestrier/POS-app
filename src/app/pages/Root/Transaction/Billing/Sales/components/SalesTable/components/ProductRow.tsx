@@ -14,10 +14,8 @@ function ProductRow({ item, onIncrease, onDecrease }: ProductRowProps) {
     <TableRow key={item.id}>
       <TableCell className="font-medium text-[11px] sm:text-sm ">{item.id}</TableCell>
       <TableCell className="text-[11px] sm:text-sm">{item.itemName}</TableCell>
-      <TableCell className="hidden sm:table-cell text-[11px] sm:text-sm">{item.uom}</TableCell>
       <TableCell className=" text-[11px] sm:text-sm">{item.quantity}</TableCell>
       <TableCell className=" text-[11px] sm:text-sm">₹{item.mrp.toFixed(2)}</TableCell>
-      <TableCell className=" hidden sm:table-cell">{item.gst}%</TableCell>
       <TableCell className=" text-[11px] sm:text-sm">₹{item.amount.toFixed(2)}</TableCell>
       <TableCell className=" text-[11px] sm:text-sm">
         <div className="flex gap-1  sm:gap-2">

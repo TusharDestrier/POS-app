@@ -26,7 +26,7 @@ function useSalesTable() {
   useEffect(() => {
     if (!scanID || !salesData) return
 
-    const selectedProduct = salesData.find((item) => item.id === scanID)
+    const selectedProduct = salesData.find((item) => item.itemCode === scanID)
 
     if (!selectedProduct) {
       toast.error('There is no product with this No.')

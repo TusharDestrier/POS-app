@@ -23,7 +23,7 @@ function SalesCheckout() {
         <div className="flex flex-col gap-1 py-2 border-y border-solid border-gray-300 mb-2">
           <div className="flex gap-2">
             <h3 className="text-sm">Subtotal</h3>
-            <h4 className="ms-auto">${subTotal}</h4>
+            <h4 className="ms-auto">{subTotal}</h4>
           </div>
           <div className="flex gap-2">
             <h3 className="text-sm">GST</h3>
@@ -35,8 +35,8 @@ function SalesCheckout() {
           </div>
         </div>
         <div className="flex gap-2">
-          <h3 className="text-sm">Total(USD)</h3>
-          <h4 className="ms-auto">${shipping + subTotal}</h4>
+          <h3 className="text-sm">Total</h3>
+          <h4 className="ms-auto">{shipping + subTotal}</h4>
         </div>
       </CardContent>
       <CardFooter>

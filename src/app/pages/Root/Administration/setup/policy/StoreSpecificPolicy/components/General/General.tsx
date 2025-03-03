@@ -1,9 +1,9 @@
-import { RadioGroup, RadioGroupItem } from '@radix-ui/react-radio-group'
 import { useFormContext } from 'react-hook-form'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {  FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
   SelectContent,
@@ -56,14 +56,14 @@ const General = () => {
         />
       <FormField
           control={control}
-          name="footfallEntryRequiredDaySettlement"
+          name="footfallEntryRequiredInDaySettlement"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Footfall Entry required in Day Settlement</FormLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
-                  value={field.value}
+                  defaultValue={field.value}
                   className="flex flex-row space-x-4 roles-radio"
                 >
                   <FormItem className="flex items-center space-x-2">
@@ -235,7 +235,7 @@ const General = () => {
                     <FormControl>
                       <RadioGroupItem value="N" />
                     </FormControl>
-                    <FormLabel className="font-normal">N</FormLabel>
+                    <FormLabel className="font-normal">No</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>

@@ -4,6 +4,7 @@ import { useForm, FormProvider } from 'react-hook-form'
 
 import { promotionDataFormatter } from '../../helpers/promotionDataFormatter'
 import { useCreatePromotion } from '../../hooks_api/useCreatePromotion'
+import { usePromotionData } from '../../hooks_api/usePromotionData'
 import { promotionSetupSchema } from '../../schema'
 import { usePromotionSetupStore } from '../../store/usePromotionSetupStore'
 import { usePromotionSetupDataStore } from '../../store/usePromotionSetupStoreData'
@@ -11,8 +12,6 @@ import PromotionForm1 from '../PromotionForm1'
 import PromotionForm2 from '../PromotionForm2'
 
 import { Button } from '@/components/ui/button'
-import { usePromotionData } from '../../hooks_api/usePromotionData'
-import { FetchedPromotionType } from '@/types/Promotion'
 
 function PromotionSetupForm() {
   const next = usePromotionSetupStore((state) => state.next)
@@ -86,23 +85,23 @@ function PromotionSetupForm() {
         promotionParameters: {
           paidForCondition: promotionData.objCondition
             ? {
-                condition: promotionData.objCondition[0]?.conditionID || "buyAny",
+                condition: promotionData.objCondition[0]?.conditionID || "A",
                 quantity: promotionData.objCondition[0]?.value || undefined,
               }
-            : { condition: "buyAny", quantity: undefined },
+            : { condition: "A", quantity: undefined },
           buyAssortments: promotionData.objAssortment?.map((assortment) => ({
             assortmentID: assortment.assortmentID,
             assortmentName: assortment.assortmentName,
-            value: assortment.value,
+            unit: assortment.value,
           })) || [],
           benefitType: promotionData.objBenifit
             ? {
-                type: promotionData.objBenifit[0]?.benifitID || "flatDiscount",
+                type: promotionData.objBenifit[0]?.benifitID || "F",
                 value: promotionData.objBenifit[0]?.value || 0,
                 assortmentID: promotionData.objBenifit[0]?.assortmentID || 0,
                 assortmentName: promotionData.objBenifit[0]?.assortmentName || "",
               }
-            : { type: "flatDiscount" },
+            : { type: "F" },
           objValue: promotionData.objValue || [],
           discountTypes: {
             selectedDiscount: "",

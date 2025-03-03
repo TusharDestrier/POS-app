@@ -30,7 +30,6 @@ import {
 
 function StoreDetailForm() {
   const { control, setValue, getValues, watch } = useFormContext()
-  // const modalMode = useStoreMasterStore((state) => state.mode)
   const [isOpen, setIsOpen] = useState(false)
   const [isOpen2, setIsOpen2] = useState(false)
   const storeTypeCode = watch('storeTypeCode')
